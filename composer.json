@@ -1,0 +1,30 @@
+{
+  "name": "praxigento/mobi_mod_mage2_pv",
+  "description": "Magento v2 integration code for Praxigento_Pv module used in MOBI apps.",
+  "type": "magento2-module",
+  "homepage": "https://github.com/praxigento/mobi_mod_mage2_pv",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alex Gusev",
+      "email": "flancer64@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Praxigento\\Pv\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=5.3",
+    "praxigento/mobi_mod_common_pv": "dev-master"
+  },
+  "extra": {
+    "map": [
+      [
+        "src",
+        "Praxigento/Pv"
+      ]
+    ]
+  }
+}
