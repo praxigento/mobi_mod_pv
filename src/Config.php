@@ -7,5 +7,5 @@
 namespace Praxigento\Pv;
 
 class Config {
-
+    const MODULE = 'Praxigento_Pv';
 }
