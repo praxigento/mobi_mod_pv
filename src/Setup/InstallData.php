@@ -6,7 +6,7 @@
  */
 namespace Praxigento\Pv\Setup;
 
-class InstallSchema extends \Praxigento\Core\Setup\Data\Base {
+class InstallData extends \Praxigento\Core\Setup\Data\Base {
 
     public function __construct() {
         parent::__construct('Praxigento\Pv\Lib\Setup\Data');
