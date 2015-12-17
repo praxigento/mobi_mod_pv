@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+
+    <preference for="Praxigento\Pv\Lib\Service\ISale"
+                type="Praxigento\Pv\Lib\Service\Sale\Call"/>
+    <preference for="Praxigento\Pv\Lib\Service\ITransfer"
+                type="Praxigento\Pv\Lib\Service\Transfer\Call"/>
+
+</config>
