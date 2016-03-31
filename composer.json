@@ -19,7 +19,6 @@
     }
   },
   "require": {
-    "praxigento/mobi_mod_common_pv": "dev-master",
     "praxigento/mobi_mod_mage2_accounting": "dev-master"
   }
 }
