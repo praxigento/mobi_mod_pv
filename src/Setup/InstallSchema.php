@@ -5,13 +5,15 @@
  */
 namespace Praxigento\Pv\Setup;
 
-class InstallSchema extends \Praxigento\Core\Setup\Schema\Base {
+use Magento\Framework\Setup\ModuleContextInterface;
+use Magento\Framework\Setup\SchemaSetupInterface;
 
-    /**
-     * InstallSchema constructor.
-     */
-    public function __construct() {
-        parent::__construct('Praxigento\Pv\Lib\Setup\Schema');
+class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
+{
+    protected function _setup(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
+        // TODO: Implement _setup() method.
     }
+
 
 }
