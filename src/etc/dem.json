@@ -1,0 +1,124 @@
+{
+  "dBEAR": {
+    "package": {
+      "Praxigento": {
+        "alias": "prxgt",
+        "comment": "Root namespace for Praxigento modules",
+        "package": {
+          "Pv": {
+            "alias": "pv",
+            "comment": "Top level package for Praxigento_Pv module",
+            "package": {
+              "SaleOrder": {
+                "alias": "sale",
+                "comment": "Sale Order package",
+                "entity": {
+                  "OrderItem": {
+                    "alias": "item",
+                    "comment": "PV attributes related to sale order item.",
+                    "attribute": {
+                      "SaleItemId": {
+                        "alias": "sale_item_id",
+                        "comment": "Reference to the sale order item.",
+                        "nullable": false,
+                        "type": {"integer": {"unsigned": true}}
+                      },
+                      "Subtotal": {
+                        "alias": "subtotal",
+                        "comment": "PV amount for the item w/o discount.",
+                        "nullable": false,
+                        "default": 0,
+                        "type": {"numeric": {"precision": 12, "scale": 4}}
+                      },
+                      "Discount": {
+                        "alias": "discount",
+                        "comment": "PV discount amount for the item.",
+                        "nullable": false,
+                        "default": 0,
+                        "type": {"numeric": {"precision": 12, "scale": 4}}
+                      },
+                      "Total": {
+                        "alias": "total",
+                        "comment": "PV amount for the item with discount.",
+                        "nullable": false,
+                        "default": 0,
+                        "type": {"numeric": {"precision": 12, "scale": 4}}
+                      }
+                    },
+                    "index": {
+                      "PK": {"type": "primary", "aliases": ["sale_id"]}
+                    },
+                    "relation": {
+                      "toMageSaleOrder": {
+                        "own": {"aliases": ["sale_item_id"]},
+                        "reference": {
+                          "entity": {"completeAlias": "sales_order_item"},
+                          "aliases": ["item_id"]
+                        },
+                        "action": {"delete": "restrict", "update": "restrict"}
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "entity": {
+              "SaleOrder": {
+                "alias": "sale",
+                "comment": "PV attributes related to sale order.",
+                "attribute": {
+                  "SaleOrderId": {
+                    "alias": "sale_id",
+                    "comment": "Reference to the sale order.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true}}
+                  },
+                  "Subtotal": {
+                    "alias": "subtotal",
+                    "comment": "PV amount for all order items w/o discount.",
+                    "nullable": false,
+                    "default": 0,
+                    "type": {"numeric": {"precision": 12, "scale": 4}}
+                  },
+                  "Discount": {
+                    "alias": "discount",
+                    "comment": "PV discount amount for all items.",
+                    "nullable": false,
+                    "default": 0,
+                    "type": {"numeric": {"precision": 12, "scale": 4}}
+                  },
+                  "Total": {
+                    "alias": "total",
+                    "comment": "PV amount for all order items with discount.",
+                    "nullable": false,
+                    "default": 0,
+                    "type": {"numeric": {"precision": 12, "scale": 4}}
+                  },
+                  "DatePaid": {
+                    "alias": "date_paid",
+                    "comment": "Time when sale order was paid and PV were transferred to the customer's account.",
+                    "nullable": true,
+                    "type": {"datetime": {}}
+                  }
+                },
+                "index": {
+                  "PK": {"type": "primary", "aliases": ["sale_id"]}
+                },
+                "relation": {
+                  "toMageSaleOrder": {
+                    "own": {"aliases": ["sale_id"]},
+                    "reference": {
+                      "entity": {"completeAlias": "sales_order"},
+                      "aliases": ["entity_id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
