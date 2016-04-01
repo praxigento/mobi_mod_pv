@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Pv\Lib\Test\Story01;
 
-use Praxigento\Accounting\Lib\Entity\Transaction;
+use Praxigento\Accounting\Data\Entity\Transaction;
 use Praxigento\Core\Lib\Context;
 use Praxigento\Core\Lib\Service\Repo\Request\GetEntityByPk as RepoGetEntityByPkRequest;
 use Praxigento\Core\Lib\Test\BaseIntegrationTest;

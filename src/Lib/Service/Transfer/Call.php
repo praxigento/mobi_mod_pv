@@ -4,8 +4,8 @@
  */
 namespace Praxigento\Pv\Lib\Service\Transfer;
 
-use Praxigento\Accounting\Lib\Entity\Account;
-use Praxigento\Accounting\Lib\Entity\Transaction;
+use Praxigento\Accounting\Data\Entity\Account;
+use Praxigento\Accounting\Data\Entity\Transaction;
 use Praxigento\Accounting\Lib\Service\Account\Request\Get as AccountGetRequest;
 use Praxigento\Accounting\Lib\Service\Account\Request\GetRepresentative as AccountGetRepresentativeRequest;
 use Praxigento\Accounting\Lib\Service\Operation\Request\Add as OperationAddRequest;
