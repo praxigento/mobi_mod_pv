@@ -39,8 +39,8 @@ class Main_IntegrationTest extends BaseIntegrationTest {
     public function __construct() {
         parent::__construct();
         /* services */
-        $this->_callRepo = $this->_obm->get(\Praxigento\Core\Lib\Service\IRepo::class);
-        $this->_callSale = $this->_obm->get(\Praxigento\Pv\Lib\Service\ISale::class);
+        $this->_callRepo = $this->_manObj->get(\Praxigento\Core\Lib\Service\IRepo::class);
+        $this->_callSale = $this->_manObj->get(\Praxigento\Pv\Lib\Service\ISale::class);
     }
 
     private function _accountPv() {
