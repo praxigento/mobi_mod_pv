@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Pv\Lib\Service\Sale\Request;
 
-use Praxigento\Pv\Lib\Entity\Sale;
+use Praxigento\Pv\Data\Entity\Sale;
 
 class Save extends \Praxigento\Core\Lib\Service\Base\Request {
     /* // @formatter:off

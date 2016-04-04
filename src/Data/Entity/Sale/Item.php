@@ -2,7 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Pv\Lib\Entity\Sale;
+namespace Praxigento\Pv\Data\Entity\Sale;
 
 class Item {
     const ATTR_DISCOUNT = 'discount';

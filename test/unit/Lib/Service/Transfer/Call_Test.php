@@ -9,7 +9,7 @@ use Praxigento\Accounting\Lib\Service\Account\Request\Get as AccountGetResponse;
 use Praxigento\Accounting\Lib\Service\Account\Response\GetRepresentative as AccountGetRepresentativeResponse;
 use Praxigento\Accounting\Lib\Service\Operation\Response\Add as AccountingOperationAddResponse;
 use Praxigento\Downline\Data\Entity\Customer as DownlineCustomer;
-use Praxigento\Pv\Lib\Entity\Sale;
+use Praxigento\Pv\Data\Entity\Sale;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 

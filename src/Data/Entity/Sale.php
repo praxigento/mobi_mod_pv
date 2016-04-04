@@ -2,7 +2,8 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Pv\Lib\Entity;
+
+namespace Praxigento\Pv\Data\Entity;
 
 class Sale {
     const ATTR_DATE_PAID = 'date_paid';

@@ -10,8 +10,8 @@ use Praxigento\Accounting\Lib\Service\Account\Request\Get as GetAccountRequest;
 use Praxigento\Accounting\Lib\Service\Account\Request\GetRepresentative as GetAccountRepresentativeRequest;
 use Praxigento\Accounting\Lib\Service\Operation\Request\Add as AddOperationRequest;
 use Praxigento\Pv\Config as Cfg;
-use Praxigento\Pv\Lib\Entity\Sale;
-use Praxigento\Pv\Lib\Entity\Sale\Item as SaleItem;
+use Praxigento\Pv\Data\Entity\Sale;
+use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
 use Praxigento\Pv\Lib\Service\ISale;
 
 class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ISale

@@ -11,8 +11,8 @@ use Praxigento\Accounting\Lib\Service\Operation\Response\Add as OperationAddResp
 use Praxigento\Core\Lib\Service\Repo\Response\GetEntityByPk as GetEntityByPkResponse;
 use Praxigento\Core\Lib\Service\Repo\Response\ReplaceEntity as ReplaceEntityResponse;
 use Praxigento\Pv\Config;
-use Praxigento\Pv\Lib\Entity\Sale;
-use Praxigento\Pv\Lib\Entity\Sale\Item as SaleItem;
+use Praxigento\Pv\Data\Entity\Sale;
+use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 

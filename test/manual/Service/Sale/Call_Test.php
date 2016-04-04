@@ -5,8 +5,8 @@
 namespace Praxigento\Pv\Lib\Service\Sale;
 
 use Praxigento\Core\Lib\Context;
-use Praxigento\Pv\Lib\Entity\Sale;
-use Praxigento\Pv\Lib\Entity\Sale\Item as SaleItem;
+use Praxigento\Pv\Data\Entity\Sale;
+use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
