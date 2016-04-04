@@ -22,12 +22,12 @@ class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
 
         /* Sale */
         $entityAlias = Sale::ENTITY_NAME;
-        $demEntity = $demPackage['entity']['SaleOrder'];
+        $demEntity = $demPackage->getData('entity/SaleOrder');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Sale Item*/
         $entityAlias = SaleItem::ENTITY_NAME;
-        $demEntity = $demPackage['package']['SaleOrder']['entity']['OrderItem'];
+        $demEntity = $demPackage->getData('package/SaleOrder/entity/OrderItem');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
     }
