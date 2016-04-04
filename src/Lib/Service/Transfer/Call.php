@@ -13,39 +13,42 @@ use Praxigento\Downline\Data\Entity\Customer as DownlineCustomer;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Lib\Service\ITransfer;
 
-class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ITransfer {
+class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ITransfer
+{
     /**
      * Database sub functions for this service.
      *
      * @var Sub\Db
      */
-    private $_subDb;
+    protected $_subDb;
     /**
      * @var \Praxigento\Accounting\Lib\Service\IAccount
      */
-    private $_callAccount;
+    protected $_callAccount;
     /** @var  \Praxigento\Accounting\Lib\Service\IOperation */
-    private $_callOperation;
+    protected $_callOperation;
+    /** @var  \Praxigento\Core\Lib\Tool\Date */
+    protected $_toolDate;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Core\Lib\Context\IDbAdapter $dba,
-        \Praxigento\Core\Lib\IToolbox $toolbox,
-        \Praxigento\Core\Lib\Service\IRepo $callRepo,
+        \Praxigento\Core\Lib\Tool\Date $toolDate,
         \Praxigento\Accounting\Lib\Service\IAccount $callAccount,
         \Praxigento\Accounting\Lib\Service\IOperation $callOperation,
         Sub\Db $subDb
     ) {
-        parent::__construct($logger, $dba, $toolbox, $callRepo);
+        parent::__construct($logger);
+        $this->_toolDate = $toolDate;
         $this->_callAccount = $callAccount;
         $this->_callOperation = $callOperation;
         $this->_subDb = $subDb;
     }
 
 
-    public function betweenCustomers(Request\BetweenCustomers $request) {
+    public function betweenCustomers(Request\BetweenCustomers $request)
+    {
         $result = new Response\BetweenCustomers();
-        $toolDate = $this->_toolbox->getDate();
+        $toolDate = $this->_toolDate;
         /* constraints validation results */
         $isCountriesTheSame = false;
         $isTargetPlacedInTheDownline = false;
@@ -57,16 +60,16 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ITransfer {
         $condForceAll = $request->getData(Request\BetweenCustomers::COND_FORCE_ALL);
         $condForceCountry = (boolean)$request->getData(Request\BetweenCustomers::COND_FORCE_COUNTRY);
         $condForceDownline = (boolean)$request->getData(Request\BetweenCustomers::COND_FORCE_DOWNLINE);
-        if(is_null($date)) {
+        if (is_null($date)) {
             $date = $toolDate->getUtcNowForDb();
         }
         /* validate conditions */
-        if(!$condForceAll) {
+        if (!$condForceAll) {
             /* validate customer countries */
             $downDebit = $this->_subDb->getDownlineCustomer($custIdDebit);
             $downCredit = $this->_subDb->getDownlineCustomer($custIdCredit);
             /* countries should be equals */
-            if(
+            if (
                 ($downDebit[DownlineCustomer::ATTR_COUNTRY_CODE] == $downCredit[DownlineCustomer::ATTR_COUNTRY_CODE]) ||
                 $condForceCountry
             ) {
@@ -75,7 +78,7 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ITransfer {
             /* transfer is allowed to own subtree only */
             $path = $downCredit[DownlineCustomer::ATTR_PATH];
             $key = Cfg::DTPS . $downDebit[DownlineCustomer::ATTR_CUSTOMER_ID] . Cfg::DTPS;
-            if(
+            if (
                 (strpos($path, $key) !== false) ||
                 $condForceDownline
             ) {
@@ -83,7 +86,7 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ITransfer {
             }
         }
         /* check validation results and perform transfer */
-        if(
+        if (
             $condForceAll ||
             ($isTargetPlacedInTheDownline && $isCountriesTheSame)
         ) {
@@ -101,20 +104,29 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ITransfer {
             $reqAddOper->setDatePerformed($date);
             $reqAddOper->setTransactions([
                 [
-                    Transaction::ATTR_DEBIT_ACC_ID  => $respAccDebit->getData(Account::ATTR_ID),
+                    Transaction::ATTR_DEBIT_ACC_ID => $respAccDebit->getData(Account::ATTR_ID),
                     Transaction::ATTR_CREDIT_ACC_ID => $respAccCredit->getData(Account::ATTR_ID),
-                    Transaction::ATTR_VALUE         => $value
+                    Transaction::ATTR_VALUE => $value
                 ]
             ]);
             $respAddOper = $this->_callOperation->add($reqAddOper);
-            if($respAddOper->isSucceed()) {
+            if ($respAddOper->isSucceed()) {
                 $result->setAsSucceed();
             }
         }
         return $result;
     }
 
-    public function creditToCustomer(Request\CreditToCustomer $request) {
+    /**
+     * Reset cached data.
+     */
+    public function cacheReset()
+    {
+        $this->_callAccount->cacheReset();
+    }
+
+    public function creditToCustomer(Request\CreditToCustomer $request)
+    {
         $result = new Response\CreditToCustomer();
         /* get representative customer account for PV asset */
         $reqRepres = new AccountGetRepresentativeRequest();
@@ -126,13 +138,14 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ITransfer {
         $requestData[Request\BetweenCustomers::COND_FORCE_ALL] = true;
         $reqBetween = new Request\BetweenCustomers($requestData);
         $respBetween = $this->betweenCustomers($reqBetween);
-        if($respBetween->isSucceed()) {
+        if ($respBetween->isSucceed()) {
             $result->setAsSucceed();
         }
         return $result;
     }
 
-    public function debitFromCustomer(Request\DebitFromCustomer $request) {
+    public function debitFromCustomer(Request\DebitFromCustomer $request)
+    {
         $result = new Response\DebitFromCustomer();
         /* get representative customer account for PV asset */
         $reqRepres = new AccountGetRepresentativeRequest();
@@ -144,16 +157,9 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ITransfer {
         $requestData[Request\BetweenCustomers::COND_FORCE_ALL] = true;
         $reqBetween = new Request\BetweenCustomers($requestData);
         $respBetween = $this->betweenCustomers($reqBetween);
-        if($respBetween->isSucceed()) {
+        if ($respBetween->isSucceed()) {
             $result->setAsSucceed();
         }
         return $result;
-    }
-
-    /**
-     * Reset cached data.
-     */
-    public function cacheReset() {
-        $this->_callAccount->cacheReset();
     }
 }
