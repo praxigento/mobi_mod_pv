@@ -5,7 +5,7 @@
 namespace Praxigento\Pv\Lib\Service\Transfer\Sub;
 
 use Praxigento\Core\Lib\Service\Repo\Request\GetEntityByPk;
-use Praxigento\Downline\Lib\Entity\Customer;
+use Praxigento\Downline\Data\Entity\Customer;
 
 class Db extends \Praxigento\Core\Lib\Service\Base\Sub\Db {
 

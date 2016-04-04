@@ -9,7 +9,7 @@ use Praxigento\Accounting\Data\Entity\Transaction;
 use Praxigento\Accounting\Lib\Service\Account\Request\Get as AccountGetRequest;
 use Praxigento\Accounting\Lib\Service\Account\Request\GetRepresentative as AccountGetRepresentativeRequest;
 use Praxigento\Accounting\Lib\Service\Operation\Request\Add as OperationAddRequest;
-use Praxigento\Downline\Lib\Entity\Customer as DownlineCustomer;
+use Praxigento\Downline\Data\Entity\Customer as DownlineCustomer;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Lib\Service\ITransfer;
 
