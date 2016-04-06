@@ -33,13 +33,13 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransfer
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\Tool\IDate $toolDate,
-        \Praxigento\Accounting\Lib\Service\IAccount $callAccount,
+        \Praxigento\Accounting\Lib\Service\IAccount $repoAccount,
         \Praxigento\Accounting\Lib\Service\IOperation $callOperation,
         Sub\Db $subDb
     ) {
         parent::__construct($logger);
         $this->_toolDate = $toolDate;
-        $this->_callAccount = $callAccount;
+        $this->_callAccount = $repoAccount;
         $this->_callOperation = $callOperation;
         $this->_subDb = $subDb;
     }
