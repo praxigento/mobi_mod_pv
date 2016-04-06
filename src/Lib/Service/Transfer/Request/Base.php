@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Pv\Lib\Service\Transfer\Request;
 
-class Base extends \Praxigento\Core\Lib\Service\Base\Request {
+class Base extends \Praxigento\Core\Service\Base\Request {
     /**
      * Force transfer if any or all validation conditions are violated.
      */

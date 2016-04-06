@@ -6,7 +6,7 @@ namespace Praxigento\Pv\Lib\Service\Sale\Request;
 
 use Praxigento\Pv\Data\Entity\Sale;
 
-class Save extends \Praxigento\Core\Lib\Service\Base\Request {
+class Save extends \Praxigento\Core\Service\Base\Request {
     /* // @formatter:off
 $data = [
     Sale::ATTR_SALE_ID  => 100,

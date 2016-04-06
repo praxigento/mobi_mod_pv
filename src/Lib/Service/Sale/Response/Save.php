@@ -5,6 +5,6 @@
 namespace Praxigento\Pv\Lib\Service\Sale\Response;
 
 
-class Save extends \Praxigento\Core\Lib\Service\Base\Response {
+class Save extends \Praxigento\Core\Service\Base\Response {
 
 }

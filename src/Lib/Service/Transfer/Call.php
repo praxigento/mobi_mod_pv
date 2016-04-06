@@ -13,7 +13,7 @@ use Praxigento\Downline\Data\Entity\Customer as DownlineCustomer;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Lib\Service\ITransfer;
 
-class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ITransfer
+class Call extends \Praxigento\Core\Service\Base\Call implements ITransfer
 {
     /**
      * Database sub functions for this service.

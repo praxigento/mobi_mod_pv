@@ -14,7 +14,7 @@ use Praxigento\Pv\Data\Entity\Sale;
 use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
 use Praxigento\Pv\Lib\Service\ISale;
 
-class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ISale
+class Call extends \Praxigento\Core\Service\Base\Call implements ISale
 {
     /** @var \Praxigento\Core\Repo\ITransactionManager */
     protected $_manTrans;
