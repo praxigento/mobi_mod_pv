@@ -25,23 +25,21 @@ class Main_IntegrationTest extends BaseIntegrationTest
     const ATTR_ORDER_ID = Cfg::E_COMMON_A_ENTITY_ID;
     const DATA_EMAIL = 'some_customer_email@test.com';
     const DATA_PV_TOTAL = 300;
-    /** @var \Praxigento\Core\Lib\Service\IRepo */
-    private $_callRepo;
     /** @var \Praxigento\Pv\Lib\Service\Sale\Call */
     private $_callSale;
+    /** @var \Praxigento\Core\Repo\IBasic */
+    protected $_repoBasic;
     private $customerId;
     private $operationId;
     private $orderId;
     private $orderItemsIds = [];
 
-    /**
-     * Main_FunctionalTest constructor.
-     */
-    public function __construct()
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
-        parent::__construct();
+        parent::__construct($name, $data, $dataName);
         /* services */
-        $this->_callRepo = $this->_manObj->get(\Praxigento\Core\Lib\Service\IRepo::class);
+        $this->_repoBasic = $this->_manObj->get(\Praxigento\Core\Repo\IBasic::class);
+        /* services */
         $this->_callSale = $this->_manObj->get(\Praxigento\Pv\Lib\Service\ISale::class);
     }
 
@@ -58,11 +56,13 @@ class Main_IntegrationTest extends BaseIntegrationTest
 
     private function _checkOperation()
     {
-        $req = new RepoGetEntityByPkRequest(Transaction::ENTITY_NAME,
-            [Transaction::ATTR_OPERATION_ID => $this->operationId]);
-        $resp = $this->_callRepo->getEntityByPk($req);
-        $this->assertTrue($resp->isSucceed());
-        $pvAccounted = $resp->getData(Transaction::ATTR_VALUE);
+        $data = $this->_repoBasic->getEntityByPk(
+            Transaction::ENTITY_NAME,
+            [
+                Transaction::ATTR_OPERATION_ID => $this->operationId
+            ]
+        );
+        $pvAccounted = isset($data[Transaction::ATTR_VALUE]) ? $data[Transaction::ATTR_VALUE] : null;
         $this->assertEquals(self::DATA_PV_TOTAL, $pvAccounted);
         $this->_logger->debug("Total '$pvAccounted' PV is accounted for the order #{$this->orderId}.");
     }
