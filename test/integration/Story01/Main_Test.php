@@ -5,7 +5,6 @@
 namespace Praxigento\Pv\Lib\Test\Story01;
 
 use Praxigento\Accounting\Data\Entity\Transaction;
-use Praxigento\Core\Lib\Context;
 use Praxigento\Core\Lib\Service\Repo\Request\GetEntityByPk as RepoGetEntityByPkRequest;
 use Praxigento\Core\Lib\Test\BaseIntegrationTest;
 use Praxigento\Pv\Config as Cfg;
@@ -69,8 +68,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
 
     private function _createMageCustomer()
     {
-        $mappedCustomer = Context::getMappedEntityName(Cfg::ENTITY_MAGE_CUSTOMER);
-        $tblCustomer = $this->_resource->getTableName($mappedCustomer);
+        $tblCustomer = $this->_resource->getTableName(Cfg::ENTITY_MAGE_CUSTOMER);
         /* add new customer */
         $this->_conn->insert(
             $tblCustomer,
@@ -84,10 +82,8 @@ class Main_IntegrationTest extends BaseIntegrationTest
 
     private function _createMageSaleOrder()
     {
-        $mappedOrder = Context::getMappedEntityName(Cfg::ENTITY_MAGE_SALES_ORDER);
-        $mappedOrderItem = Context::getMappedEntityName(Cfg::ENTITY_MAGE_SALES_ORDER_ITEM);
-        $tblOrder = $this->_resource->getTableName($mappedOrder);
-        $tblOrderItem = $this->_resource->getTableName($mappedOrderItem);
+        $tblOrder = $this->_resource->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER);
+        $tblOrderItem = $this->_resource->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER_ITEM);
         /* add new sale order*/
         $this->_conn->insert(
             $tblOrder,

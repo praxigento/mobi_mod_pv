@@ -4,14 +4,14 @@
  */
 namespace Praxigento\Pv\Lib\Service\Transfer;
 
-use Praxigento\Core\Lib\Context;
+
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
 class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
 
     public function test_betweenCustomers() {
-        $obm = Context::instance()->getObjectManager();
+        $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $toolbox \Praxigento\Core\Lib\IToolbox */
         $toolbox = $obm->get('Praxigento\Core\Lib\IToolbox');
         $toolDate = $toolbox->getDate();
@@ -32,7 +32,7 @@ class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
     }
 
     public function test_creditToCustomer() {
-        $obm = Context::instance()->getObjectManager();
+        $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $toolbox \Praxigento\Core\Lib\IToolbox */
         $toolbox = $obm->get('Praxigento\Core\Lib\IToolbox');
         $toolDate = $toolbox->getDate();
@@ -52,7 +52,7 @@ class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
     }
 
     public function test_debitFromCustomer() {
-        $obm = Context::instance()->getObjectManager();
+        $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $toolbox \Praxigento\Core\Lib\IToolbox */
         $toolbox = $obm->get('Praxigento\Core\Lib\IToolbox');
         $toolDate = $toolbox->getDate();

@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Pv\Lib\Service\Sale;
 
-use Praxigento\Core\Lib\Context;
+
 use Praxigento\Pv\Data\Entity\Sale;
 use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
 
@@ -13,7 +13,7 @@ include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
 
     public function test_save() {
-        $obm = Context::instance()->getObjectManager();
+        $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call Call */
         $call = $obm->get('Praxigento\Pv\Lib\Service\Sale\Call');
         $req = new Request\Save();
@@ -43,7 +43,7 @@ class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
     }
 
     public function test_accountPv() {
-        $obm = Context::instance()->getObjectManager();
+        $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call Call */
         $call = $obm->get('Praxigento\Pv\Lib\Service\Sale\Call');
         $req = new Request\AccountPv();
