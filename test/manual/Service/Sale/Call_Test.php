@@ -10,7 +10,7 @@ use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
-class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
+class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
 
     public function test_save() {
         $obm = \Magento\Framework\App\ObjectManager::getInstance();
