@@ -27,12 +27,12 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ITransfer
     protected $_callAccount;
     /** @var  \Praxigento\Accounting\Lib\Service\IOperation */
     protected $_callOperation;
-    /** @var  \Praxigento\Core\Lib\Tool\Date */
+    /** @var  \Praxigento\Core\Tool\IDate */
     protected $_toolDate;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Core\Lib\Tool\Date $toolDate,
+        \Praxigento\Core\Tool\IDate $toolDate,
         \Praxigento\Accounting\Lib\Service\IAccount $callAccount,
         \Praxigento\Accounting\Lib\Service\IOperation $callOperation,
         Sub\Db $subDb
