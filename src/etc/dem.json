@@ -11,7 +11,7 @@
             "package": {
               "SaleOrder": {
                 "alias": "sale",
-                "comment": "Sale Order package",
+                "comment": "Sale Order subpackage",
                 "entity": {
                   "OrderItem": {
                     "alias": "item",
@@ -54,6 +54,44 @@
                         "reference": {
                           "entity": {"completeAlias": "sales_order_item"},
                           "aliases": ["item_id"]
+                        },
+                        "action": {"delete": "restrict", "update": "restrict"}
+                      }
+                    }
+                  }
+                }
+              },
+              "Stock": {
+                "alias": "sale",
+                "comment": "Stock subpackage",
+                "entity": {
+                  "StockItem": {
+                    "alias": "item",
+                    "comment": "PV attributes related to stock item (product in warehouse).",
+                    "attribute": {
+                      "StockItemRef": {
+                        "alias": "stock_item_ref",
+                        "comment": "Reference to the stock item.",
+                        "nullable": false,
+                        "type": {"integer": {"unsigned": true}}
+                      },
+                      "PV": {
+                        "alias": "pv",
+                        "comment": "Warehouse PV amount for the item.",
+                        "nullable": false,
+                        "default": 0,
+                        "type": {"numeric": {"precision": 12, "scale": 4}}
+                      }
+                    },
+                    "index": {
+                      "PK": {"type": "primary", "aliases": ["stock_item_ref"]}
+                    },
+                    "relation": {
+                      "toWarehouseStockItem": {
+                        "own": {"aliases": ["stock_item_ref"]},
+                        "reference": {
+                          "entity": {"completeAlias": "prxgt_wrhs_stock_item"},
+                          "aliases": ["stock_item_ref"]
                         },
                         "action": {"delete": "restrict", "update": "restrict"}
                       }

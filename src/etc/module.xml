@@ -4,6 +4,7 @@
     <module name="Praxigento_Pv" setup_version="0.1.0">
         <sequence>
             <module name="Praxigento_Downline"/>
+            <module name="Praxigento_Warehouse"/>
         </sequence>
     </module>
 </config>
