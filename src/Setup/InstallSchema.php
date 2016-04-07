@@ -5,9 +5,7 @@
  */
 namespace Praxigento\Pv\Setup;
 
-use Magento\Framework\Setup\ModuleContextInterface;
-use Magento\Framework\Setup\SchemaSetupInterface;
-use Praxigento\Core\Lib\Setup\Db as Db;
+use Praxigento\Pv\Data\Entity\Product;
 use Praxigento\Pv\Data\Entity\Sale;
 use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
 
@@ -19,6 +17,11 @@ class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
         $pathToFile = __DIR__ . '/../etc/dem.json';
         $pathToNode = '/dBEAR/package/Praxigento/package/Pv';
         $demPackage = $this->_toolDem->readDemPackage($pathToFile, $pathToNode);
+
+        /* Product */
+        $entityAlias = Product::ENTITY_NAME;
+        $demEntity = $demPackage->getData('entity/Product');
+        $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Sale */
         $entityAlias = Sale::ENTITY_NAME;

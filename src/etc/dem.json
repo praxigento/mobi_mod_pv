@@ -63,6 +63,38 @@
               }
             },
             "entity": {
+              "Product": {
+                "alias": "prod",
+                "comment": "PV attributes related to the whole product.",
+                "attribute": {
+                  "ProductRef": {
+                    "alias": "prod_ref",
+                    "comment": "Reference to the product.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true}}
+                  },
+                  "Total": {
+                    "alias": "pv",
+                    "comment": "Wholesale PV value for the product.",
+                    "nullable": false,
+                    "default": 0,
+                    "type": {"numeric": {"precision": 12, "scale": 4}}
+                  }
+                },
+                "index": {
+                  "PK": {"type": "primary", "aliases": ["prod_ref"]}
+                },
+                "relation": {
+                  "toMageProduct": {
+                    "own": {"aliases": ["prod_ref"]},
+                    "reference": {
+                      "entity": {"completeAlias": "catalog_product_entity"},
+                      "aliases": ["entity_id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  }
+                }
+              },
               "SaleOrder": {
                 "alias": "sale",
                 "comment": "PV attributes related to sale order.",
