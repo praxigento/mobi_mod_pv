@@ -2,6 +2,16 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
 
+    <!-- Repo -->
+    <preference for="Praxigento\Pv\Repo\Entity\IProduct"
+                type="Praxigento\Pv\Repo\Entity\Def\Product"/>
+    <preference for="Praxigento\Pv\Repo\Entity\ISale"
+                type="Praxigento\Pv\Repo\Entity\Def\Sale"/>
+    <preference for="Praxigento\Pv\Repo\Entity\Sale\IItem"
+                type="Praxigento\Pv\Repo\Entity\Sale\Def\Item"/>
+    <preference for="Praxigento\Pv\Repo\Entity\Stock\IItem"
+                type="Praxigento\Pv\Repo\Entity\Stock\Def\Item"/>
+    <!-- Services -->
     <preference for="Praxigento\Pv\Lib\Service\ISale"
                 type="Praxigento\Pv\Lib\Service\Sale\Call"/>
     <preference for="Praxigento\Pv\Lib\Service\ITransfer"
