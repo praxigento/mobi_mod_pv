@@ -13,7 +13,7 @@ class Item extends BaseEntityRepo implements IEntityRepo
 {
     public function __construct(IRepoBasic $repoBasic)
     {
-        parent::__construct($repoBasic, Entity::ENTITY_NAME, Entity::ATTR_SALE_ITEM_ID);
+        parent::__construct($repoBasic, new Entity());
     }
 
 }

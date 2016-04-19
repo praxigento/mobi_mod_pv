@@ -11,6 +11,7 @@
                 type="Praxigento\Pv\Repo\Entity\Sale\Def\Item"/>
     <preference for="Praxigento\Pv\Repo\Entity\Stock\IItem"
                 type="Praxigento\Pv\Repo\Entity\Stock\Def\Item"/>
+
     <!-- Services -->
     <preference for="Praxigento\Pv\Lib\Service\ISale"
                 type="Praxigento\Pv\Lib\Service\Sale\Call"/>

@@ -2,7 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Warehouse\Repo\Entity\Def;
+namespace Praxigento\Pv\Repo\Entity\Def;
 
 use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
 use Praxigento\Core\Repo\IBasic as IRepoBasic;
@@ -13,7 +13,7 @@ class Product extends BaseEntityRepo implements IEntityRepo
 {
     public function __construct(IRepoBasic $repoBasic)
     {
-        parent::__construct($repoBasic, Entity::ENTITY_NAME, Entity::ATTR_PROD_REF);
+        parent::__construct($repoBasic, new Entity());
     }
 
 }
