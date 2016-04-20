@@ -23,11 +23,11 @@ class InstallData_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
         /* create mocks */
         $this->mConn = $this->_mockConn();
         $this->mResource = $this->_mockResourceConnection($this->mConn);
-        $this->mRepoBasic = $this->_mockRepoBasic();
+        $this->mRepoGeneric = $this->_mockRepoGeneric();
         /* create object to test */
         $this->obj = new InstallData(
             $this->mResource,
-            $this->mRepoBasic
+            $this->mRepoGeneric
         );
     }
 

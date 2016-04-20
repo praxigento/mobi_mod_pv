@@ -18,7 +18,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
 {
     /** @var \Praxigento\Core\Repo\ITransactionManager */
     protected $_manTrans;
-    /** @var \Praxigento\Core\Repo\IBasic */
+    /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoBasic;
     /** @var  \Praxigento\Accounting\Lib\Service\IAccount */
     protected $_callAccount;
@@ -28,7 +28,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\Repo\ITransactionManager $manTrans,
-        \Praxigento\Core\Repo\IBasic $repoBasic,
+        \Praxigento\Core\Repo\IGeneric $repoBasic,
         \Praxigento\Accounting\Lib\Service\IAccount $callAccount,
         \Praxigento\Accounting\Lib\Service\IOperation $callOperation
     ) {

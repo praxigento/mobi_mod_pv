@@ -26,7 +26,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
     const DATA_PV_TOTAL = 300;
     /** @var \Praxigento\Pv\Lib\Service\Sale\Call */
     private $_callSale;
-    /** @var \Praxigento\Core\Repo\IBasic */
+    /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoBasic;
     private $customerId;
     private $operationId;
@@ -37,7 +37,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
     {
         parent::__construct($name, $data, $dataName);
         /* services */
-        $this->_repoBasic = $this->_manObj->get(\Praxigento\Core\Repo\IBasic::class);
+        $this->_repoBasic = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
         /* services */
         $this->_callSale = $this->_manObj->get(\Praxigento\Pv\Lib\Service\ISale::class);
     }
