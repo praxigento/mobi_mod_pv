@@ -82,7 +82,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
             ->willReturn($mRespGetCredit);
         //  $respAddOper = $this->_callOperation->add($reqAddOper);
         $mRespAddOper = new AccountingOperationAddResponse();
-        $mRespAddOper->setAsSucceed();
+        $mRespAddOper->markSucceed();
         $mCallOperation
             ->expects($this->once())
             ->method('add')
@@ -176,7 +176,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
             ->willReturn($mRespGetRepres);
         // $respBetween = $this->betweenCustomers($reqBetween);
         $mRespBetween = new Response\BetweenCustomers();
-        $mRespBetween->setAsSucceed();
+        $mRespBetween->markSucceed();
         $mCall
             ->expects($this->once())
             ->method('betweenCustomers')
@@ -229,7 +229,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
             ->willReturn($mRespGetRepres);
         // $respBetween = $this->betweenCustomers($reqBetween);
         $mRespBetween = new Response\BetweenCustomers();
-        $mRespBetween->setAsSucceed();
+        $mRespBetween->markSucceed();
         $mCall
             ->expects($this->once())
             ->method('betweenCustomers')

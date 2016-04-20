@@ -111,7 +111,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransfer
             ]);
             $respAddOper = $this->_callOperation->add($reqAddOper);
             if ($respAddOper->isSucceed()) {
-                $result->setAsSucceed();
+                $result->markSucceed();
             }
         }
         return $result;
@@ -139,7 +139,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransfer
         $reqBetween = new Request\BetweenCustomers($requestData);
         $respBetween = $this->betweenCustomers($reqBetween);
         if ($respBetween->isSucceed()) {
-            $result->setAsSucceed();
+            $result->markSucceed();
         }
         return $result;
     }
@@ -158,7 +158,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransfer
         $reqBetween = new Request\BetweenCustomers($requestData);
         $respBetween = $this->betweenCustomers($reqBetween);
         if ($respBetween->isSucceed()) {
-            $result->setAsSucceed();
+            $result->markSucceed();
         }
         return $result;
     }

@@ -92,7 +92,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
         if ($respAddOper->isSucceed()) {
             $operId = $respAddOper->getOperationId();
             $result->setData(Response\AccountPv::OPERATION_ID, $operId);
-            $result->setAsSucceed();
+            $result->markSucceed();
         }
         $this->_logger->info("PV accounting operation for sale order #$saleId is completed.");
         return $result;
@@ -125,7 +125,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
                 $this->_repoBasic->replaceEntity(SaleItem::ENTITY_NAME, $one);
             }
             $this->_manTrans->transactionCommit($trans);
-            $result->setAsSucceed();
+            $result->markSucceed();
             $this->_logger->info("PV attributes for sale order #$orderId are saved.");
         } finally {
             $this->_manTrans->transactionClose($trans);

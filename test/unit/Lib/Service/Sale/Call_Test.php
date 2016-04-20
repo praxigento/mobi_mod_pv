@@ -87,7 +87,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
         // $respAddOper = $this->_callOperation->add($reqAddOper);
         $mRespAddOper = new OperationAddResponse();
         $mRespAddOper->setOperationId($OPER_ID);
-        $mRespAddOper->setAsSucceed();
+        $mRespAddOper->markSucceed();
         $mCallOperation
             ->expects($this->once())
             ->method('add')
@@ -135,7 +135,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
         // $respGetSaleOrder = $this->_callRepo->getEntityByPk($reqGetSaleOrder);
         $mSaleOrder = new GetEntityByPkResponse();
         $mSaleOrder->setData(Config::E_SALE_ORDER_A_CUSTOMER_ID, $CUSTOMER_ID);
-        $mSaleOrder->setAsSucceed();
+        $mSaleOrder->markSucceed();
         $mCallRepo
             ->expects($this->at(1))
             ->method('getEntityByPk')
@@ -157,7 +157,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
         // $respAddOper = $this->_callOperation->add($reqAddOper);
         $mRespAddOper = new OperationAddResponse();
         $mRespAddOper->setOperationId($OPER_ID);
-        $mRespAddOper->setAsSucceed();
+        $mRespAddOper->markSucceed();
         $mCallOperation
             ->expects($this->once())
             ->method('add')
@@ -215,7 +215,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
             ->method('beginTransaction');
         // $respReplace = $this->_callRepo->replaceEntity($reqReplace);
         $mRespReplace = new ReplaceEntityResponse();
-        $mRespReplace->setAsSucceed();
+        $mRespReplace->markSucceed();
         $mCallRepo
             ->expects($this->any())
             ->method('replaceEntity')
@@ -255,7 +255,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
             ->method('beginTransaction');
         // $respReplace = $this->_callRepo->replaceEntity($reqReplace);
         $mRespReplaceOrder = new ReplaceEntityResponse();
-        $mRespReplaceOrder->setAsSucceed();
+        $mRespReplaceOrder->markSucceed();
         $mCallRepo
             ->expects($this->at(0))
             ->method('replaceEntity')
