@@ -16,7 +16,7 @@ use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
-class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
+class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
     private $DATA = [
         Sale::ATTR_SALE_ID => 1,

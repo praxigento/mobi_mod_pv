@@ -6,7 +6,7 @@ namespace Praxigento\Pv\Lib\Test\Story01;
 
 use Praxigento\Accounting\Data\Entity\Transaction;
 use Praxigento\Core\Lib\Service\Repo\Request\GetEntityByPk as RepoGetEntityByPkRequest;
-use Praxigento\Core\Lib\Test\BaseIntegrationTest;
+use Praxigento\Core\Test\BaseIntegrationTest;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Data\Entity\Sale as Sale;
 use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
