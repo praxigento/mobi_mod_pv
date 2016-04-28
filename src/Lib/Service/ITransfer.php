@@ -4,10 +4,11 @@
  */
 namespace Praxigento\Pv\Lib\Service;
 
+use Praxigento\Core\ICached;
 use Praxigento\Pv\Lib\Service\Transfer\Request;
 use Praxigento\Pv\Lib\Service\Transfer\Response;
 
-interface ITransfer {
+interface ITransfer extends  ICached{
     /**
      * @param Request\BetweenCustomers $request
      *
@@ -29,8 +30,4 @@ interface ITransfer {
      */
     public function debitFromCustomer(Request\DebitFromCustomer $request);
 
-    /**
-     * Reset cached data.
-     */
-    public function cacheReset();
 }

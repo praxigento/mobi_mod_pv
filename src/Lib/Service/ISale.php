@@ -4,7 +4,10 @@
  */
 namespace Praxigento\Pv\Lib\Service;
 
-interface ISale {
+use Praxigento\Core\ICached;
+
+interface ISale extends ICached
+{
     /**
      * Account PV on sale done.
      *
@@ -13,12 +16,7 @@ interface ISale {
      * @return Sale\Response\AccountPv
      */
     public function accountPv(Sale\Request\AccountPv $request);
-
-    /**
-     * Reset cached data.
-     */
-    public function cacheReset();
-
+    
     /**
      * Save PV data on sale order save.
      *
