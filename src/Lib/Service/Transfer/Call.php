@@ -6,9 +6,9 @@ namespace Praxigento\Pv\Lib\Service\Transfer;
 
 use Praxigento\Accounting\Data\Entity\Account;
 use Praxigento\Accounting\Data\Entity\Transaction;
-use Praxigento\Accounting\Lib\Service\Account\Request\Get as AccountGetRequest;
-use Praxigento\Accounting\Lib\Service\Account\Request\GetRepresentative as AccountGetRepresentativeRequest;
-use Praxigento\Accounting\Lib\Service\Operation\Request\Add as OperationAddRequest;
+use Praxigento\Accounting\Service\Account\Request\Get as AccountGetRequest;
+use Praxigento\Accounting\Service\Account\Request\GetRepresentative as AccountGetRepresentativeRequest;
+use Praxigento\Accounting\Service\Operation\Request\Add as OperationAddRequest;
 use Praxigento\Downline\Data\Entity\Customer as DownlineCustomer;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Lib\Service\ITransfer;
@@ -22,10 +22,10 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransfer
      */
     protected $_subDb;
     /**
-     * @var \Praxigento\Accounting\Lib\Service\IAccount
+     * @var \Praxigento\Accounting\Service\IAccount
      */
     protected $_callAccount;
-    /** @var  \Praxigento\Accounting\Lib\Service\IOperation */
+    /** @var  \Praxigento\Accounting\Service\IOperation */
     protected $_callOperation;
     /** @var  \Praxigento\Core\Tool\IDate */
     protected $_toolDate;
@@ -33,8 +33,8 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransfer
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\Tool\IDate $toolDate,
-        \Praxigento\Accounting\Lib\Service\IAccount $repoAccount,
-        \Praxigento\Accounting\Lib\Service\IOperation $callOperation,
+        \Praxigento\Accounting\Service\IAccount $repoAccount,
+        \Praxigento\Accounting\Service\IOperation $callOperation,
         Sub\Db $subDb
     ) {
         parent::__construct($logger);

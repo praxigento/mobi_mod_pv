@@ -5,9 +5,9 @@
 namespace Praxigento\Pv\Lib\Service\Sale;
 
 use Praxigento\Accounting\Data\Entity\Account;
-use Praxigento\Accounting\Lib\Service\Account\Response\Get as AccountGetResponse;
-use Praxigento\Accounting\Lib\Service\Account\Response\GetRepresentative as AccountGetRepresentativeResponse;
-use Praxigento\Accounting\Lib\Service\Operation\Response\Add as OperationAddResponse;
+use Praxigento\Accounting\Service\Account\Response\Get as AccountGetResponse;
+use Praxigento\Accounting\Service\Account\Response\GetRepresentative as AccountGetRepresentativeResponse;
+use Praxigento\Accounting\Service\Operation\Response\Add as OperationAddResponse;
 use Praxigento\Core\Lib\Service\Repo\Response\GetEntityByPk as GetEntityByPkResponse;
 use Praxigento\Core\Lib\Service\Repo\Response\ReplaceEntity as ReplaceEntityResponse;
 use Praxigento\Pv\Config;
@@ -60,8 +60,8 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $mDba = $this->_mockDbAdapter(null, $mConn);
         $mToolbox = $this->_mockToolbox();
         $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Lib\Service\IAccount');
-        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Lib\Service\IOperation');
+        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\IAccount');
+        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Service\IOperation');
 
         // $respGetSalePv = $this->_callRepo->getEntityByPk($reqGetSalePv);
         $mSalePv = new GetEntityByPkResponse();
@@ -122,8 +122,8 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $mDba = $this->_mockDbAdapter(null, $mConn);
         $mToolbox = $this->_mockToolbox();
         $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Lib\Service\IAccount');
-        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Lib\Service\IOperation');
+        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\IAccount');
+        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Service\IOperation');
 
         // $respGetSalePv = $this->_callRepo->getEntityByPk($reqGetSalePv);
         $mSalePv = new GetEntityByPkResponse();
@@ -185,8 +185,8 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $mDba = $this->_mockDbAdapter(null, $mConn);
         $mToolbox = $this->_mockToolbox();
         $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Lib\Service\IAccount');
-        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Lib\Service\IOperation');
+        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\IAccount');
+        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Service\IOperation');
 
         /**
          * Prepare request and perform call.
@@ -206,8 +206,8 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $mDba = $this->_mockDbAdapter(null, $mConn);
         $mToolbox = $this->_mockToolbox();
         $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Lib\Service\IAccount');
-        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Lib\Service\IOperation');
+        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\IAccount');
+        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Service\IOperation');
 
         // $this->_conn->beginTransaction();
         $mConn
@@ -246,8 +246,8 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $mDba = $this->_mockDbAdapter(null, $mConn);
         $mToolbox = $this->_mockToolbox();
         $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Lib\Service\IAccount');
-        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Lib\Service\IOperation');
+        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\IAccount');
+        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Service\IOperation');
 
         // $this->_conn->beginTransaction();
         $mConn

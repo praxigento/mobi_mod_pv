@@ -6,9 +6,9 @@ namespace Praxigento\Pv\Lib\Service\Sale;
 
 use Praxigento\Accounting\Data\Entity\Account;
 use Praxigento\Accounting\Data\Entity\Transaction;
-use Praxigento\Accounting\Lib\Service\Account\Request\Get as GetAccountRequest;
-use Praxigento\Accounting\Lib\Service\Account\Request\GetRepresentative as GetAccountRepresentativeRequest;
-use Praxigento\Accounting\Lib\Service\Operation\Request\Add as AddOperationRequest;
+use Praxigento\Accounting\Service\Account\Request\Get as GetAccountRequest;
+use Praxigento\Accounting\Service\Account\Request\GetRepresentative as GetAccountRepresentativeRequest;
+use Praxigento\Accounting\Service\Operation\Request\Add as AddOperationRequest;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Data\Entity\Sale;
 use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
@@ -20,17 +20,17 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
     protected $_manTrans;
     /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoBasic;
-    /** @var  \Praxigento\Accounting\Lib\Service\IAccount */
+    /** @var  \Praxigento\Accounting\Service\IAccount */
     protected $_callAccount;
-    /** @var  \Praxigento\Accounting\Lib\Service\IOperation */
+    /** @var  \Praxigento\Accounting\Service\IOperation */
     protected $_callOperation;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\Repo\ITransactionManager $manTrans,
         \Praxigento\Core\Repo\IGeneric $repoBasic,
-        \Praxigento\Accounting\Lib\Service\IAccount $callAccount,
-        \Praxigento\Accounting\Lib\Service\IOperation $callOperation
+        \Praxigento\Accounting\Service\IAccount $callAccount,
+        \Praxigento\Accounting\Service\IOperation $callOperation
     ) {
         parent::__construct($logger);
         $this->_manTrans = $manTrans;
