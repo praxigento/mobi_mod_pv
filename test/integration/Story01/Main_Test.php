@@ -5,14 +5,13 @@
 namespace Praxigento\Pv\Lib\Test\Story01;
 
 use Praxigento\Accounting\Data\Entity\Transaction;
-use Praxigento\Core\Lib\Service\Repo\Request\GetEntityByPk as RepoGetEntityByPkRequest;
 use Praxigento\Core\Test\BaseIntegrationTest;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Data\Entity\Sale as Sale;
 use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
-use Praxigento\Pv\Lib\Service\Sale\Request\AccountPv as SaleAccountPvRequest;
-use Praxigento\Pv\Lib\Service\Sale\Request\Save as SaleSaveRequest;
-use Praxigento\Pv\Lib\Service\Sale\Response\AccountPv as SaleAccountPvResponse;
+use Praxigento\Pv\Service\Sale\Request\AccountPv as SaleAccountPvRequest;
+use Praxigento\Pv\Service\Sale\Request\Save as SaleSaveRequest;
+use Praxigento\Pv\Service\Sale\Response\AccountPv as SaleAccountPvResponse;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
@@ -24,7 +23,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
     const ATTR_ORDER_ID = Cfg::E_COMMON_A_ENTITY_ID;
     const DATA_EMAIL = 'some_customer_email@test.com';
     const DATA_PV_TOTAL = 300;
-    /** @var \Praxigento\Pv\Lib\Service\Sale\Call */
+    /** @var \Praxigento\Pv\Service\Sale\Call */
     private $_callSale;
     /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoBasic;
@@ -39,7 +38,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
         /* services */
         $this->_repoBasic = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
         /* services */
-        $this->_callSale = $this->_manObj->get(\Praxigento\Pv\Lib\Service\ISale::class);
+        $this->_callSale = $this->_manObj->get(\Praxigento\Pv\Service\ISale::class);
     }
 
     private function _accountPv()

@@ -2,7 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Pv\Lib\Service\Sale;
+namespace Praxigento\Pv\Service\Sale;
 
 
 use Praxigento\Pv\Data\Entity\Sale;
@@ -15,7 +15,7 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase {
     public function test_save() {
         $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call Call */
-        $call = $obm->get('Praxigento\Pv\Lib\Service\Sale\Call');
+        $call = $obm->get('Praxigento\Pv\Service\Sale\Call');
         $req = new Request\Save();
         $req->data = [
             Sale::ATTR_SALE_ID       => 1,
@@ -45,7 +45,7 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase {
     public function test_accountPv() {
         $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call Call */
-        $call = $obm->get('Praxigento\Pv\Lib\Service\Sale\Call');
+        $call = $obm->get('Praxigento\Pv\Service\Sale\Call');
         $req = new Request\AccountPv();
         $req->setSaleOrderId(1);
         /** @var  $resp Response\AccountPv */

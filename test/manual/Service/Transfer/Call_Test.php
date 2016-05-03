@@ -2,7 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Pv\Lib\Service\Transfer;
+namespace Praxigento\Pv\Service\Transfer;
 
 
 
@@ -12,7 +12,7 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase {
 
     public function test_betweenCustomers() {
         $obm = \Magento\Framework\App\ObjectManager::getInstance();
-        /** @var  $toolbox \Praxigento\Core\Lib\IToolbox */
+        /** @var  $toolbox \Praxigento\Core\IToolbox */
         $toolbox = $obm->get('Praxigento\Core\Lib\IToolbox');
         $toolDate = $toolbox->getDate();
         $toolFormat = $toolbox->getFormat();
@@ -20,7 +20,7 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase {
         $dateNow = $toolDate->getUtcNow();
         $formattedNow = $toolFormat->dateTimeForDb($dateNow);
         /** @var  $call Call */
-        $call = $obm->get('Praxigento\Pv\Lib\Service\Transfer\Call');
+        $call = $obm->get('Praxigento\Pv\Service\Transfer\Call');
         $req = new Request\BetweenCustomers();
         $req->setData(Request\BetweenCustomers::FROM_CUSTOMER_ID, 1);
         $req->setData(Request\BetweenCustomers::TO_CUSTOMER_ID, 2);
@@ -41,7 +41,7 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase {
         $dateNow = $toolDate->getUtcNow();
         $formattedNow = $toolFormat->dateTimeForDb($dateNow);
         /** @var  $call Call */
-        $call = $obm->get('Praxigento\Pv\Lib\Service\Transfer\Call');
+        $call = $obm->get('Praxigento\Pv\Service\Transfer\Call');
         $req = new Request\CreditToCustomer();
         $req->setData(Request\CreditToCustomer::TO_CUSTOMER_ID, 4);
         $req->setData(Request\CreditToCustomer::VALUE, 23);
@@ -61,7 +61,7 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase {
         $dateNow = $toolDate->getUtcNow();
         $formattedNow = $toolFormat->dateTimeForDb($dateNow);
         /** @var  $call Call */
-        $call = $obm->get('Praxigento\Pv\Lib\Service\Transfer\Call');
+        $call = $obm->get('Praxigento\Pv\Service\Transfer\Call');
         $req = new Request\DebitFromCustomer();
         $req->setData(Request\DebitFromCustomer::FROM_CUSTOMER_ID, 2);
         $req->setData(Request\DebitFromCustomer::VALUE, 127.15);

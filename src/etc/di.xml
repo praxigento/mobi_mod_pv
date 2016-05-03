@@ -11,11 +11,12 @@
                 type="Praxigento\Pv\Repo\Entity\Sale\Def\Item"/>
     <preference for="Praxigento\Pv\Repo\Entity\Stock\IItem"
                 type="Praxigento\Pv\Repo\Entity\Stock\Def\Item"/>
-
+    <preference for="Praxigento\Pv\Repo\IModule"
+                type="Praxigento\Pv\Repo\Def\Module"/>
     <!-- Services -->
-    <preference for="Praxigento\Pv\Lib\Service\ISale"
-                type="Praxigento\Pv\Lib\Service\Sale\Call"/>
-    <preference for="Praxigento\Pv\Lib\Service\ITransfer"
-                type="Praxigento\Pv\Lib\Service\Transfer\Call"/>
+    <preference for="Praxigento\Pv\Service\ISale"
+                type="Praxigento\Pv\Service\Sale\Call"/>
+    <preference for="Praxigento\Pv\Service\ITransfer"
+                type="Praxigento\Pv\Service\Transfer\Call"/>
 
 </config>
