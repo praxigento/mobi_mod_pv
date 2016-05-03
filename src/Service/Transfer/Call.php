@@ -32,35 +32,34 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransfer
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\Tool\IDate $toolDate,
+        \Praxigento\Accounting\Service\IAccount $callAccount,
         \Praxigento\Accounting\Service\IOperation $callOperation,
-        \Praxigento\Pv\Repo\IModule $repoMod,
-        \Praxigento\Accounting\Service\IAccount $repoAccount
+        \Praxigento\Pv\Repo\IModule $repoMod
     ) {
         parent::__construct($logger);
         $this->_toolDate = $toolDate;
+        $this->_callAccount = $callAccount;
         $this->_callOperation = $callOperation;
         $this->_repoMod = $repoMod;
-        $this->_callAccount = $repoAccount;
     }
 
 
     public function betweenCustomers(Request\BetweenCustomers $request)
     {
         $result = new Response\BetweenCustomers();
-        $toolDate = $this->_toolDate;
         /* constraints validation results */
         $isCountriesTheSame = false;
         $isTargetPlacedInTheDownline = false;
         /* extract input parameters */
-        $custIdDebit = $request->getData(Request\BetweenCustomers::FROM_CUSTOMER_ID);
-        $custIdCredit = $request->getData(Request\BetweenCustomers::TO_CUSTOMER_ID);
-        $date = $request->getData(Request\BetweenCustomers::DATE_APPLIED);
-        $value = $request->getData(Request\BetweenCustomers::VALUE);
-        $condForceAll = $request->getData(Request\BetweenCustomers::COND_FORCE_ALL);
-        $condForceCountry = (boolean)$request->getData(Request\BetweenCustomers::COND_FORCE_COUNTRY);
-        $condForceDownline = (boolean)$request->getData(Request\BetweenCustomers::COND_FORCE_DOWNLINE);
+        $custIdDebit = $request->getFromCustomerId();
+        $custIdCredit = $request->getToCustomerId();
+        $date = $request->getDateApplied();
+        $value = $request->getValue();
+        $condForceAll = $request->getConditionForceAll();
+        $condForceCountry = $request->getConditionForceCountry();
+        $condForceDownline = $request->getConditionForceDownline();
         if (is_null($date)) {
-            $date = $toolDate->getUtcNowForDb();
+            $date = $this->_toolDate->getUtcNowForDb();
         }
         /* validate conditions */
         if (!$condForceAll) {
@@ -105,8 +104,8 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransfer
             $reqAddOper->setDatePerformed($date);
             $reqAddOper->setTransactions([
                 [
-                    Transaction::ATTR_DEBIT_ACC_ID => $respAccDebit->getData(Account::ATTR_ID),
-                    Transaction::ATTR_CREDIT_ACC_ID => $respAccCredit->getData(Account::ATTR_ID),
+                    Transaction::ATTR_DEBIT_ACC_ID => $respAccDebit->getId(),
+                    Transaction::ATTR_CREDIT_ACC_ID => $respAccCredit->getId(),
                     Transaction::ATTR_VALUE => $value
                 ]
             ]);

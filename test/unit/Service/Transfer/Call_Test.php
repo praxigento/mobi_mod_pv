@@ -5,20 +5,43 @@
 namespace Praxigento\Pv\Service\Transfer;
 
 use Praxigento\Accounting\Data\Entity\Account;
-use Praxigento\Accounting\Service\Account\Request\Get as AccountGetResponse;
-use Praxigento\Accounting\Service\Account\Response\GetRepresentative as AccountGetRepresentativeResponse;
-use Praxigento\Accounting\Service\Operation\Response\Add as AccountingOperationAddResponse;
-use Praxigento\Downline\Data\Entity\Customer as DownlineCustomer;
+use Praxigento\Downline\Data\Entity\Customer;
 use Praxigento\Pv\Data\Entity\Sale;
 
-include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
+include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
 class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
+    /** @var \Mockery\MockInterface */
+    private $mCallAccount;
+    /** @var \Mockery\MockInterface */
+    private $mCallOperation;
+    /** @var \Mockery\MockInterface */
+    private $mLogger;
+    /** @var \Mockery\MockInterface */
+    private $mRepoMod;
+    /** @var \Mockery\MockInterface */
+    private $mToolDate;
+    /** @var  Call */
+    private $obj;
+
     protected function setUp()
     {
-        $this->markTestSkipped('test has old mocks.');
         parent::setUp();
+        /** create mocks */
+        $this->mLogger = $this->_mockLogger();
+        $this->mToolDate = $this->_mock(\Praxigento\Core\Tool\IDate::class);
+        $this->mCallAccount = $this->_mock(\Praxigento\Accounting\Service\IAccount::class);
+        $this->mCallOperation = $this->_mock(\Praxigento\Accounting\Service\IOperation::class);
+        $this->mRepoMod = $this->_mock(\Praxigento\Pv\Repo\IModule::class);
+        /** create object to test */
+        $this->obj = new Call(
+            $this->mLogger,
+            $this->mToolDate,
+            $this->mCallAccount,
+            $this->mCallOperation,
+            $this->mRepoMod
+        );
     }
 
     public function test_betweenCustomers()
@@ -32,216 +55,73 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $PATH_TO = '/1/2/5/';
         $DATE_APPLIED = '2015-06-23 13:23:34';
         $VALUE = '23.34';
-        /** === Mocks === */
-        $mLogger = $this->_mockLogger();
-        $mConn = $this->_mockConnection();
-        $mDba = $this->_mockDbAdapter(null, $mConn);
-        $mToolDate = $this->_mockFor('Praxigento\Core\Tool\IDate');
-        $mToolbox = $this->_mockToolbox(null, $mToolDate);
-        $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\IAccount');
-        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Service\IOperation');
-        $mSubDb = $this->_mockFor('Praxigento\Pv\Service\Transfer\Sub\Db');
-
-        // $dtNow = $toolDate->getUtcNowForDb();
-        $mToolDate
-            ->expects($this->once())
-            ->method('getUtcNowForDb')
-            ->willReturn($DATE_APPLIED);
-        // $downDebit = $this->_subDb->getDownlineCustomer($custIdDebit);
-        $mSubDb
-            ->expects($this->at(0))
-            ->method('getDownlineCustomer')
+        $ACC_ID_FROM = 43;
+        $ACC_ID_TO = 65;
+        $CUSTOMER_DEBIT = new Customer([
+            Customer::ATTR_CUSTOMER_ID => $CUSTOMER_ID_FROM,
+            Customer::ATTR_COUNTRY_CODE => $COUNTRY_FROM
+        ]);
+        $CUSTOMER_CREDIT = new Customer([
+            Customer::ATTR_CUSTOMER_ID => $CUSTOMER_ID_TO,
+            Customer::ATTR_COUNTRY_CODE => $COUNTRY_TO,
+            Customer::ATTR_PATH => $PATH_TO
+        ]);
+        $ACCOUNT_FROM = new Account([
+            Account::ATTR_ID => $ACC_ID_FROM
+        ]);
+        $ACCOUNT_TO = new Account([
+            Account::ATTR_ID => $ACC_ID_TO
+        ]);
+        /** === Setup Mocks === */
+        // $date = $this->_toolDate->getUtcNowForDb();
+        $this->mToolDate
+            ->shouldReceive('getUtcNowForDb')->once()
+            ->andReturn($DATE_APPLIED);
+        // $downDebit = $this->_repoMod->getDownlineCustomerById($custIdDebit);
+        $this->mRepoMod
+            ->shouldReceive('getDownlineCustomerById')->once()
             ->with($CUSTOMER_ID_FROM)
-            ->willReturn([
-                DownlineCustomer::ATTR_CUSTOMER_ID => $CUSTOMER_ID_FROM,
-                DownlineCustomer::ATTR_COUNTRY_CODE => $COUNTRY_FROM,
-                DownlineCustomer::ATTR_PATH => $PATH_FROM
-            ]);
-        // $downCredit = $this->_subDb->getDownlineCustomer($custIdCredit);
-        $mSubDb
-            ->expects($this->at(1))
-            ->method('getDownlineCustomer')
+            ->andReturn($CUSTOMER_DEBIT);
+        // $downCredit = $this->_repoMod->getDownlineCustomerById($custIdCredit);
+        $this->mRepoMod
+            ->shouldReceive('getDownlineCustomerById')->once()
             ->with($CUSTOMER_ID_TO)
-            ->willReturn([
-                DownlineCustomer::ATTR_CUSTOMER_ID => $CUSTOMER_ID_TO,
-                DownlineCustomer::ATTR_COUNTRY_CODE => $COUNTRY_TO,
-                DownlineCustomer::ATTR_PATH => $PATH_TO
-            ]);
+            ->andReturn($CUSTOMER_CREDIT);
         // $respAccDebit = $this->_callAccount->get($reqAccGet);
-        $mRespGetDebit = new AccountGetResponse();
-        $mCallAccount
-            ->expects($this->at(0))
-            ->method('get')
-            ->willReturn($mRespGetDebit);
+        $this->mCallAccount
+            ->shouldReceive('get')->once()
+            ->andReturn($ACCOUNT_FROM);
         // $respAccCredit = $this->_callAccount->get($reqAccGet);
-        $mRespGetCredit = new AccountGetResponse();
-        $mCallAccount
-            ->expects($this->at(1))
-            ->method('get')
-            ->willReturn($mRespGetCredit);
-        //  $respAddOper = $this->_callOperation->add($reqAddOper);
-        $mRespAddOper = new AccountingOperationAddResponse();
+        $this->mCallAccount
+            ->shouldReceive('get')->once()
+            ->andReturn($ACCOUNT_TO);
+        // $respAddOper = $this->_callOperation->add($reqAddOper);
+        $mRespAddOper = new \Praxigento\Accounting\Service\Operation\Response\Add();
         $mRespAddOper->markSucceed();
-        $mCallOperation
-            ->expects($this->once())
-            ->method('add')
-            ->willReturn($mRespAddOper);
-        /**
-         * Prepare request and perform call.
-         */
-        /** @var  $sub Db */
-        $call = new Call(
-            $mLogger,
-            $mDba,
-            $mToolbox,
-            $mCallRepo,
-            $mCallAccount,
-            $mCallOperation,
-            $mSubDb
-        );
+        $this->mCallOperation
+            ->shouldReceive('add')->once()
+            ->andReturn($mRespAddOper);
+        /** === Call and asserts  === */
         $req = new Request\BetweenCustomers();
-        $req->setData(Request\BetweenCustomers::FROM_CUSTOMER_ID, $CUSTOMER_ID_FROM);
-        $req->setData(Request\BetweenCustomers::TO_CUSTOMER_ID, $CUSTOMER_ID_TO);
-        $req->setData(Request\BetweenCustomers::VALUE, $VALUE);
-        $req->setData(Request\BetweenCustomers::COND_FORCE_COUNTRY, true);
-        $req->setData(Request\BetweenCustomers::COND_FORCE_DOWNLINE, true);
-        $resp = $call->betweenCustomers($req);
+        $req->setFromCustomerId($CUSTOMER_ID_FROM);
+        $req->setToCustomerId($CUSTOMER_ID_TO);
+        $req->setValue($VALUE);
+        $req->setConditionForceCountry(true);
+        $req->setConditionForceDownline(true);
+        $resp = $this->obj->betweenCustomers($req);
         $this->assertTrue($resp->isSucceed());
     }
 
     public function test_cacheReset()
     {
         /** === Test Data === */
-        /** === Mocks === */
-        $mLogger = $this->_mockLogger();
-        $mConn = $this->_mockConnection();
-        $mDba = $this->_mockDbAdapter(null, $mConn);
-        $mToolbox = $this->_mockToolbox();
-        $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\IAccount');
-        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Service\IOperation');
-        $mSubDb = $this->_mockFor('Praxigento\Pv\Service\Transfer\Sub\Db');
-
-        /**
-         * Prepare request and perform call.
-         */
-        /** @var  $sub Db */
-        $call = new Call(
-            $mLogger,
-            $mDba,
-            $mToolbox,
-            $mCallRepo,
-            $mCallAccount,
-            $mCallOperation,
-            $mSubDb
-        );
-        $call->cacheReset();
+        /** === Setup Mocks === */
+        // $this->_callAccount->cacheReset();
+        $this->mCallAccount
+            ->shouldReceive('cacheReset')->once();
+        /** === Call and asserts  === */
+        $this->obj->cacheReset();
     }
 
-    public function test_creditToCustomer()
-    {
-        /** === Test Data === */
-        $CUSTOMER_ID = 123;
-        /** === Mocks === */
-        $mLogger = $this->_mockLogger();
-        $mConn = $this->_mockConnection();
-        $mDba = $this->_mockDbAdapter(null, $mConn);
-        $mToolbox = $this->_mockToolbox();
-        $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\IAccount');
-        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Service\IOperation');
-        $mSubDb = $this->_mockFor('Praxigento\Pv\Service\Transfer\Sub\Db');
 
-        $mCall = $this
-            ->getMockBuilder('Praxigento\Pv\Service\Transfer\Call')
-            ->setConstructorArgs([
-                $mLogger,
-                $mDba,
-                $mToolbox,
-                $mCallRepo,
-                $mCallAccount,
-                $mCallOperation,
-                $mSubDb
-            ])
-            ->setMethods(['betweenCustomers'])
-            ->getMock();
-
-        // $respRepres = $this->_callAccount->getRepresentative($reqRepres);
-        $mRespGetRepres = new AccountGetRepresentativeResponse();
-        $mRespGetRepres->setData(Account::ATTR_CUST_ID, $CUSTOMER_ID);
-        $mCallAccount
-            ->expects($this->once())
-            ->method('getRepresentative')
-            ->willReturn($mRespGetRepres);
-        // $respBetween = $this->betweenCustomers($reqBetween);
-        $mRespBetween = new Response\BetweenCustomers();
-        $mRespBetween->markSucceed();
-        $mCall
-            ->expects($this->once())
-            ->method('betweenCustomers')
-            ->willReturn($mRespBetween);
-        /**
-         * Prepare request and perform call.
-         */
-        /** @var  $sub Db */
-        // $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mCallAccount, $mCallOperation);
-        $call = $mCall;
-        $req = new Request\CreditToCustomer();
-        $resp = $call->creditToCustomer($req);
-        $this->assertTrue($resp->isSucceed());
-    }
-
-    public function test_debitFromCustomer()
-    {
-        /** === Test Data === */
-        $CUSTOMER_ID = 123;
-        /** === Mocks === */
-        $mLogger = $this->_mockLogger();
-        $mConn = $this->_mockConnection();
-        $mDba = $this->_mockDbAdapter(null, $mConn);
-        $mToolbox = $this->_mockToolbox();
-        $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\IAccount');
-        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Service\IOperation');
-        $mSubDb = $this->_mockFor('Praxigento\Pv\Service\Transfer\Sub\Db');
-
-        $mCall = $this
-            ->getMockBuilder('Praxigento\Pv\Service\Transfer\Call')
-            ->setConstructorArgs([
-                $mLogger,
-                $mDba,
-                $mToolbox,
-                $mCallRepo,
-                $mCallAccount,
-                $mCallOperation,
-                $mSubDb
-            ])
-            ->setMethods(['betweenCustomers'])
-            ->getMock();
-
-        // $respRepres = $this->_callAccount->getRepresentative($reqRepres);
-        $mRespGetRepres = new AccountGetRepresentativeResponse();
-        $mRespGetRepres->setData(Account::ATTR_CUST_ID, $CUSTOMER_ID);
-        $mCallAccount
-            ->expects($this->once())
-            ->method('getRepresentative')
-            ->willReturn($mRespGetRepres);
-        // $respBetween = $this->betweenCustomers($reqBetween);
-        $mRespBetween = new Response\BetweenCustomers();
-        $mRespBetween->markSucceed();
-        $mCall
-            ->expects($this->once())
-            ->method('betweenCustomers')
-            ->willReturn($mRespBetween);
-        /**
-         * Prepare request and perform call.
-         */
-        /** @var  $sub Db */
-        // $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mCallAccount, $mCallOperation);
-        $call = $mCall;
-        $req = new Request\DebitFromCustomer();
-        $resp = $call->debitFromCustomer($req);
-        $this->assertTrue($resp->isSucceed());
-    }
 }
