@@ -51,7 +51,6 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $CUSTOMER_ID_TO = 321;
         $COUNTRY_FROM = 'lv';
         $COUNTRY_TO = 'ru';
-        $PATH_FROM = '/1/2/3/';
         $PATH_TO = '/1/2/5/';
         $DATE_APPLIED = '2015-06-23 13:23:34';
         $VALUE = '23.34';
@@ -110,6 +109,9 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $req->setConditionForceDownline(true);
         $resp = $this->obj->betweenCustomers($req);
         $this->assertTrue($resp->isSucceed());
+        /* code coverage */
+        $req->setConditionForceAll(true);
+        $req->setDateApplied(null);
     }
 
     public function test_cacheReset()
@@ -121,6 +123,88 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             ->shouldReceive('cacheReset')->once();
         /** === Call and asserts  === */
         $this->obj->cacheReset();
+    }
+
+    public function test_creditToCustomer()
+    {
+        /* partially mocked object */
+        $obj = \Mockery::mock(
+            Call::class . '[betweenCustomers]',
+            [
+                $this->mLogger,
+                $this->mToolDate,
+                $this->mCallAccount,
+                $this->mCallOperation,
+                $this->mRepoMod
+            ]
+        );
+        /** === Test Data === */
+        $CUSTOMER_ID_FROM = 123;
+        $CUSTOMER_ID_TO = 321;
+        $VALUE = '23.34';
+        $ACCOUNT_FROM = new Account([
+            Account::ATTR_CUST_ID => $CUSTOMER_ID_FROM
+        ]);
+        /** === Setup Mocks === */
+        // $respRepres = $this->_callAccount->getRepresentative($reqRepres);
+        $this->mCallAccount
+            ->shouldReceive('getRepresentative')->once()
+            ->andReturn($ACCOUNT_FROM);
+        // $respBetween = $this->betweenCustomers($reqBetween);
+        $mRespBetween = new Response\BetweenCustomers();
+        $obj->shouldReceive('betweenCustomers')->once()
+            ->andReturn($mRespBetween);
+        // if ($respBetween->isSucceed()) {
+        $mRespBetween->markSucceed();
+        /** === Call and asserts  === */
+        $req = new Request\CreditToCustomer();
+        $req->setToCustomerId($CUSTOMER_ID_TO);
+        $req->setValue($VALUE);
+        $res = $obj->creditToCustomer($req);
+        $this->assertTrue($res->isSucceed());
+        /* coverage for accessors */
+        $req->getToCustomerId();
+    }
+
+    public function test_debitFromCustomer()
+    {
+        /* partially mocked object */
+        $obj = \Mockery::mock(
+            Call::class . '[betweenCustomers]',
+            [
+                $this->mLogger,
+                $this->mToolDate,
+                $this->mCallAccount,
+                $this->mCallOperation,
+                $this->mRepoMod
+            ]
+        );
+        /** === Test Data === */
+        $CUSTOMER_ID_FROM = 123;
+        $CUSTOMER_ID_TO = 321;
+        $VALUE = '23.34';
+        $ACCOUNT_TO = new Account([
+            Account::ATTR_CUST_ID => $CUSTOMER_ID_TO
+        ]);
+        /** === Setup Mocks === */
+        // $respRepres = $this->_callAccount->getRepresentative($reqRepres);
+        $this->mCallAccount
+            ->shouldReceive('getRepresentative')->once()
+            ->andReturn($ACCOUNT_TO);
+        // $respBetween = $this->betweenCustomers($reqBetween);
+        $mRespBetween = new Response\BetweenCustomers();
+        $obj->shouldReceive('betweenCustomers')->once()
+            ->andReturn($mRespBetween);
+        // if ($respBetween->isSucceed()) {
+        $mRespBetween->markSucceed();
+        /** === Call and asserts  === */
+        $req = new Request\DebitFromCustomer();
+        $req->setFromCustomerId($CUSTOMER_ID_FROM);
+        $req->setValue($VALUE);
+        $res = $obj->debitFromCustomer($req);
+        $this->assertTrue($res->isSucceed());
+        /* coverage for accessors */
+        $req->getFromCustomerId();
     }
 
 

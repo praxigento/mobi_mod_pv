@@ -4,39 +4,49 @@
  */
 namespace Praxigento\Pv\Service\Sale;
 
-use Praxigento\Accounting\Data\Entity\Account;
 use Praxigento\Accounting\Data\Entity\Transaction;
 use Praxigento\Accounting\Service\Account\Request\Get as GetAccountRequest;
 use Praxigento\Accounting\Service\Account\Request\GetRepresentative as GetAccountRepresentativeRequest;
 use Praxigento\Accounting\Service\Operation\Request\Add as AddOperationRequest;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Data\Entity\Sale;
-use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
 use Praxigento\Pv\Service\ISale;
 
 class Call extends \Praxigento\Core\Service\Base\Call implements ISale
 {
-    /** @var \Praxigento\Core\Repo\ITransactionManager */
-    protected $_manTrans;
-    /** @var \Praxigento\Core\Repo\IGeneric */
-    protected $_repoBasic;
     /** @var  \Praxigento\Accounting\Service\IAccount */
     protected $_callAccount;
     /** @var  \Praxigento\Accounting\Service\IOperation */
     protected $_callOperation;
+    /** @var \Praxigento\Core\Repo\ITransactionManager */
+    protected $_manTrans;
+    /** @var \Praxigento\Core\Repo\IGeneric */
+    protected $_repoGeneric;
+    /** @var  \Praxigento\Pv\Repo\IModule */
+    protected $_repoMod;
+    /** @var  \Praxigento\Pv\Repo\Entity\ISale */
+    protected $_repoSale;
+    /** @var  \Praxigento\Pv\Repo\Entity\Sale\IItem */
+    protected $_repoSaleItem;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\Repo\ITransactionManager $manTrans,
-        \Praxigento\Core\Repo\IGeneric $repoBasic,
+        \Praxigento\Core\Repo\IGeneric $repoGeneric,
         \Praxigento\Accounting\Service\IAccount $callAccount,
-        \Praxigento\Accounting\Service\IOperation $callOperation
+        \Praxigento\Accounting\Service\IOperation $callOperation,
+        \Praxigento\Pv\Repo\IModule $repoMod,
+        \Praxigento\Pv\Repo\Entity\ISale $repoSale,
+        \Praxigento\Pv\Repo\Entity\Sale\IItem $repoSaleItem
     ) {
         parent::__construct($logger);
         $this->_manTrans = $manTrans;
-        $this->_repoBasic = $repoBasic;
+        $this->_repoGeneric = $repoGeneric;
         $this->_callAccount = $callAccount;
         $this->_callOperation = $callOperation;
+        $this->_repoMod = $repoMod;
+        $this->_repoSale = $repoSale;
+        $this->_repoSaleItem = $repoSaleItem;
     }
 
     /**
@@ -53,47 +63,38 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
         $customerId = $request->getCustomerId();
         $dateApplied = $request->getDateApplied();
         $this->_logger->info("PV accounting operation for sale order #$saleId is started.");
-        $data = $this->_repoBasic->getEntityByPk(Sale::ENTITY_NAME, [Sale::ATTR_SALE_ID => $saleId]);
-        $pvTotal = $data[Sale::ATTR_TOTAL];
+        $sale = $this->_repoSale->getById($saleId);
+        $pvTotal = $sale->getTotal();
         /* get customer for sale order */
         if (is_null($customerId)) {
-            $this->_logger->info("There is no customer ID in request, select customer ID from sales order data.");
-            $data = $this->_repoBasic->getEntityByPk(
-                Cfg::ENTITY_MAGE_SALES_ORDER,
-                [Cfg::E_COMMON_A_ENTITY_ID => $saleId],
-                [Cfg::E_SALE_ORDER_A_CUSTOMER_ID]
-            );
-            $customerId = $data[Cfg::E_SALE_ORDER_A_CUSTOMER_ID];
+            $this->_logger->info("There is no customer ID in request, select customer ID from sale order data.");
+            $customerId = $this->_repoMod->getSaleOrderCustomerId($saleId);
             $this->_logger->info("Order #$saleId is created by customer #$customerId.");
         }
         /* get PV account data for customer */
         $reqGetAccCust = new GetAccountRequest();
-        $reqGetAccCust->setData(GetAccountRequest::CUSTOMER_ID, $customerId);
-        $reqGetAccCust->setData(GetAccountRequest::ASSET_TYPE_CODE, Cfg::CODE_TYPE_ASSET_PV);
-        $reqGetAccCust->setData(GetAccountRequest::CREATE_NEW_ACCOUNT_IF_MISSED, true);
+        $reqGetAccCust->setCustomerId($customerId);
+        $reqGetAccCust->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
+        $reqGetAccCust->setCreateNewAccountIfMissed(true);
         $respGetAccCust = $this->_callAccount->get($reqGetAccCust);
-        $accCust = $respGetAccCust->getData();
         /* get PV account data for representative */
         $reqGetAccRepres = new GetAccountRepresentativeRequest();
         $reqGetAccRepres->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
         $respGetAccRepres = $this->_callAccount->getRepresentative($reqGetAccRepres);
-        $accRepres = $respGetAccRepres->getData();
         /* create one operation with one transaction */
         $reqAddOper = new AddOperationRequest();
         $reqAddOper->setOperationTypeCode(Cfg::CODE_TYPE_OPER_PV_SALE_PAID);
         $trans = [
-            Transaction::ATTR_DEBIT_ACC_ID => $accRepres[Account::ATTR_ID],
-            Transaction::ATTR_CREDIT_ACC_ID => $accCust[Account::ATTR_ID],
+            Transaction::ATTR_DEBIT_ACC_ID => $respGetAccRepres->getId(),
+            Transaction::ATTR_CREDIT_ACC_ID => $respGetAccCust->getId(),
             Transaction::ATTR_VALUE => $pvTotal,
             Transaction::ATTR_DATE_APPLIED => $dateApplied
         ];
         $reqAddOper->setTransactions([$trans]);
         $respAddOper = $this->_callOperation->add($reqAddOper);
-        if ($respAddOper->isSucceed()) {
-            $operId = $respAddOper->getOperationId();
-            $result->setData(Response\AccountPv::OPERATION_ID, $operId);
-            $result->markSucceed();
-        }
+        $operId = $respAddOper->getOperationId();
+        $result->setOperationId($operId);
+        $result->markSucceed();
         $this->_logger->info("PV accounting operation for sale order #$saleId is completed.");
         return $result;
     }
@@ -119,10 +120,11 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
         $trans = $this->_manTrans->transactionBegin();
         try {
             /* save order data */
-            $this->_repoBasic->replaceEntity(Sale::ENTITY_NAME, $orderData);
+            $this->_repoSale->replace($orderData);
             $items = $request->getOrderItemsData();
+            /* save items */
             foreach ($items as $one) {
-                $this->_repoBasic->replaceEntity(SaleItem::ENTITY_NAME, $one);
+                $this->_repoSaleItem->replace($one);
             }
             $this->_manTrans->transactionCommit($trans);
             $result->markSucceed();

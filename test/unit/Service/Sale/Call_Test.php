@@ -5,12 +5,6 @@
 namespace Praxigento\Pv\Service\Sale;
 
 use Praxigento\Accounting\Data\Entity\Account;
-use Praxigento\Accounting\Service\Account\Response\Get as AccountGetResponse;
-use Praxigento\Accounting\Service\Account\Response\GetRepresentative as AccountGetRepresentativeResponse;
-use Praxigento\Accounting\Service\Operation\Response\Add as OperationAddResponse;
-use Praxigento\Core\Lib\Service\Repo\Response\GetEntityByPk as GetEntityByPkResponse;
-use Praxigento\Core\Lib\Service\Repo\Response\ReplaceEntity as ReplaceEntityResponse;
-use Praxigento\Pv\Config;
 use Praxigento\Pv\Data\Entity\Sale;
 use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
 
@@ -38,11 +32,47 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             ]
         ]
     ];
+    /** @var \Mockery\MockInterface */
+    private $mCallAccount;
+    /** @var \Mockery\MockInterface */
+    private $mCallOperation;
+    /** @var \Mockery\MockInterface */
+    private $mLogger;
+    /** @var \Mockery\MockInterface */
+    private $mManTrans;
+    /** @var \Mockery\MockInterface */
+    private $mRepoMod;
+    /** @var \Mockery\MockInterface */
+    private $mRepoSale;
+    /** @var \Mockery\MockInterface */
+    private $mRepoSaleItem;
+    /** @var  Call */
+    private $obj;
 
     protected function setUp()
     {
-        $this->markTestSkipped('test has old mocks.');
         parent::setUp();
+        /** create mocks */
+        $this->mLogger = $this->_mockLogger();
+        $this->mManTrans = $this->_mockTransactionManager();
+        /* TODO: remove generic repo */
+        $mRepoGeneric = $this->_mockRepoGeneric();
+        $this->mCallAccount = $this->_mock(\Praxigento\Accounting\Service\IAccount::class);
+        $this->mCallOperation = $this->_mock(\Praxigento\Accounting\Service\IOperation::class);
+        $this->mRepoMod = $this->_mock(\Praxigento\Pv\Repo\IModule::class);
+        $this->mRepoSale = $this->_mock(\Praxigento\Pv\Repo\Entity\ISale::class);
+        $this->mRepoSaleItem = $this->_mock(\Praxigento\Pv\Repo\Entity\Sale\IItem::class);
+        /** create object to test */
+        $this->obj = new Call(
+            $this->mLogger,
+            $this->mManTrans,
+            $mRepoGeneric,
+            $this->mCallAccount,
+            $this->mCallOperation,
+            $this->mRepoMod,
+            $this->mRepoSale,
+            $this->mRepoSaleItem
+        );
     }
 
     public function test_accountPv()
@@ -54,230 +84,83 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $PV_TOTAL = 300;
         $ACC_ID_CUST = 101;
         $ACC_ID_REPRES = 202;
-        /** === Mocks === */
-        $mLogger = $this->_mockLogger();
-        $mConn = $this->_mockConnection();
-        $mDba = $this->_mockDbAdapter(null, $mConn);
-        $mToolbox = $this->_mockToolbox();
-        $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\IAccount');
-        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Service\IOperation');
-
-        // $respGetSalePv = $this->_callRepo->getEntityByPk($reqGetSalePv);
-        $mSalePv = new GetEntityByPkResponse();
-        $mSalePv->setData(Sale::ATTR_TOTAL, $PV_TOTAL);
-        $mCallRepo
-            ->expects($this->once())
-            ->method('getEntityByPk')
-            ->willReturn($mSalePv);
+        /** === Setup Mocks === */
+        // $sale = $this->_repoSale->getById($saleId);
+        $this->mRepoSale
+            ->shouldReceive('getById')->once()
+            ->with($ORDER_ID)
+            ->andReturn(new Sale([Sale::ATTR_TOTAL => $PV_TOTAL]));
+        // $customerId = $this->_repoMod->getSaleOrderCustomerId($saleId);
+        $this->mRepoMod
+            ->shouldReceive('getSaleOrderCustomerId')->once()
+            ->with($ORDER_ID)
+            ->andReturn($CUSTOMER_ID);
         // $respGetAccCust = $this->_callAccount->get($reqGetAccCust);
-        $mGetAccCust = new AccountGetResponse();
-        $mGetAccCust->setData(Account::ATTR_ID, $ACC_ID_CUST);
-        $mCallAccount
-            ->expects($this->once())
-            ->method('get')
-            ->willReturn($mGetAccCust);
+        $mRespGetAccCust = new \Praxigento\Accounting\Service\Account\Response\Get();
+        $mRespGetAccCust->setData([Account::ATTR_ID => $ACC_ID_CUST]);
+        $this->mCallAccount
+            ->shouldReceive('get')->once()
+            ->andReturn($mRespGetAccCust);
         // $respGetAccRepres = $this->_callAccount->getRepresentative($reqGetAccRepres);
-        $mGetAccRepres = new AccountGetRepresentativeResponse();
-        $mGetAccRepres->setData(Account::ATTR_ID, $ACC_ID_REPRES);
-        $mCallAccount
-            ->expects($this->once())
-            ->method('getRepresentative')
-            ->willReturn($mGetAccRepres);
+        $mRespGetAccRepres = new \Praxigento\Accounting\Service\Account\Response\GetRepresentative();
+        $mRespGetAccRepres->setData([Account::ATTR_ID => $ACC_ID_REPRES]);
+        $this->mCallAccount
+            ->shouldReceive('getRepresentative')->once()
+            ->andReturn($mRespGetAccRepres);
         // $respAddOper = $this->_callOperation->add($reqAddOper);
-        $mRespAddOper = new OperationAddResponse();
+        $mRespAddOper = new \Praxigento\Accounting\Service\Operation\Response\Add();
+        $this->mCallOperation
+            ->shouldReceive('add')->once()
+            ->andReturn($mRespAddOper);
+        // $operId = $respAddOper->getOperationId();
         $mRespAddOper->setOperationId($OPER_ID);
-        $mRespAddOper->markSucceed();
-        $mCallOperation
-            ->expects($this->once())
-            ->method('add')
-            ->willReturn($mRespAddOper);
-        /**
-         * Prepare request and perform call.
-         */
-        /** === Test itself === */
-        /** @var  $call Call */
-        $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mCallAccount, $mCallOperation);
-        $req = new Request\AccountPv();
-        $req->setCustomerId($CUSTOMER_ID);
-        $req->setSaleOrderId($ORDER_ID);
-        $resp = $call->accountPv($req);
-        $this->assertTrue($resp->isSucceed());
-        $operId = $resp->getData(Response\AccountPv::OPERATION_ID);
-        $this->assertEquals($OPER_ID, $operId);
-    }
-
-    public function test_accountPv_withoutCustomerId()
-    {
-        /** === Test Data === */
-        $CUSTOMER_ID = 21;
-        $ORDER_ID = 34;
-        $OPER_ID = 1024;
-        $PV_TOTAL = 300;
-        $ACC_ID_CUST = 101;
-        $ACC_ID_REPRES = 202;
-        /** === Mocks === */
-        $mLogger = $this->_mockLogger();
-        $mConn = $this->_mockConnection();
-        $mDba = $this->_mockDbAdapter(null, $mConn);
-        $mToolbox = $this->_mockToolbox();
-        $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\IAccount');
-        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Service\IOperation');
-
-        // $respGetSalePv = $this->_callRepo->getEntityByPk($reqGetSalePv);
-        $mSalePv = new GetEntityByPkResponse();
-        $mSalePv->setData(Sale::ATTR_TOTAL, $PV_TOTAL);
-        $mCallRepo
-            ->expects($this->at(0))
-            ->method('getEntityByPk')
-            ->willReturn($mSalePv);
-        // $respGetSaleOrder = $this->_callRepo->getEntityByPk($reqGetSaleOrder);
-        $mSaleOrder = new GetEntityByPkResponse();
-        $mSaleOrder->setData(Config::E_SALE_ORDER_A_CUSTOMER_ID, $CUSTOMER_ID);
-        $mSaleOrder->markSucceed();
-        $mCallRepo
-            ->expects($this->at(1))
-            ->method('getEntityByPk')
-            ->willReturn($mSaleOrder);
-        // $respGetAccCust = $this->_callAccount->get($reqGetAccCust);
-        $mGetAccCust = new AccountGetResponse();
-        $mGetAccCust->setData(Account::ATTR_ID, $ACC_ID_CUST);
-        $mCallAccount
-            ->expects($this->once())
-            ->method('get')
-            ->willReturn($mGetAccCust);
-        // $respGetAccRepres = $this->_callAccount->getRepresentative($reqGetAccRepres);
-        $mGetAccRepres = new AccountGetRepresentativeResponse();
-        $mGetAccRepres->setData(Account::ATTR_ID, $ACC_ID_REPRES);
-        $mCallAccount
-            ->expects($this->once())
-            ->method('getRepresentative')
-            ->willReturn($mGetAccRepres);
-        // $respAddOper = $this->_callOperation->add($reqAddOper);
-        $mRespAddOper = new OperationAddResponse();
-        $mRespAddOper->setOperationId($OPER_ID);
-        $mRespAddOper->markSucceed();
-        $mCallOperation
-            ->expects($this->once())
-            ->method('add')
-            ->willReturn($mRespAddOper);
-        /**
-         * Prepare request and perform call.
-         */
-        /** === Test itself === */
-        /** @var  $call Call */
-        $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mCallAccount, $mCallOperation);
+        /** === Call and asserts  === */
         $req = new Request\AccountPv();
         $req->setSaleOrderId($ORDER_ID);
-        $resp = $call->accountPv($req);
-        $this->assertTrue($resp->isSucceed());
-        $operId = $resp->getData(Response\AccountPv::OPERATION_ID);
+        $res = $this->obj->accountPv($req);
+        $this->assertTrue($res->isSucceed());
+        $operId = $res->getOperationId();
         $this->assertEquals($OPER_ID, $operId);
     }
 
     public function test_cacheReset()
     {
         /** === Test Data === */
-        /** === Mocks === */
-        $mLogger = $this->_mockLogger();
-        $mConn = $this->_mockConnection();
-        $mDba = $this->_mockDbAdapter(null, $mConn);
-        $mToolbox = $this->_mockToolbox();
-        $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\IAccount');
-        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Service\IOperation');
-
-        /**
-         * Prepare request and perform call.
-         */
-        /** @var  $sub Db */
-        $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mCallAccount, $mCallOperation);
-        $call->cacheReset();
+        /** === Setup Mocks === */
+        // $this->_callAccount->cacheReset();
+        $this->mCallAccount
+            ->shouldReceive('cacheReset')->once();
+        /** === Call and asserts  === */
+        $this->obj->cacheReset();
     }
 
     public function test_save()
     {
         /** === Test Data === */
         $data = $this->DATA;
-        /** === Mocks === */
-        $mLogger = $this->_mockLogger();
-        $mConn = $this->_mockConnection();
-        $mDba = $this->_mockDbAdapter(null, $mConn);
-        $mToolbox = $this->_mockToolbox();
-        $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\IAccount');
-        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Service\IOperation');
-
-        // $this->_conn->beginTransaction();
-        $mConn
-            ->expects($this->once())
-            ->method('beginTransaction');
-        // $respReplace = $this->_callRepo->replaceEntity($reqReplace);
-        $mRespReplace = new ReplaceEntityResponse();
-        $mRespReplace->markSucceed();
-        $mCallRepo
-            ->expects($this->any())
-            ->method('replaceEntity')
-            ->willReturn($mRespReplace);
-        // $this->_conn->commit();
-        $mConn
-            ->expects($this->once())
-            ->method('commit');
-        /**
-         * Prepare request and perform call.
-         */
-        /** === Test itself === */
-        /** @var  $call Call */
-        $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mCallAccount, $mCallOperation);
+        /** === Setup Mocks === */
+        // $trans = $this->_manTrans->transactionBegin();
+        $mTrans = $this->_mockTransactionDefinition();
+        $this->mManTrans
+            ->shouldReceive('transactionBegin')->once()
+            ->andReturn($mTrans);
+        // $this->_repoSale->replace($orderData);
+        $this->mRepoSale
+            ->shouldReceive('replace')->once();
+        // $this->_repoSaleItem->replace($one);
+        $this->mRepoSaleItem
+            ->shouldReceive('replace')->twice();
+        // $this->_manTrans->transactionCommit($trans);
+        $this->mManTrans
+            ->shouldReceive('transactionCommit')->once();
+        // $this->_manTrans->transactionClose($trans);
+        $this->mManTrans
+            ->shouldReceive('transactionClose')->once();
+        /** === Call and asserts  === */
         $req = new Request\Save();
         $req->setData($data);
-        $resp = $call->save($req);
+        $resp = $this->obj->save($req);
         $this->assertTrue($resp->isSucceed());
     }
 
-    public function test_save_exception()
-    {
-        /** === Test Data === */
-        $data = $this->DATA;
-        /** === Mocks === */
-        $mLogger = $this->_mockLogger();
-        $mConn = $this->_mockConnection();
-        $mDba = $this->_mockDbAdapter(null, $mConn);
-        $mToolbox = $this->_mockToolbox();
-        $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\IAccount');
-        $mCallOperation = $this->_mockFor('Praxigento\Accounting\Service\IOperation');
-
-        // $this->_conn->beginTransaction();
-        $mConn
-            ->expects($this->once())
-            ->method('beginTransaction');
-        // $respReplace = $this->_callRepo->replaceEntity($reqReplace);
-        $mRespReplaceOrder = new ReplaceEntityResponse();
-        $mRespReplaceOrder->markSucceed();
-        $mCallRepo
-            ->expects($this->at(0))
-            ->method('replaceEntity')
-            ->willReturn($mRespReplaceOrder);
-        // return 'flase' on second replace
-        $mCallRepo
-            ->expects($this->at(1))
-            ->method('replaceEntity')
-            ->willReturn(new ReplaceEntityResponse());
-        // $this->_conn->commit();
-        $mConn
-            ->expects($this->once())
-            ->method('rollBack');
-        /**
-         * Prepare request and perform call.
-         */
-        /** === Test itself === */
-        /** @var  $call Call */
-        $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mCallAccount, $mCallOperation);
-        $req = new Request\Save();
-        $req->setData($data);
-        $resp = $call->save($req);
-        $this->assertFalse($resp->isSucceed());
-    }
 }

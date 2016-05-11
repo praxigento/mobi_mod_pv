@@ -11,7 +11,6 @@ use Praxigento\Pv\Data\Entity\Sale as Sale;
 use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
 use Praxigento\Pv\Service\Sale\Request\AccountPv as SaleAccountPvRequest;
 use Praxigento\Pv\Service\Sale\Request\Save as SaleSaveRequest;
-use Praxigento\Pv\Service\Sale\Response\AccountPv as SaleAccountPvResponse;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
@@ -47,7 +46,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $req->setCustomerId($this->customerId);
         $req->setSaleOrderId($this->orderId);
         $resp = $this->_callSale->accountPv($req);
-        $this->operationId = $resp->getData(SaleAccountPvResponse::OPERATION_ID);
+        $this->operationId = $resp->getOperationId();
         $this->assertTrue($resp->isSucceed());
         $this->_logger->debug("PV for order #{$this->orderId} is accounted as for paid sale order as operation #{$this->operationId}.");
     }

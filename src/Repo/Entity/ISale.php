@@ -5,13 +5,20 @@
 
 namespace Praxigento\Pv\Repo\Entity;
 
+use Praxigento\Pv\Data\Entity\Sale as Entity;
 
 interface ISale extends \Praxigento\Core\Repo\IEntity
 {
     /**
+     * @param int $id
+     * @return Entity
+     */
+    public function getById($id);
+
+    /**
      * Referenced entity to address attributes.
      *
-     * @return \Praxigento\Pv\Data\Entity\Sale
+     * @return Entity
      */
     public function getRef();
 }

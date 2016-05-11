@@ -13,4 +13,12 @@ interface IModule
      * @return \Praxigento\Downline\Data\Entity\Customer
      */
     public function getDownlineCustomerById($id);
+
+    /**
+     * Get Customer Mage ID from sale order that is selected by order ID.
+     *
+     * @param int $saleId
+     * @return int
+     */
+    public function getSaleOrderCustomerId($saleId);
 }
