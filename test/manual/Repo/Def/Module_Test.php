@@ -19,7 +19,7 @@ class Module_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase
     {
         parent::setUp();
         $repoDownlineCustomer = ObjectManager::getInstance()->get(\Praxigento\Downline\Repo\Entity\ICustomer::class);
-        /* create object to test */
+        /** create object to test */
         $this->obj = new Module(
             $repoDownlineCustomer
         );

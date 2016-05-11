@@ -20,13 +20,13 @@ class Sale_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_accessors()
     {
-        /* === Test Data === */
+        /** === Test Data === */
         $DATE_PAID = 'date paid';
         $DISCOUNT = 'discount';
         $SALE_ID = 'sale id';
         $SUBTOTAL = 'subtotal';
         $TOTAL = 'total';
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $this->obj->setDatePaid($DATE_PAID);
         $this->obj->setDiscount($DISCOUNT);
         $this->obj->setSaleId($SALE_ID);

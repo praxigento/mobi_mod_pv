@@ -20,10 +20,10 @@ class Product_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_accessors()
     {
-        /* === Test Data === */
+        /** === Test Data === */
         $REF = 'product ref';
         $PV = 'pv';
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $this->obj->setProductRef($REF);
         $this->obj->setPv($PV);
         $this->assertEquals($REF, $this->obj->getProductRef());

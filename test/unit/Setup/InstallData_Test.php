@@ -20,11 +20,11 @@ class InstallData_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     protected function setUp()
     {
         parent::setUp();
-        /* create mocks */
+        /** create mocks */
         $this->mConn = $this->_mockConn();
         $this->mResource = $this->_mockResourceConnection($this->mConn);
         $this->mRepoGeneric = $this->_mockRepoGeneric();
-        /* create object to test */
+        /** create object to test */
         $this->obj = new InstallData(
             $this->mResource,
             $this->mRepoGeneric
@@ -33,7 +33,7 @@ class InstallData_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_install()
     {
-        /* === Setup Mocks === */
+        /** === Setup Mocks === */
         $mSetup = $this->_mock(\Magento\Framework\Setup\ModuleDataSetupInterface::class);
         $mSetup->shouldReceive('startSetup')->once();
         $mSetup->shouldReceive('endSetup')->once();
@@ -41,7 +41,7 @@ class InstallData_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         // $this->_setup();
         $this->mConn->shouldReceive('getTableName')->twice();
         $this->mConn->shouldReceive('insertArray')->twice();
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $this->obj->install($mSetup, $mContext);
     }
 
