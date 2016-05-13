@@ -15,10 +15,4 @@ interface ISale extends \Praxigento\Core\Repo\IEntity
      */
     public function getById($id);
 
-    /**
-     * Referenced entity to address attributes.
-     *
-     * @return Entity
-     */
-    public function getRef();
 }
