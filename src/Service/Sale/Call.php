@@ -28,6 +28,10 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
     protected $_repoSale;
     /** @var  \Praxigento\Pv\Repo\Entity\Sale\IItem */
     protected $_repoSaleItem;
+    /** @var  \Praxigento\Pv\Repo\Entity\Stock\IItem */
+    protected $_repoStockItem;
+    /** @var \Praxigento\Core\Tool\IDate */
+    protected $_toolDate;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
@@ -37,7 +41,9 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
         \Praxigento\Accounting\Service\IOperation $callOperation,
         \Praxigento\Pv\Repo\IModule $repoMod,
         \Praxigento\Pv\Repo\Entity\ISale $repoSale,
-        \Praxigento\Pv\Repo\Entity\Sale\IItem $repoSaleItem
+        \Praxigento\Pv\Repo\Entity\Sale\IItem $repoSaleItem,
+        \Praxigento\Pv\Repo\Entity\Stock\IItem $repoStockItem,
+        \Praxigento\Core\Tool\IDate $toolDate
     ) {
         parent::__construct($logger);
         $this->_manTrans = $manTrans;
@@ -47,6 +53,8 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
         $this->_repoMod = $repoMod;
         $this->_repoSale = $repoSale;
         $this->_repoSaleItem = $repoSaleItem;
+        $this->_repoStockItem = $repoStockItem;
+        $this->_toolDate = $toolDate;
     }
 
     /**
@@ -107,25 +115,42 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
     /**
      * Save PV data on sale order save.
      *
-     * @param Request\Save $request
+     * @param Request\Save $req
      *
      * @return Response\Save
      */
-    public function save(Request\Save $request)
+    public function save(Request\Save $req)
     {
         $result = new Response\Save();
-        $orderData = $request->getOrderData();
-        $orderId = $orderData[Sale::ATTR_SALE_ID];
+        $orderId = $req->getSaleOrderId();
+        $items = $req->getOrderItems();
         $this->_logger->info("Save PV attributes for sale order #$orderId.");
         $trans = $this->_manTrans->transactionBegin();
         try {
-            /* save order data */
-            $this->_repoSale->replace($orderData);
-            $items = $request->getOrderItemsData();
-            /* save items */
-            foreach ($items as $one) {
-                $this->_repoSaleItem->replace($one);
+            /* for all items get PV data by warehouse */
+            $orderTotal = 0;
+            foreach ($items as $item) {
+                $prodId = $item->getProductId();
+                $stockId = $item->getStockId();
+                $pv = $this->_repoStockItem->getPvByProductAndStock($prodId, $stockId);
+                $qty = $item->getQuantity();
+                $total = $pv * $qty;
+                $eItem = new \Praxigento\Pv\Data\Entity\Sale\Item();
+                $eItem->setSaleItemId($item->getItemId());
+                $eItem->setSubtotal($total);
+                $eItem->setDiscount(0);
+                $eItem->setTotal($total);
+                $eItem->setSaleItemId($item->getItemId());
+                $this->_repoSaleItem->replace($eItem);
+                $orderTotal += $total;
             }
+            /* save order data */
+            $eOrder = new \Praxigento\Pv\Data\Entity\Sale();
+            $eOrder->setSaleId($orderId);
+            $eOrder->setSubtotal($orderTotal);
+            $eOrder->setDiscount(0);
+            $eOrder->setTotal($orderTotal);
+            $this->_repoSale->replace($eOrder);
             $this->_manTrans->transactionCommit($trans);
             $result->markSucceed();
             $this->_logger->info("PV attributes for sale order #$orderId are saved.");
@@ -134,4 +159,5 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
         }
         return $result;
     }
+
 }

@@ -44,4 +44,13 @@ interface IItem extends \Praxigento\Core\Repo\IEntity
      * @return Entity|bool Found instance data or 'false'
      */
     public function getById($id);
+
+    /**
+     * Get Warehouse PV by $productId & $stockId.
+     *
+     * @param int $productId
+     * @param int $stockId
+     * @return double
+     */
+    public function getPvByProductAndStock($productId, $stockId);
 }

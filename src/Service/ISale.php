@@ -20,9 +20,9 @@ interface ISale extends ICached
     /**
      * Save PV data on sale order save.
      *
-     * @param Sale\Request\Save $request
+     * @param Sale\Request\Save $req
      *
      * @return Sale\Response\Save
      */
-    public function save(Sale\Request\Save $request);
+    public function save(Sale\Request\Save $req);
 }
