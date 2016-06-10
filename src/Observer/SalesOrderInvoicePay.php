@@ -12,7 +12,7 @@ use Magento\Framework\Event\ObserverInterface;
  *
  * @package Praxigento\Downline\Observer
  */
-class Register implements ObserverInterface
+class SalesOrderInvoicePay implements ObserverInterface
 {
     /* Names for the items in the event's data */
     const DATA_INVOICE = 'invoice';
