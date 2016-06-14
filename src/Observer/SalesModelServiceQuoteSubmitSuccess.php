@@ -8,14 +8,14 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
 /**
- * Register PV on invoice is paid event.
+ * Save order items PV info into registry.
  *
  * @package Praxigento\Downline\Observer
  */
-class SalesOrderInvoicePay implements ObserverInterface
+class SalesModelServiceQuoteSubmitSuccess implements ObserverInterface
 {
     /* Names for the items in the event's data */
-    const DATA_INVOICE = 'invoice';
+    const DATA_ORDER = 'order';
     /** @var \Praxigento\Pv\Service\ISale */
     protected $_callSale;
     /** @var  \Praxigento\Warehouse\Tool\IStockManager */
@@ -31,10 +31,8 @@ class SalesOrderInvoicePay implements ObserverInterface
 
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        /** @var \Magento\Sales\Model\Order\Invoice $invoice */
-        $invoice = $observer->getData(self::DATA_INVOICE);
         /** @var \Magento\Sales\Model\Order $order */
-        $order = $invoice->getOrder();
+        $order = $observer->getData(self::DATA_ORDER);
         $orderId = $order->getId();
         $storeId = $order->getStoreId();
         /* get stock ID for the store view */
