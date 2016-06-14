@@ -16,16 +16,16 @@ class SalesOrderInvoicePay implements ObserverInterface
 {
     /* Names for the items in the event's data */
     const DATA_INVOICE = 'invoice';
-    /** @var \Praxigento\Warehouse\Service\ICustomer */
-    protected $_callCustomer;
     /** @var \Praxigento\Pv\Service\ISale */
     protected $_callSale;
+    /** @var  \Praxigento\Warehouse\Tool\IStockManager */
+    protected $_manStock;
 
     public function __construct(
-        \Praxigento\Warehouse\Service\ICustomer $callCustomer,
+        \Praxigento\Warehouse\Tool\IStockManager $manStock,
         \Praxigento\Pv\Service\ISale $callSale
     ) {
-        $this->_callCustomer = $callCustomer;
+        $this->_manStock = $manStock;
         $this->_callSale = $callSale;
     }
 
@@ -36,9 +36,9 @@ class SalesOrderInvoicePay implements ObserverInterface
         /** @var \Magento\Sales\Model\Order $order */
         $order = $invoice->getOrder();
         $orderId = $order->getId();
-        $custId = $order->getCustomerId();
-        /* get stock ID for the customer */
-        $stockId = $this->getStockIdByCustomer($custId);
+        $storeId = $order->getStoreId();
+        /* get stock ID for the store view */
+        $stockId = $this->_manStock->getStockIdByStoreId($storeId);
         /** @var \Magento\Sales\Api\Data\OrderItemInterface[] $items */
         $items = $order->getItems();
         $itemsData = [];
@@ -62,22 +62,5 @@ class SalesOrderInvoicePay implements ObserverInterface
         $req->setOrderItems($itemsData);
         $this->_callSale->save($req);
         return;
-    }
-
-    /**
-     * Define current stock/warehouse for the customer.
-     *
-     * @param $custId
-     * @return int
-     */
-    private function getStockIdByCustomer($custId)
-    {
-        /* TODO: move stock id to the service */
-        /* get stock ID for the customer */
-        $reqStock = new \Praxigento\Warehouse\Service\Customer\Request\GetCurrentStock();
-        $reqStock->setCustomerId($custId);
-        $respStock = $this->_callCustomer->getCurrentStock($reqStock);
-        $result = $respStock->getStockId();
-        return $result;
     }
 }
