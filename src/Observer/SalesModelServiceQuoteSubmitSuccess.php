@@ -8,9 +8,7 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
 /**
- * Save order items PV info into registry.
- *
- * @package Praxigento\Downline\Observer
+ * Save order items PV info into the registry.
  */
 class SalesModelServiceQuoteSubmitSuccess implements ObserverInterface
 {
