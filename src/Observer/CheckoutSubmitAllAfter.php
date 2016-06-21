@@ -18,7 +18,7 @@ class CheckoutSubmitAllAfter implements ObserverInterface
     protected $_subRegister;
 
     public function __construct(
-        \Praxigento\Pv\Observer\Sub\Collector $subRegister
+        \Praxigento\Pv\Observer\Sub\Register $subRegister
     ) {
 
         $this->_subRegister = $subRegister;

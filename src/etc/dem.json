@@ -46,7 +46,7 @@
                       }
                     },
                     "index": {
-                      "PK": {"type": "primary", "aliases": ["sale_id"]}
+                      "PK": {"type": "primary", "aliases": ["sale_item_id"]}
                     },
                     "relation": {
                       "toMageSaleOrder": {

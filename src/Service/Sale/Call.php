@@ -150,6 +150,8 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
             $eOrder->setSubtotal($orderTotal);
             $eOrder->setDiscount(0);
             $eOrder->setTotal($orderTotal);
+            $datePaid = $this->_toolDate->getUtcNowForDb();
+            $eOrder->setDatePaid($datePaid);
             $this->_repoSale->replace($eOrder);
             $this->_manTrans->transactionCommit($trans);
             $result->markSucceed();

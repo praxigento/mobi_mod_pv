@@ -49,7 +49,7 @@ class Collector
         $items = $order->getItems();
         /** @var \Magento\Sales\Api\Data\OrderItemInterface $item */
         foreach ($items as $item) {
-            $itemData = $this->_subCollector->getServiceItemForMageItem($item, $stockId);
+            $itemData = $this->getServiceItemForMageItem($item, $stockId);
             $result[] = $itemData;
         }
         return $result;
