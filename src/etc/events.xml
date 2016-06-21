@@ -14,7 +14,7 @@
     <event name="sales_order_invoice_pay">
         <!-- Registry PV for paid order on invoice payments (check/money order). -->
         <observer
-                name="praxigento_pv_on_checkout_submit_all_after"
+                name="praxigento_pv_on_sales_order_invoice_pay"
                 instance="Praxigento\Pv\Observer\SalesOrderInvoicePay"/>
     </event>
 
