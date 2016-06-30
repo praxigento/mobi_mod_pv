@@ -113,24 +113,25 @@ class Main_IntegrationTest extends BaseIntegrationTest
             Sale::ATTR_SALE_ID => $orderId,
             Sale::ATTR_SUBTOTAL => 500,
             Sale::ATTR_DISCOUNT => 50,
-            Sale::ATTR_TOTAL => 450,
-            SaleSaveRequest::DATA_ITEMS => [
-                $orderItemFirstId => [
-                    SaleItem::ATTR_SALE_ITEM_ID => $orderItemFirstId,
-                    Sale::ATTR_SUBTOTAL => 250,
-                    Sale::ATTR_DISCOUNT => 50,
-                    Sale::ATTR_TOTAL => 200,
-                ],
-                $orderItemSecondId => [
-                    SaleItem::ATTR_SALE_ITEM_ID => $orderItemSecondId,
-                    Sale::ATTR_SUBTOTAL => 250,
-                    Sale::ATTR_DISCOUNT => 0,
-                    Sale::ATTR_TOTAL => 250,
-                ]
-            ]
+            Sale::ATTR_TOTAL => 450
+        ];
+        $items = [
+            $orderItemFirstId => new \Praxigento\Pv\Service\Sale\Data\Item([
+                SaleItem::ATTR_SALE_ITEM_ID => $orderItemFirstId,
+                Sale::ATTR_SUBTOTAL => 250,
+                Sale::ATTR_DISCOUNT => 50,
+                Sale::ATTR_TOTAL => 200,
+            ]),
+            $orderItemSecondId => new \Praxigento\Pv\Service\Sale\Data\Item([
+                SaleItem::ATTR_SALE_ITEM_ID => $orderItemSecondId,
+                Sale::ATTR_SUBTOTAL => 250,
+                Sale::ATTR_DISCOUNT => 0,
+                Sale::ATTR_TOTAL => 250,
+            ])
         ];
         $req = new SaleSaveRequest();
         $req->setData($data);
+        $req->setOrderItems($items);
         $resp = $this->_callSale->save($req);
         $this->assertTrue($resp->isSucceed());
         $this->_logger->debug("PV attributes for order #{$this->orderId} are saved.");
@@ -145,24 +146,25 @@ class Main_IntegrationTest extends BaseIntegrationTest
             Sale::ATTR_SALE_ID => $orderId,
             Sale::ATTR_SUBTOTAL => 400,
             Sale::ATTR_DISCOUNT => 100,
-            Sale::ATTR_TOTAL => self::DATA_PV_TOTAL,
-            SaleSaveRequest::DATA_ITEMS => [
-                $orderItemFirstId => [
-                    SaleItem::ATTR_SALE_ITEM_ID => $orderItemFirstId,
-                    Sale::ATTR_SUBTOTAL => 200,
-                    Sale::ATTR_DISCOUNT => 50,
-                    Sale::ATTR_TOTAL => 150,
-                ],
-                $orderItemSecondId => [
-                    SaleItem::ATTR_SALE_ITEM_ID => $orderItemSecondId,
-                    Sale::ATTR_SUBTOTAL => 200,
-                    Sale::ATTR_DISCOUNT => 50,
-                    Sale::ATTR_TOTAL => 150,
-                ]
-            ]
+            Sale::ATTR_TOTAL => self::DATA_PV_TOTAL
+        ];
+        $items = [
+            $orderItemFirstId => new \Praxigento\Pv\Service\Sale\Data\Item([
+                SaleItem::ATTR_SALE_ITEM_ID => $orderItemFirstId,
+                Sale::ATTR_SUBTOTAL => 200,
+                Sale::ATTR_DISCOUNT => 50,
+                Sale::ATTR_TOTAL => 150,
+            ]),
+            $orderItemSecondId => new \Praxigento\Pv\Service\Sale\Data\Item([
+                SaleItem::ATTR_SALE_ITEM_ID => $orderItemSecondId,
+                Sale::ATTR_SUBTOTAL => 200,
+                Sale::ATTR_DISCOUNT => 50,
+                Sale::ATTR_TOTAL => 150,
+            ])
         ];
         $req = new SaleSaveRequest();
         $req->setData($data);
+        $req->setOrderItems($items);
         $resp = $this->_callSale->save($req);
         $this->assertTrue($resp->isSucceed());
         $this->_logger->debug("PV attributes for order #{$this->orderId} are updated.");
