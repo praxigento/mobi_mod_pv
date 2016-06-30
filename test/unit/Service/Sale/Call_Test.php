@@ -6,32 +6,11 @@ namespace Praxigento\Pv\Service\Sale;
 
 use Praxigento\Accounting\Data\Entity\Account;
 use Praxigento\Pv\Data\Entity\Sale;
-use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
 class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
-    private $DATA = [
-        Sale::ATTR_SALE_ID => 1,
-        Sale::ATTR_SUBTOTAL => 500,
-        Sale::ATTR_DISCOUNT => 50,
-        Sale::ATTR_TOTAL => 450,
-        Request\Save::DATA_ITEMS => [
-            1 => [
-                SaleItem::ATTR_SALE_ITEM_ID => 1,
-                Sale::ATTR_SUBTOTAL => 250,
-                Sale::ATTR_DISCOUNT => 50,
-                Sale::ATTR_TOTAL => 200,
-            ],
-            2 => [
-                SaleItem::ATTR_SALE_ITEM_ID => 2,
-                Sale::ATTR_SUBTOTAL => 250,
-                Sale::ATTR_DISCOUNT => 0,
-                Sale::ATTR_TOTAL => 250,
-            ]
-        ]
-    ];
     /** @var \Mockery\MockInterface */
     private $mCallAccount;
     /** @var \Mockery\MockInterface */
@@ -46,6 +25,10 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     private $mRepoSale;
     /** @var \Mockery\MockInterface */
     private $mRepoSaleItem;
+    /** @var \Mockery\MockInterface */
+    private $mRepoStockItem;
+    /** @var \Mockery\MockInterface */
+    private $mToolDate;
     /** @var  Call */
     private $obj;
 
@@ -55,23 +38,24 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** create mocks */
         $this->mLogger = $this->_mockLogger();
         $this->mManTrans = $this->_mockTransactionManager();
-        /* TODO: remove generic repo */
-        $mRepoGeneric = $this->_mockRepoGeneric();
         $this->mCallAccount = $this->_mock(\Praxigento\Accounting\Service\IAccount::class);
         $this->mCallOperation = $this->_mock(\Praxigento\Accounting\Service\IOperation::class);
         $this->mRepoMod = $this->_mock(\Praxigento\Pv\Repo\IModule::class);
         $this->mRepoSale = $this->_mock(\Praxigento\Pv\Repo\Entity\ISale::class);
         $this->mRepoSaleItem = $this->_mock(\Praxigento\Pv\Repo\Entity\Sale\IItem::class);
+        $this->mRepoStockItem = $this->_mock(\Praxigento\Pv\Repo\Entity\Stock\IItem::class);
+        $this->mToolDate = $this->_mock(\Praxigento\Core\Tool\IDate::class);
         /** create object to test */
         $this->obj = new Call(
             $this->mLogger,
             $this->mManTrans,
-            $mRepoGeneric,
             $this->mCallAccount,
             $this->mCallOperation,
             $this->mRepoMod,
             $this->mRepoSale,
-            $this->mRepoSaleItem
+            $this->mRepoSaleItem,
+            $this->mRepoStockItem,
+            $this->mToolDate
         );
     }
 
@@ -137,7 +121,10 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     public function test_save()
     {
         /** === Test Data === */
-        $data = $this->DATA;
+        $ORDER_ID = 21;
+        $DATE_PAID = 'paid';
+        $DATE_UTC = 'utc date';
+        $ITEMS = [];
         /** === Setup Mocks === */
         // $trans = $this->_manTrans->transactionBegin();
         $mTrans = $this->_mockTransactionDefinition();
@@ -150,6 +137,10 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         // $this->_repoSaleItem->replace($one);
         $this->mRepoSaleItem
             ->shouldReceive('replace')->twice();
+        // $datePaid = $this->_toolDate->getUtcNowForDb();
+        $this->mToolDate
+            ->shouldReceive('getUtcNowForDb')->once()
+            ->andReturn($DATE_UTC);
         // $this->_manTrans->transactionCommit($trans);
         $this->mManTrans
             ->shouldReceive('transactionCommit')->once();
@@ -158,7 +149,9 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             ->shouldReceive('transactionClose')->once();
         /** === Call and asserts  === */
         $req = new Request\Save();
-        $req->setData($data);
+        $req->setSaleOrderId($ORDER_ID);
+        $req->setSaleOrderDatePaid($DATE_PAID);
+        $req->setOrderItems($ITEMS);
         $resp = $this->obj->save($req);
         $this->assertTrue($resp->isSucceed());
     }
