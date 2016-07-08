@@ -4,6 +4,9 @@
  */
 namespace Praxigento\Pv\Lib\Test\Story01;
 
+use Magento\Catalog\Api\Data\ProductInterface as MageProd;
+use Magento\CatalogInventory\Api\Data\StockItemInterface as MageStockItem;
+use Magento\Sales\Api\Data\OrderItemInterface as MageOrderItem;
 use Praxigento\Accounting\Data\Entity\Transaction;
 use Praxigento\Core\Test\BaseIntegrationTest;
 use Praxigento\Pv\Config as Cfg;
@@ -21,7 +24,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
     const ATTR_ITEM_ORDER_ID = 'order_id';
     const ATTR_ORDER_ID = Cfg::E_COMMON_A_ENTITY_ID;
     const DATA_EMAIL = 'some_customer_email@test.com';
-    const DATA_PV_TOTAL = 300;
+    const DATA_PV_TOTAL = 400;
     /** @var \Praxigento\Pv\Service\Sale\Call */
     private $_callSale;
     /** @var \Praxigento\Core\Repo\IGeneric */
@@ -30,6 +33,8 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private $operationId;
     private $orderId;
     private $orderItemsIds = [];
+    private $prodIds = [];
+    private $stockItemIds = [];
 
     public function __construct($name = null, array $data = [], $dataName = '')
     {
@@ -96,7 +101,8 @@ class Main_IntegrationTest extends BaseIntegrationTest
             $this->_conn->insert(
                 $tblOrderItem,
                 [
-                    self::ATTR_ITEM_ORDER_ID => $this->orderId
+                    MageOrderItem::ORDER_ID => $this->orderId,
+                    MageOrderItem::PRODUCT_ID => $this->prodIds[$i]
                 ]
             );
             $this->orderItemsIds[$i] = $this->_conn->lastInsertId($tblOrderItem);
@@ -104,71 +110,75 @@ class Main_IntegrationTest extends BaseIntegrationTest
         }
     }
 
+    private function _createMageProducts()
+    {
+        $tblProd = $this->_resource->getTableName(Cfg::ENTITY_MAGE_PRODUCT);
+        /* add new 2 products */
+        for ($i = 0; $i < 2; $i++) {
+            $this->_conn->insert(
+                $tblProd,
+                [
+                    MageProd::SKU => 'unit_test_product_' . $i,
+                    MageProd::ATTRIBUTE_SET_ID => 4 // default ATTR SET for product in the empty DB
+                ]
+            );
+            $this->prodIds[$i] = $this->_conn->lastInsertId($tblProd);
+            $this->_logger->debug("New product #{$this->prodIds[$i]} is added to Magento.");
+        }
+    }
+
+    private function _createWarehousePv()
+    {
+        $tblStockItem = $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
+        /** @var \Praxigento\Warehouse\Repo\Entity\Stock\IItem $repoWrhs */
+        $repoWrhs = $this->_manObj->get(\Praxigento\Warehouse\Repo\Entity\Stock\IItem::class);
+        /** @var \Praxigento\Pv\Repo\Entity\Stock\IItem $repo */
+        $repoPv = $this->_manObj->get(\Praxigento\Pv\Repo\Entity\Stock\IItem::class);
+        for ($i = 0; $i < 2; $i++) {
+            /* add stock item */
+            $this->_conn->insert(
+                $tblStockItem,
+                [
+                    MageStockItem::PRODUCT_ID => $this->prodIds[$i],
+                    MageStockItem::STOCK_ID => 1 // default stock (exists in empty DB)
+                ]
+            );
+            $this->stockItemIds[$i] = $this->_conn->lastInsertId($tblStockItem);
+            /* add warehouse stock item data */
+            $data = new \Praxigento\Warehouse\Data\Entity\Stock\Item();
+            $data->setStockItemRef($this->stockItemIds[$i]);
+            $data->setPrice(10.20);
+            $repoWrhs->create($data);
+            /* add pv stock item data */
+            $data = new \Praxigento\Pv\Data\Entity\Stock\Item();
+            $data->setStockItemRef($this->stockItemIds[$i]);
+            $data->setPv(200);
+            $repoPv->create($data);
+        }
+    }
+
     private function _savePv()
     {
         $orderId = $this->orderId;
-        $orderItemFirstId = $this->orderItemsIds[0];
-        $orderItemSecondId = $this->orderItemsIds[1];
-        $data = [
-            Sale::ATTR_SALE_ID => $orderId,
-            Sale::ATTR_SUBTOTAL => 500,
-            Sale::ATTR_DISCOUNT => 50,
-            Sale::ATTR_TOTAL => 450
-        ];
-        $items = [
-            $orderItemFirstId => new \Praxigento\Pv\Service\Sale\Data\Item([
-                SaleItem::ATTR_SALE_ITEM_ID => $orderItemFirstId,
-                Sale::ATTR_SUBTOTAL => 250,
-                Sale::ATTR_DISCOUNT => 50,
-                Sale::ATTR_TOTAL => 200,
-            ]),
-            $orderItemSecondId => new \Praxigento\Pv\Service\Sale\Data\Item([
-                SaleItem::ATTR_SALE_ITEM_ID => $orderItemSecondId,
-                Sale::ATTR_SUBTOTAL => 250,
-                Sale::ATTR_DISCOUNT => 0,
-                Sale::ATTR_TOTAL => 250,
-            ])
-        ];
+        $item0 = new \Praxigento\Pv\Service\Sale\Data\Item();
+        $item0->setItemId($this->orderItemsIds[0]);
+        $item0->setProductId($this->prodIds[0]);
+        $item0->setStockId(1);
+        $item0->setQuantity(1);
+        $item1 = new \Praxigento\Pv\Service\Sale\Data\Item();
+        $item1->setItemId($this->orderItemsIds[1]);
+        $item1->setProductId($this->prodIds[1]);
+        $item1->setStockId(1);
+        $item1->setQuantity(1);
+        $items = [$item0, $item1];
         $req = new SaleSaveRequest();
-        $req->setData($data);
+        $req->setSaleOrderId($orderId);
         $req->setOrderItems($items);
         $resp = $this->_callSale->save($req);
         $this->assertTrue($resp->isSucceed());
         $this->_logger->debug("PV attributes for order #{$this->orderId} are saved.");
     }
 
-    private function _updatePv()
-    {
-        $orderId = $this->orderId;
-        $orderItemFirstId = $this->orderItemsIds[0];
-        $orderItemSecondId = $this->orderItemsIds[1];
-        $data = [
-            Sale::ATTR_SALE_ID => $orderId,
-            Sale::ATTR_SUBTOTAL => 400,
-            Sale::ATTR_DISCOUNT => 100,
-            Sale::ATTR_TOTAL => self::DATA_PV_TOTAL
-        ];
-        $items = [
-            $orderItemFirstId => new \Praxigento\Pv\Service\Sale\Data\Item([
-                SaleItem::ATTR_SALE_ITEM_ID => $orderItemFirstId,
-                Sale::ATTR_SUBTOTAL => 200,
-                Sale::ATTR_DISCOUNT => 50,
-                Sale::ATTR_TOTAL => 150,
-            ]),
-            $orderItemSecondId => new \Praxigento\Pv\Service\Sale\Data\Item([
-                SaleItem::ATTR_SALE_ITEM_ID => $orderItemSecondId,
-                Sale::ATTR_SUBTOTAL => 200,
-                Sale::ATTR_DISCOUNT => 50,
-                Sale::ATTR_TOTAL => 150,
-            ])
-        ];
-        $req = new SaleSaveRequest();
-        $req->setData($data);
-        $req->setOrderItems($items);
-        $resp = $this->_callSale->save($req);
-        $this->assertTrue($resp->isSucceed());
-        $this->_logger->debug("PV attributes for order #{$this->orderId} are updated.");
-    }
 
     public function test_main()
     {
@@ -177,9 +187,10 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $this->_conn->beginTransaction();
         try {
             $this->_createMageCustomer();
+            $this->_createMageProducts();
+            $this->_createWarehousePv();
             $this->_createMageSaleOrder();
             $this->_savePv();
-            $this->_updatePv();
             $this->_accountPv();
             $this->_checkOperation();
         } finally {
