@@ -29,8 +29,8 @@ class Item extends BaseEntityRepo implements IEntityRepo
         /* aliases and tables */
         $asOrder = 'sale';
         $asPvItem = 'pv';
-        $tblOrder = [$asOrder => $conn->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER_ITEM)];
-        $tblPvItem = [$asPvItem => $conn->getTableName(Entity::ENTITY_NAME)];
+        $tblOrder = [$asOrder => $this->_resource->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER_ITEM)];
+        $tblPvItem = [$asPvItem => $this->_resource->getTableName(Entity::ENTITY_NAME)];
         /* SELECT FROM sales_order_item */
         $query = $conn->select();
         $cols = [];

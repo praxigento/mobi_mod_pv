@@ -28,8 +28,8 @@ class Item extends BaseEntityRepo implements IEntityRepo
         /* aliases and tables */
         $asStockItem = 'csi';
         $asPv = 'ppsi';
-        $tblStockItem = [$asStockItem => $conn->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM)];
-        $tblPv = [$asPv => $conn->getTableName(Entity::ENTITY_NAME)];
+        $tblStockItem = [$asStockItem => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM)];
+        $tblPv = [$asPv => $this->_resource->getTableName(Entity::ENTITY_NAME)];
         /* SELECT FROM cataloginventory_stock_item */
         $query = $conn->select();
         $cols = [];
