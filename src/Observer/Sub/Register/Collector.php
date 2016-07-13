@@ -29,12 +29,12 @@ class Collector
         $result = new \Praxigento\Pv\Service\Sale\Data\Item();
         $prodId = $item->getProductId();
         $itemId = $item->getItemId();
-        /* qty of the product can be changed in invoice */
-        $qtyInvoiced = $item->getQtyInvoiced();
+        /* qty of the product can be changed in invoice but we use ordered only */
+        $qty = $item->getQtyOrdered();
         /* create data item for service */
         $result->setItemId($itemId);
         $result->setProductId($prodId);
-        $result->setQuantity($qtyInvoiced);
+        $result->setQuantity($qty);
         $result->setStockId($stockId);
         return $result;
     }
