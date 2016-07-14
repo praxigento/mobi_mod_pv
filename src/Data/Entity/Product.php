@@ -5,19 +5,12 @@
 
 namespace Praxigento\Pv\Data\Entity;
 
-use Praxigento\Core\Data\Entity\Base as EntityBase;
-
-class Product extends EntityBase
+class Product
+    extends \Praxigento\Core\Data\Entity\Base
 {
     const ATTR_PROD_REF = 'prod_ref';
     const ATTR_PV = 'pv';
     const ENTITY_NAME = 'prxgt_pv_prod';
-
-
-    public function getEntityName()
-    {
-        return self::ENTITY_NAME;
-    }
 
     public function getPrimaryKeyAttrs()
     {

@@ -4,9 +4,8 @@
  */
 namespace Praxigento\Pv\Data\Entity\Sale;
 
-use Praxigento\Core\Data\Entity\Base as EntityBase;
-
-class Item extends EntityBase
+class Item
+    extends \Praxigento\Core\Data\Entity\Base
 {
     const ATTR_DISCOUNT = 'discount';
     const ATTR_SALE_ITEM_ID = 'sale_item_id';
@@ -21,11 +20,6 @@ class Item extends EntityBase
     {
         $result = parent::getData(self::ATTR_DISCOUNT);
         return $result;
-    }
-
-    public function getEntityName()
-    {
-        return self::ENTITY_NAME;
     }
 
     public function getPrimaryKeyAttrs()

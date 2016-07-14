@@ -4,18 +4,12 @@
  */
 namespace Praxigento\Pv\Data\Entity\Stock;
 
-use Praxigento\Core\Data\Entity\Base as EntityBase;
-
-class Item extends EntityBase
+class Item
+    extends \Praxigento\Core\Data\Entity\Base
 {
     const ATTR_PV = 'pv';
     const ATTR_STOCK_ITEM_REF = 'stock_item_ref';
     const ENTITY_NAME = 'prxgt_pv_stock_item';
-
-    public function getEntityName()
-    {
-        return self::ENTITY_NAME;
-    }
 
     public function getPrimaryKeyAttrs()
     {
