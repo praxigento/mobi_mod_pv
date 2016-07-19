@@ -126,11 +126,11 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $DATE_UTC = 'utc date';
         $ITEMS = [];
         /** === Setup Mocks === */
-        // $trans = $this->_manTrans->transactionBegin();
-        $mTrans = $this->_mockTransactionDefinition();
+        // $def = $this->_manTrans->begin();
+        $mDef = $this->_mockTransactionDefinition();
         $this->mManTrans
-            ->shouldReceive('transactionBegin')->once()
-            ->andReturn($mTrans);
+            ->shouldReceive('begin')->once()
+            ->andReturn($mDef);
         // $this->_repoSale->replace($orderData);
         $this->mRepoSale
             ->shouldReceive('replace')->once();
@@ -141,12 +141,12 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mToolDate
             ->shouldReceive('getUtcNowForDb')->once()
             ->andReturn($DATE_UTC);
-        // $this->_manTrans->transactionCommit($trans);
+        // $this->_manTrans->commit($def);
         $this->mManTrans
-            ->shouldReceive('transactionCommit')->once();
-        // $this->_manTrans->transactionClose($trans);
+            ->shouldReceive('commit')->once();
+        // $this->_manTrans->end($def);
         $this->mManTrans
-            ->shouldReceive('transactionClose')->once();
+            ->shouldReceive('end')->once();
         /** === Call and asserts  === */
         $req = new Request\Save();
         $req->setSaleOrderId($ORDER_ID);

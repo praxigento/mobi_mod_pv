@@ -18,7 +18,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
     protected $_callAccount;
     /** @var  \Praxigento\Accounting\Service\IOperation */
     protected $_callOperation;
-    /** @var \Praxigento\Core\Repo\Transaction\IManager */
+    /** @var \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
     /** @var  \Praxigento\Pv\Repo\IModule */
     protected $_repoMod;
@@ -33,7 +33,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Core\Repo\Transaction\IManager $manTrans,
+        \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Service\IAccount $callAccount,
         \Praxigento\Accounting\Service\IOperation $callOperation,
         \Praxigento\Pv\Repo\IModule $repoMod,
@@ -121,7 +121,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
         $orderId = $req->getSaleOrderId();
         $items = $req->getOrderItems();
         $this->_logger->info("Save PV attributes for sale order #$orderId.");
-        $trans = $this->_manTrans->transactionBegin();
+        $def = $this->_manTrans->begin();
         try {
             /* for all items get PV data by warehouse */
             $orderTotal = 0;
@@ -149,11 +149,11 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
             $datePaid = $this->_toolDate->getUtcNowForDb();
             $eOrder->setDatePaid($datePaid);
             $this->_repoSale->replace($eOrder);
-            $this->_manTrans->transactionCommit($trans);
+            $this->_manTrans->commit($def);
             $result->markSucceed();
             $this->_logger->info("PV attributes for sale order #$orderId are saved.");
         } finally {
-            $this->_manTrans->transactionClose($trans);
+            $this->_manTrans->end($def);
         }
         return $result;
     }

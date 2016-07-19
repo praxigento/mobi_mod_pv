@@ -7,7 +7,6 @@ namespace Praxigento\Pv\Lib\Test\Story02;
 use Praxigento\Accounting\Service\Account\Request\Get as RequestAccountGet;
 use Praxigento\Core\Test\BaseIntegrationTest;
 use Praxigento\Pv\Config as Cfg;
-use Praxigento\Pv\Data\Entity\Sale as Sale;
 use Praxigento\Pv\Service\Transfer\Request\BetweenCustomers as RequestTransferBetweenCustomers;
 use Praxigento\Pv\Service\Transfer\Request\CreditToCustomer as RequestTransferCreditToCustomer;
 use Praxigento\Pv\Service\Transfer\Request\DebitFromCustomer as RequestTransferDebitFromCustomer;
@@ -20,13 +19,13 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private $_callAccount;
     /** @var \Praxigento\Pv\Service\ITransfer */
     private $_callTransfer;
-    /** @var \Praxigento\Core\Repo\Transaction\IManager */
+    /** @var \Praxigento\Core\Transaction\Database\IManager */
     private $_manTrans;
 
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->_manTrans = $this->_manObj->get(\Praxigento\Core\Repo\Transaction\IManager::class);
+        $this->_manTrans = $this->_manObj->get(\Praxigento\Core\Transaction\Database\IManager::class);
         $this->_callTransfer = $this->_manObj->get(\Praxigento\Pv\Service\ITransfer::class);
         $this->_callAccount = $this->_manObj->get(\Praxigento\Accounting\Service\IAccount::class);
     }
@@ -76,7 +75,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
     {
 
         $this->_logger->debug('Story02 in PV Integration tests is started.');
-        $trans = $this->_manTrans->transactionBegin();
+        $def = $this->_manTrans->begin();
         try {
             $this->_createMageCustomers();
             $this->_createDownlineCustomers();
@@ -95,8 +94,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
             $this->_transferFromCustomer($CUST_2, $VAL_4);
             $this->_checkAccount($CUST_2, $VAL_5);
         } finally {
-            //         $this->_conn->commit();
-            $this->_manTrans->transactionRollback($trans);
+            $this->_manTrans->rollback($def);
 
         }
         $this->_logger->debug('Story02 in PV Integration tests is completed, all transactions are rolled back.');
