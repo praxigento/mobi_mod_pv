@@ -1,22 +1,28 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
     <!-- Repo -->
-    <preference for="Praxigento\Pv\Repo\Entity\IProduct"
-                type="Praxigento\Pv\Repo\Entity\Def\Product"/>
-    <preference for="Praxigento\Pv\Repo\Entity\ISale"
-                type="Praxigento\Pv\Repo\Entity\Def\Sale"/>
-    <preference for="Praxigento\Pv\Repo\Entity\Sale\IItem"
-                type="Praxigento\Pv\Repo\Entity\Sale\Def\Item"/>
-    <preference for="Praxigento\Pv\Repo\Entity\Stock\IItem"
-                type="Praxigento\Pv\Repo\Entity\Stock\Def\Item"/>
-    <preference for="Praxigento\Pv\Repo\IModule"
-                type="Praxigento\Pv\Repo\Def\Module"/>
+    <preference for="Praxigento\Pv\Repo\Entity\IProduct" type="Praxigento\Pv\Repo\Entity\Def\Product"/>
+    <preference for="Praxigento\Pv\Repo\Entity\ISale" type="Praxigento\Pv\Repo\Entity\Def\Sale"/>
+    <preference for="Praxigento\Pv\Repo\Entity\Sale\IItem" type="Praxigento\Pv\Repo\Entity\Sale\Def\Item"/>
+    <preference for="Praxigento\Pv\Repo\Entity\Stock\IItem" type="Praxigento\Pv\Repo\Entity\Stock\Def\Item"/>
+    <preference for="Praxigento\Pv\Repo\IModule" type="Praxigento\Pv\Repo\Def\Module"/>
     <!-- Services -->
-    <preference for="Praxigento\Pv\Service\ISale"
-                type="Praxigento\Pv\Service\Sale\Call"/>
-    <preference for="Praxigento\Pv\Service\ITransfer"
-                type="Praxigento\Pv\Service\Transfer\Call"/>
+    <preference for="Praxigento\Pv\Service\ISale" type="Praxigento\Pv\Service\Sale\Call"/>
+    <preference for="Praxigento\Pv\Service\ITransfer" type="Praxigento\Pv\Service\Transfer\Call"/>
+
+
+    <!-- ******* -->
+    <!-- PLUGINS -->
+    <!-- ******* -->
+    <type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
+        <!-- Enable ordering by additional fields (wholesale PV) for products collection -->
+        <plugin name="prxgt_pv_catalog_model_resourceModel_product_collection" type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\Collection" sortOrder="100" disabled="false"/>
+    </type>
+
+    <type name="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
+        <!-- Add fields mapping (wholesale PV) to products collection -->
+        <plugin name="prxgt_pv_catalog_model_resourceModel_product_collectionFactory" type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory" sortOrder="100" disabled="false"/>
+    </type>
 
 </config>
