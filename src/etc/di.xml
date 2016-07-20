@@ -17,12 +17,17 @@
     <!-- ******* -->
     <type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
         <!-- Enable ordering by additional fields (wholesale PV) for products collection -->
-        <plugin name="prxgt_pv_catalog_model_resourceModel_product_collection" type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\Collection" sortOrder="100" disabled="false"/>
+        <plugin name="praxigento_pv_catalog_model_resourceModel_product_collection" type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\Collection" sortOrder="100" disabled="false"/>
     </type>
 
     <type name="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
         <!-- Add fields mapping (wholesale PV) to products collection -->
-        <plugin name="prxgt_pv_catalog_model_resourceModel_product_collectionFactory" type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory" sortOrder="100" disabled="false"/>
+        <plugin name="praxigento_pv_catalog_model_resourceModel_product_collectionFactory" type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory" sortOrder="100" disabled="false"/>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <!-- Add custom columns to the sales orders grid -->
+        <plugin name="praxigento_pv_data_provider_collection_factory" type="Praxigento\Pv\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory" sortOrder="100" disabled="false"/>
     </type>
 
 </config>
