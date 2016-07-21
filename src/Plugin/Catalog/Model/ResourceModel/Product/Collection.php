@@ -6,24 +6,11 @@
 namespace Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product;
 
 /**
- * Plugin for "\Magento\Catalog\Model\ResourceModel\Product\Collection" to enable ordering by additional attributes.
+ * Plugin for "\Magento\Catalog\Model\ResourceModel\Product\Collection" to enable order & filter for
+ * additional attributes.
  */
 class Collection
 {
-    public function aroundAddOrder(
-        \Magento\Catalog\Model\ResourceModel\Product\Collection $subject,
-        \Closure $proceed,
-        $field,
-        $dir = \Magento\Framework\Data\Collection::SORT_ORDER_DESC
-    ) {
-        $result = $proceed($field, $dir);
-        if (CollectionFactory::AS_FLD_PV == $field) {
-            $order = CollectionFactory::FULL_PV . ' ' . $dir;
-            $subject->getSelect()->order($order);
-        }
-        return $result;
-    }
-
     public function aroundAddFieldToFilter(
         \Magento\Catalog\Model\ResourceModel\Product\Collection $subject,
         \Closure $proceed,
@@ -37,6 +24,22 @@ class Collection
             $result->getSelect()->where($query);
         } else {
             $result = $proceed($attribute, $condition);
+        }
+        return $result;
+    }
+
+    public function aroundAddOrder(
+        \Magento\Catalog\Model\ResourceModel\Product\Collection $subject,
+        \Closure $proceed,
+        $field,
+        $dir = \Magento\Framework\Data\Collection::SORT_ORDER_DESC
+    ) {
+        if (CollectionFactory::AS_FLD_PV == $field) {
+            $result = $subject;
+            $order = CollectionFactory::FULL_PV . ' ' . $dir;
+            $result->getSelect()->order($order);
+        } else {
+            $result = $proceed($field, $dir);
         }
         return $result;
     }

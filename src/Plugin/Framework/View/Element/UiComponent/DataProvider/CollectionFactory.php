@@ -5,6 +5,11 @@
 
 namespace Praxigento\Pv\Plugin\Framework\View\Element\UiComponent\DataProvider;
 
+use Praxigento\Pv\Config as Cfg;
+
+/**
+ * Add PV data for sale orders.
+ */
 class CollectionFactory
 {
     /** @var  Sub\QueryModifier */
@@ -30,7 +35,7 @@ class CollectionFactory
         $requestName
     ) {
         $result = $proceed($requestName);
-        if ($requestName == 'sales_order_grid_data_source') {
+        if ($requestName == Cfg::DS_SALES_ORDERS_GRID) {
             if ($result instanceof \Magento\Sales\Model\ResourceModel\Order\Grid\Collection) {
                 /* add JOINS to the select query */
                 $this->_subQueryModifier->populateSelect($result);

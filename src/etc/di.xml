@@ -16,7 +16,7 @@
     <!-- PLUGINS -->
     <!-- ******* -->
     <type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
-        <!-- Enable ordering by additional fields (wholesale PV) for products collection -->
+        <!-- Enable order & filter for additional fields (wholesale PV) in products collection -->
         <plugin name="praxigento_pv_catalog_model_resourceModel_product_collection" type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\Collection" sortOrder="100" disabled="false"/>
     </type>
 
