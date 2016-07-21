@@ -1,21 +1,10 @@
 <?xml version="1.0"?>
-<config
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
 
 
     <event name="checkout_submit_all_after">
-        <!-- Registry PV for paid order for credit cards payments. -->
-        <observer
-                name="prxgt_pv_on_checkout_submit_all_after"
-                instance="Praxigento\Pv\Observer\CheckoutSubmitAllAfter"/>
-    </event>
-
-    <event name="sales_order_invoice_save_commit_after">
-        <!-- Registry PV for paid order on invoice payments (check/money order). -->
-        <observer
-                name="prxgt_pv_on_sales_order_invoice_save_commit_after"
-                instance="Praxigento\Pv\Observer\SalesOrderInvoiceSaveCommitAfter"/>
+        <!-- Registry PV for sale orders. -->
+        <observer name="prxgt_pv_on_checkout_submit_all_after" instance="Praxigento\Pv\Observer\CheckoutSubmitAllAfter"/>
     </event>
 
 </config>

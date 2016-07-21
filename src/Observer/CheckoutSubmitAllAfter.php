@@ -4,7 +4,6 @@
  */
 namespace Praxigento\Pv\Observer;
 
-use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
 /**
@@ -28,10 +27,7 @@ class CheckoutSubmitAllAfter implements ObserverInterface
     {
         /** @var \Magento\Sales\Model\Order $order */
         $order = $observer->getData(self::DATA_ORDER);
-        $state = $order->getState();
-        if ($state == \Magento\Sales\Model\Order::STATE_PROCESSING) {
-            $this->_subRegister->savePv($order);
-        }
+        $this->_subRegister->savePv($order);
         return;
     }
 }
