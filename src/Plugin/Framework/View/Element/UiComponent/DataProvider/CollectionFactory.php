@@ -8,7 +8,7 @@ namespace Praxigento\Pv\Plugin\Framework\View\Element\UiComponent\DataProvider;
 use Praxigento\Pv\Config as Cfg;
 
 /**
- * Add PV data for sale orders.
+ * Add PV data to collection for sale orders grid.
  */
 class CollectionFactory
 {

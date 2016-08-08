@@ -5,7 +5,7 @@
 
 namespace Praxigento\Pv\Plugin\Framework\View\Element\UiComponent\DataProvider\Sub;
 
-use Praxigento\Downline\Config as Cfg;
+use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Data\Entity\Sale;
 
 class QueryModifier
@@ -55,7 +55,6 @@ class QueryModifier
             self::AS_FLD_PV_SUBTOTAL => Sale::ATTR_SUBTOTAL
         ];
         $select->joinLeft($tbl, $on, $cols);
-        // $sql = (string)$query;
         return $select;
     }
 
