@@ -10,10 +10,14 @@ class Collector
 {
     /** @var  \Praxigento\Warehouse\Tool\IStockManager */
     protected $_manStock;
+    /** @var \Magento\Framework\ObjectManagerInterface */
+    protected $_manObj;
 
     public function __construct(
+        \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Warehouse\Tool\IStockManager $manStock
     ) {
+        $this->_manObj = $manObj;
         $this->_manStock = $manStock;
     }
 
@@ -26,7 +30,7 @@ class Collector
      */
     public function getServiceItemForMageItem(\Magento\Sales\Api\Data\OrderItemInterface $item, $stockId = null)
     {
-        $result = new \Praxigento\Pv\Service\Sale\Data\Item();
+        $result = $this->_manObj->create(\Praxigento\Pv\Service\Sale\Data\Item::class);
         $prodId = $item->getProductId();
         $itemId = $item->getItemId();
         /* qty of the product can be changed in invoice but we use ordered only */
@@ -39,6 +43,10 @@ class Collector
         return $result;
     }
 
+    /**
+     * @param \Magento\Sales\Api\Data\OrderInterface $order
+     * @return \Praxigento\Pv\Service\Sale\Data\Item[]
+     */
     public function getServiceItemsForMageSaleOrder(\Magento\Sales\Api\Data\OrderInterface $order)
     {
         $result = [];

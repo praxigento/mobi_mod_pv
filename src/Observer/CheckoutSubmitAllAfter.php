@@ -28,6 +28,5 @@ class CheckoutSubmitAllAfter implements ObserverInterface
         /** @var \Magento\Sales\Model\Order $order */
         $order = $observer->getData(self::DATA_ORDER);
         $this->_subRegister->savePv($order);
-        return;
     }
 }
