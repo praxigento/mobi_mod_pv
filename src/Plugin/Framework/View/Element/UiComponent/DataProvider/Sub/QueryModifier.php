@@ -39,7 +39,6 @@ class QueryModifier
         $fieldAlias = self::AS_FLD_PV_SUBTOTAL;
         $fieldFullName = self::AS_TBL_PV_SALES . '.' . Sale::ATTR_SUBTOTAL;
         $collection->addFilterToMap($fieldAlias, $fieldFullName);
-
     }
 
     public function populateSelect(
@@ -55,7 +54,6 @@ class QueryModifier
             self::AS_FLD_PV_SUBTOTAL => Sale::ATTR_SUBTOTAL
         ];
         $select->joinLeft($tbl, $on, $cols);
-        return $select;
     }
 
 }

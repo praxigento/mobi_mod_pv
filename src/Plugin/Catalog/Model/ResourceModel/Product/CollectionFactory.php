@@ -2,11 +2,9 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-
 namespace Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product;
 
 use Praxigento\Pv\Data\Entity\Product;
-
 
 /**
  * Plugin for "\Magento\Catalog\Model\ResourceModel\Product\CollectionFactory" to add fields mapping to product collection.
@@ -26,13 +24,12 @@ class CollectionFactory
     }
 
     public function aroundCreate(
-        $subject,
+        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $subject,
         \Closure $proceed,
         array $data = []
     ) {
         $result = $proceed($data);
         if ($result instanceof \Magento\Catalog\Model\ResourceModel\Product\Collection) {
-
             $query = $result->getSelect();
             /* LEFT JOIN `prxgt_pv_prod` AS `prxgtPvProd` */
             $tbl = [self::AS_TBL_PROD_PV => $this->_resource->getTableName(Product::ENTITY_NAME)];
@@ -41,7 +38,6 @@ class CollectionFactory
                 self::AS_FLD_PV => Product::ATTR_PV
             ];
             $query->joinLeft($tbl, $on, $cols);
-
             /* add fields mapping */
             $result->addFilterToMap(self::AS_FLD_PV, self::FULL_PV);
             $result->addFilterToMap('`e`.`' . self::AS_FLD_PV . '`', self::FULL_PV);
