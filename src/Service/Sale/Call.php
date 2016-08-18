@@ -9,7 +9,6 @@ use Praxigento\Accounting\Service\Account\Request\Get as GetAccountRequest;
 use Praxigento\Accounting\Service\Account\Request\GetRepresentative as GetAccountRepresentativeRequest;
 use Praxigento\Accounting\Service\Operation\Request\Add as AddOperationRequest;
 use Praxigento\Pv\Config as Cfg;
-use Praxigento\Pv\Data\Entity\Sale;
 use Praxigento\Pv\Service\ISale;
 
 class Call extends \Praxigento\Core\Service\Base\Call implements ISale
@@ -128,15 +127,15 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
             foreach ($items as $item) {
                 $prodId = $item->getProductId();
                 $stockId = $item->getStockId();
+                $itemId = $item->getItemId();
                 $pv = $this->_repoStockItem->getPvByProductAndStock($prodId, $stockId);
                 $qty = $item->getQuantity();
                 $total = $pv * $qty;
                 $eItem = new \Praxigento\Pv\Data\Entity\Sale\Item();
-                $eItem->setSaleItemId($item->getItemId());
+                $eItem->setSaleItemId($itemId);
                 $eItem->setSubtotal($total);
                 $eItem->setDiscount(0);
                 $eItem->setTotal($total);
-                $eItem->setSaleItemId($item->getItemId());
                 $this->_repoSaleItem->replace($eItem);
                 $orderTotal += $total;
             }

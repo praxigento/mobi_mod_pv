@@ -124,13 +124,43 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $ORDER_ID = 21;
         $DATE_PAID = 'paid';
         $DATE_UTC = 'utc date';
-        $ITEMS = [];
+        $PROD_ID = 32;
+        $STOCK_ID = 4;
+        $ITEM_ID = 64;
+        $PV = 12.44;
+        $QTY = 4;
+        $ITEM = $this->_mock(\Praxigento\Pv\Service\Sale\Data\Item::class);
+        $ITEMS = [$ITEM];
         /** === Setup Mocks === */
         // $def = $this->_manTrans->begin();
         $mDef = $this->_mockTransactionDefinition();
         $this->mManTrans
             ->shouldReceive('begin')->once()
             ->andReturn($mDef);
+        //
+        // FIRST ITERATION
+        //
+        // $prodId = $item->getProductId();
+        $ITEM->shouldReceive('getProductId')->once()
+            ->andReturn($PROD_ID);
+        // $stockId = $item->getStockId();
+        $ITEM->shouldReceive('getStockId')->once()
+            ->andReturn($STOCK_ID);
+        // $itemId = $item->getItemId();
+        $ITEM->shouldReceive('getItemId')->once()
+            ->andReturn($ITEM_ID);
+        // $pv = $this->_repoStockItem->getPvByProductAndStock($prodId, $stockId);
+        $this->mRepoStockItem
+            ->shouldReceive('getPvByProductAndStock')->once()
+            ->with($PROD_ID, $STOCK_ID)
+            ->andReturn($PV);
+        // $qty = $item->getQuantity();
+        $ITEM->shouldReceive('getQuantity')->once()
+            ->andReturn($QTY);
+        // $this->_repoSaleItem->replace($eItem);
+        $this->mRepoSaleItem
+            ->shouldReceive('replace')->once();
+        //
         // $this->_repoSale->replace($orderData);
         $this->mRepoSale
             ->shouldReceive('replace')->once();
@@ -155,5 +185,4 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $resp = $this->obj->save($req);
         $this->assertTrue($resp->isSucceed());
     }
-
 }
