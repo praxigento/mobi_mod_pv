@@ -24,7 +24,7 @@ class Item extends BaseEntityRepo implements IEntityRepo
     public function getPvByProductAndStock($productId, $stockId)
     {
         /** @var \Magento\Framework\DB\Adapter\AdapterInterface $conn */
-        $conn = $this->_repoGeneric->getConnection();
+        $conn = $this->_resource->getConnection();
         /* aliases and tables */
         $asStockItem = 'csi';
         $asPv = 'ppsi';

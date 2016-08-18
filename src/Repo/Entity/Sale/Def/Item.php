@@ -4,20 +4,24 @@
  */
 namespace Praxigento\Pv\Repo\Entity\Sale\Def;
 
-use Magento\Framework\App\ResourceConnection;
 use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
-use Praxigento\Core\Repo\IGeneric as IRepoGeneric;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Data\Entity\Sale\Item as Entity;
-use Praxigento\Pv\Repo\Entity\Sale\IItem as IEntityRepo;
 
-class Item extends BaseEntityRepo implements IEntityRepo
+class Item
+    extends \Praxigento\Core\Repo\Def\Entity
+    implements \Praxigento\Pv\Repo\Entity\Sale\IItem
 {
+    /** @var \Magento\Framework\ObjectManagerInterface */
+    protected $_manObj;
+
     public function __construct(
-        ResourceConnection $resource,
-        IRepoGeneric $repoGeneric
+        \Magento\Framework\ObjectManagerInterface $manOb,
+        \Magento\Framework\App\ResourceConnection $resource,
+        \Praxigento\Core\Repo\IGeneric $repoGeneric
     ) {
         parent::__construct($resource, $repoGeneric, Entity::class);
+        $this->_manObj = $manOb;
     }
 
     /** @inheritdoc */
@@ -25,7 +29,7 @@ class Item extends BaseEntityRepo implements IEntityRepo
     {
         $result = [];
         /** @var \Magento\Framework\DB\Adapter\AdapterInterface $conn */
-        $conn = $this->_repoGeneric->getConnection();
+        $conn = $this->_resource->getConnection();
         /* aliases and tables */
         $asOrder = 'sale';
         $asPvItem = 'pv';
@@ -45,7 +49,8 @@ class Item extends BaseEntityRepo implements IEntityRepo
         /* fetch data */
         $rows = $conn->fetchAll($query);
         foreach ($rows as $row) {
-            $item = new Entity($row);
+            /** @var Entity $item */
+            $item = $this->_manObj->create(Entity::class, $row);
             $result[$item->getSaleItemId()] = $item;
         }
         return $result;
