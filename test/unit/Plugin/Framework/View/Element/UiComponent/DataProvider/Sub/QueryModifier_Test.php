@@ -7,7 +7,7 @@ namespace Praxigento\Pv\Plugin\Framework\View\Element\UiComponent\DataProvider\S
 include_once(__DIR__ . '/../../../../../../../phpunit_bootstrap.php');
 
 class QueryModifier_UnitTest
-    extends \Praxigento\Core\Test\BaseMockeryCase
+    extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var  \Mockery\MockInterface */
     private $mResource;

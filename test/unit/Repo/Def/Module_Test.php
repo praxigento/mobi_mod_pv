@@ -7,7 +7,7 @@ namespace Praxigento\Pv\Repo\Def;
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 use Praxigento\Pv\Config as Cfg;
 
-class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
+class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var  \Mockery\MockInterface */
     protected $mRepoDownlineCustomer;

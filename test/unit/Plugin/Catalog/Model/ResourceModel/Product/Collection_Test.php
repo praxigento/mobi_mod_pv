@@ -7,7 +7,7 @@ namespace Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product;
 include_once(__DIR__ . '/../../../../../phpunit_bootstrap.php');
 
 class Collection_UnitTest
-    extends \Praxigento\Core\Test\BaseMockeryCase
+    extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var  \Mockery\MockInterface */
     private $mSubject;

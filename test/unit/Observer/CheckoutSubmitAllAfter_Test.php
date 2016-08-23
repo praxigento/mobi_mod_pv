@@ -7,7 +7,7 @@ namespace Praxigento\Pv\Observer;
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
 class CheckoutSubmitAllAfter_UnitTest
-    extends \Praxigento\Core\Test\BaseMockeryCase
+    extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var  \Mockery\MockInterface */
     protected $mSubRegister;

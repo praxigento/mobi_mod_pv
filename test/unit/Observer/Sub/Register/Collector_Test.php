@@ -7,7 +7,7 @@ namespace Praxigento\Pv\Observer\Sub\Register;
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Collector_UnitTest
-    extends \Praxigento\Core\Test\BaseMockeryCase
+    extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var  \Mockery\MockInterface */
     protected $mManObj;

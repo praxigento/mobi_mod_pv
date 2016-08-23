@@ -7,7 +7,7 @@ namespace Praxigento\Pv\Observer\Sub;
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
 class Register_UnitTest
-    extends \Praxigento\Core\Test\BaseMockeryCase
+    extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var  \Mockery\MockInterface */
     protected $mCallSale;
