@@ -91,12 +91,13 @@ class Collection_UnitTest
         };
         // $result = $subject;
         // $select = $result->getSelect();
-        $mSelect = $this->_mockDbSelect(['order']);
+        $mSelect = $this->_mockDbSelect();
         $this->mSubject
             ->shouldReceive('getSelect')->once()
             ->andReturn($mSelect);
         // $select->order($order);
-        $mSelect->shouldReceive('order')->once()->with($DIR);
+        $mSelect->shouldReceive('order')->once()
+            ->with(CollectionFactory::FULL_PV . ' ' . $DIR);
         /** === Call and asserts  === */
         $res = $this->obj->aroundAddOrder(
             $this->mSubject,

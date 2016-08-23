@@ -28,15 +28,13 @@ class Item
     public function getItemsByOrderId($orderId)
     {
         $result = [];
-        /** @var \Magento\Framework\DB\Adapter\AdapterInterface $conn */
-        $conn = $this->_resource->getConnection();
         /* aliases and tables */
         $asOrder = 'sale';
         $asPvItem = 'pv';
         $tblOrder = [$asOrder => $this->_resource->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER_ITEM)];
         $tblPvItem = [$asPvItem => $this->_resource->getTableName(Entity::ENTITY_NAME)];
         /* SELECT FROM sales_order_item */
-        $query = $conn->select();
+        $query = $this->_conn->select();
         $cols = [];
         $query->from($tblOrder, $cols);
         /* LEFT JOIN prxgt_pv_sale_item pwq */
@@ -47,7 +45,7 @@ class Item
         $where = $asOrder . '.' . Cfg::E_SALE_ORDER_ITEM_A_ORDER_ID . '=' . (int)$orderId;
         $query->where($where);
         /* fetch data */
-        $rows = $conn->fetchAll($query);
+        $rows = $this->_conn->fetchAll($query);
         foreach ($rows as $row) {
             /** @var Entity $item */
             $item = $this->_manObj->create(Entity::class, $row);

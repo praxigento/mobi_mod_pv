@@ -23,15 +23,13 @@ class Item extends BaseEntityRepo implements IEntityRepo
     /** @inheritdoc */
     public function getPvByProductAndStock($productId, $stockId)
     {
-        /** @var \Magento\Framework\DB\Adapter\AdapterInterface $conn */
-        $conn = $this->_resource->getConnection();
         /* aliases and tables */
         $asStockItem = 'csi';
         $asPv = 'ppsi';
         $tblStockItem = [$asStockItem => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM)];
         $tblPv = [$asPv => $this->_resource->getTableName(Entity::ENTITY_NAME)];
         /* SELECT FROM cataloginventory_stock_item */
-        $query = $conn->select();
+        $query = $this->_conn->select();
         $cols = [];
         $query->from($tblStockItem, $cols);
         /* LEFT JOIN prxgt_pv_stock_item */
@@ -43,7 +41,7 @@ class Item extends BaseEntityRepo implements IEntityRepo
         $where .= ' AND ' . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID . '=' . (int)$stockId;
         $query->where($where);
         /* fetch data */
-        $result = $conn->fetchOne($query);
+        $result = $this->_conn->fetchOne($query);
         return $result;
     }
 }

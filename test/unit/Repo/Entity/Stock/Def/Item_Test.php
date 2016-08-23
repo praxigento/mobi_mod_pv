@@ -30,10 +30,20 @@ class Item_UnitTest extends \Praxigento\Core\Test\BaseCase\Repo\Entity
     public function test_getPvByProductAndStock()
     {
         /** === Test Data === */
+        $TBL_STOCK_ITEM = 'stock item';
+        $TBL_PV = 'pv table';
         $PRODUCT_ID = 32;
         $STOCK_ID = 64;
         $RESULT = 'result';
         /** === Setup Mocks === */
+        // $tblStockItem = [$asStockItem => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM)];
+        $this->mResource
+            ->shouldReceive('getTableName')->once()
+            ->andReturn($TBL_STOCK_ITEM);
+        // $tblPv = [$asPv => $this->_resource->getTableName(Entity::ENTITY_NAME)];
+        $this->mResource
+            ->shouldReceive('getTableName')->once()
+            ->andReturn($TBL_PV);
         // $query = $conn->select();
         $mQuery = $this->_mockDbSelect(['from', 'joinLeft', 'where']);
         $this->mConn

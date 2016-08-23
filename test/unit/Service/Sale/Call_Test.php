@@ -161,16 +161,13 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->mRepoSaleItem
             ->shouldReceive('replace')->once();
         //
-        // $this->_repoSale->replace($orderData);
-        $this->mRepoSale
-            ->shouldReceive('replace')->once();
-        // $this->_repoSaleItem->replace($one);
-        $this->mRepoSaleItem
-            ->shouldReceive('replace')->twice();
         // $datePaid = $this->_toolDate->getUtcNowForDb();
         $this->mToolDate
             ->shouldReceive('getUtcNowForDb')->once()
             ->andReturn($DATE_UTC);
+        // $this->_repoSale->replace($orderData);
+        $this->mRepoSale
+            ->shouldReceive('replace')->once();
         // $this->_manTrans->commit($def);
         $this->mManTrans
             ->shouldReceive('commit')->once();

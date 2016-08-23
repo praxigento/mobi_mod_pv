@@ -37,12 +37,28 @@ class Item_UnitTest extends \Praxigento\Core\Test\BaseCase\Repo\Entity
         /** === Test Data === */
         $ORDER_ID = 32;
         $ITEM_ID = 64;
+        $TBL_ORDER = 'sale order item';
+        $TBL_PV_ITEM = 'pv item';
         /** === Setup Mocks === */
+        // $tblOrder = [$asOrder => $this->_resource->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER_ITEM)];
+        $this->mResource
+            ->shouldReceive('getTableName')->once()
+            ->andReturn($TBL_ORDER);
+        // $tblPvItem = [$asPvItem => $this->_resource->getTableName(Entity::ENTITY_NAME)];
+        $this->mResource
+            ->shouldReceive('getTableName')->once()
+            ->andReturn($TBL_PV_ITEM);
         // $query = $conn->select();
-        $mQuery = $this->_mockDbSelect(['from', 'joinLeft', 'where']);
+        $mQuery = $this->_mockDbSelect();
         $this->mConn
             ->shouldReceive('select')->once()
             ->andReturn($mQuery);
+        // $query->from($tblOrder, $cols);
+        $mQuery->shouldReceive('from')->once();
+        // $query->joinLeft($tblPvItem, $on, $cols);
+        $mQuery->shouldReceive('joinLeft')->once();
+        // $query->where($where);
+        $mQuery->shouldReceive('where')->once();
         // $rows = $conn->fetchAll($query);
         $mRow = [];
         $mRows = [$mRow];
