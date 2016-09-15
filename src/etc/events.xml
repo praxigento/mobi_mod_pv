@@ -3,8 +3,12 @@
 
 
     <event name="checkout_submit_all_after">
-        <!-- Registry PV for sale orders. -->
-        <observer name="prxgt_pv_on_checkout_submit_all_after" instance="Praxigento\Pv\Observer\CheckoutSubmitAllAfter"/>
+        <!-- Registry PV for sale orders and collect PV on customer account if order is paid. -->
+        <observer name="prxgt_pv_observer" instance="Praxigento\Pv\Observer\CheckoutSubmitAllAfter"/>
+    </event>
+    <event name="sales_order_invoice_pay">
+        <!-- Collect PV on customer account when order is paid by check or transfer. -->
+        <observer name="prxgt_pv_observer" instance="Praxigento\Pv\Observer\SalesOrderInvoicePay"/>
     </event>
 
 </config>

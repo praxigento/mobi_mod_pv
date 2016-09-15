@@ -19,13 +19,21 @@ class SalesOrderInvoicePay
     protected $_logger;
     /** @var \Praxigento\Pv\Repo\Entity\ISale */
     protected $_repoSale;
+    /** @var \Praxigento\Pv\Observer\Sub\Register */
+    protected $_subRegister;
+    /** @var \Praxigento\Core\Tool\IDate */
+    protected $_toolDate;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Pv\Repo\Entity\ISale $repoSale
+        \Praxigento\Pv\Repo\Entity\ISale $repoSale,
+        \Praxigento\Core\Tool\IDate $toolDate,
+        \Praxigento\Pv\Observer\Sub\Register $subRegister
     ) {
         $this->_logger = $logger;
         $this->_repoSale = $repoSale;
+        $this->_toolDate = $toolDate;
+        $this->_subRegister = $subRegister;
     }
 
     public function execute(\Magento\Framework\Event\Observer $observer)
@@ -39,12 +47,12 @@ class SalesOrderInvoicePay
                 /** @var \Magento\Sales\Model\Order $order */
                 $order = $invoice->getOrder();
                 $orderId = $order->getEntityId();
-                $datePaid = $invoice->getCreatedAt();
+                $datePaid = $this->_toolDate->getUtcNowForDb();
                 $this->_logger->debug("Update paid date in PV registry on sale order (#$orderId) is paid.");
                 $data = [EntitySale::ATTR_DATE_PAID => $datePaid];
                 $this->_repoSale->updateById($orderId, $data);
                 /* transfer PV to customer account */
-
+                $this->_subRegister->accountPv($order);
             } catch (\Exception $e) {
                 /* catch all exceptions and steal them */
                 $msg = 'Some error is occurred on update of the paid date in PV register. Error: ' . $e->getMessage();
