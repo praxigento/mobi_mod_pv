@@ -4,12 +4,11 @@
  */
 namespace Praxigento\Pv\Observer;
 
-use Magento\Framework\Event\ObserverInterface;
-
 /**
- * Registry PV for paid order for credit cards payments.
+ * Registry PV on order submit and collect PV on customer account if order is paid.
  */
-class CheckoutSubmitAllAfter implements ObserverInterface
+class CheckoutSubmitAllAfter
+    implements \Magento\Framework\Event\ObserverInterface
 {
     /* Names for the items in the event's data */
     const DATA_ORDER = 'order';
@@ -28,5 +27,6 @@ class CheckoutSubmitAllAfter implements ObserverInterface
         /** @var \Magento\Sales\Model\Order $order */
         $order = $observer->getData(self::DATA_ORDER);
         $this->_subRegister->savePv($order);
+        $this->_subRegister->accountPv($order);
     }
 }

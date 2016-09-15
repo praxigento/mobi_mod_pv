@@ -118,6 +118,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
     {
         $result = new Response\Save();
         $orderId = $req->getSaleOrderId();
+        $datePaid = $req->getSaleOrderDatePaid();
         $items = $req->getOrderItems();
         $this->_logger->info("Save PV attributes for sale order #$orderId.");
         $def = $this->_manTrans->begin();
@@ -145,7 +146,6 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
             $eOrder->setSubtotal($orderTotal);
             $eOrder->setDiscount(0);
             $eOrder->setTotal($orderTotal);
-            $datePaid = $this->_toolDate->getUtcNowForDb();
             $eOrder->setDatePaid($datePaid);
             $this->_repoSale->replace($eOrder);
             $this->_manTrans->commit($def);
