@@ -43,10 +43,16 @@ class Register_UnitTest
     {
         /** === Test Data === */
         $ID = 4;
+        $STATE = \Magento\Sales\Model\Order::STATE_PROCESSING;
+        $DATE_CREATED = 'created at';
         $ORDER = $this->_mock(\Magento\Sales\Api\Data\OrderInterface::class);
         /** === Setup Mocks === */
         // $orderId = $order->getId();
         $ORDER->shouldReceive('getId')->once()->andReturn($ID);
+        // $state = $order->getState();
+        $ORDER->shouldReceive('getState')->once()->andReturn($STATE);
+        // $dateCreated = $order->getCreatedAt();
+        $ORDER->shouldReceive('getCreatedAt')->once()->andReturn($DATE_CREATED);
         // $itemsData = $this->_subCollector->getServiceItemsForMageSaleOrder($order);
         $mItemsData = [];
         $this->mSubCollector
@@ -61,6 +67,8 @@ class Register_UnitTest
         $mReq->shouldReceive('setSaleOrderId')->once()->with($ID);
         // $req->setOrderItems($itemsData);
         $mReq->shouldReceive('setOrderItems')->once()->with($mItemsData);
+        // $req->setSaleOrderDatePaid($dateCreated);
+        $mReq->shouldReceive('setSaleOrderDatePaid')->once()->with($DATE_CREATED);
         // $this->_callSale->save($req);
         $this->mCallSale->shouldReceive('save')->once()->with($mReq);
         /** === Call and asserts  === */

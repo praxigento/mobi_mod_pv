@@ -44,6 +44,9 @@ class CheckoutSubmitAllAfter_UnitTest
         // $this->_subRegister->savePv($order);
         $this->mSubRegister
             ->shouldReceive('savePv')->once();
+        // $this->_subRegister->accountPv($order);
+        $this->mSubRegister
+            ->shouldReceive('accountPv')->once();
         /** === Call and asserts  === */
         $this->obj->execute($OBSERVER);
     }
