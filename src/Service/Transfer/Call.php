@@ -10,9 +10,14 @@ use Praxigento\Accounting\Service\Account\Request\Get as AccountGetRequest;
 use Praxigento\Accounting\Service\Account\Request\GetRepresentative as AccountGetRepresentativeRequest;
 use Praxigento\Accounting\Service\Operation\Request\Add as OperationAddRequest;
 use Praxigento\Pv\Config as Cfg;
-use Praxigento\Pv\Service\ITransfer;
 
-class Call extends \Praxigento\Core\Service\Base\Call implements ITransfer
+/**
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
+class Call
+    extends \Praxigento\Core\Service\Base\Call
+    implements \Praxigento\Pv\Service\ITransfer
 {
     /**
      * @var \Praxigento\Accounting\Service\IAccount
@@ -31,12 +36,13 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransfer
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
+        \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Tool\IDate $toolDate,
         \Praxigento\Accounting\Service\IAccount $callAccount,
         \Praxigento\Accounting\Service\IOperation $callOperation,
         \Praxigento\Pv\Repo\IModule $repoMod
     ) {
-        parent::__construct($logger);
+        parent::__construct($logger, $manObj);
         $this->_toolDate = $toolDate;
         $this->_callAccount = $callAccount;
         $this->_callOperation = $callOperation;
@@ -49,7 +55,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransfer
         $result = new Response\BetweenCustomers();
         /* constraints validation results */
         $isCountriesTheSame = false;
-        $isTargetPlacedInTheDownline = false;
+        $isTargetInDownline = false;
         /* extract input parameters */
         $custIdDebit = $request->getFromCustomerId();
         $custIdCredit = $request->getToCustomerId();
@@ -82,13 +88,13 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransfer
                 (strpos($path, $key) !== false) ||
                 $condForceDownline
             ) {
-                $isTargetPlacedInTheDownline = true;
+                $isTargetInDownline = true;
             }
         }
         /* check validation results and perform transfer */
         if (
             $condForceAll ||
-            ($isTargetPlacedInTheDownline && $isCountriesTheSame)
+            ($isTargetInDownline && $isCountriesTheSame)
         ) {
             /* get PV-accounts */
             $reqAccGet = new AccountGetRequest();

@@ -9,14 +9,18 @@ use Praxigento\Pv\Data\Entity\Sale;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
-class Call_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
+/**
+ * @SuppressWarnings(PHPMD.CamelCaseClassName)
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
+class Call_UnitTest
+    extends \Praxigento\Core\Test\BaseCase\Service\Call
 {
     /** @var \Mockery\MockInterface */
     private $mCallAccount;
     /** @var \Mockery\MockInterface */
     private $mCallOperation;
-    /** @var \Mockery\MockInterface */
-    private $mLogger;
     /** @var \Mockery\MockInterface */
     private $mManTrans;
     /** @var \Mockery\MockInterface */
@@ -36,7 +40,6 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
     {
         parent::setUp();
         /** create mocks */
-        $this->mLogger = $this->_mockLogger();
         $this->mManTrans = $this->_mockTransactionManager();
         $this->mCallAccount = $this->_mock(\Praxigento\Accounting\Service\IAccount::class);
         $this->mCallOperation = $this->_mock(\Praxigento\Accounting\Service\IOperation::class);
@@ -48,6 +51,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         /** create object to test */
         $this->obj = new Call(
             $this->mLogger,
+            $this->mManObj,
             $this->mManTrans,
             $this->mCallAccount,
             $this->mCallOperation,
@@ -62,32 +66,32 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
     public function test_accountPv()
     {
         /** === Test Data === */
-        $CUSTOMER_ID = 21;
-        $ORDER_ID = 34;
-        $OPER_ID = 1024;
-        $PV_TOTAL = 300;
-        $ACC_ID_CUST = 101;
-        $ACC_ID_REPRES = 202;
+        $custId = 21;
+        $orderId = 34;
+        $operId = 1024;
+        $pvTotal = 300;
+        $accIdCust = 101;
+        $accIdRepres = 202;
         /** === Setup Mocks === */
         // $sale = $this->_repoSale->getById($saleId);
         $this->mRepoSale
             ->shouldReceive('getById')->once()
-            ->with($ORDER_ID)
-            ->andReturn(new Sale([Sale::ATTR_TOTAL => $PV_TOTAL]));
+            ->with($orderId)
+            ->andReturn(new Sale([Sale::ATTR_TOTAL => $pvTotal]));
         // $customerId = $this->_repoMod->getSaleOrderCustomerId($saleId);
         $this->mRepoMod
             ->shouldReceive('getSaleOrderCustomerId')->once()
-            ->with($ORDER_ID)
-            ->andReturn($CUSTOMER_ID);
+            ->with($orderId)
+            ->andReturn($custId);
         // $respGetAccCust = $this->_callAccount->get($reqGetAccCust);
         $mRespGetAccCust = new \Praxigento\Accounting\Service\Account\Response\Get();
-        $mRespGetAccCust->setData([Account::ATTR_ID => $ACC_ID_CUST]);
+        $mRespGetAccCust->setData([Account::ATTR_ID => $accIdCust]);
         $this->mCallAccount
             ->shouldReceive('get')->once()
             ->andReturn($mRespGetAccCust);
         // $respGetAccRepres = $this->_callAccount->getRepresentative($reqGetAccRepres);
         $mRespGetAccRepres = new \Praxigento\Accounting\Service\Account\Response\GetRepresentative();
-        $mRespGetAccRepres->setData([Account::ATTR_ID => $ACC_ID_REPRES]);
+        $mRespGetAccRepres->setData([Account::ATTR_ID => $accIdRepres]);
         $this->mCallAccount
             ->shouldReceive('getRepresentative')->once()
             ->andReturn($mRespGetAccRepres);
@@ -97,14 +101,14 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
             ->shouldReceive('add')->once()
             ->andReturn($mRespAddOper);
         // $operId = $respAddOper->getOperationId();
-        $mRespAddOper->setOperationId($OPER_ID);
+        $mRespAddOper->setOperationId($operId);
         /** === Call and asserts  === */
         $req = new Request\AccountPv();
-        $req->setSaleOrderId($ORDER_ID);
+        $req->setSaleOrderId($orderId);
         $res = $this->obj->accountPv($req);
         $this->assertTrue($res->isSucceed());
         $operId = $res->getOperationId();
-        $this->assertEquals($OPER_ID, $operId);
+        $this->assertEquals($operId, $operId);
     }
 
     public function test_cacheReset()
@@ -118,19 +122,21 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->obj->cacheReset();
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ShortVariable)
+     */
     public function test_save()
     {
         /** === Test Data === */
-        $ORDER_ID = 21;
-        $DATE_PAID = 'paid';
-        $DATE_UTC = 'utc date';
-        $PROD_ID = 32;
-        $STOCK_ID = 4;
-        $ITEM_ID = 64;
-        $PV = 12.44;
-        $QTY = 4;
-        $ITEM = $this->_mock(\Praxigento\Pv\Service\Sale\Data\Item::class);
-        $ITEMS = [$ITEM];
+        $operId = 21;
+        $datePaid = 'paid';
+        $prodId = 32;
+        $stockId = 4;
+        $itemId = 64;
+        $pv = 12.44;
+        $qty = 4;
+        $item = $this->_mock(\Praxigento\Pv\Service\Sale\Data\Item::class);
+        $items = [$item];
         /** === Setup Mocks === */
         // $def = $this->_manTrans->begin();
         $mDef = $this->_mockTransactionDefinition();
@@ -141,22 +147,22 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         // FIRST ITERATION
         //
         // $prodId = $item->getProductId();
-        $ITEM->shouldReceive('getProductId')->once()
-            ->andReturn($PROD_ID);
+        $item->shouldReceive('getProductId')->once()
+            ->andReturn($prodId);
         // $stockId = $item->getStockId();
-        $ITEM->shouldReceive('getStockId')->once()
-            ->andReturn($STOCK_ID);
+        $item->shouldReceive('getStockId')->once()
+            ->andReturn($stockId);
         // $itemId = $item->getItemId();
-        $ITEM->shouldReceive('getItemId')->once()
-            ->andReturn($ITEM_ID);
+        $item->shouldReceive('getItemId')->once()
+            ->andReturn($itemId);
         // $pv = $this->_repoStockItem->getPvByProductAndStock($prodId, $stockId);
         $this->mRepoStockItem
             ->shouldReceive('getPvByProductAndStock')->once()
-            ->with($PROD_ID, $STOCK_ID)
-            ->andReturn($PV);
+            ->with($prodId, $stockId)
+            ->andReturn($pv);
         // $qty = $item->getQuantity();
-        $ITEM->shouldReceive('getQuantity')->once()
-            ->andReturn($QTY);
+        $item->shouldReceive('getQuantity')->once()
+            ->andReturn($qty);
         // $this->_repoSaleItem->replace($eItem);
         $this->mRepoSaleItem
             ->shouldReceive('replace')->once();
@@ -172,9 +178,9 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
             ->shouldReceive('end')->once();
         /** === Call and asserts  === */
         $req = new Request\Save();
-        $req->setSaleOrderId($ORDER_ID);
-        $req->setSaleOrderDatePaid($DATE_PAID);
-        $req->setOrderItems($ITEMS);
+        $req->setSaleOrderId($operId);
+        $req->setSaleOrderDatePaid($datePaid);
+        $req->setOrderItems($items);
         $resp = $this->obj->save($req);
         $this->assertTrue($resp->isSucceed());
     }

@@ -9,9 +9,14 @@ use Praxigento\Accounting\Service\Account\Request\Get as GetAccountRequest;
 use Praxigento\Accounting\Service\Account\Request\GetRepresentative as GetAccountRepresentativeRequest;
 use Praxigento\Accounting\Service\Operation\Request\Add as AddOperationRequest;
 use Praxigento\Pv\Config as Cfg;
-use Praxigento\Pv\Service\ISale;
 
-class Call extends \Praxigento\Core\Service\Base\Call implements ISale
+/**
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
+class Call
+    extends \Praxigento\Core\Service\Base\Call
+    implements \Praxigento\Pv\Service\ISale
 {
     /** @var  \Praxigento\Accounting\Service\IAccount */
     protected $_callAccount;
@@ -30,8 +35,24 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
     /** @var \Praxigento\Core\Tool\IDate */
     protected $_toolDate;
 
+    /**
+     * Call constructor.
+     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Magento\Framework\ObjectManagerInterface $manObj
+     * @param \Praxigento\Core\Transaction\Database\IManager $manTrans
+     * @param \Praxigento\Accounting\Service\IAccount $callAccount
+     * @param \Praxigento\Accounting\Service\IOperation $callOperation
+     * @param \Praxigento\Pv\Repo\IModule $repoMod
+     * @param \Praxigento\Pv\Repo\Entity\ISale $repoSale
+     * @param \Praxigento\Pv\Repo\Entity\Sale\IItem $repoSaleItem
+     * @param \Praxigento\Pv\Repo\Entity\Stock\IItem $repoStockItem
+     * @param \Praxigento\Core\Tool\IDate $toolDate
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
+        \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Service\IAccount $callAccount,
         \Praxigento\Accounting\Service\IOperation $callOperation,
@@ -41,7 +62,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ISale
         \Praxigento\Pv\Repo\Entity\Stock\IItem $repoStockItem,
         \Praxigento\Core\Tool\IDate $toolDate
     ) {
-        parent::__construct($logger);
+        parent::__construct($logger, $manObj);
         $this->_manTrans = $manTrans;
         $this->_callAccount = $callAccount;
         $this->_callOperation = $callOperation;
