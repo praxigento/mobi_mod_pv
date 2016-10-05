@@ -6,6 +6,10 @@ namespace Praxigento\Pv\Observer\Sub;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
+/**
+ * @SuppressWarnings(PHPMD.CamelCaseClassName)
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ */
 class Register_UnitTest
     extends \Praxigento\Core\Test\BaseCase\Mockery
 {
@@ -33,26 +37,61 @@ class Register_UnitTest
         );
     }
 
+    public function test_accountPv()
+    {
+        /** === Test Data === */
+        $order = $this->_mock(\Magento\Sales\Api\Data\OrderInterface::class);
+        /** === Setup Mocks === */
+        // $state = $order->getState();
+        $mState = \Magento\Sales\Model\Order::STATE_PROCESSING;
+        $order->shouldReceive('getState')->once()
+            ->andReturn($mState);
+        // $orderId = $order->getEntityId();
+        $mOrderId = 32;
+        $order->shouldReceive('getEntityId')->once()
+            ->andReturn($mOrderId);
+        // $itemsData = $this->_subCollector->getServiceItemsForMageSaleOrder($order);
+        $mItemsData = [];
+        $this->mSubCollector
+            ->shouldReceive('getServiceItemsForMageSaleOrder')->once()
+            ->andReturn($mItemsData);
+        // $req = $this->_manObj->create(\Praxigento\Pv\Service\Sale\Request\AccountPv::class);
+        $mReq = new \Praxigento\Pv\Service\Sale\Request\AccountPv();
+        $this->mManObj
+            ->shouldReceive('create')->once()
+            ->with(\Praxigento\Pv\Service\Sale\Request\AccountPv::class)
+            ->andReturn($mReq);
+        // $this->_callSale->accountPv($req);
+        $this->mCallSale
+            ->shouldReceive('accountPv')->once()
+            ->with($mReq);
+        /** === Call and asserts  === */
+        $this->obj->accountPv($order);
+    }
+
     public function test_constructor()
     {
         /** === Call and asserts  === */
         $this->assertInstanceOf(Register::class, $this->obj);
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ShortVariable)
+     */
     public function test_savePv()
     {
         /** === Test Data === */
-        $ID = 4;
-        $STATE = \Magento\Sales\Model\Order::STATE_PROCESSING;
-        $DATE_CREATED = 'created at';
-        $ORDER = $this->_mock(\Magento\Sales\Api\Data\OrderInterface::class);
+        $id = 4;
+        $state = \Magento\Sales\Model\Order::STATE_PROCESSING;
+        $dateCreated = 'created at';
+        $order = $this->_mock(\Magento\Sales\Api\Data\OrderInterface::class);
         /** === Setup Mocks === */
         // $orderId = $order->getId();
-        $ORDER->shouldReceive('getId')->once()->andReturn($ID);
+        $order->shouldReceive('getId')->once()->andReturn($id);
         // $state = $order->getState();
-        $ORDER->shouldReceive('getState')->once()->andReturn($STATE);
+        $order->shouldReceive('getState')->once()->andReturn($state);
         // $dateCreated = $order->getCreatedAt();
-        $ORDER->shouldReceive('getCreatedAt')->once()->andReturn($DATE_CREATED);
+        $order->shouldReceive('getCreatedAt')->once()->andReturn($dateCreated);
         // $itemsData = $this->_subCollector->getServiceItemsForMageSaleOrder($order);
         $mItemsData = [];
         $this->mSubCollector
@@ -64,15 +103,15 @@ class Register_UnitTest
             ->shouldReceive('create')->once()
             ->andReturn($mReq);
         // $req->setSaleOrderId($orderId);
-        $mReq->shouldReceive('setSaleOrderId')->once()->with($ID);
+        $mReq->shouldReceive('setSaleOrderId')->once()->with($id);
         // $req->setOrderItems($itemsData);
         $mReq->shouldReceive('setOrderItems')->once()->with($mItemsData);
         // $req->setSaleOrderDatePaid($dateCreated);
-        $mReq->shouldReceive('setSaleOrderDatePaid')->once()->with($DATE_CREATED);
+        $mReq->shouldReceive('setSaleOrderDatePaid')->once()->with($dateCreated);
         // $this->_callSale->save($req);
         $this->mCallSale->shouldReceive('save')->once()->with($mReq);
         /** === Call and asserts  === */
-        $this->obj->savePv($ORDER);
+        $this->obj->savePv($order);
     }
 
 }

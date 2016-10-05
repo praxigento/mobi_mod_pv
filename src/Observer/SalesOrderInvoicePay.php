@@ -5,10 +5,12 @@
 
 namespace Praxigento\Pv\Observer;
 
-use Praxigento\Pv\Data\Entity\Sale as EntitySale;
+use Praxigento\Pv\Data\Entity\Sale as ESale;
 
 /**
  * Update 'date_paid' in PV register.
+ *
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class SalesOrderInvoicePay
     implements \Magento\Framework\Event\ObserverInterface
@@ -49,11 +51,11 @@ class SalesOrderInvoicePay
                 $orderId = $order->getEntityId();
                 $datePaid = $this->_toolDate->getUtcNowForDb();
                 $this->_logger->debug("Update paid date in PV registry on sale order (#$orderId) is paid.");
-                $data = [EntitySale::ATTR_DATE_PAID => $datePaid];
+                $data = [ESale::ATTR_DATE_PAID => $datePaid];
                 $this->_repoSale->updateById($orderId, $data);
                 /* transfer PV to customer account */
                 $this->_subRegister->accountPv($order);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 /* catch all exceptions and steal them */
                 $msg = 'Some error is occurred on update of the paid date in PV register. Error: ' . $e->getMessage();
                 $this->_logger->error($msg);

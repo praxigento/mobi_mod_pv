@@ -4,6 +4,9 @@
  */
 namespace Praxigento\Pv\Observer\Sub;
 
+/**
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ */
 class Register
 {
     /** @var \Praxigento\Pv\Service\ISale */
@@ -35,7 +38,7 @@ class Register
             /* transfer PV if order is paid */
             $orderId = $order->getEntityId();
             $itemsData = $this->_subCollector->getServiceItemsForMageSaleOrder($order);
-            /** @var \Praxigento\Pv\Service\Sale\Request\Save $req */
+            /** @var \Praxigento\Pv\Service\Sale\Request\AccountPv $req */
             $req = $this->_manObj->create(\Praxigento\Pv\Service\Sale\Request\AccountPv::class);
             $req->setSaleOrderId($orderId);
             $req->setOrderItems($itemsData);
