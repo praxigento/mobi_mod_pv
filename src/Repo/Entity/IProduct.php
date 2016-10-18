@@ -7,7 +7,8 @@ namespace Praxigento\Pv\Repo\Entity;
 
 use Praxigento\Pv\Data\Entity\Product as Entity;
 
-interface IProduct extends \Praxigento\Core\Repo\IEntity
+interface IProduct
+    extends \Praxigento\Core\Repo\IEntity
 {
     /**
      * @param array|Entity $data
