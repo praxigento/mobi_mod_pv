@@ -20,10 +20,10 @@
         <plugin name="praxigento_pv_catalog_model_resourceModel_product_collection" type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\Collection" sortOrder="100" disabled="false"/>
     </type>
 
-    <!--<type name="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">-->
-        <!--&lt;!&ndash; Add fields mapping (wholesale PV) to products collection &ndash;&gt;-->
-        <!--<plugin name="praxigento_pv_catalog_model_resourceModel_product_collectionFactory" type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory" sortOrder="100" disabled="false"/>-->
-    <!--</type>-->
+    <type name="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
+        <!-- Add fields mapping (wholesale PV) to products collection -->
+        <plugin name="praxigento_pv_catalog_model_resourceModel_product_collectionFactory" type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory" sortOrder="100" disabled="false"/>
+    </type>
 
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <!-- Add custom columns to the sales orders grid -->
