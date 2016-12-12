@@ -8,7 +8,7 @@ namespace Praxigento\Pv\Observer;
 use Praxigento\Pv\Data\Entity\Sale as ESale;
 
 /**
- * Update 'date_paid' in PV register.
+ * Update 'date_paid' in PV register and account PV when order is paid completely (bank transfer).
  *
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -44,7 +44,6 @@ class SalesOrderInvoicePay
         $invoice = $observer->getData(self::DATA_INVOICE);
         $state = $invoice->getState();
         if ($state == \Magento\Sales\Model\Order\Invoice::STATE_PAID) {
-            try {
                 /* update date_paid in the PV registry */
                 /** @var \Magento\Sales\Model\Order $order */
                 $order = $invoice->getOrder();
@@ -55,11 +54,6 @@ class SalesOrderInvoicePay
                 $this->_repoSale->updateById($orderId, $data);
                 /* transfer PV to customer account */
                 $this->_subRegister->accountPv($order);
-            } catch (\Throwable $e) {
-                /* catch all exceptions and steal them */
-                $msg = 'Some error is occurred on update of the paid date in PV register. Error: ' . $e->getMessage();
-                $this->_logger->error($msg);
-            }
         }
     }
 }
