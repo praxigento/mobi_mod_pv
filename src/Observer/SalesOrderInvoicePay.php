@@ -27,7 +27,7 @@ class SalesOrderInvoicePay
     protected $_toolDate;
 
     public function __construct(
-        \Psr\Log\LoggerInterface $logger,
+        \Praxigento\Core\Fw\Logger\App $logger,
         \Praxigento\Pv\Repo\Entity\ISale $repoSale,
         \Praxigento\Core\Tool\IDate $toolDate,
         \Praxigento\Pv\Observer\Sub\Register $subRegister

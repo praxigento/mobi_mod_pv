@@ -35,7 +35,7 @@ class Call
     protected $_toolDate;
 
     public function __construct(
-        \Psr\Log\LoggerInterface $logger,
+        \Praxigento\Core\Fw\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Tool\IDate $toolDate,
         \Praxigento\Accounting\Service\IAccount $callAccount,
