@@ -30,7 +30,11 @@ class CheckoutSubmitAllAfter
         $this->_subRegister->savePv($order);
         /* account PV if order is paid (credit card payment) */
         $state = $order->getState();
-        if ($state == \Magento\Sales\Model\Order::STATE_PROCESSING) {
+        $status = $order->getStatus();
+        if (
+            ($state == \Magento\Sales\Model\Order::STATE_PROCESSING) &&
+            ($status != \Magento\Sales\Model\Order::STATUS_FRAUD)
+        ) {
             $this->_subRegister->accountPv($order);
         }
 
