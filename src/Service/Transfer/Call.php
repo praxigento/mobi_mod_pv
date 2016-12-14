@@ -110,7 +110,7 @@ class Call
             $reqAddOper = new OperationAddRequest();
             $reqAddOper->setOperationTypeCode(Cfg::CODE_TYPE_OPER_PV_TRANSFER);
             $reqAddOper->setDatePerformed($date);
-            $reqAddOper->setNote($noteOper);
+            $reqAddOper->setOperationNote($noteOper);
             $reqAddOper->setTransactions([
                 [
                     Transaction::ATTR_DEBIT_ACC_ID => $respAccDebit->getId(),
