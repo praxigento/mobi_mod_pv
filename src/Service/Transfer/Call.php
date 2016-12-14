@@ -64,6 +64,8 @@ class Call
         $condForceAll = $request->getConditionForceAll();
         $condForceCountry = $request->getConditionForceCountry();
         $condForceDownline = $request->getConditionForceDownline();
+        $noteOper = $request->getNoteOperation();
+        $noteTrans = $request->getNoteTransaction();
         if (is_null($date)) {
             $date = $this->_toolDate->getUtcNowForDb();
         }
@@ -108,15 +110,19 @@ class Call
             $reqAddOper = new OperationAddRequest();
             $reqAddOper->setOperationTypeCode(Cfg::CODE_TYPE_OPER_PV_TRANSFER);
             $reqAddOper->setDatePerformed($date);
+            $reqAddOper->setNote($noteOper);
             $reqAddOper->setTransactions([
                 [
                     Transaction::ATTR_DEBIT_ACC_ID => $respAccDebit->getId(),
                     Transaction::ATTR_CREDIT_ACC_ID => $respAccCredit->getId(),
-                    Transaction::ATTR_VALUE => $value
+                    Transaction::ATTR_VALUE => $value,
+                    Transaction::ATTR_NOTE => $noteTrans
                 ]
             ]);
             $respAddOper = $this->_callOperation->add($reqAddOper);
             if ($respAddOper->isSucceed()) {
+                $result->setOperationId($respAddOper->getOperationId());
+                $result->setTransactionsIds($respAddOper->getTransactionsIds());
                 $result->markSucceed();
             }
         }
@@ -145,6 +151,8 @@ class Call
         $reqBetween = new Request\BetweenCustomers($requestData);
         $respBetween = $this->betweenCustomers($reqBetween);
         if ($respBetween->isSucceed()) {
+            $result->setOperationId($respBetween->getOperationId());
+            $result->setTransactionsIds($respBetween->getTransactionsIds());
             $result->markSucceed();
         }
         return $result;

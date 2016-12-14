@@ -19,6 +19,10 @@ class Base extends \Praxigento\Core\Service\Base\Request
      */
     const COND_FORCE_DOWNLINE = 'condition_force_downline';
     const DATE_APPLIED = 'date_applied';
+    /** Note to add to operation */
+    const NOTE_OPERATION = 'note_operation';
+    /** Note to add to transaction  */
+    const NOTE_TRANSACTION = 'note_transaction';
     /**
      * PV transfer value.
      */
@@ -61,7 +65,25 @@ class Base extends \Praxigento\Core\Service\Base\Request
     }
 
     /**
-     * @return double
+     * @return string
+     */
+    public function getNoteOperation()
+    {
+        $result = parent::getData(self::NOTE_OPERATION);
+        return $result;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNoteTransaction()
+    {
+        $result = parent::getData(self::NOTE_TRANSACTION);
+        return $result;
+    }
+
+    /**
+     * @return float
      */
     public function getValue()
     {
@@ -102,7 +124,23 @@ class Base extends \Praxigento\Core\Service\Base\Request
     }
 
     /**
-     * @param double $data
+     * @param string $data
+     */
+    public function setNoteOperation($data)
+    {
+        parent::setData(self::NOTE_OPERATION, $data);
+    }
+
+    /**
+     * @param string $data
+     */
+    public function setNoteTransaction($data)
+    {
+        parent::setData(self::NOTE_TRANSACTION, $data);
+    }
+
+    /**
+     * @param float $data
      */
     public function setValue($data)
     {
