@@ -146,9 +146,10 @@ class Call
         $respRepres = $this->_callAccount->getRepresentative($reqRepres);
         /* extract input parameters */
         $requestData = $request->get();
-        $requestData[Request\BetweenCustomers::FROM_CUSTOMER_ID] = $respRepres->get(Account::ATTR_CUST_ID);
-        $requestData[Request\BetweenCustomers::COND_FORCE_ALL] = true;
         $reqBetween = new Request\BetweenCustomers($requestData);
+        $fromCustId = $respRepres->get(Account::ATTR_CUST_ID);
+        $reqBetween->setFromCustomerId($fromCustId);
+        $reqBetween->setConditionForceAll(true);
         $respBetween = $this->betweenCustomers($reqBetween);
         if ($respBetween->isSucceed()) {
             $result->setOperationId($respBetween->getOperationId());
