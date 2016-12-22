@@ -10,12 +10,12 @@ class AccountPv extends \Praxigento\Core\Service\Base\Response
 
     public function getOperationId()
     {
-        $result = parent::getData(self::OPERATION_ID);
+        $result = parent::get(self::OPERATION_ID);
         return $result;
     }
 
     public function setOperationId($data)
     {
-        parent::setData(self::OPERATION_ID, $data);
+        parent::set(self::OPERATION_ID, $data);
     }
 }

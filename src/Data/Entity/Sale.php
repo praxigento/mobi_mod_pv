@@ -20,7 +20,7 @@ class Sale
      */
     public function getDatePaid()
     {
-        $result = parent::getData(self::ATTR_DATE_PAID);
+        $result = parent::get(self::ATTR_DATE_PAID);
         return $result;
     }
 
@@ -29,7 +29,7 @@ class Sale
      */
     public function getDiscount()
     {
-        $result = parent::getData(self::ATTR_DISCOUNT);
+        $result = parent::get(self::ATTR_DISCOUNT);
         return $result;
     }
 
@@ -43,7 +43,7 @@ class Sale
      */
     public function getSaleId()
     {
-        $result = parent::getData(self::ATTR_SALE_ID);
+        $result = parent::get(self::ATTR_SALE_ID);
         return $result;
     }
 
@@ -52,7 +52,7 @@ class Sale
      */
     public function getSubtotal()
     {
-        $result = parent::getData(self::ATTR_SUBTOTAL);
+        $result = parent::get(self::ATTR_SUBTOTAL);
         return $result;
     }
 
@@ -61,7 +61,7 @@ class Sale
      */
     public function getTotal()
     {
-        $result = parent::getData(self::ATTR_TOTAL);
+        $result = parent::get(self::ATTR_TOTAL);
         return $result;
     }
 
@@ -70,7 +70,7 @@ class Sale
      */
     public function setDatePaid($data)
     {
-        parent::setData(self::ATTR_DATE_PAID, $data);
+        parent::set(self::ATTR_DATE_PAID, $data);
     }
 
     /**
@@ -78,7 +78,7 @@ class Sale
      */
     public function setDiscount($data)
     {
-        parent::setData(self::ATTR_DISCOUNT, $data);
+        parent::set(self::ATTR_DISCOUNT, $data);
     }
 
     /**
@@ -86,7 +86,7 @@ class Sale
      */
     public function setSaleId($data)
     {
-        parent::setData(self::ATTR_SALE_ID, $data);
+        parent::set(self::ATTR_SALE_ID, $data);
     }
 
     /**
@@ -94,7 +94,7 @@ class Sale
      */
     public function setSubtotal($data)
     {
-        parent::setData(self::ATTR_SUBTOTAL, $data);
+        parent::set(self::ATTR_SUBTOTAL, $data);
     }
 
     /**
@@ -102,7 +102,7 @@ class Sale
      */
     public function setTotal($data)
     {
-        parent::setData(self::ATTR_TOTAL, $data);
+        parent::set(self::ATTR_TOTAL, $data);
     }
 
 }

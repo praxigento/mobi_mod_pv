@@ -22,10 +22,10 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         /** @var  $call Call */
         $call = $obm->get('Praxigento\Pv\Service\Transfer\Call');
         $req = new Request\BetweenCustomers();
-        $req->setData(Request\BetweenCustomers::FROM_CUSTOMER_ID, 1);
-        $req->setData(Request\BetweenCustomers::TO_CUSTOMER_ID, 2);
-        $req->setData(Request\BetweenCustomers::VALUE, 25.43);
-        $req->setData(Request\BetweenCustomers::DATE_APPLIED, $formattedNow);
+        $req->set(Request\BetweenCustomers::FROM_CUSTOMER_ID, 1);
+        $req->set(Request\BetweenCustomers::TO_CUSTOMER_ID, 2);
+        $req->set(Request\BetweenCustomers::VALUE, 25.43);
+        $req->set(Request\BetweenCustomers::DATE_APPLIED, $formattedNow);
         /** @var  $resp Response\BetweenCustomers */
         $resp = $call->betweenCustomers($req);
         $this->assertTrue($resp->isSucceed());
@@ -43,9 +43,9 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         /** @var  $call Call */
         $call = $obm->get('Praxigento\Pv\Service\Transfer\Call');
         $req = new Request\CreditToCustomer();
-        $req->setData(Request\CreditToCustomer::TO_CUSTOMER_ID, 4);
-        $req->setData(Request\CreditToCustomer::VALUE, 23);
-        $req->setData(Request\CreditToCustomer::DATE_APPLIED, $formattedNow);
+        $req->set(Request\CreditToCustomer::TO_CUSTOMER_ID, 4);
+        $req->set(Request\CreditToCustomer::VALUE, 23);
+        $req->set(Request\CreditToCustomer::DATE_APPLIED, $formattedNow);
         /** @var  $resp Response\CreditToCustomer */
         $resp = $call->creditToCustomer($req);
         $this->assertTrue($resp->isSucceed());
@@ -63,9 +63,9 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         /** @var  $call Call */
         $call = $obm->get('Praxigento\Pv\Service\Transfer\Call');
         $req = new Request\DebitFromCustomer();
-        $req->setData(Request\DebitFromCustomer::FROM_CUSTOMER_ID, 2);
-        $req->setData(Request\DebitFromCustomer::VALUE, 127.15);
-        $req->setData(Request\DebitFromCustomer::DATE_APPLIED, $formattedNow);
+        $req->set(Request\DebitFromCustomer::FROM_CUSTOMER_ID, 2);
+        $req->set(Request\DebitFromCustomer::VALUE, 127.15);
+        $req->set(Request\DebitFromCustomer::DATE_APPLIED, $formattedNow);
         /** @var  $resp Response\DebitFromCustomer */
         $resp = $call->debitFromCustomer($req);
         $this->assertTrue($resp->isSucceed());

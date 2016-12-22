@@ -18,7 +18,7 @@ class Item
      */
     public function getDiscount()
     {
-        $result = parent::getData(self::ATTR_DISCOUNT);
+        $result = parent::get(self::ATTR_DISCOUNT);
         return $result;
     }
 
@@ -32,7 +32,7 @@ class Item
      */
     public function getSaleItemId()
     {
-        $result = parent::getData(self::ATTR_SALE_ITEM_ID);
+        $result = parent::get(self::ATTR_SALE_ITEM_ID);
         return $result;
     }
 
@@ -41,7 +41,7 @@ class Item
      */
     public function getSubtotal()
     {
-        $result = parent::getData(self::ATTR_SUBTOTAL);
+        $result = parent::get(self::ATTR_SUBTOTAL);
         return $result;
     }
 
@@ -50,7 +50,7 @@ class Item
      */
     public function getTotal()
     {
-        $result = parent::getData(self::ATTR_TOTAL);
+        $result = parent::get(self::ATTR_TOTAL);
         return $result;
     }
 
@@ -59,7 +59,7 @@ class Item
      */
     public function setDiscount($data)
     {
-        parent::setData(self::ATTR_DISCOUNT, $data);
+        parent::set(self::ATTR_DISCOUNT, $data);
     }
 
     /**
@@ -67,7 +67,7 @@ class Item
      */
     public function setSaleItemId($data)
     {
-        parent::setData(self::ATTR_SALE_ITEM_ID, $data);
+        parent::set(self::ATTR_SALE_ITEM_ID, $data);
     }
 
     /**
@@ -75,7 +75,7 @@ class Item
      */
     public function setSubtotal($data)
     {
-        parent::setData(self::ATTR_SUBTOTAL, $data);
+        parent::set(self::ATTR_SUBTOTAL, $data);
     }
 
     /**
@@ -83,6 +83,6 @@ class Item
      */
     public function setTotal($data)
     {
-        parent::setData(self::ATTR_TOTAL, $data);
+        parent::set(self::ATTR_TOTAL, $data);
     }
 }

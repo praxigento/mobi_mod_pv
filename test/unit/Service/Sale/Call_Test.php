@@ -85,13 +85,13 @@ class Call_UnitTest
             ->andReturn($custId);
         // $respGetAccCust = $this->_callAccount->get($reqGetAccCust);
         $mRespGetAccCust = new \Praxigento\Accounting\Service\Account\Response\Get();
-        $mRespGetAccCust->setData([Account::ATTR_ID => $accIdCust]);
+        $mRespGetAccCust->set([Account::ATTR_ID => $accIdCust]);
         $this->mCallAccount
             ->shouldReceive('get')->once()
             ->andReturn($mRespGetAccCust);
         // $respGetAccRepres = $this->_callAccount->getRepresentative($reqGetAccRepres);
         $mRespGetAccRepres = new \Praxigento\Accounting\Service\Account\Response\GetRepresentative();
-        $mRespGetAccRepres->setData([Account::ATTR_ID => $accIdRepres]);
+        $mRespGetAccRepres->set([Account::ATTR_ID => $accIdRepres]);
         $this->mCallAccount
             ->shouldReceive('getRepresentative')->once()
             ->andReturn($mRespGetAccRepres);

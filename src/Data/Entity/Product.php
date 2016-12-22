@@ -22,7 +22,7 @@ class Product
      */
     public function getProductRef()
     {
-        $result = parent::getData(self::ATTR_PROD_REF);
+        $result = parent::get(self::ATTR_PROD_REF);
         return $result;
     }
 
@@ -31,7 +31,7 @@ class Product
      */
     public function getPv()
     {
-        $result = parent::getData(self::ATTR_PV);
+        $result = parent::get(self::ATTR_PV);
         return $result;
     }
 
@@ -41,7 +41,7 @@ class Product
      */
     public function setProductRef($data)
     {
-        parent::setData(self::ATTR_PROD_REF, $data);
+        parent::set(self::ATTR_PROD_REF, $data);
     }
 
     /**
@@ -49,7 +49,7 @@ class Product
      */
     public function setPv($data)
     {
-        parent::setData(self::ATTR_PV, $data);
+        parent::set(self::ATTR_PV, $data);
     }
 
 }

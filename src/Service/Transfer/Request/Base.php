@@ -33,7 +33,7 @@ class Base extends \Praxigento\Core\Service\Base\Request
      */
     public function getConditionForceAll()
     {
-        $result = parent::getData(self::COND_FORCE_ALL);
+        $result = parent::get(self::COND_FORCE_ALL);
         return $result;
     }
 
@@ -42,7 +42,7 @@ class Base extends \Praxigento\Core\Service\Base\Request
      */
     public function getConditionForceCountry()
     {
-        $result = parent::getData(self::COND_FORCE_COUNTRY);
+        $result = parent::get(self::COND_FORCE_COUNTRY);
         return $result;
     }
 
@@ -51,7 +51,7 @@ class Base extends \Praxigento\Core\Service\Base\Request
      */
     public function getConditionForceDownline()
     {
-        $result = parent::getData(self::COND_FORCE_DOWNLINE);
+        $result = parent::get(self::COND_FORCE_DOWNLINE);
         return $result;
     }
 
@@ -60,7 +60,7 @@ class Base extends \Praxigento\Core\Service\Base\Request
      */
     public function getDateApplied()
     {
-        $result = parent::getData(self::DATE_APPLIED);
+        $result = parent::get(self::DATE_APPLIED);
         return $result;
     }
 
@@ -69,7 +69,7 @@ class Base extends \Praxigento\Core\Service\Base\Request
      */
     public function getNoteOperation()
     {
-        $result = parent::getData(self::NOTE_OPERATION);
+        $result = parent::get(self::NOTE_OPERATION);
         return $result;
     }
 
@@ -78,7 +78,7 @@ class Base extends \Praxigento\Core\Service\Base\Request
      */
     public function getNoteTransaction()
     {
-        $result = parent::getData(self::NOTE_TRANSACTION);
+        $result = parent::get(self::NOTE_TRANSACTION);
         return $result;
     }
 
@@ -87,7 +87,7 @@ class Base extends \Praxigento\Core\Service\Base\Request
      */
     public function getValue()
     {
-        $result = parent::getData(self::VALUE);
+        $result = parent::get(self::VALUE);
         return $result;
     }
 
@@ -96,7 +96,7 @@ class Base extends \Praxigento\Core\Service\Base\Request
      */
     public function setConditionForceAll($data)
     {
-        parent::setData(self::COND_FORCE_ALL, $data);
+        parent::set(self::COND_FORCE_ALL, $data);
     }
 
     /**
@@ -104,7 +104,7 @@ class Base extends \Praxigento\Core\Service\Base\Request
      */
     public function setConditionForceCountry($data)
     {
-        parent::setData(self::COND_FORCE_COUNTRY, $data);
+        parent::set(self::COND_FORCE_COUNTRY, $data);
     }
 
     /**
@@ -112,7 +112,7 @@ class Base extends \Praxigento\Core\Service\Base\Request
      */
     public function setConditionForceDownline($data)
     {
-        parent::setData(self::COND_FORCE_DOWNLINE, $data);
+        parent::set(self::COND_FORCE_DOWNLINE, $data);
     }
 
     /**
@@ -120,7 +120,7 @@ class Base extends \Praxigento\Core\Service\Base\Request
      */
     public function setDateApplied($data)
     {
-        parent::setData(self::DATE_APPLIED, $data);
+        parent::set(self::DATE_APPLIED, $data);
     }
 
     /**
@@ -128,7 +128,7 @@ class Base extends \Praxigento\Core\Service\Base\Request
      */
     public function setNoteOperation($data)
     {
-        parent::setData(self::NOTE_OPERATION, $data);
+        parent::set(self::NOTE_OPERATION, $data);
     }
 
     /**
@@ -136,7 +136,7 @@ class Base extends \Praxigento\Core\Service\Base\Request
      */
     public function setNoteTransaction($data)
     {
-        parent::setData(self::NOTE_TRANSACTION, $data);
+        parent::set(self::NOTE_TRANSACTION, $data);
     }
 
     /**
@@ -144,6 +144,6 @@ class Base extends \Praxigento\Core\Service\Base\Request
      */
     public function setValue($data)
     {
-        parent::setData(self::VALUE, $data);
+        parent::set(self::VALUE, $data);
     }
 }

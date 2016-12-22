@@ -13,7 +13,7 @@ class DebitFromCustomer extends Base
      */
     public function getFromCustomerId()
     {
-        $result = parent::getData(self::FROM_CUSTOMER_ID);
+        $result = parent::get(self::FROM_CUSTOMER_ID);
         return $result;
     }
 
@@ -22,6 +22,6 @@ class DebitFromCustomer extends Base
      */
     public function setFromCustomerId($data)
     {
-        parent::setData(self::FROM_CUSTOMER_ID, $data);
+        parent::set(self::FROM_CUSTOMER_ID, $data);
     }
 }

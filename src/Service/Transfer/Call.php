@@ -145,8 +145,8 @@ class Call
         $reqRepres->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
         $respRepres = $this->_callAccount->getRepresentative($reqRepres);
         /* extract input parameters */
-        $requestData = $request->getData();
-        $requestData[Request\BetweenCustomers::FROM_CUSTOMER_ID] = $respRepres->getData(Account::ATTR_CUST_ID);
+        $requestData = $request->get();
+        $requestData[Request\BetweenCustomers::FROM_CUSTOMER_ID] = $respRepres->get(Account::ATTR_CUST_ID);
         $requestData[Request\BetweenCustomers::COND_FORCE_ALL] = true;
         $reqBetween = new Request\BetweenCustomers($requestData);
         $respBetween = $this->betweenCustomers($reqBetween);
@@ -166,8 +166,8 @@ class Call
         $reqRepres->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
         $respRepres = $this->_callAccount->getRepresentative($reqRepres);
         /* extract input parameters */
-        $requestData = $request->getData();
-        $requestData[Request\BetweenCustomers::TO_CUSTOMER_ID] = $respRepres->getData(Account::ATTR_CUST_ID);
+        $requestData = $request->get();
+        $requestData[Request\BetweenCustomers::TO_CUSTOMER_ID] = $respRepres->get(Account::ATTR_CUST_ID);
         $requestData[Request\BetweenCustomers::COND_FORCE_ALL] = true;
         $reqBetween = new Request\BetweenCustomers($requestData);
         $respBetween = $this->betweenCustomers($reqBetween);

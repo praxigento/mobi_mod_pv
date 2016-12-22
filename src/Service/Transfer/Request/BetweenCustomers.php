@@ -14,7 +14,7 @@ class BetweenCustomers extends Base
      */
     public function getFromCustomerId()
     {
-        $result = parent::getData(self::FROM_CUSTOMER_ID);
+        $result = parent::get(self::FROM_CUSTOMER_ID);
         return $result;
     }
 
@@ -23,7 +23,7 @@ class BetweenCustomers extends Base
      */
     public function getToCustomerId()
     {
-        $result = parent::getData(self::TO_CUSTOMER_ID);
+        $result = parent::get(self::TO_CUSTOMER_ID);
         return $result;
     }
 
@@ -32,7 +32,7 @@ class BetweenCustomers extends Base
      */
     public function setFromCustomerId($data)
     {
-        parent::setData(self::FROM_CUSTOMER_ID, $data);
+        parent::set(self::FROM_CUSTOMER_ID, $data);
     }
 
     /**
@@ -40,6 +40,6 @@ class BetweenCustomers extends Base
      */
     public function setToCustomerId($data)
     {
-        parent::setData(self::TO_CUSTOMER_ID, $data);
+        parent::set(self::TO_CUSTOMER_ID, $data);
     }
 }
