@@ -30,7 +30,7 @@ class Collector
      */
     public function getServiceItemForMageItem(\Magento\Sales\Api\Data\OrderItemInterface $item, $stockId = null)
     {
-        $result = $this->_manObj->create(\Praxigento\Pv\Service\Sale\Data\Item::class);
+        $result = new \Praxigento\Pv\Service\Sale\Data\Item();
         $prodId = $item->getProductId();
         $itemId = $item->getItemId();
         /* qty of the product can be changed in invoice but we use ordered only */

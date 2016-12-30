@@ -39,7 +39,7 @@ class Register
             $orderId = $order->getEntityId();
             $itemsData = $this->_subCollector->getServiceItemsForMageSaleOrder($order);
             /** @var \Praxigento\Pv\Service\Sale\Request\AccountPv $req */
-            $req = $this->_manObj->create(\Praxigento\Pv\Service\Sale\Request\AccountPv::class);
+            $req = new \Praxigento\Pv\Service\Sale\Request\AccountPv();
             $req->setSaleOrderId($orderId);
             $req->setOrderItems($itemsData);
             $this->_callSale->accountPv($req);
@@ -59,7 +59,7 @@ class Register
         $itemsData = $this->_subCollector->getServiceItemsForMageSaleOrder($order);
         /* compose request data and request itself */
         /** @var \Praxigento\Pv\Service\Sale\Request\Save $req */
-        $req = $this->_manObj->create(\Praxigento\Pv\Service\Sale\Request\Save::class);
+        $req = new \Praxigento\Pv\Service\Sale\Request\Save();
         $req->setSaleOrderId($orderId);
         $req->setOrderItems($itemsData);
         if ($state == \Magento\Sales\Model\Order::STATE_PROCESSING) {
