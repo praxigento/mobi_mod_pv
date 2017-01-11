@@ -95,31 +95,35 @@ class Call
             $customerId = $this->_repoMod->getSaleOrderCustomerId($saleId);
             $this->_logger->info("Order #$saleId is created by customer #$customerId.");
         }
-        /* get PV account data for customer */
-        $reqGetAccCust = new GetAccountRequest();
-        $reqGetAccCust->setCustomerId($customerId);
-        $reqGetAccCust->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-        $reqGetAccCust->setCreateNewAccountIfMissed(true);
-        $respGetAccCust = $this->_callAccount->get($reqGetAccCust);
-        /* get PV account data for representative */
-        $reqGetAccRepres = new GetAccountRepresentativeRequest();
-        $reqGetAccRepres->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-        $respGetAccRepres = $this->_callAccount->getRepresentative($reqGetAccRepres);
-        /* create one operation with one transaction */
-        $reqAddOper = new AddOperationRequest();
-        $reqAddOper->setOperationTypeCode(Cfg::CODE_TYPE_OPER_PV_SALE_PAID);
-        $trans = [
-            Transaction::ATTR_DEBIT_ACC_ID => $respGetAccRepres->getId(),
-            Transaction::ATTR_CREDIT_ACC_ID => $respGetAccCust->getId(),
-            Transaction::ATTR_VALUE => $pvTotal,
-            Transaction::ATTR_DATE_APPLIED => $dateApplied
-        ];
-        $reqAddOper->setTransactions([$trans]);
-        $respAddOper = $this->_callOperation->add($reqAddOper);
-        $operId = $respAddOper->getOperationId();
-        $result->setOperationId($operId);
-        $result->markSucceed();
-        $this->_logger->info("PV accounting operation for sale order #$saleId is completed.");
+        if (!is_null($customerId)) {
+            /* get PV account data for customer */
+            $reqGetAccCust = new GetAccountRequest();
+            $reqGetAccCust->setCustomerId($customerId);
+            $reqGetAccCust->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
+            $reqGetAccCust->setCreateNewAccountIfMissed(true);
+            $respGetAccCust = $this->_callAccount->get($reqGetAccCust);
+            /* get PV account data for representative */
+            $reqGetAccRepres = new GetAccountRepresentativeRequest();
+            $reqGetAccRepres->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
+            $respGetAccRepres = $this->_callAccount->getRepresentative($reqGetAccRepres);
+            /* create one operation with one transaction */
+            $reqAddOper = new AddOperationRequest();
+            $reqAddOper->setOperationTypeCode(Cfg::CODE_TYPE_OPER_PV_SALE_PAID);
+            $trans = [
+                Transaction::ATTR_DEBIT_ACC_ID => $respGetAccRepres->getId(),
+                Transaction::ATTR_CREDIT_ACC_ID => $respGetAccCust->getId(),
+                Transaction::ATTR_VALUE => $pvTotal,
+                Transaction::ATTR_DATE_APPLIED => $dateApplied
+            ];
+            $reqAddOper->setTransactions([$trans]);
+            $respAddOper = $this->_callOperation->add($reqAddOper);
+            $operId = $respAddOper->getOperationId();
+            $result->setOperationId($operId);
+            $result->markSucceed();
+            $this->_logger->info("PV accounting operation for sale order #$saleId is completed.");
+        } else {
+            $this->_logger->info("PV accounting operation for sale order #$saleId cannot be completed. Customer is not defined (guest?).");
+        }
         return $result;
     }
 
