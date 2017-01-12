@@ -26,10 +26,10 @@ class Item extends BaseEntityRepo implements IEntityRepo
         /* aliases and tables */
         $asStockItem = 'csi';
         $asPv = 'ppsi';
-        $tblStockItem = [$asStockItem => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM)];
-        $tblPv = [$asPv => $this->_resource->getTableName(Entity::ENTITY_NAME)];
+        $tblStockItem = [$asStockItem => $this->resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM)];
+        $tblPv = [$asPv => $this->resource->getTableName(Entity::ENTITY_NAME)];
         /* SELECT FROM cataloginventory_stock_item */
-        $query = $this->_conn->select();
+        $query = $this->conn->select();
         $cols = [];
         $query->from($tblStockItem, $cols);
         /* LEFT JOIN prxgt_pv_stock_item */
@@ -41,7 +41,7 @@ class Item extends BaseEntityRepo implements IEntityRepo
         $where .= ' AND ' . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID . '=' . (int)$stockId;
         $query->where($where);
         /* fetch data */
-        $result = $this->_conn->fetchOne($query);
+        $result = $this->conn->fetchOne($query);
         return $result;
     }
 }

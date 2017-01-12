@@ -31,10 +31,10 @@ class Item
         /* aliases and tables */
         $asOrder = 'sale';
         $asPvItem = 'pv';
-        $tblOrder = [$asOrder => $this->_resource->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER_ITEM)];
-        $tblPvItem = [$asPvItem => $this->_resource->getTableName(Entity::ENTITY_NAME)];
+        $tblOrder = [$asOrder => $this->resource->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER_ITEM)];
+        $tblPvItem = [$asPvItem => $this->resource->getTableName(Entity::ENTITY_NAME)];
         /* SELECT FROM sales_order_item */
-        $query = $this->_conn->select();
+        $query = $this->conn->select();
         $cols = [];
         $query->from($tblOrder, $cols);
         /* LEFT JOIN prxgt_pv_sale_item pwq */
@@ -45,7 +45,7 @@ class Item
         $where = $asOrder . '.' . Cfg::E_SALE_ORDER_ITEM_A_ORDER_ID . '=' . (int)$orderId;
         $query->where($where);
         /* fetch data */
-        $rows = $this->_conn->fetchAll($query);
+        $rows = $this->conn->fetchAll($query);
         foreach ($rows as $row) {
             /** @var Entity $item */
             $item = $this->_manObj->create(Entity::class, $row);
