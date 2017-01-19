@@ -7,7 +7,6 @@ namespace Praxigento\Pv\Setup;
 
 use Praxigento\Pv\Data\Entity\Product;
 use Praxigento\Pv\Data\Entity\Sale;
-use Praxigento\Pv\Data\Entity\Group\Price as GroupPrice;
 use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
 use Praxigento\Pv\Data\Entity\Stock\Item as StockItem;
 
@@ -19,11 +18,6 @@ class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
         $pathToFile = __DIR__ . '/../etc/dem.json';
         $pathToNode = '/dBEAR/package/Praxigento/package/Pv';
         $demPackage = $this->_toolDem->readDemPackage($pathToFile, $pathToNode);
-
-        /* Group Price */
-        $entityAlias = GroupPrice::ENTITY_NAME;
-        $demEntity = $demPackage->get('package/Group/entity/Price');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Stock Item */
         $entityAlias = StockItem::ENTITY_NAME;
