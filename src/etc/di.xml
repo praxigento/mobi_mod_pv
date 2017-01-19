@@ -34,6 +34,20 @@
                 sortOrder="100" disabled="false"/>
     </type>
 
+    <type name="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
+        <!-- Add fields mapping (wholesale PV) to products collection -->
+        <plugin name="praxigento_pv"
+                type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory"
+                sortOrder="100" disabled="false"/>
+    </type>
+
+    <type name="Magento\Catalog\Model\Layer">
+        <!-- Add warehouse PV to collection for category view -->
+        <plugin name="praxigento_pv"
+                type="\Praxigento\Pv\Plugin\Catalog\Model\Layer"
+                sortOrder="100" disabled="false"/>
+    </type>
+
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <!-- Add custom columns to the sales orders grid -->
         <plugin name="praxigento_pv"
