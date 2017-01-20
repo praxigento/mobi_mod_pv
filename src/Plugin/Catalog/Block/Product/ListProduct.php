@@ -16,7 +16,7 @@ class ListProduct
     ) {
         $result = $proceed($product);
         $domId = "prxgt_pv_" . $product->getId();
-        $pvWholesale = $product->getData(\Praxigento\Pv\Plugin\Catalog\Model\Layer::AS_PV_WRHS);
+        $pvWholesale = $product->getData(\Praxigento\Pv\Plugin\Catalog\Model\Layer::AS_ATTR_PV_WRHS);
         $pvWholesale = number_format($pvWholesale, 2);
         $html = "<div id=\"$domId\"><span>$pvWholesale</span> PV</div>";
         $result = $html . $result;

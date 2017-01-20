@@ -8,7 +8,8 @@ use Praxigento\Pv\Config as Cfg;
 
 class Layer
 {
-    const AS_PV_WRHS = 'prxgt_pv_warehouse';
+    const AS_ATTR_PV_WRHS = 'prxgt_pv_warehouse';
+    const AS_TBL_PV_STOCK_ITEM = 'prxgt_psi';
     /**
      * Join warehouse PV data to product collection.
      *
@@ -25,22 +26,14 @@ class Layer
         $result = $proceed($collection);
         $query = $collection->getSelect();
         /* aliases and tables */
-        $asStockStatus = 'stock_status_index';
-        $asStockItem = 'csi';
-        $asStockPv = 'ppsi';
+        $asStockItem = \Praxigento\Warehouse\Plugin\Catalog\Model\Layer::AS_TBL_CATALOGINVENTORY_STOCK_ITEM;
+        $asStockPv = self::AS_TBL_PV_STOCK_ITEM;
         $tblStockItem = [$asStockItem => $collection->getTable(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM)];
         $tblStockPv = [$asStockPv => $collection->getTable(\Praxigento\Pv\Data\Entity\Stock\Item::ENTITY_NAME)];
-        /* INNER JOIN cataloginventory_stock_item AS stock_item */
-        $on = $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_PROD_ID . '='
-            . $asStockStatus . '.' . Cfg::E_CATINV_STOCK_STATUS_A_PROD_ID;
-        $on .= ' AND ' . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID . '='
-            . $asStockStatus . '.' . Cfg::E_CATINV_STOCK_STATUS_A_STOCK_ID;
-        $cols = [];
-        $query->joinInner($tblStockItem, $on, $cols);
         // LEFT JOIN `prxgt_pv_stock_item` AS `prxgtPvStock`
         $on = $asStockPv . '.' . \Praxigento\Pv\Data\Entity\Stock\Item::ATTR_STOCK_ITEM_REF . '='
             . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
-        $cols = [self::AS_PV_WRHS => \Praxigento\Pv\Data\Entity\Stock\Item::ATTR_PV];
+        $cols = [self::AS_ATTR_PV_WRHS => \Praxigento\Pv\Data\Entity\Stock\Item::ATTR_PV];
         $query->joinLeft($tblStockPv, $on, $cols);
         return $result;
     }

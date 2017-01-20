@@ -17,42 +17,42 @@
     <!-- ******* -->
     <type name="Magento\Catalog\Block\Product\ListProduct">
         <!-- Display PV in catalog list -->
-        <plugin name="praxigento_pv"
+        <plugin name="praxigento_pv_plugin"
                 type="\Praxigento\Pv\Plugin\Catalog\Block\Product\ListProduct"
-                sortOrder="100" disabled="false"/>
+                sortOrder="400" disabled="false"/>
     </type>
     <type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
         <!-- Enable order & filter for additional fields (wholesale PV) in products collection -->
-        <plugin name="praxigento_pv"
+        <plugin name="praxigento_pv_plugin"
                 type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\Collection"
-                sortOrder="100" disabled="false"/>
+                sortOrder="400" disabled="false"/>
     </type>
     <type name="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
         <!-- Add fields mapping (wholesale PV) to products collection -->
-        <plugin name="praxigento_pv"
+        <plugin name="praxigento_pv_plugin"
                 type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory"
-                sortOrder="100" disabled="false"/>
+                sortOrder="400" disabled="false"/>
     </type>
 
     <type name="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
         <!-- Add fields mapping (wholesale PV) to products collection -->
-        <plugin name="praxigento_pv"
+        <plugin name="praxigento_pv_plugin"
                 type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory"
-                sortOrder="100" disabled="false"/>
+                sortOrder="400" disabled="false"/>
     </type>
 
     <type name="Magento\Catalog\Model\Layer">
         <!-- Add warehouse PV to collection for category view -->
-        <plugin name="praxigento_pv"
+        <plugin name="praxigento_pv_plugin"
                 type="\Praxigento\Pv\Plugin\Catalog\Model\Layer"
-                sortOrder="100" disabled="false"/>
+                sortOrder="400" disabled="false"/>
     </type>
 
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <!-- Add custom columns to the sales orders grid -->
-        <plugin name="praxigento_pv"
+        <plugin name="praxigento_pv_plugin"
                 type="Praxigento\Pv\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory"
-                sortOrder="100" disabled="false"/>
+                sortOrder="400" disabled="false"/>
     </type>
 
 </config>

@@ -26,7 +26,7 @@ class Collection_UnitTest
     public function test_aroundAddFieldToFilter_isPv()
     {
         /** === Test Data === */
-        $ATTR = CollectionFactory::AS_FLD_PV;
+        $ATTR = CollectionFactory::AS_ATTR_PV;
         $CONDITION = 'condition';
         /** === Setup Mocks === */
         $mProceed = function () {
@@ -84,7 +84,7 @@ class Collection_UnitTest
     public function test_aroundAddOrder_isPv()
     {
         /** === Test Data === */
-        $FIELD = CollectionFactory::AS_FLD_PV;
+        $FIELD = CollectionFactory::AS_ATTR_PV;
         $DIR = \Magento\Framework\Data\Collection::SORT_ORDER_ASC;
         /** === Setup Mocks === */
         $mProceed = function () {

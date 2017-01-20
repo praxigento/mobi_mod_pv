@@ -11,7 +11,7 @@ use Praxigento\Pv\Data\Entity\Product;
  */
 class CollectionFactory
 {
-    const AS_FLD_PV = 'prxgt_pv_wholesale';
+    const AS_ATTR_PV = 'prxgt_pv_wholesale';
     const AS_TBL_PROD_PV = 'prxgtPvProd';
     const FULL_PV = self::AS_TBL_PROD_PV . '.' . Product::ATTR_PV;
     /** @var \Magento\Framework\App\ResourceConnection */
@@ -35,12 +35,12 @@ class CollectionFactory
             $tbl = [self::AS_TBL_PROD_PV => $this->_resource->getTableName(Product::ENTITY_NAME)];
             $on = self::AS_TBL_PROD_PV . '.' . Product::ATTR_PROD_REF . '=e.entity_id';
             $cols = [
-                self::AS_FLD_PV => Product::ATTR_PV
+                self::AS_ATTR_PV => Product::ATTR_PV
             ];
             $query->joinLeft($tbl, $on, $cols);
             /* add fields mapping */
-            $result->addFilterToMap(self::AS_FLD_PV, self::FULL_PV);
-            $result->addFilterToMap('`e`.`' . self::AS_FLD_PV . '`', self::FULL_PV);
+            $result->addFilterToMap(self::AS_ATTR_PV, self::FULL_PV);
+            $result->addFilterToMap('`e`.`' . self::AS_ATTR_PV . '`', self::FULL_PV);
         }
         return $result;
     }
