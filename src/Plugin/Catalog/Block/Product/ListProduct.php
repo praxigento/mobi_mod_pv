@@ -8,7 +8,14 @@ namespace Praxigento\Pv\Plugin\Catalog\Block\Product;
 
 class ListProduct
 {
-
+    /**
+     * Insert PV HTML before product price HTML.
+     *
+     * @param \Magento\Catalog\Block\Product\ListProduct $subject
+     * @param \Closure $proceed
+     * @param \Magento\Catalog\Model\Product $product
+     * @return mixed|string
+     */
     public function aroundGetProductPrice(
         \Magento\Catalog\Block\Product\ListProduct $subject,
         \Closure $proceed,
