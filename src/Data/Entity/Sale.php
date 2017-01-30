@@ -33,6 +33,9 @@ class Sale
         return $result;
     }
 
+    /**
+     * @return string[]
+     */
     public function getPrimaryKeyAttrs()
     {
         return [self::ATTR_SALE_ID];
