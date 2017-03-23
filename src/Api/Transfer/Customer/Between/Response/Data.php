@@ -9,25 +9,39 @@ namespace Praxigento\Pv\Api\Transfer\Customer\Between\Response;
  *
  * (Define getters explicitly to use with Swagger tool)
  *
- * @method void setIsSucceed(bool $data)
+ * @method void setIsInvalidCountries(bool $data)
+ * @method void setIsInvalidDownline(bool $data)
  * @method void setOperationId(int $data)
  */
 class Data
     extends \Flancer32\Lib\Data
 {
     /**
-     * @return bool
+     * 'true' - Country of the PV recipient is not the same as of PV sender.
+     *
+     * @return bool|null
      */
-    public function getIsSucceed()
+    public function getIsInvalidCountries()
     {
-        $result = parent::getIsSucceed();
+        $result = parent::getIsInvalidCountries();
+        return $result;
+    }
+
+    /**
+     * 'true' - PV recipient is not in the downline of the PV sender.
+     *
+     * @return bool|null
+     */
+    public function getIsInvalidDownline()
+    {
+        $result = parent::getIsInvalidDownline();
         return $result;
     }
 
     /**
      * Operation ID if transfer is successfully completed.
      *
-     * @return int
+     * @return int|null
      */
     public function getOperationId()
     {

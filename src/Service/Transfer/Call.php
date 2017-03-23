@@ -128,7 +128,8 @@ class Call
         } else {
             /* some of the constraints are not satisfied */
             $result->setErrorCode(\Praxigento\Pv\Service\Transfer\Response\BetweenCustomers::ERR_VALIDATION);
-
+            if (!$isCountriesTheSame) $result->setIsInvalidCountries(true);
+            if (!$isTargetInDownline) $result->setIsInvalidDownline(true);
         }
         return $result;
     }

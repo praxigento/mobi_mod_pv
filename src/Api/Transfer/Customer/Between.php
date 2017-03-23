@@ -9,7 +9,8 @@ class Between
     implements \Praxigento\Pv\Api\Transfer\Customer\BetweenInterface
 {
     const CTX_REQ = 'request'; // API request data
-    const CTX_RESULT = 'result'; // data to place to response
+    const CTX_RESULT_DATA = 'result_data'; // data to place to response
+    const CTX_RESULT_CODE = 'result_code'; // data to place to response
     const VAR_AMOUNT = 'amount';
     const VAR_CUST_ID_FROM = 'cust_id_from';
     const VAR_CUST_ID_TO = 'cust_id_to';
@@ -27,7 +28,7 @@ class Between
         /* create context for request processing */
         $ctx = new \Flancer32\Lib\Data();
         $ctx->set(self::CTX_REQ, $data);
-        $ctx->set(self::CTX_RESULT, null);
+        $ctx->set(self::CTX_RESULT_DATA, null);
 
         $this->preProcess($ctx);
         $this->process($ctx);
@@ -36,21 +37,16 @@ class Between
         /* get results from context and place it to API response */
         /** @var \Praxigento\Core\Api\Response $result */
         $result = new \Praxigento\Core\Api\Response();
-        $rs = $ctx->get(self::CTX_RESULT);
-        $result->setData($rs);
+        $rsData = $ctx->get(self::CTX_RESULT_DATA);
+        $rsCode = $ctx->get(self::CTX_RESULT_CODE);
+        $result->setData($rsData);
+        $result->getResult()->setCode($rsCode);
         return $result;
     }
 
     protected function postProcess(\Flancer32\Lib\Data $ctx)
     {
-        /* sample for post-processing handling */
-        /** @var \Praxigento\Pv\Api\Transfer\Customer\Between\Response\Data $res */
-        $res = $ctx->get(self::CTX_RESULT);
-        if ($res->getOperationId()) {
-            $res->setIsSucceed(true);
-        } else {
-            $res->setIsSucceed(false);
-        }
+        /* post-processing should be here */
     }
 
     protected function preProcess(\Flancer32\Lib\Data $ctx)
@@ -83,11 +79,16 @@ class Between
         $resp = $this->callTransfer->betweenCustomers($req);
 
         /* prepare result and place it to context */
-        $result = new \Praxigento\Pv\Api\Transfer\Customer\Between\Response\Data();
         $operId = $resp->getOperationId();
-        $result->setOperationId($operId);
-
-        $ctx->set(self::CTX_RESULT, $result);
+        $respData = new \Praxigento\Pv\Api\Transfer\Customer\Between\Response\Data();
+        $respCode = ($resp->isSucceed()) ?
+            \Praxigento\Core\Api\Response::CODE_SUCCESS :
+            \Praxigento\Core\Api\Response::CODE_FAILED;
+        if ($operId) $respData->setOperationId($operId);
+        if ($resp->getIsInvalidCountries()) $respData->setIsInvalidCountries(true);
+        if ($resp->getIsInvalidDownline()) $respData->setIsInvalidDownline(true);
+        $ctx->set(self::CTX_RESULT_DATA, $respData);
+        $ctx->set(self::CTX_RESULT_CODE, $respCode);
     }
 
 }
