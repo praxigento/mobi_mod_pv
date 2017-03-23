@@ -11,5 +11,5 @@ namespace Praxigento\Pv\Service\Transfer\Response;
  * @method void setTransactionsIds(array $data)
  */
 abstract class Base extends \Praxigento\Core\Service\Base\Response {
-    const ERR_IS_NOT_DOWNLINE = 'receiver is not in the downline of sender';
+
 }

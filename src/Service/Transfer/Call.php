@@ -125,6 +125,10 @@ class Call
                 $result->setTransactionsIds($respAddOper->getTransactionsIds());
                 $result->markSucceed();
             }
+        } else {
+            /* some of the constraints are not satisfied */
+            $result->setErrorCode(\Praxigento\Pv\Service\Transfer\Response\BetweenCustomers::ERR_VALIDATION);
+
         }
         return $result;
     }
