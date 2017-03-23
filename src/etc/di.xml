@@ -6,6 +6,8 @@
     <!-- *** -->
     <preference for="\Praxigento\Pv\Api\Sale\Order\GetInterface"
             type="\Praxigento\Pv\Api\Sale\Order\Get"/>
+    <preference for="\Praxigento\Pv\Api\Transfer\Customer\BetweenInterface"
+            type="\Praxigento\Pv\Api\Transfer\Customer\Between"/>
 
 
     <!-- **** -->
