@@ -9,19 +9,29 @@ namespace Praxigento\Pv\Api\Transfer\Customer\Between\Response;
  *
  * (Define getters explicitly to use with Swagger tool)
  *
- * @method void setRef(string $data)
+ * @method void setIsSucceed(bool $data)
+ * @method void setOperationId(int $data)
  */
 class Data
     extends \Flancer32\Lib\Data
 {
     /**
-     * Some fake data for sample.
-     *
-     * @return string
+     * @return bool
      */
-    public function getRef()
+    public function getIsSucceed()
     {
-        $result = parent::getRef();
+        $result = parent::getIsSucceed();
+        return $result;
+    }
+
+    /**
+     * Operation ID if transfer is successfully completed.
+     *
+     * @return int
+     */
+    public function getOperationId()
+    {
+        $result = parent::getOperationId();
         return $result;
     }
 
