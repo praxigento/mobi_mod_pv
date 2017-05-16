@@ -57,13 +57,6 @@
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
-        <!-- Add fields mapping (wholesale PV) to products collection -->
-        <plugin name="praxigento_pv_plugin"
-                type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory"
-                sortOrder="400" disabled="false"/>
-    </type>
-
     <type name="Magento\Catalog\Model\Layer">
         <!-- Add warehouse PV to collection for category view -->
         <plugin name="praxigento_pv_plugin"
