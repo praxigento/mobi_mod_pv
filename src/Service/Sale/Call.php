@@ -86,14 +86,14 @@ class Call
         $saleId = $request->getSaleOrderId();
         $customerId = $request->getCustomerId();
         $dateApplied = $request->getDateApplied();
-        $this->_logger->info("PV accounting operation for sale order #$saleId is started.");
+        $this->logger->info("PV accounting operation for sale order #$saleId is started.");
         $sale = $this->_repoSale->getById($saleId);
         $pvTotal = $sale->getTotal();
         /* get customer for sale order */
         if (is_null($customerId)) {
-            $this->_logger->info("There is no customer ID in request, select customer ID from sale order data.");
+            $this->logger->info("There is no customer ID in request, select customer ID from sale order data.");
             $customerId = $this->_repoMod->getSaleOrderCustomerId($saleId);
-            $this->_logger->info("Order #$saleId is created by customer #$customerId.");
+            $this->logger->info("Order #$saleId is created by customer #$customerId.");
         }
         if (!is_null($customerId)) {
             /* get PV account data for customer */
@@ -120,9 +120,9 @@ class Call
             $operId = $respAddOper->getOperationId();
             $result->setOperationId($operId);
             $result->markSucceed();
-            $this->_logger->info("PV accounting operation for sale order #$saleId is completed.");
+            $this->logger->info("PV accounting operation for sale order #$saleId is completed.");
         } else {
-            $this->_logger->info("PV accounting operation for sale order #$saleId cannot be completed. Customer is not defined (guest?).");
+            $this->logger->info("PV accounting operation for sale order #$saleId cannot be completed. Customer is not defined (guest?).");
         }
         return $result;
     }
@@ -145,7 +145,7 @@ class Call
         $orderId = $req->getSaleOrderId();
         $datePaid = $req->getSaleOrderDatePaid();
         $items = $req->getOrderItems();
-        $this->_logger->info("Save PV attributes for sale order #$orderId.");
+        $this->logger->info("Save PV attributes for sale order #$orderId.");
         $def = $this->_manTrans->begin();
         try {
             /* for all items get PV data by warehouse */
@@ -175,7 +175,7 @@ class Call
             $this->_repoSale->replace($eOrder);
             $this->_manTrans->commit($def);
             $result->markSucceed();
-            $this->_logger->info("PV attributes for sale order #$orderId are saved.");
+            $this->logger->info("PV attributes for sale order #$orderId are saved.");
         } finally {
             $this->_manTrans->end($def);
         }
