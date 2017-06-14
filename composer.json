@@ -19,6 +19,7 @@
     }
   },
   "require": {
-    "praxigento/mobi_mod_mage2_accounting": "dev-master"
+    "praxigento/mobi_mod_mage2_accounting": "dev-master",
+    "praxigento/mobi_mod_mage2_warehouse": "dev-master"
   }
 }
