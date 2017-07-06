@@ -103,7 +103,7 @@
             "entity": {
               "Product": {
                 "alias": "prod",
-                "comment": "PV attributes related to the whole product.",
+                "comment": "Base PV attributes (related to the whole product)",
                 "attribute": {
                   "ProductRef": {
                     "alias": "prod_ref",

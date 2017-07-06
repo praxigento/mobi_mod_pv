@@ -4,7 +4,10 @@
  */
 
 namespace Praxigento\Pv\Data\Entity;
-
+/**
+ * Base PV attributes (related to the whole product).
+ * Warehouse PV are in \Praxigento\Pv\Data\Entity\Stock\Item.
+ */
 class Product
     extends \Praxigento\Core\Data\Entity\Base
 {
