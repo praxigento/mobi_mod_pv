@@ -76,4 +76,47 @@ class Product_Test
         $this->assertNotNull($deleted_rows);
     }
 
+    public function test_repo()
+    {
+        /* get transaction manager & begin database transaction */
+        /** @var \Praxigento\Core\Transaction\Database\IManager $manTrans */
+        $manTrans = $this->manObj->get(\Praxigento\Core\Transaction\Database\IManager::class);
+        $trans = $manTrans->begin();
+        try {
+            /* perform DB operations */
+            /** @var \Praxigento\Pv\Repo\Entity\Def\Product $obj */
+            $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Def\Product::class);
+
+            /* get all entities from repo */
+            $rows = $obj->get();
+            /** @var \Praxigento\Pv\Data\Entity\Product $row */
+            $row = reset($rows);
+            if (!($row instanceof \Praxigento\Pv\Data\Entity\Product)) {
+                $row = new \Praxigento\Pv\Data\Entity\Product($row);
+            }
+            $prodId = $row->getProductRef();
+            $pv = $row->getPv();
+
+            /* update entity  */
+            $row->setPv($pv + 5);
+            $obj->updateById($prodId, $row);
+
+            /* delete entity */
+            $obj->deleteById($prodId);
+
+            /* validate deletion */
+            $res = $obj->getById($prodId);
+            $this->assertFalse($res);
+
+            /* create entity and validate */
+            $obj->create($row);
+            $res = $obj->getById($prodId);
+            $this->assertTrue($res !== false);
+
+        } finally {
+            /* rollback changes using transaction definition */
+            $manTrans->rollback($trans);
+        }
+    }
+
 }
