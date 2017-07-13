@@ -22,7 +22,7 @@ class Item
         return $result;
     }
 
-    public function getPrimaryKeyAttrs()
+    public static function getPrimaryKeyAttrs()
     {
         return [self::ATTR_SALE_ITEM_ID];
     }

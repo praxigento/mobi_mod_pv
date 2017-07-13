@@ -36,7 +36,7 @@ class Sale
     /**
      * @return string[]
      */
-    public function getPrimaryKeyAttrs()
+    public static function getPrimaryKeyAttrs()
     {
         return [self::ATTR_SALE_ID];
     }

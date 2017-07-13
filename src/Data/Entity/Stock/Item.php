@@ -11,7 +11,7 @@ class Item
     const ATTR_STOCK_ITEM_REF = 'stock_item_ref';
     const ENTITY_NAME = 'prxgt_pv_stock_item';
 
-    public function getPrimaryKeyAttrs()
+    public static function getPrimaryKeyAttrs()
     {
         return [self::ATTR_STOCK_ITEM_REF];
     }
