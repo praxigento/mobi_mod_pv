@@ -11,18 +11,6 @@ class Product_Test
     extends \Praxigento\Core\Test\BaseCase\Manual
 {
 
-    public function test_get()
-    {
-        /** @var \Praxigento\Pv\Repo\Entity\Def\Product $obj */
-        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Def\Product::class);
-        $res = $obj->get();
-        $data = $res[0];
-        $product = new \Praxigento\Pv\Data\Entity\Product($data);
-        $pv = $product->getPv();
-        $this->assertNotNull($res);
-        $this->assertNotNull($pv);
-    }
-
     public function test_create()
     {
         /** @var \Praxigento\Pv\Repo\Entity\Def\Product $obj */
@@ -45,28 +33,6 @@ class Product_Test
         $this->assertNotNull($res);
     }
 
-    public function test_getById()
-    {
-        /** @var \Praxigento\Pv\Repo\Entity\Def\Product $obj */
-        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Def\Product::class);
-        /** @var \Praxigento\Pv\Repo\Entity\Def\Product $product */
-        $product = $obj->getById(2);
-        $pv = $product->getPv();
-        $prodref = $product->getProductRef();
-        $this->assertNotNull($prodref);
-        $this->assertNotNull($pv);
-    }
-
-    public function test_updateById()
-    {
-        /** @var \Praxigento\Pv\Repo\Entity\Def\Product $obj */
-        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Def\Product::class);
-        $product = new \Praxigento\Pv\Data\Entity\Product();
-        $product->setPv(21.347);
-        $res = $obj->updateById(5, $product);
-        $this->assertNotNull($res);
-    }
-
     public function test_delete()
     {
         /** @var \Praxigento\Pv\Repo\Entity\Def\Product $obj */
@@ -74,6 +40,31 @@ class Product_Test
         $where = "prod_ref = 5";
         $deleted_rows = $obj->delete($where);
         $this->assertNotNull($deleted_rows);
+    }
+
+    public function test_get()
+    {
+        /** @var \Praxigento\Pv\Repo\Entity\Def\Product $obj */
+        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Def\Product::class);
+        /** @var \Praxigento\Pv\Data\Entity\Product[] $res */
+        $res = $obj->get();
+        /** @var \Praxigento\Pv\Data\Entity\Product $product */
+        $product = $res[0];
+        $pv = $product->getPv();
+        $this->assertNotNull($res);
+        $this->assertNotNull($pv);
+    }
+
+    public function test_getById()
+    {
+        /** @var \Praxigento\Pv\Repo\Entity\Def\Product $obj */
+        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Def\Product::class);
+        /** @var \Praxigento\Pv\Data\Entity\Product $product */
+        $product = $obj->getById(2);
+        $pv = $product->getPv();
+        $prodref = $product->getProductRef();
+        $this->assertNotNull($prodref);
+        $this->assertNotNull($pv);
     }
 
     public function test_repo()
@@ -117,6 +108,16 @@ class Product_Test
             /* rollback changes using transaction definition */
             $manTrans->rollback($trans);
         }
+    }
+
+    public function test_updateById()
+    {
+        /** @var \Praxigento\Pv\Repo\Entity\Def\Product $obj */
+        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Def\Product::class);
+        $product = new \Praxigento\Pv\Data\Entity\Product();
+        $product->setPv(21.347);
+        $res = $obj->updateById(5, $product);
+        $this->assertNotNull($res);
     }
 
 }
