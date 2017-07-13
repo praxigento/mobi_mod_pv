@@ -15,7 +15,7 @@ class Product
     const ATTR_PV = 'pv';
     const ENTITY_NAME = 'prxgt_pv_prod';
 
-    public function getPrimaryKeyAttrs()
+    public static function getPrimaryKeyAttrs()
     {
         return [self::ATTR_PROD_REF];
     }
