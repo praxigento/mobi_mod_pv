@@ -19,7 +19,7 @@ class SalesOrderInvoicePay
     const DATA_INVOICE = 'invoice';
     /** @var \Psr\Log\LoggerInterface */
     protected $_logger;
-    /** @var \Praxigento\Pv\Repo\Entity\Def\Sale */
+    /** @var \Praxigento\Pv\Repo\Entity\Sale */
     protected $_repoSale;
     /** @var \Praxigento\Pv\Observer\Sub\Register */
     protected $_subRegister;
@@ -28,7 +28,7 @@ class SalesOrderInvoicePay
 
     public function __construct(
         \Praxigento\Core\Fw\Logger\App $logger,
-        \Praxigento\Pv\Repo\Entity\Def\Sale $repoSale,
+        \Praxigento\Pv\Repo\Entity\Sale $repoSale,
         \Praxigento\Core\Tool\IDate $toolDate,
         \Praxigento\Pv\Observer\Sub\Register $subRegister
     ) {

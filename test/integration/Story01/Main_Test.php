@@ -130,8 +130,8 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $tblStockItem = $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
         /** @var \Praxigento\Warehouse\Repo\Entity\Stock\IItem $repoWrhs */
         $repoWrhs = $this->_manObj->get(\Praxigento\Warehouse\Repo\Entity\Stock\IItem::class);
-        /** @var \Praxigento\Pv\Repo\Entity\Stock\Def\Item $repo */
-        $repoPv = $this->_manObj->get(\Praxigento\Pv\Repo\Entity\Stock\Def\Item::class);
+        /** @var \Praxigento\Pv\Repo\Entity\Stock\Item $repo */
+        $repoPv = $this->_manObj->get(\Praxigento\Pv\Repo\Entity\Stock\Item::class);
         for ($i = 0; $i < 2; $i++) {
             /* add stock item */
             $this->_conn->insert(

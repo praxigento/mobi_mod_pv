@@ -2,7 +2,8 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Pv\Repo\Entity\Def;
+
+namespace Praxigento\Pv\Repo\Entity;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 

@@ -26,11 +26,11 @@ class Call
     protected $_manTrans;
     /** @var  \Praxigento\Pv\Repo\IModule */
     protected $_repoMod;
-    /** @var  \Praxigento\Pv\Repo\Entity\Def\Sale */
+    /** @var  \Praxigento\Pv\Repo\Entity\Sale */
     protected $_repoSale;
-    /** @var  \Praxigento\Pv\Repo\Entity\Sale\Def\Item */
+    /** @var  \Praxigento\Pv\Repo\Entity\Sale\Item */
     protected $_repoSaleItem;
-    /** @var  \Praxigento\Pv\Repo\Entity\Stock\Def\Item */
+    /** @var  \Praxigento\Pv\Repo\Entity\Stock\Item */
     protected $_repoStockItem;
     /** @var \Praxigento\Core\Tool\IDate */
     protected $_toolDate;
@@ -43,9 +43,9 @@ class Call
      * @param \Praxigento\Accounting\Service\IAccount $callAccount
      * @param \Praxigento\Accounting\Service\IOperation $callOperation
      * @param \Praxigento\Pv\Repo\IModule $repoMod
-     * @param \Praxigento\Pv\Repo\Entity\Def\Sale $repoSale
-     * @param \Praxigento\Pv\Repo\Entity\Sale\Def\Item $repoSaleItem
-     * @param \Praxigento\Pv\Repo\Entity\Stock\Def\Item $repoStockItem
+     * @param \Praxigento\Pv\Repo\Entity\Sale $repoSale
+     * @param \Praxigento\Pv\Repo\Entity\Sale\Item $repoSaleItem
+     * @param \Praxigento\Pv\Repo\Entity\Stock\Item $repoStockItem
      * @param \Praxigento\Core\Tool\IDate $toolDate
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -57,9 +57,9 @@ class Call
         \Praxigento\Accounting\Service\IAccount $callAccount,
         \Praxigento\Accounting\Service\IOperation $callOperation,
         \Praxigento\Pv\Repo\IModule $repoMod,
-        \Praxigento\Pv\Repo\Entity\Def\Sale $repoSale,
-        \Praxigento\Pv\Repo\Entity\Sale\Def\Item $repoSaleItem,
-        \Praxigento\Pv\Repo\Entity\Stock\Def\Item $repoStockItem,
+        \Praxigento\Pv\Repo\Entity\Sale $repoSale,
+        \Praxigento\Pv\Repo\Entity\Sale\Item $repoSaleItem,
+        \Praxigento\Pv\Repo\Entity\Stock\Item $repoStockItem,
         \Praxigento\Core\Tool\IDate $toolDate
     ) {
         parent::__construct($logger, $manObj);

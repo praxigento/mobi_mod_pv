@@ -2,7 +2,8 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Pv\Repo\Entity\Sale\Def;
+
+namespace Praxigento\Pv\Repo\Entity\Sale;
 
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Data\Entity\Sale\Item as Entity;

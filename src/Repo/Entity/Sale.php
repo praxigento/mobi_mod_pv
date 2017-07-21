@@ -2,14 +2,15 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Pv\Repo\Entity\Def;
+
+namespace Praxigento\Pv\Repo\Entity;
 
 use Magento\Framework\App\ResourceConnection;
 use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
 use Praxigento\Core\Repo\IGeneric as IRepoGeneric;
-use Praxigento\Pv\Data\Entity\Product as Entity;
+use Praxigento\Pv\Data\Entity\Sale as Entity;
 
-class Product extends BaseEntityRepo
+class Sale extends BaseEntityRepo
 {
     public function __construct(
         ResourceConnection $resource,
@@ -19,8 +20,8 @@ class Product extends BaseEntityRepo
     }
 
     /**
-     * @param array|Entity $data
-     * @return \Praxigento\Pv\Data\Entity\Product
+     * @param \Praxigento\Pv\Data\Entity\Sale|array $data
+     * @return \Praxigento\Pv\Data\Entity\Sale
      */
     public function create($data)
     {
@@ -38,7 +39,7 @@ class Product extends BaseEntityRepo
      * @param null $columns
      * @param null $group
      * @param null $having
-     * @return \Praxigento\Pv\Data\Entity\Product[] Found data or empty array if no data found.
+     * @return \Praxigento\Pv\Data\Entity\Sale[] Found data or empty array if no data found.
      */
     public function get(
         $where = null,
@@ -58,7 +59,7 @@ class Product extends BaseEntityRepo
      * Get the data instance by ID.
      *
      * @param int $id
-     * @return \Praxigento\Pv\Data\Entity\Product|bool Found instance data or 'false'
+     * @return \Praxigento\Pv\Data\Entity\Sale|bool Found instance data or 'false'
      */
     public function getById($id)
     {

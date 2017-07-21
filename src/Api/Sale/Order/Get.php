@@ -17,7 +17,7 @@ class Get
     public function __construct(
         \Magento\Framework\Api\SearchCriteriaBuilder $searchCritBuilder,
         \Magento\Sales\Api\OrderRepositoryInterface $repoSaleOrder,
-        \Praxigento\Pv\Repo\Entity\Def\Sale $repoPvSale
+        \Praxigento\Pv\Repo\Entity\Sale $repoPvSale
     ) {
         $this->searchCritBuilder = $searchCritBuilder;
         $this->repoSaleOrder = $repoSaleOrder;

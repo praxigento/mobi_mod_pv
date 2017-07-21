@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Pv\Repo\Entity\Def;
+namespace Praxigento\Pv\Repo\Entity;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
@@ -13,8 +13,8 @@ class Product_Test
 
     public function test_create()
     {
-        /** @var \Praxigento\Pv\Repo\Entity\Def\Product $obj */
-        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Def\Product::class);
+        /** @var \Praxigento\Pv\Repo\Entity\Product $obj */
+        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Product::class);
 
         $data = [\Praxigento\Pv\Data\Entity\Product::ATTR_PV => 54.34,
             \Praxigento\Pv\Data\Entity\Product::ATTR_PROD_REF => 5];
@@ -35,8 +35,8 @@ class Product_Test
 
     public function test_delete()
     {
-        /** @var \Praxigento\Pv\Repo\Entity\Def\Product $obj */
-        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Def\Product::class);
+        /** @var \Praxigento\Pv\Repo\Entity\Product $obj */
+        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Product::class);
         $where = "prod_ref = 5";
         $deleted_rows = $obj->delete($where);
         $this->assertNotNull($deleted_rows);
@@ -44,8 +44,8 @@ class Product_Test
 
     public function test_get()
     {
-        /** @var \Praxigento\Pv\Repo\Entity\Def\Product $obj */
-        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Def\Product::class);
+        /** @var \Praxigento\Pv\Repo\Entity\Product $obj */
+        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Product::class);
         /** @var \Praxigento\Pv\Data\Entity\Product[] $res */
         $res = $obj->get();
         /** @var \Praxigento\Pv\Data\Entity\Product $product */
@@ -57,8 +57,8 @@ class Product_Test
 
     public function test_getById()
     {
-        /** @var \Praxigento\Pv\Repo\Entity\Def\Product $obj */
-        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Def\Product::class);
+        /** @var \Praxigento\Pv\Repo\Entity\Product $obj */
+        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Product::class);
         /** @var \Praxigento\Pv\Data\Entity\Product $product */
         $product = $obj->getById(2);
         $pv = $product->getPv();
@@ -75,8 +75,8 @@ class Product_Test
         $trans = $manTrans->begin();
         try {
             /* perform DB operations */
-            /** @var \Praxigento\Pv\Repo\Entity\Def\Product $obj */
-            $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Def\Product::class);
+            /** @var \Praxigento\Pv\Repo\Entity\Product $obj */
+            $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Product::class);
 
             /* get all entities from repo */
             $rows = $obj->get();
@@ -112,8 +112,8 @@ class Product_Test
 
     public function test_updateById()
     {
-        /** @var \Praxigento\Pv\Repo\Entity\Def\Product $obj */
-        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Def\Product::class);
+        /** @var \Praxigento\Pv\Repo\Entity\Product $obj */
+        $obj = $this->manObj->create(\Praxigento\Pv\Repo\Entity\Product::class);
         $product = new \Praxigento\Pv\Data\Entity\Product();
         $product->setPv(21.347);
         $res = $obj->updateById(5, $product);

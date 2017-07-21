@@ -44,9 +44,9 @@ class Call_UnitTest
         $this->mCallAccount = $this->_mock(\Praxigento\Accounting\Service\IAccount::class);
         $this->mCallOperation = $this->_mock(\Praxigento\Accounting\Service\IOperation::class);
         $this->mRepoMod = $this->_mock(\Praxigento\Pv\Repo\IModule::class);
-        $this->mRepoSale = $this->_mock(\Praxigento\Pv\Repo\Entity\Def\Sale::class);
-        $this->mRepoSaleItem = $this->_mock(\Praxigento\Pv\Repo\Entity\Sale\Def\Item::class);
-        $this->mRepoStockItem = $this->_mock(\Praxigento\Pv\Repo\Entity\Stock\Def\Item::class);
+        $this->mRepoSale = $this->_mock(\Praxigento\Pv\Repo\Entity\Sale::class);
+        $this->mRepoSaleItem = $this->_mock(\Praxigento\Pv\Repo\Entity\Sale\Item::class);
+        $this->mRepoStockItem = $this->_mock(\Praxigento\Pv\Repo\Entity\Stock\Item::class);
         $this->mToolDate = $this->_mock(\Praxigento\Core\Tool\IDate::class);
         /** create object to test */
         $this->obj = new Call(
