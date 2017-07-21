@@ -8,16 +8,16 @@ namespace Praxigento\Pv\Api\Sale\Order;
 class Get
     implements \Praxigento\Pv\Api\Sale\Order\GetInterface
 {
-    /** @var \Magento\Framework\Api\SearchCriteriaBuilder */
-    protected $searchCritBuilder;
+    protected $repoPvSale;
     /** @var \Magento\Sales\Api\OrderRepositoryInterface */
     protected $repoSaleOrder;
-    protected $repoPvSale;
+    /** @var \Magento\Framework\Api\SearchCriteriaBuilder */
+    protected $searchCritBuilder;
 
     public function __construct(
         \Magento\Framework\Api\SearchCriteriaBuilder $searchCritBuilder,
         \Magento\Sales\Api\OrderRepositoryInterface $repoSaleOrder,
-        \Praxigento\Pv\Repo\Entity\ISale $repoPvSale
+        \Praxigento\Pv\Repo\Entity\Def\Sale $repoPvSale
     ) {
         $this->searchCritBuilder = $searchCritBuilder;
         $this->repoSaleOrder = $repoSaleOrder;

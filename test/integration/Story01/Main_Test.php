@@ -10,8 +10,6 @@ use Magento\Sales\Api\Data\OrderItemInterface as MageOrderItem;
 use Praxigento\Accounting\Data\Entity\Transaction;
 use Praxigento\Core\Test\BaseIntegrationTest;
 use Praxigento\Pv\Config as Cfg;
-use Praxigento\Pv\Data\Entity\Sale as Sale;
-use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
 use Praxigento\Pv\Service\Sale\Request\AccountPv as SaleAccountPvRequest;
 use Praxigento\Pv\Service\Sale\Request\Save as SaleSaveRequest;
 
@@ -83,6 +81,23 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $this->_logger->debug("New customer #{$this->customerId} is added to Magento.");
     }
 
+    private function _createMageProducts()
+    {
+        $tblProd = $this->_resource->getTableName(Cfg::ENTITY_MAGE_PRODUCT);
+        /* add new 2 products */
+        for ($i = 0; $i < 2; $i++) {
+            $this->_conn->insert(
+                $tblProd,
+                [
+                    MageProd::SKU => 'unit_test_product_' . $i,
+                    MageProd::ATTRIBUTE_SET_ID => 4 // default ATTR SET for product in the empty DB
+                ]
+            );
+            $this->prodIds[$i] = $this->_conn->lastInsertId($tblProd);
+            $this->_logger->debug("New product #{$this->prodIds[$i]} is added to Magento.");
+        }
+    }
+
     private function _createMageSaleOrder()
     {
         $tblOrder = $this->_resource->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER);
@@ -110,30 +125,13 @@ class Main_IntegrationTest extends BaseIntegrationTest
         }
     }
 
-    private function _createMageProducts()
-    {
-        $tblProd = $this->_resource->getTableName(Cfg::ENTITY_MAGE_PRODUCT);
-        /* add new 2 products */
-        for ($i = 0; $i < 2; $i++) {
-            $this->_conn->insert(
-                $tblProd,
-                [
-                    MageProd::SKU => 'unit_test_product_' . $i,
-                    MageProd::ATTRIBUTE_SET_ID => 4 // default ATTR SET for product in the empty DB
-                ]
-            );
-            $this->prodIds[$i] = $this->_conn->lastInsertId($tblProd);
-            $this->_logger->debug("New product #{$this->prodIds[$i]} is added to Magento.");
-        }
-    }
-
     private function _createWarehousePv()
     {
         $tblStockItem = $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
         /** @var \Praxigento\Warehouse\Repo\Entity\Stock\IItem $repoWrhs */
         $repoWrhs = $this->_manObj->get(\Praxigento\Warehouse\Repo\Entity\Stock\IItem::class);
-        /** @var \Praxigento\Pv\Repo\Entity\Stock\IItem $repo */
-        $repoPv = $this->_manObj->get(\Praxigento\Pv\Repo\Entity\Stock\IItem::class);
+        /** @var \Praxigento\Pv\Repo\Entity\Stock\Def\Item $repo */
+        $repoPv = $this->_manObj->get(\Praxigento\Pv\Repo\Entity\Stock\Def\Item::class);
         for ($i = 0; $i < 2; $i++) {
             /* add stock item */
             $this->_conn->insert(

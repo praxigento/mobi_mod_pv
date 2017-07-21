@@ -4,13 +4,11 @@
  */
 namespace Praxigento\Pv\Repo\Entity\Sale\Def;
 
-use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Data\Entity\Sale\Item as Entity;
 
 class Item
     extends \Praxigento\Core\Repo\Def\Entity
-    implements \Praxigento\Pv\Repo\Entity\Sale\IItem
 {
     /** @var \Magento\Framework\ObjectManagerInterface */
     protected $_manObj;
@@ -24,7 +22,11 @@ class Item
         $this->_manObj = $manOb;
     }
 
-    /** @inheritdoc */
+    /**
+     * Get array of the PvSaleItems entities by Magento order ID.
+     * @param int $orderId
+     * @return \Praxigento\Pv\Data\Entity\Sale\Item[] index is a $saleItemId
+     */
     public function getItemsByOrderId($orderId)
     {
         $result = [];

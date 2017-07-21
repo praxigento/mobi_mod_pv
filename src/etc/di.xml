@@ -13,14 +13,6 @@
     <!-- **** -->
     <!-- Repo -->
     <!-- **** -->
-    <preference for="Praxigento\Pv\Repo\Entity\IProduct"
-            type="Praxigento\Pv\Repo\Entity\Def\Product"/>
-    <preference for="Praxigento\Pv\Repo\Entity\ISale"
-            type="Praxigento\Pv\Repo\Entity\Def\Sale"/>
-    <preference for="Praxigento\Pv\Repo\Entity\Sale\IItem"
-            type="Praxigento\Pv\Repo\Entity\Sale\Def\Item"/>
-    <preference for="Praxigento\Pv\Repo\Entity\Stock\IItem"
-            type="Praxigento\Pv\Repo\Entity\Stock\Def\Item"/>
     <preference for="Praxigento\Pv\Repo\IModule"
             type="Praxigento\Pv\Repo\Def\Module"/>
 

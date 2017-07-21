@@ -31,7 +31,7 @@ class SalesOrderInvoicePay_UnitTest
         parent::setUp();
         /** create mocks */
         $this->mLogger = $this->_mockLogger();
-        $this->mRepoSale = $this->_mock(\Praxigento\Pv\Repo\Entity\ISale::class);
+        $this->mRepoSale = $this->_mock(\Praxigento\Pv\Repo\Entity\Def\Sale::class);
         $this->mToolDate = $this->_mock(\Praxigento\Core\Tool\IDate::class);
         $this->mSubRegister = $this->_mock(\Praxigento\Pv\Observer\Sub\Register::class);
         /** create object to test */

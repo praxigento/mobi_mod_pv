@@ -9,9 +9,8 @@ use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
 use Praxigento\Core\Repo\IGeneric as IRepoGeneric;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Data\Entity\Stock\Item as Entity;
-use Praxigento\Pv\Repo\Entity\Stock\IItem as IEntityRepo;
 
-class Item extends BaseEntityRepo implements IEntityRepo
+class Item extends BaseEntityRepo
 {
     public function __construct(
         ResourceConnection $resource,
@@ -20,7 +19,61 @@ class Item extends BaseEntityRepo implements IEntityRepo
         parent::__construct($resource, $repoGeneric, Entity::class);
     }
 
-    /** @inheritdoc */
+    /**
+     * @param array|\Praxigento\Pv\Data\Entity\Stock\Item $data
+     * @return \Praxigento\Pv\Data\Entity\Stock\Item
+     */
+    public function create($data)
+    {
+        $result = parent::create($data);
+        return $result;
+    }
+
+    /**
+     * Generic method to get data from repository.
+     *
+     * @param null $where
+     * @param null $order
+     * @param null $limit
+     * @param null $offset
+     * @param null $columns
+     * @param null $group
+     * @param null $having
+     * @return \Praxigento\Pv\Data\Entity\Stock\Item[] Found data or empty array if no data found.
+     */
+    public function get(
+        $where = null,
+        $order = null,
+        $limit = null,
+        $offset = null,
+        $columns = null,
+        $group = null,
+        $having = null
+    )
+    {
+        $result = parent::get($where, $order, $limit, $offset, $columns, $group, $having);
+        return $result;
+    }
+
+    /**
+     * Get the data instance by ID.
+     *
+     * @param int $id
+     * @return \Praxigento\Pv\Data\Entity\Stock\Item|bool Found instance data or 'false'
+     */
+    public function getById($id)
+    {
+        $result = parent::getById($id);
+        return $result;
+    }
+
+    /**
+     * Get Warehouse PV by $productId & $stockId.
+     *
+     * @param int $productId
+     * @param int $stockId
+     * @return double
+     */
     public function getPvByProductAndStock($productId, $stockId)
     {
         /* aliases and tables */
