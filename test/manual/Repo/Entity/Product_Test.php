@@ -5,7 +5,7 @@
 
 namespace Praxigento\Pv\Repo\Entity;
 
-include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
+include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
 class Product_Test
     extends \Praxigento\Core\Test\BaseCase\Manual
