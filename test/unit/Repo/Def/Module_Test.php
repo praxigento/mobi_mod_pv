@@ -21,7 +21,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         parent::setUp();
         /** create mocks */
         $this->mRepoGeneric = $this->_mockRepoGeneric();
-        $this->mRepoDownlineCustomer = $this->_mock(\Praxigento\Downline\Repo\Entity\ICustomer::class);
+        $this->mRepoDownlineCustomer = $this->_mock(\Praxigento\Downline\Repo\Entity\Def\Customer::class);
         /** create object to test */
         $this->obj = new Module(
             $this->mRepoGeneric,

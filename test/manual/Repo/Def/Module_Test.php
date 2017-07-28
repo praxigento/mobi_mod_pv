@@ -6,7 +6,6 @@ namespace Praxigento\Pv\Repo\Def;
 
 
 use Magento\Framework\App\ObjectManager;
-use Praxigento\Pv\Data\Entity\Sale;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
@@ -18,7 +17,7 @@ class Module_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery
     protected function setUp()
     {
         parent::setUp();
-        $repoDownlineCustomer = ObjectManager::getInstance()->get(\Praxigento\Downline\Repo\Entity\ICustomer::class);
+        $repoDownlineCustomer = ObjectManager::getInstance()->get(\Praxigento\Downline\Repo\Entity\Def\Customer::class);
         /** create object to test */
         $this->obj = new Module(
             $repoDownlineCustomer

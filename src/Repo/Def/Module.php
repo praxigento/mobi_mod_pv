@@ -10,14 +10,14 @@ use Praxigento\Pv\Repo\IModule;
 
 class Module implements IModule
 {
-    /** @var  \Praxigento\Downline\Repo\Entity\ICustomer */
+    /** @var  \Praxigento\Downline\Repo\Entity\Def\Customer */
     protected $_repoDownlineCustomer;
     /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoGeneric;
 
     public function __construct(
         \Praxigento\Core\Repo\IGeneric $repoGeneric,
-        \Praxigento\Downline\Repo\Entity\ICustomer $repoDownlineCustomer
+        \Praxigento\Downline\Repo\Entity\Def\Customer $repoDownlineCustomer
 
     ) {
         $this->_repoGeneric = $repoGeneric;
