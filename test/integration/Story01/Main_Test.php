@@ -128,8 +128,8 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private function _createWarehousePv()
     {
         $tblStockItem = $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM);
-        /** @var \Praxigento\Warehouse\Repo\Entity\Stock\Def\Item $repoWrhs */
-        $repoWrhs = $this->_manObj->get(\Praxigento\Warehouse\Repo\Entity\Stock\Def\Item::class);
+        /** @var \Praxigento\Warehouse\Repo\Entity\Stock\Item $repoWrhs */
+        $repoWrhs = $this->_manObj->get(\Praxigento\Warehouse\Repo\Entity\Stock\Item::class);
         /** @var \Praxigento\Pv\Repo\Entity\Stock\Item $repo */
         $repoPv = $this->_manObj->get(\Praxigento\Pv\Repo\Entity\Stock\Item::class);
         for ($i = 0; $i < 2; $i++) {
