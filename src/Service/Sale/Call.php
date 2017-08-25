@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Pv\Service\Sale;
 
-use Praxigento\Accounting\Data\Entity\Transaction;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction;
 use Praxigento\Accounting\Service\Account\Request\Get as GetAccountRequest;
 use Praxigento\Accounting\Service\Account\Request\GetRepresentative as GetAccountRepresentativeRequest;
 use Praxigento\Accounting\Service\Operation\Request\Add as AddOperationRequest;

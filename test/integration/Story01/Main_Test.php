@@ -7,7 +7,7 @@ namespace Praxigento\Pv\Lib\Test\Story01;
 use Magento\Catalog\Api\Data\ProductInterface as MageProd;
 use Magento\CatalogInventory\Api\Data\StockItemInterface as MageStockItem;
 use Magento\Sales\Api\Data\OrderItemInterface as MageOrderItem;
-use Praxigento\Accounting\Data\Entity\Transaction;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction;
 use Praxigento\Core\Test\BaseIntegrationTest;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Service\Sale\Request\AccountPv as SaleAccountPvRequest;

@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Pv\Service\Transfer;
 
-use Praxigento\Accounting\Data\Entity\Account;
+use Praxigento\Accounting\Repo\Entity\Data\Account;
 use Praxigento\Downline\Data\Entity\Customer;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
