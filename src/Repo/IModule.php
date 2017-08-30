@@ -10,7 +10,7 @@ interface IModule
 {
     /**
      * @param int $id
-     * @return \Praxigento\Downline\Data\Entity\Customer
+     * @return \Praxigento\Downline\Repo\Entity\Data\Customer
      */
     public function getDownlineCustomerById($id);
 
