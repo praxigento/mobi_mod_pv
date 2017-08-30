@@ -143,7 +143,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
             );
             $this->stockItemIds[$i] = $this->_conn->lastInsertId($tblStockItem);
             /* add warehouse stock item data */
-            $data = new \Praxigento\Warehouse\Data\Entity\Stock\Item();
+            $data = new \Praxigento\Warehouse\Repo\Entity\Data\Stock\Item();
             $data->setStockItemRef($this->stockItemIds[$i]);
             $data->setPrice(10.20);
             $repoWrhs->create($data);
