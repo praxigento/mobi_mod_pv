@@ -5,10 +5,10 @@
  */
 namespace Praxigento\Pv\Setup;
 
-use Praxigento\Pv\Data\Entity\Product;
-use Praxigento\Pv\Data\Entity\Sale;
-use Praxigento\Pv\Data\Entity\Sale\Item as SaleItem;
-use Praxigento\Pv\Data\Entity\Stock\Item as StockItem;
+use Praxigento\Pv\Repo\Entity\Data\Product;
+use Praxigento\Pv\Repo\Entity\Data\Sale;
+use Praxigento\Pv\Repo\Entity\Data\Sale\Item as SaleItem;
+use Praxigento\Pv\Repo\Entity\Data\Stock\Item as StockItem;
 
 class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
 {

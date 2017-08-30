@@ -5,8 +5,6 @@
 namespace Praxigento\Pv\Observer;
 
 
-use Praxigento\Pv\Data\Entity\Sale;
-
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
 class CheckoutSubmitAllAfter_ManualTest extends \Praxigento\Core\Test\BaseIntegrationTest

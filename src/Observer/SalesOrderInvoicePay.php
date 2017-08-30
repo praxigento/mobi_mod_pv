@@ -5,7 +5,7 @@
 
 namespace Praxigento\Pv\Observer;
 
-use Praxigento\Pv\Data\Entity\Sale as ESale;
+use Praxigento\Pv\Repo\Entity\Data\Sale as ESale;
 
 /**
  * Update 'date_paid' in PV register and account PV when order is paid completely (bank transfer).

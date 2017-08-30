@@ -6,7 +6,7 @@
 namespace Praxigento\Pv\Repo\Entity\Sale;
 
 use Praxigento\Pv\Config as Cfg;
-use Praxigento\Pv\Data\Entity\Sale\Item as Entity;
+use Praxigento\Pv\Repo\Entity\Data\Sale\Item as Entity;
 
 class Item
     extends \Praxigento\Core\Repo\Def\Entity
@@ -26,7 +26,7 @@ class Item
     /**
      * Get array of the PvSaleItems entities by Magento order ID.
      * @param int $orderId
-     * @return \Praxigento\Pv\Data\Entity\Sale\Item[] index is a $saleItemId
+     * @return \Praxigento\Pv\Repo\Entity\Data\Sale\Item[] index is a $saleItemId
      */
     public function getItemsByOrderId($orderId)
     {

@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product;
 
-use Praxigento\Pv\Data\Entity\Product;
+use Praxigento\Pv\Repo\Entity\Data\Product;
 
 /**
  * Plugin for "\Magento\Catalog\Model\ResourceModel\Product\CollectionFactory" to add fields mapping to product collection.

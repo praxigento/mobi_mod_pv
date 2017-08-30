@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Pv\Data\Entity;
+namespace Praxigento\Pv\Repo\Entity\Data;
 
 class Sale
     extends \Praxigento\Core\Data\Entity\Base

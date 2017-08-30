@@ -4,8 +4,6 @@
  */
 namespace Praxigento\Pv\Service\Sale\Request;
 
-use Praxigento\Pv\Data\Entity\Sale;
-
 /**
  * @method \Praxigento\Pv\Service\Sale\Data\Item[] getOrderItems()
  * @method void setOrderItems(\Praxigento\Pv\Service\Sale\Data\Item[] $data)

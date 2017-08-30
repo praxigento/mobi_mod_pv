@@ -2,7 +2,8 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Pv\Data\Entity\Stock;
+
+namespace Praxigento\Pv\Repo\Entity\Data\Stock;
 
 class Item
     extends \Praxigento\Core\Data\Entity\Base

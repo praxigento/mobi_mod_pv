@@ -9,7 +9,7 @@ use Magento\Framework\App\ResourceConnection;
 use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
 use Praxigento\Core\Repo\IGeneric as IRepoGeneric;
 use Praxigento\Pv\Config as Cfg;
-use Praxigento\Pv\Data\Entity\Stock\Item as Entity;
+use Praxigento\Pv\Repo\Entity\Data\Stock\Item as Entity;
 
 class Item extends BaseEntityRepo
 {
@@ -21,8 +21,8 @@ class Item extends BaseEntityRepo
     }
 
     /**
-     * @param array|\Praxigento\Pv\Data\Entity\Stock\Item $data
-     * @return \Praxigento\Pv\Data\Entity\Stock\Item
+     * @param array|\Praxigento\Pv\Repo\Entity\Data\Stock\Item $data
+     * @return \Praxigento\Pv\Repo\Entity\Data\Stock\Item
      */
     public function create($data)
     {
@@ -40,7 +40,7 @@ class Item extends BaseEntityRepo
      * @param null $columns
      * @param null $group
      * @param null $having
-     * @return \Praxigento\Pv\Data\Entity\Stock\Item[] Found data or empty array if no data found.
+     * @return \Praxigento\Pv\Repo\Entity\Data\Stock\Item[] Found data or empty array if no data found.
      */
     public function get(
         $where = null,
@@ -60,7 +60,7 @@ class Item extends BaseEntityRepo
      * Get the data instance by ID.
      *
      * @param int $id
-     * @return \Praxigento\Pv\Data\Entity\Stock\Item|bool Found instance data or 'false'
+     * @return \Praxigento\Pv\Repo\Entity\Data\Stock\Item|bool Found instance data or 'false'
      */
     public function getById($id)
     {

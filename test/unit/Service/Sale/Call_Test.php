@@ -5,7 +5,7 @@
 namespace Praxigento\Pv\Service\Sale;
 
 use Praxigento\Accounting\Repo\Entity\Data\Account;
-use Praxigento\Pv\Data\Entity\Sale;
+use Praxigento\Pv\Repo\Entity\Data\Sale;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
