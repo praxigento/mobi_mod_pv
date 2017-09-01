@@ -12,7 +12,7 @@ namespace Praxigento\Pv\Api\Sale\Order\Get;
  *
  */
 class Request
-    extends \Flancer32\Lib\Data
+    extends \Praxigento\Core\Data
 {
     /**
      * Incremental ID of the order.

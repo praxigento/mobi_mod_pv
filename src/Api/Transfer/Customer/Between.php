@@ -9,8 +9,8 @@ class Between
     implements \Praxigento\Pv\Api\Transfer\Customer\BetweenInterface
 {
     const CTX_REQ = 'request'; // API request data
-    const CTX_RESULT_DATA = 'result_data'; // data to place to response
     const CTX_RESULT_CODE = 'result_code'; // data to place to response
+    const CTX_RESULT_DATA = 'result_data'; // data to place to response
     const VAR_AMOUNT = 'amount';
     const VAR_CUST_ID_FROM = 'cust_id_from';
     const VAR_CUST_ID_TO = 'cust_id_to';
@@ -26,7 +26,7 @@ class Between
     public function exec(\Praxigento\Pv\Api\Transfer\Customer\Between\Request $data)
     {
         /* create context for request processing */
-        $ctx = new \Flancer32\Lib\Data();
+        $ctx = new \Praxigento\Core\Data();
         $ctx->set(self::CTX_REQ, $data);
         $ctx->set(self::CTX_RESULT_DATA, null);
 
@@ -44,12 +44,12 @@ class Between
         return $result;
     }
 
-    protected function postProcess(\Flancer32\Lib\Data $ctx)
+    protected function postProcess(\Praxigento\Core\Data $ctx)
     {
         /* post-processing should be here */
     }
 
-    protected function preProcess(\Flancer32\Lib\Data $ctx)
+    protected function preProcess(\Praxigento\Core\Data $ctx)
     {
         /** @var \Praxigento\Pv\Api\Transfer\Customer\Between\Request $req */
         $req = $ctx->get(self::CTX_REQ);
@@ -64,7 +64,7 @@ class Between
 
     }
 
-    protected function process(\Flancer32\Lib\Data $ctx)
+    protected function process(\Praxigento\Core\Data $ctx)
     {
         /* get working variables from context */
         $custIdFrom = $ctx->get(self::VAR_CUST_ID_FROM);

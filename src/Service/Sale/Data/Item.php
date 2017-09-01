@@ -5,7 +5,7 @@
 
 namespace Praxigento\Pv\Service\Sale\Data;
 
-use Flancer32\Lib\Data as DataObject;
+use Praxigento\Core\Data as DataObject;
 
 /**
  * Items to transfer data to registry PV on invoice payment.

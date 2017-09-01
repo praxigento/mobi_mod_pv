@@ -14,7 +14,7 @@ namespace Praxigento\Pv\Api\Transfer\Customer\Between\Response;
  * @method void setOperationId(int $data)
  */
 class Data
-    extends \Flancer32\Lib\Data
+    extends \Praxigento\Core\Data
 {
     /**
      * 'true' - Country of the PV recipient is not the same as of PV sender.
