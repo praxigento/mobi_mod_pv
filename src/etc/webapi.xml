@@ -1,20 +1,22 @@
 <?xml version="1.0"?>
-<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
 
-    <route url="/V1/prxgt/pv/sale/order/get" method="POST">
-        <!-- Get PV related data for given sale order. -->
-        <service class="Praxigento\Pv\Api\Sale\Order\GetInterface" method="execute"/>
-        <resources>
-            <resource ref="anonymous"/>
-        </resources>
-    </route>
+    <!-- TODO: use it or remove it. -->
+    <!--<route url="/V1/prxgt/pv/sale/order/get" method="POST">-->
+    <!--&lt;!&ndash; Get PV related data for given sale order. &ndash;&gt;-->
+    <!--<service class="Praxigento\Pv\Api\Sale\Order\GetInterface" method="execute"/>-->
+    <!--<resources>-->
+    <!--<resource ref="anonymous"/>-->
+    <!--</resources>-->
+    <!--</route>-->
 
-    <route url="/V1/prxgt/pv/transfer/customer/between" method="POST">
-        <!-- Perform PV transfer from one customer to another. -->
-        <service class="Praxigento\Pv\Api\Transfer\Customer\BetweenInterface" method="exec"/>
-        <resources>
-            <resource ref="anonymous"/>
-        </resources>
-    </route>
+    <!--<route url="/V1/prxgt/pv/transfer/customer/between" method="POST">-->
+    <!--&lt;!&ndash; Perform PV transfer from one customer to another. &ndash;&gt;-->
+    <!--<service class="Praxigento\Pv\Api\Transfer\Customer\BetweenInterface" method="exec"/>-->
+    <!--<resources>-->
+    <!--<resource ref="anonymous"/>-->
+    <!--</resources>-->
+    <!--</route>-->
 
 </routes>

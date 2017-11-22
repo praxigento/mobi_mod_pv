@@ -6,6 +6,8 @@ namespace Praxigento\Pv\Api\Transfer\Customer;
 
 /**
  * Perform PV transfer from one customer to another.
+ *
+ * @deprecated TODO: use it or remove it.
  */
 interface BetweenInterface
 {

@@ -4,6 +4,9 @@
  */
 namespace Praxigento\Pv\Api\Sale\Order;
 
+/**
+ * @deprecated TODO: use it or remove it.
+ */
 interface GetInterface
 {
     /**
