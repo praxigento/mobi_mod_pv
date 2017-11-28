@@ -11,7 +11,7 @@ namespace Praxigento\Pv\Api\Sale\Order\Get;
  *
  */
 class Response
-    extends \Praxigento\Core\Api\Response
+    extends \Praxigento\Core\App\WebApi\Response
 {
     /**
      * @return \Praxigento\Pv\Api\Sale\Order\Get\Response\Data
