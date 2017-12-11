@@ -6,7 +6,7 @@
 namespace Praxigento\Pv\Repo\Entity\Data\Sale;
 
 class Item
-    extends \Praxigento\Core\Data\Entity\Base
+    extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_DISCOUNT = 'discount';
     const ATTR_SALE_ITEM_ID = 'sale_item_id';

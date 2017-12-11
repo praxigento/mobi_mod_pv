@@ -9,7 +9,7 @@ use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Repo\Entity\Data\Sale\Item as Entity;
 
 class Item
-    extends \Praxigento\Core\Repo\Def\Entity
+    extends \Praxigento\Core\App\Repo\Def\Entity
 {
     /** @var \Magento\Framework\ObjectManagerInterface */
     protected $_manObj;
@@ -17,7 +17,7 @@ class Item
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manOb,
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\Repo\IGeneric $repoGeneric
+        \Praxigento\Core\App\Repo\IGeneric $repoGeneric
     ) {
         parent::__construct($resource, $repoGeneric, Entity::class);
         $this->_manObj = $manOb;

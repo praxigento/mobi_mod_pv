@@ -12,11 +12,11 @@ class Module implements IModule
 {
     /** @var  \Praxigento\Downline\Repo\Entity\Customer */
     protected $_repoDownlineCustomer;
-    /** @var \Praxigento\Core\Repo\IGeneric */
+    /** @var \Praxigento\Core\App\Repo\IGeneric */
     protected $_repoGeneric;
 
     public function __construct(
-        \Praxigento\Core\Repo\IGeneric $repoGeneric,
+        \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
         \Praxigento\Downline\Repo\Entity\Customer $repoDownlineCustomer
 
     ) {

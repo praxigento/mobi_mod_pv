@@ -9,7 +9,7 @@ namespace Praxigento\Pv\Repo\Entity\Data;
  * Warehouse PV are in \Praxigento\Pv\Repo\Entity\Data\Stock\Item.
  */
 class Product
-    extends \Praxigento\Core\Data\Entity\Base
+    extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_PROD_REF = 'prod_ref';
     const ATTR_PV = 'pv';

@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Pv\Service;
 
-use Praxigento\Core\ICached;
+use Praxigento\Core\App\ICached;
 use Praxigento\Pv\Service\Transfer\Request;
 use Praxigento\Pv\Service\Transfer\Response;
 

@@ -15,14 +15,14 @@ use Praxigento\Pv\Config as Cfg;
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Call
-    extends \Praxigento\Core\Service\Base\Call
+    extends \Praxigento\Core\App\Service\Base\Call
     implements \Praxigento\Pv\Service\ISale
 {
     /** @var  \Praxigento\Accounting\Service\IAccount */
     protected $_callAccount;
     /** @var  \Praxigento\Accounting\Service\IOperation */
     protected $_callOperation;
-    /** @var \Praxigento\Core\Transaction\Database\IManager */
+    /** @var \Praxigento\Core\App\Transaction\Database\IManager */
     protected $_manTrans;
     /** @var  \Praxigento\Pv\Repo\IModule */
     protected $_repoMod;
@@ -37,9 +37,9 @@ class Call
 
     /**
      * Call constructor.
-     * @param \Praxigento\Core\Fw\Logger\App $logger
+     * @param \Praxigento\Core\App\Logger\App $logger
      * @param \Magento\Framework\ObjectManagerInterface $manObj
-     * @param \Praxigento\Core\Transaction\Database\IManager $manTrans
+     * @param \Praxigento\Core\App\Transaction\Database\IManager $manTrans
      * @param \Praxigento\Accounting\Service\IAccount $callAccount
      * @param \Praxigento\Accounting\Service\IOperation $callOperation
      * @param \Praxigento\Pv\Repo\IModule $repoMod
@@ -51,9 +51,9 @@ class Call
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        \Praxigento\Core\Fw\Logger\App $logger,
+        \Praxigento\Core\App\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Core\Transaction\Database\IManager $manTrans,
+        \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Service\IAccount $callAccount,
         \Praxigento\Accounting\Service\IOperation $callOperation,
         \Praxigento\Pv\Repo\IModule $repoMod,

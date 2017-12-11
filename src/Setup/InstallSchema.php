@@ -10,7 +10,7 @@ use Praxigento\Pv\Repo\Entity\Data\Sale;
 use Praxigento\Pv\Repo\Entity\Data\Sale\Item as SaleItem;
 use Praxigento\Pv\Repo\Entity\Data\Stock\Item as StockItem;
 
-class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
+class InstallSchema extends \Praxigento\Core\App\Setup\Schema\Base
 {
     protected function _setup()
     {

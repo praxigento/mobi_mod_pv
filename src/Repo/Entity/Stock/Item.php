@@ -6,8 +6,8 @@
 namespace Praxigento\Pv\Repo\Entity\Stock;
 
 use Magento\Framework\App\ResourceConnection;
-use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
-use Praxigento\Core\Repo\IGeneric as IRepoGeneric;
+use Praxigento\Core\App\Repo\Def\Entity as BaseEntityRepo;
+use Praxigento\Core\App\Repo\IGeneric as IRepoGeneric;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Repo\Entity\Data\Stock\Item as Entity;
 

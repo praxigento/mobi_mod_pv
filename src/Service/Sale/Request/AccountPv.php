@@ -12,5 +12,5 @@ namespace Praxigento\Pv\Service\Sale\Request;
  * @method string getDateApplied()
  * @method void setDateApplied(string $data)
  */
-class AccountPv extends \Praxigento\Core\Service\Base\Request {
+class AccountPv extends \Praxigento\Core\App\Service\Base\Request {
 }

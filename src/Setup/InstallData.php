@@ -12,7 +12,7 @@ use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Repo\Entity\Data\Type\Operation as TypeOperation;
 use Praxigento\Pv\Config as Cfg;
 
-class InstallData extends \Praxigento\Core\Setup\Data\Base
+class InstallData extends \Praxigento\Core\App\Setup\Data\Base
 {
     private function _addAccountingAssetsTypes()
     {

@@ -6,7 +6,7 @@
 namespace Praxigento\Pv\Repo\Entity\Data;
 
 class Sale
-    extends \Praxigento\Core\Data\Entity\Base
+    extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_DATE_PAID = 'date_paid';
     const ATTR_DISCOUNT = 'discount';

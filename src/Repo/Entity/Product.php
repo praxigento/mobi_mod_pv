@@ -6,8 +6,8 @@
 namespace Praxigento\Pv\Repo\Entity;
 
 use Magento\Framework\App\ResourceConnection;
-use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
-use Praxigento\Core\Repo\IGeneric as IRepoGeneric;
+use Praxigento\Core\App\Repo\Def\Entity as BaseEntityRepo;
+use Praxigento\Core\App\Repo\IGeneric as IRepoGeneric;
 use Praxigento\Pv\Repo\Entity\Data\Product as Entity;
 
 class Product extends BaseEntityRepo

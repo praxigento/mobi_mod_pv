@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Pv\Service\Sale\Response;
 
-class AccountPv extends \Praxigento\Core\Service\Base\Response
+class AccountPv extends \Praxigento\Core\App\Service\Base\Response
 {
     const OPERATION_ID = 'operation_id';
 
