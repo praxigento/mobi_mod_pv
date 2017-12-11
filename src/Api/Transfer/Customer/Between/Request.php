@@ -12,7 +12,7 @@ namespace Praxigento\Pv\Api\Transfer\Customer\Between;
  *
  */
 class Request
-    extends \Praxigento\Core\App\Web\Request
+    extends \Praxigento\Core\App\Api\Web\Request
 {
     /**
      * Transfer amount (positive only values are possible).
