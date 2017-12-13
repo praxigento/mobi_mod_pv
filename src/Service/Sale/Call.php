@@ -34,21 +34,6 @@ class Call
     /** @var \Praxigento\Core\Tool\IDate */
     protected $_toolDate;
 
-    /**
-     * Call constructor.
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Magento\Framework\ObjectManagerInterface $manObj
-     * @param \Praxigento\Core\App\Transaction\Database\IManager $manTrans
-     * @param \Praxigento\Accounting\Service\IAccount $callAccount
-     * @param \Praxigento\Accounting\Service\IOperation $callOperation
-     * @param \Praxigento\Pv\Repo\IModule $repoMod
-     * @param \Praxigento\Pv\Repo\Entity\Sale $repoSale
-     * @param \Praxigento\Pv\Repo\Entity\Sale\Item $repoSaleItem
-     * @param \Praxigento\Pv\Repo\Entity\Stock\Item $repoStockItem
-     * @param \Praxigento\Core\Tool\IDate $toolDate
-     *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
