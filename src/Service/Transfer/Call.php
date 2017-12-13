@@ -4,10 +4,9 @@
  */
 namespace Praxigento\Pv\Service\Transfer;
 
+use Praxigento\Accounting\Api\Service\Account\Get\Request as AccountGetRequest;
 use Praxigento\Accounting\Repo\Entity\Data\Account;
 use Praxigento\Accounting\Repo\Entity\Data\Transaction;
-use Praxigento\Accounting\Service\Account\Request\Get as AccountGetRequest;
-use Praxigento\Accounting\Service\Account\Request\GetRepresentative as AccountGetRepresentativeRequest;
 use Praxigento\Accounting\Service\Operation\Request\Add as OperationAddRequest;
 use Praxigento\Pv\Config as Cfg;
 
@@ -20,7 +19,7 @@ class Call
     implements \Praxigento\Pv\Service\ITransfer
 {
     /**
-     * @var \Praxigento\Accounting\Service\IAccount
+     * @var \Praxigento\Accounting\Api\Service\Account\Get
      */
     protected $_callAccount;
     /** @var  \Praxigento\Accounting\Service\IOperation */
@@ -38,7 +37,7 @@ class Call
         \Praxigento\Core\App\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Tool\IDate $toolDate,
-        \Praxigento\Accounting\Service\IAccount $callAccount,
+        \Praxigento\Accounting\Api\Service\Account\Get $callAccount,
         \Praxigento\Accounting\Service\IOperation $callOperation,
         \Praxigento\Pv\Repo\IModule $repoMod
     ) {
@@ -102,10 +101,9 @@ class Call
             $reqAccGet = new AccountGetRequest();
             $reqAccGet->setCustomerId($custIdDebit);
             $reqAccGet->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-            $reqAccGet->setCreateNewAccountIfMissed(true);
-            $respAccDebit = $this->_callAccount->get($reqAccGet);
+            $respAccDebit = $this->_callAccount->exec($reqAccGet);
             $reqAccGet->setCustomerId($custIdCredit);
-            $respAccCredit = $this->_callAccount->get($reqAccGet);
+            $respAccCredit = $this->_callAccount->exec($reqAccGet);
             /* add transfer operation */
             $reqAddOper = new OperationAddRequest();
             $reqAddOper->setOperationTypeCode(Cfg::CODE_TYPE_OPER_PV_TRANSFER);
@@ -146,9 +144,10 @@ class Call
     {
         $result = new Response\CreditToCustomer();
         /* get representative customer account for PV asset */
-        $reqRepres = new AccountGetRepresentativeRequest();
+        $reqRepres = new AccountGetRequest();
+        $reqRepres->setIsRepresentative(TRUE);
         $reqRepres->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-        $respRepres = $this->_callAccount->getRepresentative($reqRepres);
+        $respRepres = $this->_callAccount->exec($reqRepres);
         /* extract input parameters */
         $requestData = $request->get();
         $reqBetween = new Request\BetweenCustomers($requestData);
@@ -168,9 +167,10 @@ class Call
     {
         $result = new Response\DebitFromCustomer();
         /* get representative customer account for PV asset */
-        $reqRepres = new AccountGetRepresentativeRequest();
+        $reqRepres = new AccountGetRequest();
+        $reqRepres->setIsRepresentative(TRUE);
         $reqRepres->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-        $respRepres = $this->_callAccount->getRepresentative($reqRepres);
+        $respRepres = $this->_callAccount->exec($reqRepres);
         /* extract input parameters */
         $requestData = $request->get();
         $requestData[Request\BetweenCustomers::TO_CUSTOMER_ID] = $respRepres->get(Account::ATTR_CUST_ID);

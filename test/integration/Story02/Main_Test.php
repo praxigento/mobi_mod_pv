@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Pv\Lib\Test\Story02;
 
-use Praxigento\Accounting\Service\Account\Request\Get as RequestAccountGet;
+use Praxigento\Accounting\Api\Service\Account\Get\Request as RequestAccountGet;
 use Praxigento\Core\Test\BaseIntegrationTest;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Service\Transfer\Request\BetweenCustomers as RequestTransferBetweenCustomers;
@@ -15,7 +15,7 @@ include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
 class Main_IntegrationTest extends BaseIntegrationTest
 {
-    /** @var \Praxigento\Accounting\Service\IAccount */
+    /** @var \Praxigento\Accounting\Api\Service\Account\Get */
     private $_callAccount;
     /** @var \Praxigento\Pv\Service\ITransfer */
     private $_callTransfer;
@@ -27,7 +27,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
         parent::__construct($name, $data, $dataName);
         $this->_manTrans = $this->_manObj->get(\Praxigento\Core\App\Transaction\Database\IManager::class);
         $this->_callTransfer = $this->_manObj->get(\Praxigento\Pv\Service\ITransfer::class);
-        $this->_callAccount = $this->_manObj->get(\Praxigento\Accounting\Service\IAccount::class);
+        $this->_callAccount = $this->_manObj->get(\Praxigento\Accounting\Api\Service\Account\Get::class);
     }
 
     private function _checkAccount($custId, $value)
@@ -35,7 +35,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $req = new RequestAccountGet();
         $req->setCustomerId($custId);
         $req->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-        $resp = $this->_callAccount->get($req);
+        $resp = $this->_callAccount->exec($req);
         $this->assertTrue($resp->isSucceed());
         $actualValue = $resp->getBalance();
         $this->assertEquals($value, $actualValue);

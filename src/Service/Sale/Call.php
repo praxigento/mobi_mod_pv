@@ -4,9 +4,8 @@
  */
 namespace Praxigento\Pv\Service\Sale;
 
+use Praxigento\Accounting\Api\Service\Account\Get\Request as GetAccountRequest;
 use Praxigento\Accounting\Repo\Entity\Data\Transaction;
-use Praxigento\Accounting\Service\Account\Request\Get as GetAccountRequest;
-use Praxigento\Accounting\Service\Account\Request\GetRepresentative as GetAccountRepresentativeRequest;
 use Praxigento\Accounting\Service\Operation\Request\Add as AddOperationRequest;
 use Praxigento\Pv\Config as Cfg;
 
@@ -18,7 +17,7 @@ class Call
     extends \Praxigento\Core\App\Service\Base\Call
     implements \Praxigento\Pv\Service\ISale
 {
-    /** @var  \Praxigento\Accounting\Service\IAccount */
+    /** @var  \Praxigento\Accounting\Api\Service\Account\Get */
     protected $_callAccount;
     /** @var  \Praxigento\Accounting\Service\IOperation */
     protected $_callOperation;
@@ -54,7 +53,7 @@ class Call
         \Praxigento\Core\App\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
-        \Praxigento\Accounting\Service\IAccount $callAccount,
+        \Praxigento\Accounting\Api\Service\Account\Get $callAccount,
         \Praxigento\Accounting\Service\IOperation $callOperation,
         \Praxigento\Pv\Repo\IModule $repoMod,
         \Praxigento\Pv\Repo\Entity\Sale $repoSale,
@@ -100,12 +99,12 @@ class Call
             $reqGetAccCust = new GetAccountRequest();
             $reqGetAccCust->setCustomerId($customerId);
             $reqGetAccCust->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-            $reqGetAccCust->setCreateNewAccountIfMissed(true);
-            $respGetAccCust = $this->_callAccount->get($reqGetAccCust);
+            $respGetAccCust = $this->_callAccount->exec($reqGetAccCust);
             /* get PV account data for representative */
-            $reqGetAccRepres = new GetAccountRepresentativeRequest();
+            $reqGetAccRepres = new GetAccountRequest();
             $reqGetAccRepres->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-            $respGetAccRepres = $this->_callAccount->getRepresentative($reqGetAccRepres);
+            $reqGetAccRepres->setIsRepresentative(TRUE);
+            $respGetAccRepres = $this->_callAccount->exec($reqGetAccRepres);
             /* create one operation with one transaction */
             $reqAddOper = new AddOperationRequest();
             $reqAddOper->setOperationTypeCode(Cfg::CODE_TYPE_OPER_PV_SALE_PAID);
