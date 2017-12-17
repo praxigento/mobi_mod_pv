@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="product.info.price">
+            <block class="Praxigento\Pv\Block\Catalog\Product\View\Pv"
+                   name="prxgt.pv.product.view"
+                   template="Praxigento_Pv::catalog/product/view/pv.phtml"
+                   before="product.price.final">
+            </block>
+        </referenceContainer>
+    </body>
+</page>

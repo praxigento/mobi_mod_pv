@@ -8,14 +8,14 @@ namespace Praxigento\Pv\Observer\Sub\Register;
 
 class Collector
 {
-    /** @var  \Praxigento\Warehouse\Tool\IStockManager */
+    /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
     protected $_manStock;
     /** @var \Magento\Framework\ObjectManagerInterface */
     protected $_manObj;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Warehouse\Tool\IStockManager $manStock
+        \Praxigento\Warehouse\Api\Helper\Stock $manStock
     ) {
         $this->_manObj = $manObj;
         $this->_manStock = $manStock;
