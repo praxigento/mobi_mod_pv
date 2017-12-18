@@ -31,7 +31,7 @@ class Layer
         $tblStockItem = [$asStockItem => $collection->getTable(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM)];
         $tblStockPv = [$asStockPv => $collection->getTable(\Praxigento\Pv\Repo\Entity\Data\Stock\Item::ENTITY_NAME)];
         // LEFT JOIN `prxgt_pv_stock_item` AS `prxgtPvStock`
-        $on = $asStockPv . '.' . \Praxigento\Pv\Repo\Entity\Data\Stock\Item::ATTR_STOCK_ITEM_REF . '='
+        $on = $asStockPv . '.' . \Praxigento\Pv\Repo\Entity\Data\Stock\Item::ATTR_ITEM_REF . '='
             . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
         $cols = [self::AS_ATTR_PV_WRHS => \Praxigento\Pv\Repo\Entity\Data\Stock\Item::ATTR_PV];
         $query->joinLeft($tblStockPv, $on, $cols);

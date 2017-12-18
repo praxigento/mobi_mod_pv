@@ -5,10 +5,9 @@
 
 namespace Praxigento\Pv\Repo\Entity;
 
-use Praxigento\Pv\Repo\Entity\Data\Product as Entity;
+use Praxigento\Pv\Repo\Entity\Data\Quote as Entity;
 
-class Product
-
+class Quote
     extends \Praxigento\Core\App\Repo\Def\Entity
 {
     public function __construct(
@@ -62,4 +61,5 @@ class Product
         $result = parent::getById($id);
         return $result;
     }
+
 }

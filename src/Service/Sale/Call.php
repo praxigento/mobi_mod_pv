@@ -142,7 +142,7 @@ class Call
                 $qty = $item->getQuantity();
                 $total = $pv * $qty;
                 $eItem = new \Praxigento\Pv\Repo\Entity\Data\Sale\Item();
-                $eItem->setSaleItemId($itemId);
+                $eItem->setItemRef($itemId);
                 $eItem->setSubtotal($total);
                 $eItem->setDiscount(0);
                 $eItem->setTotal($total);
@@ -151,7 +151,7 @@ class Call
             }
             /* save order data */
             $eOrder = new \Praxigento\Pv\Repo\Entity\Data\Sale();
-            $eOrder->setSaleId($orderId);
+            $eOrder->setSaleRef($orderId);
             $eOrder->setSubtotal($orderTotal);
             $eOrder->setDiscount(0);
             $eOrder->setTotal($orderTotal);

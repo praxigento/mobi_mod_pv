@@ -9,45 +9,37 @@ class Item
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_PV = 'pv';
-    const ATTR_STOCK_ITEM_REF = 'stock_item_ref';
+    const ATTR_ITEM_REF = 'item_ref';
     const ENTITY_NAME = 'prxgt_pv_stock_item';
 
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_STOCK_ITEM_REF];
+        return [self::ATTR_ITEM_REF];
     }
 
-    /**
-     * @return double
-     */
+    /** @return float */
     public function getPv()
     {
         $result = parent::get(self::ATTR_PV);
         return $result;
     }
 
-    /**
-     * @return int
-     */
-    public function getStockItemRef()
+    /** @return int */
+    public function getItemRef()
     {
-        $result = parent::get(self::ATTR_STOCK_ITEM_REF);
+        $result = parent::get(self::ATTR_ITEM_REF);
         return $result;
     }
 
-    /**
-     * @param double $data
-     */
+    /** @param float $data */
     public function setPv($data)
     {
         parent::set(self::ATTR_PV, $data);
     }
 
-    /**
-     * @param int $data
-     */
-    public function setStockItemRef($data)
+    /** @param int $data */
+    public function setItemRef($data)
     {
-        parent::set(self::ATTR_STOCK_ITEM_REF, $data);
+        parent::set(self::ATTR_ITEM_REF, $data);
     }
 }

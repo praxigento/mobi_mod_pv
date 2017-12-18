@@ -149,7 +149,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
             $repoWrhs->create($data);
             /* add pv stock item data */
             $data = new \Praxigento\Pv\Repo\Entity\Data\Stock\Item();
-            $data->setStockItemRef($this->stockItemIds[$i]);
+            $data->setItemRef($this->stockItemIds[$i]);
             $data->setPv(200);
             $repoPv->create($data);
         }

@@ -5,83 +5,60 @@
 
 namespace Praxigento\Pv\Repo\Entity\Data;
 
-class Sale
+class Quote
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
-    const ATTR_DATE_PAID = 'date_paid';
     const ATTR_DISCOUNT = 'discount';
-    const ATTR_SALE_REF = 'sale_ref';
+    const ATTR_QUOTE_REF = 'quote_ref';
     const ATTR_SUBTOTAL = 'subtotal';
     const ATTR_TOTAL = 'total';
-    const ENTITY_NAME = 'prxgt_pv_sale';
-
-    /** @return string */
-    public function getDatePaid()
-    {
-        $result = parent::get(self::ATTR_DATE_PAID);
-        return $result;
-    }
+    const ENTITY_NAME = 'prxgt_pv_quote';
 
     /** @return float */
-    public function getDiscount()
-    {
+    public function getDiscount() {
         $result = parent::get(self::ATTR_DISCOUNT);
         return $result;
     }
 
-    public static function getPrimaryKeyAttrs()
-    {
-        return [self::ATTR_SALE_REF];
+    public static function getPrimaryKeyAttrs() {
+        return [self::ATTR_QUOTE_REF];
     }
 
     /** @return int */
-    public function getSaleRef()
-    {
-        $result = parent::get(self::ATTR_SALE_REF);
+    public function getQuoteRef() {
+        $result = parent::get(self::ATTR_QUOTE_REF);
         return $result;
     }
 
     /** @return float */
-    public function getSubtotal()
-    {
+    public function getSubtotal() {
         $result = parent::get(self::ATTR_SUBTOTAL);
         return $result;
     }
 
     /** @return float */
-    public function getTotal()
-    {
+    public function getTotal() {
         $result = parent::get(self::ATTR_TOTAL);
         return $result;
     }
 
-    /** @param string $data */
-    public function setDatePaid($data)
-    {
-        parent::set(self::ATTR_DATE_PAID, $data);
-    }
-
     /** @param float $data */
-    public function setDiscount($data)
-    {
+    public function setDiscount($data) {
         parent::set(self::ATTR_DISCOUNT, $data);
     }
 
     /** @param int $data */
-    public function setSaleRef($data)
-    {
-        parent::set(self::ATTR_SALE_REF, $data);
+    public function setQuoteRef($data) {
+        parent::set(self::ATTR_QUOTE_REF, $data);
     }
 
     /** @param float $data */
-    public function setSubtotal($data)
-    {
+    public function setSubtotal($data) {
         parent::set(self::ATTR_SUBTOTAL, $data);
     }
 
     /** @param float $data */
-    public function setTotal($data)
-    {
+    public function setTotal($data) {
         parent::set(self::ATTR_TOTAL, $data);
     }
 

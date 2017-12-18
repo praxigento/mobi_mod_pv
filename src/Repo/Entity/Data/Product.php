@@ -30,7 +30,7 @@ class Product
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getPv()
     {
@@ -48,7 +48,7 @@ class Product
     }
 
     /**
-     * @param double $data
+     * @param float $data
      */
     public function setPv($data)
     {

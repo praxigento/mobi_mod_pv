@@ -5,26 +5,23 @@
 
 namespace Praxigento\Pv\Repo\Entity;
 
-use Magento\Framework\App\ResourceConnection;
-use Praxigento\Core\App\Repo\Def\Entity as BaseEntityRepo;
-use Praxigento\Core\App\Repo\IGeneric as IRepoGeneric;
 use Praxigento\Pv\Repo\Entity\Data\Sale as Entity;
 
-class Sale extends BaseEntityRepo
+class Sale
+    extends \Praxigento\Core\App\Repo\Def\Entity
 {
     public function __construct(
-        ResourceConnection $resource,
-        IRepoGeneric $repoGeneric
+        \Magento\Framework\App\ResourceConnection $resource,
+        \Praxigento\Core\App\Repo\IGeneric $repoGeneric
     ) {
         parent::__construct($resource, $repoGeneric, Entity::class);
     }
 
     /**
-     * @param \Praxigento\Pv\Repo\Entity\Data\Sale|array $data
-     * @return \Praxigento\Pv\Repo\Entity\Data\Sale
+     * @param Entity|array $data
+     * @return Entity
      */
-    public function create($data)
-    {
+    public function create($data) {
         $result = parent::create($data);
         return $result;
     }
@@ -39,7 +36,7 @@ class Sale extends BaseEntityRepo
      * @param null $columns
      * @param null $group
      * @param null $having
-     * @return \Praxigento\Pv\Repo\Entity\Data\Sale[] Found data or empty array if no data found.
+     * @return Entity[] Found data or empty array if no data found.
      */
     public function get(
         $where = null,
@@ -49,8 +46,7 @@ class Sale extends BaseEntityRepo
         $columns = null,
         $group = null,
         $having = null
-    )
-    {
+    ) {
         $result = parent::get($where, $order, $limit, $offset, $columns, $group, $having);
         return $result;
     }
@@ -59,10 +55,9 @@ class Sale extends BaseEntityRepo
      * Get the data instance by ID.
      *
      * @param int $id
-     * @return \Praxigento\Pv\Repo\Entity\Data\Sale|bool Found instance data or 'false'
+     * @return Entity|bool Found instance data or 'false'
      */
-    public function getById($id)
-    {
+    public function getById($id) {
         $result = parent::getById($id);
         return $result;
     }

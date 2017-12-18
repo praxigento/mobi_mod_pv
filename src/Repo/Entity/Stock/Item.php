@@ -5,27 +5,24 @@
 
 namespace Praxigento\Pv\Repo\Entity\Stock;
 
-use Magento\Framework\App\ResourceConnection;
-use Praxigento\Core\App\Repo\Def\Entity as BaseEntityRepo;
-use Praxigento\Core\App\Repo\IGeneric as IRepoGeneric;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Repo\Entity\Data\Stock\Item as Entity;
 
-class Item extends BaseEntityRepo
+class Item
+    extends \Praxigento\Core\App\Repo\Def\Entity
 {
     public function __construct(
-        ResourceConnection $resource,
-        IRepoGeneric $repoGeneric
+        \Magento\Framework\App\ResourceConnection $resource,
+        \Praxigento\Core\App\Repo\IGeneric $repoGeneric
     ) {
         parent::__construct($resource, $repoGeneric, Entity::class);
     }
 
     /**
-     * @param array|\Praxigento\Pv\Repo\Entity\Data\Stock\Item $data
-     * @return \Praxigento\Pv\Repo\Entity\Data\Stock\Item
+     * @param Entity|array $data
+     * @return Entity
      */
-    public function create($data)
-    {
+    public function create($data) {
         $result = parent::create($data);
         return $result;
     }
@@ -40,7 +37,7 @@ class Item extends BaseEntityRepo
      * @param null $columns
      * @param null $group
      * @param null $having
-     * @return \Praxigento\Pv\Repo\Entity\Data\Stock\Item[] Found data or empty array if no data found.
+     * @return Entity[] Found data or empty array if no data found.
      */
     public function get(
         $where = null,
@@ -50,8 +47,7 @@ class Item extends BaseEntityRepo
         $columns = null,
         $group = null,
         $having = null
-    )
-    {
+    ) {
         $result = parent::get($where, $order, $limit, $offset, $columns, $group, $having);
         return $result;
     }
@@ -60,10 +56,9 @@ class Item extends BaseEntityRepo
      * Get the data instance by ID.
      *
      * @param int $id
-     * @return \Praxigento\Pv\Repo\Entity\Data\Stock\Item|bool Found instance data or 'false'
+     * @return Entity|bool Found instance data or 'false'
      */
-    public function getById($id)
-    {
+    public function getById($id) {
         $result = parent::getById($id);
         return $result;
     }
@@ -87,7 +82,7 @@ class Item extends BaseEntityRepo
         $cols = [];
         $query->from($tblStockItem, $cols);
         /* LEFT JOIN prxgt_pv_stock_item */
-        $on = $asPv . '.' . Entity::ATTR_STOCK_ITEM_REF . '=' . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
+        $on = $asPv . '.' . Entity::ATTR_ITEM_REF . '=' . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
         $cols = [Entity::ATTR_PV];
         $query->joinLeft($tblPv, $on, $cols);
         /* WHERE */

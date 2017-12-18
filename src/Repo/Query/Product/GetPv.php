@@ -45,7 +45,7 @@ class GetPv
         $cols = [
             self::A_PV => EPvStockItem::ATTR_PV
         ];
-        $cond = $as . '.' . EPvStockItem::ATTR_STOCK_ITEM_REF . '=' . $asItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
+        $cond = $as . '.' . EPvStockItem::ATTR_ITEM_REF . '=' . $asItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* query tuning */
