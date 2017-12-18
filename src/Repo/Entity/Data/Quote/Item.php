@@ -9,7 +9,7 @@ class Item
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_DISCOUNT = 'discount';
-    const ATTR_SALE_ITEM_REF = 'item_ref';
+    const ATTR_ITEM_REF = 'item_ref';
     const ATTR_SUBTOTAL = 'subtotal';
     const ATTR_TOTAL = 'total';
     const ENTITY_NAME = 'prxgt_pv_quote_item';
@@ -20,14 +20,14 @@ class Item
         return $result;
     }
 
-    public static function getPrimaryKeyAttrs() {
-        return [self::ATTR_SALE_ITEM_REF];
+    /** @return int */
+    public function getItemRef() {
+        $result = parent::get(self::ATTR_ITEM_REF);
+        return $result;
     }
 
-    /** @return int */
-    public function getSaleItemRef() {
-        $result = parent::get(self::ATTR_SALE_ITEM_REF);
-        return $result;
+    public static function getPrimaryKeyAttrs() {
+        return [self::ATTR_ITEM_REF];
     }
 
     /** @return float */
@@ -48,8 +48,8 @@ class Item
     }
 
     /** @param int $data */
-    public function setSaleItemRef($data) {
-        parent::set(self::ATTR_SALE_ITEM_REF, $data);
+    public function setItemRef($data) {
+        parent::set(self::ATTR_ITEM_REF, $data);
     }
 
     /** @param float $data */

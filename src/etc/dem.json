@@ -149,8 +149,8 @@
                           ]
                         },
                         "action": {
-                          "delete": "restrict",
-                          "update": "restrict"
+                          "delete": "cascade",
+                          "update": "cascade"
                         }
                       }
                     }
@@ -393,8 +393,8 @@
                       ]
                     },
                     "action": {
-                      "delete": "restrict",
-                      "update": "restrict"
+                      "delete": "cascade",
+                      "update": "cascade"
                     }
                   }
                 }
