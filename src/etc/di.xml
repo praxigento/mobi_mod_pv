@@ -56,6 +56,13 @@
                 sortOrder="400" disabled="false"/>
     </type>
 
+    <type name="Magento\Checkout\Block\Cart\Item\Renderer">
+        <!-- Add PV html into cart item's price block -->
+        <plugin name="praxigento_pv_plugin"
+                type="Praxigento\Pv\Plugin\Checkout\Block\Cart\Item\Renderer"
+                sortOrder="400" disabled="false"/>
+    </type>
+
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <!-- Add custom columns to the sales orders grid -->
         <plugin name="praxigento_pv_plugin"
