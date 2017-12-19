@@ -15,67 +15,74 @@
     <!-- **** -->
     <!-- Repo -->
     <!-- **** -->
-    <preference for="Praxigento\Pv\Repo\IModule"
-            type="Praxigento\Pv\Repo\Def\Module"/>
+    <preference for="\Praxigento\Pv\Repo\IModule"
+                type="\Praxigento\Pv\Repo\Def\Module"/>
 
     <!-- ******** -->
     <!-- Services -->
     <!-- ******** -->
-    <preference for="Praxigento\Pv\Service\ISale"
-            type="Praxigento\Pv\Service\Sale\Call"/>
-    <preference for="Praxigento\Pv\Service\ITransfer"
-            type="Praxigento\Pv\Service\Transfer\Call"/>
+    <preference for="\Praxigento\Pv\Service\ISale"
+                type="\Praxigento\Pv\Service\Sale\Call"/>
+    <preference for="\Praxigento\Pv\Service\ITransfer"
+                type="\Praxigento\Pv\Service\Transfer\Call"/>
 
 
     <!-- ******* -->
     <!-- PLUGINS -->
     <!-- ******* -->
-    <type name="Magento\Catalog\Block\Product\ListProduct">
+    <type name="\Magento\Catalog\Block\Product\ListProduct">
         <!-- Display PV in catalog list -->
-        <plugin name="praxigento_pv_plugin"
+        <plugin name="prxgt_pv_plugin"
                 type="\Praxigento\Pv\Plugin\Catalog\Block\Product\ListProduct"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
+    <type name="\Magento\Catalog\Model\ResourceModel\Product\Collection">
         <!-- Enable order & filter for additional fields (wholesale PV) in products collection -->
-        <plugin name="praxigento_pv_plugin"
-                type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\Collection"
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\Collection"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
+    <type name="\Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
         <!-- Add fields mapping (wholesale PV) to products collection -->
-        <plugin name="praxigento_pv_plugin"
-                type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory"
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="Magento\Catalog\Model\Layer">
+    <type name="\Magento\Catalog\Model\Layer">
         <!-- Add warehouse PV to collection for category view -->
-        <plugin name="praxigento_pv_plugin"
+        <plugin name="prxgt_pv_plugin"
                 type="\Praxigento\Pv\Plugin\Catalog\Model\Layer"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="Magento\Checkout\Block\Cart\Item\Renderer">
+    <type name="\Magento\Checkout\Block\Cart\Item\Renderer">
         <!-- Add PV html into cart item's price block -->
-        <plugin name="praxigento_pv_plugin"
-                type="Praxigento\Pv\Plugin\Checkout\Block\Cart\Item\Renderer"
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Checkout\Block\Cart\Item\Renderer"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+    <type name="\Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <!-- Add custom columns to the sales orders grid -->
-        <plugin name="praxigento_pv_plugin"
-                type="Praxigento\Pv\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory"
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="Magento\Quote\Model\ResourceModel\Quote\Item">
+    <type name="\Magento\Quote\Model\Cart\CartTotalRepository">
+        <!-- Add PV totals to fronted data container -->
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Quote\Model\Cart\CartTotalRepository"
+                sortOrder="400" disabled="false"/>
+    </type>
+
+    <type name="\Magento\Quote\Model\ResourceModel\Quote\Item">
         <!-- Create/update PV data for corresponded quote item -->
-        <plugin name="praxigento_pv_plugin"
-                type="Praxigento\Pv\Plugin\Quote\Model\ResourceModel\Quote\Item"
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Quote\Model\ResourceModel\Quote\Item"
                 sortOrder="400" disabled="false"/>
     </type>
 
