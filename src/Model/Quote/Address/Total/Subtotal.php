@@ -33,13 +33,11 @@ class Subtotal
         /* init total structure */
         parent::collect($quote, $shippingAssignment, $total);
         /* reset these totals values */
-        $total->setBaseTotalAmount(self::CODE, 0);
-        $total->setTotalAmount(self::CODE, 0);
+        $quoteSubtotal = 0;
         /* get fresh grands from calculating totals */
         $grandBase = $total->getData(\Magento\Quote\Api\Data\TotalsInterface::KEY_BASE_GRAND_TOTAL);
         if ($grandBase > 0) {
             /* this is shipping address, compose result (skip processing for billing address)*/
-            $quoteId = $quote->getId();
             $items = $quote->getItems();
             if (is_array($items)) {
                 /** @var \Magento\Quote\Model\Quote\Item $item */
@@ -48,9 +46,14 @@ class Subtotal
                     $product = $item->getProduct();
                     $productId = $product->getId();
                     $warehousePv = $this->hlpGetPv->product($productId);
+                    $subtotal = number_format($qty * $warehousePv, 2);
+                    $quoteSubtotal += $subtotal;
                 }
             }
         }
+        /* there is no difference between PV and base PV values */
+        $total->setBaseTotalAmount(self::CODE, $quoteSubtotal);
+        $total->setTotalAmount(self::CODE, $quoteSubtotal);
         return $this;
     }
 

@@ -9,12 +9,17 @@ use Praxigento\Pv\Repo\Entity\Data\Quote\Item as EPvQuoteItem;
 
 class Item
 {
+    /** @var \Praxigento\Pv\Repo\Entity\Quote\Item */
     private $repoPvQuoteItem;
+    /** @var \Praxigento\Pv\Api\Helper\GetPv */
+    private $hlpGetPv;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Entity\Quote\Item $repoPvQuoteItem
+        \Praxigento\Pv\Repo\Entity\Quote\Item $repoPvQuoteItem,
+        \Praxigento\Pv\Api\Helper\GetPv $hlpGetPv
     ) {
         $this->repoPvQuoteItem = $repoPvQuoteItem;
+        $this->hlpGetPv = $hlpGetPv;
     }
 
     /**
@@ -31,30 +36,36 @@ class Item
         \Magento\Quote\Model\Quote\Item $object
     ) {
         $result = $proceed($object);
-        /* create/update PV quote for quote item (if changed) */
-        $id = $object->getId();
-        $pk = [EPvQuoteItem::ATTR_ITEM_REF => $id];
-        $found = $this->repoPvQuoteItem->getById($pk);
-        if ($found) {
-            /* update PV data if different */
-            if (
-                ($found->getSubtotal() != 125) ||
-                ($found->getDiscount() != 23) ||
-                ($found->getTotal() != 100)) {
-                $found->setSubtotal(125);
-                $found->setDiscount(23);
-                $found->setTotal(100);
-                $this->repoPvQuoteItem->updateById($pk, $found);
+        $isDeleted = $object->isDeleted();
+        if (!$isDeleted) {
+            /* create/update PV quote for quote item (if changed) */
+            $id = $object->getId();
+            $qty = $object->getQty();
+            $product = $object->getProduct();
+            $productId = $product->getId();
+            $pvWrhs = $this->hlpGetPv->product($productId);
+            $subtotal = number_format($pvWrhs * $qty, 2);
+            $pk = [EPvQuoteItem::ATTR_ITEM_REF => $id];
+            $found = $this->repoPvQuoteItem->getById($pk);
+            if ($found) {
+                /* update PV data if subtotals are different */
+                if ($found->getSubtotal() != $subtotal) {
+                    /* we don't know discount for the item */
+                    $found->setSubtotal($subtotal);
+                    $found->setDiscount(0);
+                    $found->setTotal($subtotal);
+                    $this->repoPvQuoteItem->updateById($pk, $found);
+                }
+            } else {
+                /* create new record */
+                $entity = new EPvQuoteItem();
+                $entity->setItemRef($id);
+                /* we don't know discount for the item */
+                $entity->setSubtotal($subtotal);
+                $entity->setDiscount(0);
+                $entity->setTotal($subtotal);
+                $this->repoPvQuoteItem->create($entity);
             }
-        } else {
-            /* create new record */
-            $entity = new EPvQuoteItem();
-            $entity->setItemRef($id);
-            /* TODO: extract PV info from quote item */
-            $entity->setSubtotal(123);
-            $entity->setDiscount(23);
-            $entity->setTotal(100);
-            $this->repoPvQuoteItem->create($entity);
         }
         return $result;
     }

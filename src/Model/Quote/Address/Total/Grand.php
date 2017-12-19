@@ -26,7 +26,21 @@ class Grand
         \Magento\Quote\Api\Data\ShippingAssignmentInterface $shippingAssignment,
         \Magento\Quote\Model\Quote\Address\Total $total
     ) {
+        /* init total structure */
         parent::collect($quote, $shippingAssignment, $total);
+        /* reset these totals values */
+        $quoteGrand = 0;
+        /* get fresh grands from calculating totals */
+        $grandBase = $total->getData(\Magento\Quote\Api\Data\TotalsInterface::KEY_BASE_GRAND_TOTAL);
+        if ($grandBase > 0) {
+            /* this is shipping address, compose result (skip processing for billing address)*/
+            $subtotal = $total->getBaseTotalAmount(Cfg::CODE_TOTAL_SUBTOTAL);
+            $discount = $total->getBaseTotalAmount(Cfg::CODE_TOTAL_DISCOUNT);
+            $quoteGrand = $subtotal - $discount;
+        }
+        /* there is no difference between PV and base PV values */
+        $total->setBaseTotalAmount(self::CODE, $quoteGrand);
+        $total->setTotalAmount(self::CODE, $quoteGrand);
         return $this;
     }
 

@@ -26,7 +26,22 @@ class Discount
         \Magento\Quote\Api\Data\ShippingAssignmentInterface $shippingAssignment,
         \Magento\Quote\Model\Quote\Address\Total $total
     ) {
+        /* init total structure */
         parent::collect($quote, $shippingAssignment, $total);
+        /* reset these totals values */
+        $quoteDiscount = 0;
+        /* get fresh grands from calculating totals */
+        $grandBase = $total->getData(\Magento\Quote\Api\Data\TotalsInterface::KEY_BASE_GRAND_TOTAL);
+        if ($grandBase > 0) {
+            /* this is shipping address, compose result (skip processing for billing address)*/
+            $items = $quote->getItems();
+            if (is_array($items)) {
+                /* TODO: calculate discounts here */
+            }
+        }
+        /* there is no difference between PV and base PV values */
+        $total->setBaseTotalAmount(self::CODE, $quoteDiscount);
+        $total->setTotalAmount(self::CODE, $quoteDiscount);
         return $this;
     }
 
