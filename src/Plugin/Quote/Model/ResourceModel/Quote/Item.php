@@ -38,13 +38,13 @@ class Item
         $result = $proceed($object);
         $isDeleted = $object->isDeleted();
         if (!$isDeleted) {
-            /* create/update PV quote for quote item (if changed) */
             $id = $object->getId();
             $qty = $object->getQty();
             $product = $object->getProduct();
             $productId = $product->getId();
             $pvWrhs = $this->hlpGetPv->product($productId);
             $subtotal = number_format($pvWrhs * $qty, 2);
+            /* create/update PV values for quote item (if changed) */
             $pk = [EPvQuoteItem::ATTR_ITEM_REF => $id];
             $found = $this->repoPvQuoteItem->getById($pk);
             if ($found) {

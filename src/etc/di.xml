@@ -86,4 +86,11 @@
                 sortOrder="400" disabled="false"/>
     </type>
 
+    <type name="\Magento\Quote\Model\ResourceModel\Quote">
+        <!-- Create/update PV data for corresponded quote -->
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Quote\Model\ResourceModel\Quote"
+                sortOrder="400" disabled="false"/>
+    </type>
+
 </config>

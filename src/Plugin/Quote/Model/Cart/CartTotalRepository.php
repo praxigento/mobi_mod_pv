@@ -5,6 +5,7 @@
 
 namespace Praxigento\Pv\Plugin\Quote\Model\Cart;
 
+use Praxigento\Pv\Repo\Entity\Data\Quote as EPvQuote;
 
 class CartTotalRepository
 {
@@ -14,11 +15,15 @@ class CartTotalRepository
 
     /** @var \Magento\Quote\Api\Data\TotalSegmentInterfaceFactory */
     private $factTotalSegment;
+    /** @var \Praxigento\Pv\Repo\Entity\Quote */
+    private $repoPvQuote;
 
     public function __construct(
-        \Magento\Quote\Api\Data\TotalSegmentInterfaceFactory $factTotalSegment
+        \Magento\Quote\Api\Data\TotalSegmentInterfaceFactory $factTotalSegment,
+        \Praxigento\Pv\Repo\Entity\Quote $repoPvQuote
     ) {
         $this->factTotalSegment = $factTotalSegment;
+        $this->repoPvQuote = $repoPvQuote;
     }
 
     /**
@@ -36,22 +41,35 @@ class CartTotalRepository
     ) {
         /** @var \Magento\Quote\Model\Cart\Totals $result */
         $result = $proceed($cartId);
+        /* set init values for totals */
+        $subtotal = $discount = $grand = 0;
+        /* get quote totals by ID */
+        $pk = [EPvQuote::ATTR_QUOTE_REF => $cartId];
+        $found = $this->repoPvQuote->getById($pk);
+        if ($found) {
+            $subtotal = $found->getSubtotal();
+            $discount = $found->getDiscount();
+            $grand = $found->getTotal();
+        }
+
+        /**
+         * Init segments.
+         */
 
         /** @var \Magento\Quote\Api\Data\TotalSegmentInterface $segSub */
         $segSub = $this->factTotalSegment->create();
         $segSub->setCode(self::SEGMENT_SUBTOTAL);
-        $segSub->setValue(1024);
+        $segSub->setValue($subtotal);
 
         /** @var \Magento\Quote\Api\Data\TotalSegmentInterface $segSub */
         $segDiscount = $this->factTotalSegment->create();
         $segDiscount->setCode(self::SEGMENT_DISCOUNT);
-        $segDiscount->setValue(10);
-
+        $segDiscount->setValue($discount);
 
         /** @var \Magento\Quote\Api\Data\TotalSegmentInterface $segSub */
         $segGrand = $this->factTotalSegment->create();
         $segGrand->setCode(self::SEGMENT_GRAND);
-        $segGrand->setValue(1014);
+        $segGrand->setValue($grand);
 
         /* add segments to totals */
         $segments = $result->getTotalSegments();
