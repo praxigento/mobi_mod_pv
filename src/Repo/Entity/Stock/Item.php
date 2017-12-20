@@ -69,6 +69,8 @@ class Item
      * @param int $productId
      * @param int $stockId
      * @return double
+     *
+     * TODO: duplicate - \Praxigento\Pv\Helper\GetPv::product ???
      */
     public function getPvByProductAndStock($productId, $stockId)
     {

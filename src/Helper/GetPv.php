@@ -7,6 +7,9 @@ namespace Praxigento\Pv\Helper;
 
 use Praxigento\Pv\Repo\Query\Product\GetPv as QBGetPv;
 
+/**
+ * TODO: duplicate - \Praxigento\Pv\Repo\Entity\Stock\Item::getPvByProductAndStock ????
+ */
 class GetPv
     implements \Praxigento\Pv\Api\Helper\GetPv
 {
