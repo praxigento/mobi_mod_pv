@@ -34,7 +34,7 @@ class Discount
         $grandBase = $total->getData(\Magento\Quote\Api\Data\TotalsInterface::KEY_BASE_GRAND_TOTAL);
         if ($grandBase > 0) {
             /* this is shipping address, compose result (skip processing for billing address)*/
-            $items = $quote->getItems();
+            $items = $shippingAssignment->getItems();
             if (is_array($items)) {
                 /* TODO: calculate discounts here */
             }

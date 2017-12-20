@@ -38,17 +38,15 @@ class Subtotal
         $grandBase = $total->getData(\Magento\Quote\Api\Data\TotalsInterface::KEY_BASE_GRAND_TOTAL);
         if ($grandBase > 0) {
             /* this is shipping address, compose result (skip processing for billing address)*/
-            $items = $quote->getItems();
-            if (is_array($items)) {
-                /** @var \Magento\Quote\Model\Quote\Item $item */
-                foreach ($items as $item) {
-                    $qty = $item->getQty();
-                    $product = $item->getProduct();
-                    $productId = $product->getId();
-                    $warehousePv = $this->hlpGetPv->product($productId);
-                    $subtotal = number_format($qty * $warehousePv, 2);
-                    $quoteSubtotal += $subtotal;
-                }
+            $items = $shippingAssignment->getItems();
+            /** @var \Magento\Quote\Model\Quote\Item $item */
+            foreach ($items as $item) {
+                $qty = $item->getQty();
+                $product = $item->getProduct();
+                $productId = $product->getId();
+                $warehousePv = $this->hlpGetPv->product($productId);
+                $subtotal = number_format($qty * $warehousePv, 2);
+                $quoteSubtotal += $subtotal;
             }
         }
         /* there is no difference between PV and base PV values */
