@@ -40,6 +40,7 @@ class Pv
             $pvSubtotal->setCode('prxgt_pv_total');
             $pvSubtotal->setValue($value);
             $pvSubtotal->setLabel('PV Total');
+            $pvSubtotal->setStrong(true);
             $pvSubtotal->setIsFormated(true);
             $parent->addTotal($pvSubtotal, 'last');
         }

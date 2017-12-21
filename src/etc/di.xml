@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
     <!-- *** -->
     <!-- API -->
@@ -7,9 +8,9 @@
     <preference for="\Praxigento\Pv\Api\Helper\GetPv"
                 type="\Praxigento\Pv\Helper\GetPv"/>
     <preference for="\Praxigento\Pv\Api\Sale\Order\GetInterface"
-            type="\Praxigento\Pv\Api\Sale\Order\Get"/>
+                type="\Praxigento\Pv\Api\Sale\Order\Get"/>
     <preference for="\Praxigento\Pv\Api\Transfer\Customer\BetweenInterface"
-            type="\Praxigento\Pv\Api\Transfer\Customer\Between"/>
+                type="\Praxigento\Pv\Api\Transfer\Customer\Between"/>
 
 
     <!-- **** -->
@@ -90,6 +91,13 @@
         <!-- Create/update PV data for corresponded quote -->
         <plugin name="prxgt_pv_plugin"
                 type="\Praxigento\Pv\Plugin\Quote\Model\ResourceModel\Quote"
+                sortOrder="400" disabled="false"/>
+    </type>
+
+    <type name="\Magento\Sales\Block\Order\Email\Items\Order\DefaultOrder">
+        <!-- Add PV total info to the item price in emails -->
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Sales\Block\Order\Email\Items\Order\DefaultOrder"
                 sortOrder="400" disabled="false"/>
     </type>
 
