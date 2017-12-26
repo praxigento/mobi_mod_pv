@@ -5,8 +5,8 @@
 namespace Praxigento\Pv\Service\Sale;
 
 use Praxigento\Accounting\Api\Service\Account\Get\Request as GetAccountRequest;
+use Praxigento\Accounting\Api\Service\Operation\Request as AddOperationRequest;
 use Praxigento\Accounting\Repo\Entity\Data\Transaction;
-use Praxigento\Accounting\Service\Operation\Request\Add as AddOperationRequest;
 use Praxigento\Pv\Config as Cfg;
 
 /**
@@ -19,7 +19,7 @@ class Call
 {
     /** @var  \Praxigento\Accounting\Api\Service\Account\Get */
     protected $_callAccount;
-    /** @var  \Praxigento\Accounting\Service\IOperation */
+    /** @var \Praxigento\Accounting\Api\Service\Operation */
     protected $_callOperation;
     /** @var \Praxigento\Core\App\Transaction\Database\IManager */
     protected $_manTrans;
@@ -39,7 +39,7 @@ class Call
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Api\Service\Account\Get $callAccount,
-        \Praxigento\Accounting\Service\IOperation $callOperation,
+        \Praxigento\Accounting\Api\Service\Operation $callOperation,
         \Praxigento\Pv\Repo\IModule $repoMod,
         \Praxigento\Pv\Repo\Entity\Sale $repoSale,
         \Praxigento\Pv\Repo\Entity\Sale\Item $repoSaleItem,
@@ -100,7 +100,7 @@ class Call
                 Transaction::ATTR_DATE_APPLIED => $dateApplied
             ];
             $reqAddOper->setTransactions([$trans]);
-            $respAddOper = $this->_callOperation->add($reqAddOper);
+            $respAddOper = $this->_callOperation->exec($reqAddOper);
             $operId = $respAddOper->getOperationId();
             $result->setOperationId($operId);
             $result->markSucceed();

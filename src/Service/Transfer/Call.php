@@ -5,9 +5,9 @@
 namespace Praxigento\Pv\Service\Transfer;
 
 use Praxigento\Accounting\Api\Service\Account\Get\Request as AccountGetRequest;
+use Praxigento\Accounting\Api\Service\Operation\Request as OperationAddRequest;
 use Praxigento\Accounting\Repo\Entity\Data\Account;
 use Praxigento\Accounting\Repo\Entity\Data\Transaction;
-use Praxigento\Accounting\Service\Operation\Request\Add as OperationAddRequest;
 use Praxigento\Pv\Config as Cfg;
 
 /**
@@ -22,7 +22,7 @@ class Call
      * @var \Praxigento\Accounting\Api\Service\Account\Get
      */
     protected $_callAccount;
-    /** @var  \Praxigento\Accounting\Service\IOperation */
+    /** @var  \Praxigento\Accounting\Api\Service\Operation */
     protected $_callOperation;
     /**
      * Other module's repositories adapter.
@@ -38,7 +38,7 @@ class Call
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Tool\IDate $toolDate,
         \Praxigento\Accounting\Api\Service\Account\Get $callAccount,
-        \Praxigento\Accounting\Service\IOperation $callOperation,
+        \Praxigento\Accounting\Api\Service\Operation $callOperation,
         \Praxigento\Pv\Repo\IModule $repoMod
     ) {
         parent::__construct($logger, $manObj);
@@ -117,7 +117,7 @@ class Call
                     Transaction::ATTR_NOTE => $noteTrans
                 ]
             ]);
-            $respAddOper = $this->_callOperation->add($reqAddOper);
+            $respAddOper = $this->_callOperation->exec($reqAddOper);
             if ($respAddOper->isSucceed()) {
                 $result->setOperationId($respAddOper->getOperationId());
                 $result->setTransactionsIds($respAddOper->getTransactionsIds());
