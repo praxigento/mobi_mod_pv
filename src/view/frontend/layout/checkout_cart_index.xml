@@ -10,15 +10,15 @@
                             <item name="children" xsi:type="array">
                                 <item name="prxgt_pv_subtotal" xsi:type="array">
                                     <item name="component" xsi:type="string">Praxigento_Pv/js/view/checkout/cart/totals/subtotal</item>
-                                    <item name="sortOrder" xsi:type="string">200</item>
+                                    <item name="sortOrder" xsi:type="string">10</item>
                                 </item>
                                 <item name="prxgt_pv_discount" xsi:type="array">
                                     <item name="component" xsi:type="string">Praxigento_Pv/js/view/checkout/cart/totals/discount</item>
-                                    <item name="sortOrder" xsi:type="string">300</item>
+                                    <item name="sortOrder" xsi:type="string">11</item>
                                 </item>
                                 <item name="prxgt_pv_grand" xsi:type="array">
                                     <item name="component" xsi:type="string">Praxigento_Pv/js/view/checkout/cart/totals/grand</item>
-                                    <item name="sortOrder" xsi:type="string">400</item>
+                                    <item name="sortOrder" xsi:type="string">12</item>
                                 </item>
                             </item>
                         </item>
