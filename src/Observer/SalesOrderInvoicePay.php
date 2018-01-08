@@ -23,13 +23,13 @@ class SalesOrderInvoicePay
     protected $_repoSale;
     /** @var \Praxigento\Pv\Observer\Sub\Register */
     protected $_subRegister;
-    /** @var \Praxigento\Core\Tool\IDate */
+    /** @var \Praxigento\Core\Api\Helper\Date */
     protected $_toolDate;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Pv\Repo\Entity\Sale $repoSale,
-        \Praxigento\Core\Tool\IDate $toolDate,
+        \Praxigento\Core\Api\Helper\Date $toolDate,
         \Praxigento\Pv\Observer\Sub\Register $subRegister
     ) {
         $this->_logger = $logger;

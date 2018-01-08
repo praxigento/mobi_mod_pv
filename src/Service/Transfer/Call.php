@@ -30,13 +30,13 @@ class Call
      * @var \Praxigento\Pv\Repo\IModule
      */
     protected $_repoMod;
-    /** @var  \Praxigento\Core\Tool\IDate */
+    /** @var  \Praxigento\Core\Api\Helper\Date */
     protected $_toolDate;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Core\Tool\IDate $toolDate,
+        \Praxigento\Core\Api\Helper\Date $toolDate,
         \Praxigento\Accounting\Api\Service\Account\Get $callAccount,
         \Praxigento\Accounting\Api\Service\Operation $callOperation,
         \Praxigento\Pv\Repo\IModule $repoMod

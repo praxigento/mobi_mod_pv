@@ -31,7 +31,7 @@ class Call
     protected $_repoSaleItem;
     /** @var  \Praxigento\Pv\Repo\Entity\Stock\Item */
     protected $_repoStockItem;
-    /** @var \Praxigento\Core\Tool\IDate */
+    /** @var \Praxigento\Core\Api\Helper\Date */
     protected $_toolDate;
 
     public function __construct(
@@ -44,7 +44,7 @@ class Call
         \Praxigento\Pv\Repo\Entity\Sale $repoSale,
         \Praxigento\Pv\Repo\Entity\Sale\Item $repoSaleItem,
         \Praxigento\Pv\Repo\Entity\Stock\Item $repoStockItem,
-        \Praxigento\Core\Tool\IDate $toolDate
+        \Praxigento\Core\Api\Helper\Date $toolDate
     ) {
         parent::__construct($logger, $manObj);
         $this->_manTrans = $manTrans;
