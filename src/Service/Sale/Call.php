@@ -2,6 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Pv\Service\Sale;
 
 use Praxigento\Accounting\Api\Service\Account\Get\Request as GetAccountRequest;
@@ -18,21 +19,21 @@ class Call
     implements \Praxigento\Pv\Service\ISale
 {
     /** @var  \Praxigento\Accounting\Api\Service\Account\Get */
-    protected $_callAccount;
+    protected $callAccount;
     /** @var \Praxigento\Accounting\Api\Service\Operation */
-    protected $_callOperation;
-    /** @var \Praxigento\Core\App\Transaction\Database\IManager */
-    protected $_manTrans;
-    /** @var  \Praxigento\Pv\Repo\IModule */
-    protected $_repoMod;
-    /** @var  \Praxigento\Pv\Repo\Entity\Sale */
-    protected $_repoSale;
-    /** @var  \Praxigento\Pv\Repo\Entity\Sale\Item */
-    protected $_repoSaleItem;
-    /** @var  \Praxigento\Pv\Repo\Entity\Stock\Item */
-    protected $_repoStockItem;
+    protected $callOperation;
     /** @var \Praxigento\Core\Api\Helper\Date */
-    protected $_toolDate;
+    protected $hlpDate;
+    /** @var \Praxigento\Core\App\Transaction\Database\IManager */
+    protected $manTrans;
+    /** @var  \Praxigento\Pv\Repo\IModule */
+    protected $repoMod;
+    /** @var  \Praxigento\Pv\Repo\Entity\Sale */
+    protected $repoSale;
+    /** @var  \Praxigento\Pv\Repo\Entity\Sale\Item */
+    protected $repoSaleItem;
+    /** @var  \Praxigento\Pv\Repo\Entity\Stock\Item */
+    protected $repoStockItem;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
@@ -44,17 +45,17 @@ class Call
         \Praxigento\Pv\Repo\Entity\Sale $repoSale,
         \Praxigento\Pv\Repo\Entity\Sale\Item $repoSaleItem,
         \Praxigento\Pv\Repo\Entity\Stock\Item $repoStockItem,
-        \Praxigento\Core\Api\Helper\Date $toolDate
+        \Praxigento\Core\Api\Helper\Date $hlpDate
     ) {
         parent::__construct($logger, $manObj);
-        $this->_manTrans = $manTrans;
-        $this->_callAccount = $callAccount;
-        $this->_callOperation = $callOperation;
-        $this->_repoMod = $repoMod;
-        $this->_repoSale = $repoSale;
-        $this->_repoSaleItem = $repoSaleItem;
-        $this->_repoStockItem = $repoStockItem;
-        $this->_toolDate = $toolDate;
+        $this->manTrans = $manTrans;
+        $this->callAccount = $callAccount;
+        $this->callOperation = $callOperation;
+        $this->repoMod = $repoMod;
+        $this->repoSale = $repoSale;
+        $this->repoSaleItem = $repoSaleItem;
+        $this->repoStockItem = $repoStockItem;
+        $this->hlpDate = $hlpDate;
     }
 
     /**
@@ -71,12 +72,12 @@ class Call
         $customerId = $request->getCustomerId();
         $dateApplied = $request->getDateApplied();
         $this->logger->info("PV accounting operation for sale order #$saleId is started.");
-        $sale = $this->_repoSale->getById($saleId);
+        $sale = $this->repoSale->getById($saleId);
         $pvTotal = $sale->getTotal();
         /* get customer for sale order */
         if (is_null($customerId)) {
             $this->logger->info("There is no customer ID in request, select customer ID from sale order data.");
-            $customerId = $this->_repoMod->getSaleOrderCustomerId($saleId);
+            $customerId = $this->repoMod->getSaleOrderCustomerId($saleId);
             $this->logger->info("Order #$saleId is created by customer #$customerId.");
         }
         if (!is_null($customerId)) {
@@ -84,12 +85,12 @@ class Call
             $reqGetAccCust = new GetAccountRequest();
             $reqGetAccCust->setCustomerId($customerId);
             $reqGetAccCust->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-            $respGetAccCust = $this->_callAccount->exec($reqGetAccCust);
+            $respGetAccCust = $this->callAccount->exec($reqGetAccCust);
             /* get PV account data for representative */
             $reqGetAccRepres = new GetAccountRequest();
             $reqGetAccRepres->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
             $reqGetAccRepres->setIsRepresentative(TRUE);
-            $respGetAccRepres = $this->_callAccount->exec($reqGetAccRepres);
+            $respGetAccRepres = $this->callAccount->exec($reqGetAccRepres);
             /* create one operation with one transaction */
             $reqAddOper = new AddOperationRequest();
             $reqAddOper->setOperationTypeCode(Cfg::CODE_TYPE_OPER_PV_SALE_PAID);
@@ -100,7 +101,7 @@ class Call
                 Transaction::ATTR_DATE_APPLIED => $dateApplied
             ];
             $reqAddOper->setTransactions([$trans]);
-            $respAddOper = $this->_callOperation->exec($reqAddOper);
+            $respAddOper = $this->callOperation->exec($reqAddOper);
             $operId = $respAddOper->getOperationId();
             $result->setOperationId($operId);
             $result->markSucceed();
@@ -113,7 +114,7 @@ class Call
 
     public function cacheReset()
     {
-        $this->_callAccount->cacheReset();
+        $this->callAccount->cacheReset();
     }
 
     /**
@@ -130,7 +131,7 @@ class Call
         $datePaid = $req->getSaleOrderDatePaid();
         $items = $req->getOrderItems();
         $this->logger->info("Save PV attributes for sale order #$orderId.");
-        $def = $this->_manTrans->begin();
+        $def = $this->manTrans->begin();
         try {
             /* for all items get PV data by warehouse */
             $orderTotal = 0;
@@ -138,7 +139,7 @@ class Call
                 $prodId = $item->getProductId();
                 $stockId = $item->getStockId();
                 $itemId = $item->getItemId();
-                $pv = $this->_repoStockItem->getPvByProductAndStock($prodId, $stockId);
+                $pv = $this->repoStockItem->getPvByProductAndStock($prodId, $stockId);
                 $qty = $item->getQuantity();
                 $total = $pv * $qty;
                 $eItem = new \Praxigento\Pv\Repo\Entity\Data\Sale\Item();
@@ -146,7 +147,7 @@ class Call
                 $eItem->setSubtotal($total);
                 $eItem->setDiscount(0);
                 $eItem->setTotal($total);
-                $this->_repoSaleItem->replace($eItem);
+                $this->repoSaleItem->replace($eItem);
                 $orderTotal += $total;
             }
             /* save order data */
@@ -156,12 +157,12 @@ class Call
             $eOrder->setDiscount(0);
             $eOrder->setTotal($orderTotal);
             $eOrder->setDatePaid($datePaid);
-            $this->_repoSale->replace($eOrder);
-            $this->_manTrans->commit($def);
+            $this->repoSale->replace($eOrder);
+            $this->manTrans->commit($def);
             $result->markSucceed();
             $this->logger->info("PV attributes for sale order #$orderId are saved.");
         } finally {
-            $this->_manTrans->end($def);
+            $this->manTrans->end($def);
         }
         return $result;
     }

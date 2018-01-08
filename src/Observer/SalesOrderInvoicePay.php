@@ -17,25 +17,25 @@ class SalesOrderInvoicePay
 {
     /* Names for the items in the event's data */
     const DATA_INVOICE = 'invoice';
-    /** @var \Psr\Log\LoggerInterface */
-    protected $_logger;
-    /** @var \Praxigento\Pv\Repo\Entity\Sale */
-    protected $_repoSale;
-    /** @var \Praxigento\Pv\Observer\Sub\Register */
-    protected $_subRegister;
     /** @var \Praxigento\Core\Api\Helper\Date */
-    protected $_toolDate;
+    protected $hlpDate;
+    /** @var \Psr\Log\LoggerInterface */
+    protected $logger;
+    /** @var \Praxigento\Pv\Repo\Entity\Sale */
+    protected $repoSale;
+    /** @var \Praxigento\Pv\Observer\Sub\Register */
+    protected $subRegister;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Pv\Repo\Entity\Sale $repoSale,
-        \Praxigento\Core\Api\Helper\Date $toolDate,
+        \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Pv\Observer\Sub\Register $subRegister
     ) {
-        $this->_logger = $logger;
-        $this->_repoSale = $repoSale;
-        $this->_toolDate = $toolDate;
-        $this->_subRegister = $subRegister;
+        $this->logger = $logger;
+        $this->repoSale = $repoSale;
+        $this->hlpDate = $hlpDate;
+        $this->subRegister = $subRegister;
     }
 
     public function execute(\Magento\Framework\Event\Observer $observer)
@@ -49,12 +49,12 @@ class SalesOrderInvoicePay
             $order = $invoice->getOrder();
             $orderId = $order->getEntityId();
             if ($orderId) {
-                $datePaid = $this->_toolDate->getUtcNowForDb();
-                $this->_logger->debug("Update paid date in PV registry on sale order (#$orderId) is paid.");
+                $datePaid = $this->hlpDate->getUtcNowForDb();
+                $this->logger->debug("Update paid date in PV registry on sale order (#$orderId) is paid.");
                 $data = [ESale::ATTR_DATE_PAID => $datePaid];
-                $this->_repoSale->updateById($orderId, $data);
+                $this->repoSale->updateById($orderId, $data);
                 /* transfer PV to customer account */
-                $this->_subRegister->accountPv($order);
+                $this->subRegister->accountPv($order);
             }
         }
     }

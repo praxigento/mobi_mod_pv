@@ -2,6 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Pv\Service\Transfer;
 
 use Praxigento\Accounting\Api\Service\Account\Get\Request as AccountGetRequest;
@@ -21,31 +22,31 @@ class Call
     /**
      * @var \Praxigento\Accounting\Api\Service\Account\Get
      */
-    protected $_callAccount;
+    protected $callAccount;
     /** @var  \Praxigento\Accounting\Api\Service\Operation */
-    protected $_callOperation;
+    protected $callOperation;
+    /** @var  \Praxigento\Core\Api\Helper\Date */
+    protected $hlpDate;
     /**
      * Other module's repositories adapter.
      *
      * @var \Praxigento\Pv\Repo\IModule
      */
-    protected $_repoMod;
-    /** @var  \Praxigento\Core\Api\Helper\Date */
-    protected $_toolDate;
+    protected $repoMod;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Core\Api\Helper\Date $toolDate,
+        \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Accounting\Api\Service\Account\Get $callAccount,
         \Praxigento\Accounting\Api\Service\Operation $callOperation,
         \Praxigento\Pv\Repo\IModule $repoMod
     ) {
         parent::__construct($logger, $manObj);
-        $this->_toolDate = $toolDate;
-        $this->_callAccount = $callAccount;
-        $this->_callOperation = $callOperation;
-        $this->_repoMod = $repoMod;
+        $this->hlpDate = $hlpDate;
+        $this->callAccount = $callAccount;
+        $this->callOperation = $callOperation;
+        $this->repoMod = $repoMod;
     }
 
 
@@ -66,13 +67,13 @@ class Call
         $noteOper = $request->getNoteOperation();
         $noteTrans = $request->getNoteTransaction();
         if (is_null($date)) {
-            $date = $this->_toolDate->getUtcNowForDb();
+            $date = $this->hlpDate->getUtcNowForDb();
         }
         /* validate conditions */
         if (!$condForceAll) {
             /* validate customer countries */
-            $downDebit = $this->_repoMod->getDownlineCustomerById($custIdDebit);
-            $downCredit = $this->_repoMod->getDownlineCustomerById($custIdCredit);
+            $downDebit = $this->repoMod->getDownlineCustomerById($custIdDebit);
+            $downCredit = $this->repoMod->getDownlineCustomerById($custIdCredit);
             /* countries should be equals */
             $countryDebit = $downDebit->getCountryCode();
             $countryCredit = $downCredit->getCountryCode();
@@ -101,9 +102,9 @@ class Call
             $reqAccGet = new AccountGetRequest();
             $reqAccGet->setCustomerId($custIdDebit);
             $reqAccGet->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-            $respAccDebit = $this->_callAccount->exec($reqAccGet);
+            $respAccDebit = $this->callAccount->exec($reqAccGet);
             $reqAccGet->setCustomerId($custIdCredit);
-            $respAccCredit = $this->_callAccount->exec($reqAccGet);
+            $respAccCredit = $this->callAccount->exec($reqAccGet);
             /* add transfer operation */
             $reqAddOper = new OperationAddRequest();
             $reqAddOper->setOperationTypeCode(Cfg::CODE_TYPE_OPER_PV_TRANSFER);
@@ -117,7 +118,7 @@ class Call
                     Transaction::ATTR_NOTE => $noteTrans
                 ]
             ]);
-            $respAddOper = $this->_callOperation->exec($reqAddOper);
+            $respAddOper = $this->callOperation->exec($reqAddOper);
             if ($respAddOper->isSucceed()) {
                 $result->setOperationId($respAddOper->getOperationId());
                 $result->setTransactionsIds($respAddOper->getTransactionsIds());
@@ -137,7 +138,7 @@ class Call
      */
     public function cacheReset()
     {
-        $this->_callAccount->cacheReset();
+        $this->callAccount->cacheReset();
     }
 
     public function creditToCustomer(Request\CreditToCustomer $request)
@@ -147,7 +148,7 @@ class Call
         $reqRepres = new AccountGetRequest();
         $reqRepres->setIsRepresentative(TRUE);
         $reqRepres->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-        $respRepres = $this->_callAccount->exec($reqRepres);
+        $respRepres = $this->callAccount->exec($reqRepres);
         /* extract input parameters */
         $requestData = $request->get();
         $reqBetween = new Request\BetweenCustomers($requestData);
@@ -170,7 +171,7 @@ class Call
         $reqRepres = new AccountGetRequest();
         $reqRepres->setIsRepresentative(TRUE);
         $reqRepres->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-        $respRepres = $this->_callAccount->exec($reqRepres);
+        $respRepres = $this->callAccount->exec($reqRepres);
         /* extract input parameters */
         $requestData = $request->get();
         $requestData[Request\BetweenCustomers::TO_CUSTOMER_ID] = $respRepres->get(Account::ATTR_CUST_ID);
