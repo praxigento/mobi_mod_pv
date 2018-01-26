@@ -28,7 +28,6 @@ class Layer
         /* aliases and tables */
         $asStockItem = \Praxigento\Warehouse\Plugin\Catalog\Model\Layer::AS_TBL_CATALOGINVENTORY_STOCK_ITEM;
         $asStockPv = self::AS_TBL_PV_STOCK_ITEM;
-        $tblStockItem = [$asStockItem => $collection->getTable(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK_ITEM)];
         $tblStockPv = [$asStockPv => $collection->getTable(\Praxigento\Pv\Repo\Entity\Data\Stock\Item::ENTITY_NAME)];
         // LEFT JOIN `prxgt_pv_stock_item` AS `prxgtPvStock`
         $on = $asStockPv . '.' . \Praxigento\Pv\Repo\Entity\Data\Stock\Item::ATTR_ITEM_REF . '='
