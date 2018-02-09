@@ -5,6 +5,7 @@
  */
 namespace Praxigento\Pv\Setup;
 
+use Praxigento\Pv\Repo\Entity\Data\Customer\Group as Group;
 use Praxigento\Pv\Repo\Entity\Data\Product as Product;
 use Praxigento\Pv\Repo\Entity\Data\Quote as Quote;
 use Praxigento\Pv\Repo\Entity\Data\Quote\Item as QuoteItem;
@@ -21,6 +22,10 @@ class InstallSchema
         $pathToFile = __DIR__ . '/../etc/dem.json';
         $pathToNode = '/dBEAR/package/Praxigento/package/Pv';
         $demPackage = $this->toolDem->readDemPackage($pathToFile, $pathToNode);
+
+        /* Customer / Group */
+        $demEntity = $demPackage->get('package/Customer/entity/Group');
+        $this->toolDem->createEntity(Group::ENTITY_NAME, $demEntity);
 
         /* Stock Item */
         $demEntity = $demPackage->get('package/Stock/entity/StockItem');
