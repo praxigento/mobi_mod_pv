@@ -11,13 +11,20 @@ namespace Praxigento\Pv\Plugin\Customer\Block\Adminhtml\Group\Edit;
  */
 class Form
 {
+    const ELEM_PRXGT_PV_CAN_SEE = 'prxgt_pv_can_see';
+    const PARAM_PRXGT_PV_CAN_SEE = 'pv_can_see';
+
+    /** @var \Praxigento\Pv\Repo\Entity\Customer\Group */
+    private $repoPvCustGroup;
     /** @var \Magento\Eav\Model\Entity\Attribute\Source\Boolean */
     private $srcBool;
 
     public function __construct(
-        \Magento\Eav\Model\Entity\Attribute\Source\Boolean $srcBool
+        \Magento\Eav\Model\Entity\Attribute\Source\Boolean $srcBool,
+        \Praxigento\Pv\Repo\Entity\Customer\Group $repoPvCustGroup
     ) {
         $this->srcBool = $srcBool;
+        $this->repoPvCustGroup = $repoPvCustGroup;
     }
 
     public function beforeSetForm(
@@ -26,22 +33,36 @@ class Form
     ) {
         /** @var \Magento\Framework\Data\Form\Element\Fieldset $fieldset */
         $fieldset = $form->getElement('base_fieldset');
-        $fieldset->addField(
-            'prxgt_pv_can_see',
-            'select',
-            [
-                'name' => 'can_see_pv',
-                'label' => __('Can see PV'),
-                'title' => __('Can see PV'),
-                'note' => __(
-                    'Ability for customers from this group to see products PV in catalog.',
-                    \Magento\Customer\Model\GroupManagement::GROUP_CODE_MAX_LENGTH
-                ),
-                'class' => '',
-                'required' => true,
-                'values' => $this->srcBool->toOptionArray(),
-            ]
-        );
+        if ($fieldset) {
+            $fieldset->addField(
+                self::ELEM_PRXGT_PV_CAN_SEE,
+                'select',
+                [
+                    'name' => self::PARAM_PRXGT_PV_CAN_SEE,
+                    'label' => __('Can see PV'),
+                    'title' => __('Can see PV'),
+                    'note' => __(
+                        'Ability for customers from this group to see products PV in catalog.',
+                        \Magento\Customer\Model\GroupManagement::GROUP_CODE_MAX_LENGTH
+                    ),
+                    'class' => '',
+                    'required' => true,
+                    'values' => $this->srcBool->toOptionArray(),
+                ]
+            );
+        }
+        /* load 'Can See PV' flag and add to the form */
+        $fldId = $form->getElement('id');
+        if ($fldId) {
+            $groupId = $fldId->getValue();
+            $entity = $this->repoPvCustGroup->getById($groupId);
+            if ($entity) {
+                $canSeePv = (bool)$entity->getCanSeePv();
+            } else {
+                $canSeePv = false;
+            }
+            $form->addValues([self::ELEM_PRXGT_PV_CAN_SEE => $canSeePv]);
+        }
         return [$form];
     }
 }

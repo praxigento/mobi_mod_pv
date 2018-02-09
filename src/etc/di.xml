@@ -60,6 +60,13 @@
                 sortOrder="400" disabled="false"/>
     </type>
 
+    <type name="\Magento\Customer\Api\GroupRepositoryInterface">
+        <!-- Save 'Can See PV' flag on customer group save from adminhtml -->
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Customer\Api\GroupRepositoryInterface"
+                sortOrder="400" disabled="false"/>
+    </type>
+
     <type name="\Magento\Customer\Block\Adminhtml\Group\Edit\Form">
         <!-- Add more fields to customer group edit form (can see PV flag) -->
         <plugin name="prxgt_pv_plugin"
