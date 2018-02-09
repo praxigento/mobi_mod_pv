@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
+    <extension_attributes for="Magento\Customer\Api\Data\GroupInterface">
+        <attribute code="prxgt_can_see_pv" type="bool">
+            <join reference_table="prxgt_pv_cust_group"
+                  join_on_field="customer_group_id"
+                  reference_field="group_ref"
+            >
+                <field>can_see_pv</field>
+            </join>
+        </attribute>
+    </extension_attributes>
+</config>
