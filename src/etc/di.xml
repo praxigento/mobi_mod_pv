@@ -66,6 +66,13 @@
                 sortOrder="400" disabled="false"/>
     </type>
 
+    <type name="\Magento\Customer\Block\Adminhtml\Group\Edit\Form">
+        <!-- Add more fields to customer group edit form (can see PV flag) -->
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Customer\Block\Adminhtml\Group\Edit\Form"
+                sortOrder="400" disabled="false"/>
+    </type>
+
     <type name="\Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <!-- Add custom columns to the sales orders grid -->
         <plugin name="prxgt_pv_plugin"
