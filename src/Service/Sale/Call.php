@@ -42,7 +42,6 @@ class Call
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Api\Service\Account\Get $servAccount,
         \Praxigento\Accounting\Api\Service\Operation $servOper,
-        \Praxigento\Pv\Repo\IModule $repoMod,
         \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
         \Praxigento\Pv\Repo\Entity\Sale $repoSale,
         \Praxigento\Pv\Repo\Entity\Sale\Item $repoSaleItem,
