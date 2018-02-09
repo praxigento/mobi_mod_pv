@@ -9,6 +9,48 @@
             "alias": "pv",
             "comment": "Top level package for Praxigento_Pv module",
             "package": {
+              "Customer": {
+                "alias": "cust",
+                "comment": "Customer nested package",
+                "entity": {
+                  "Group": {
+                    "alias": "group",
+                    "comment": "'Can see PV' flag for customer groups",
+                    "attribute": {
+                      "GroupRef": {
+                        "alias": "group_ref",
+                        "comment": "Reference to the customer group.",
+                        "nullable": false,
+                        "type": {"integer": {"unsigned": true}}
+                      },
+                      "CanSeePv": {
+                        "alias": "can_see_pv",
+                        "comment": "Ability for customers from this group to see products PV in catalog.",
+                        "nullable": false,
+                        "type": {"boolean": {}}
+                      }
+                    },
+                    "index": {
+                      "PK": {
+                        "type": "primary",
+                        "aliases": [
+                          "group_ref"
+                        ]
+                      }
+                    },
+                    "relation": {
+                      "toCustomerGroup": {
+                        "own": {"aliases": ["group_ref"]},
+                        "reference": {
+                          "entity": {"completeAlias": "customer_group"},
+                          "aliases": ["customer_group_id"]
+                        },
+                        "action": {"delete": "cascade", "update": "cascade"}
+                      }
+                    }
+                  }
+                }
+              },
               "SaleOrder": {
                 "alias": "sale",
                 "comment": "Sale Order nested package",

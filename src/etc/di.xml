@@ -13,12 +13,6 @@
                 type="\Praxigento\Pv\Api\Transfer\Customer\Between"/>
 
 
-    <!-- **** -->
-    <!-- Repo -->
-    <!-- **** -->
-    <preference for="\Praxigento\Pv\Repo\IModule"
-                type="\Praxigento\Pv\Repo\Def\Module"/>
-
     <!-- ******** -->
     <!-- Services -->
     <!-- ******** -->
