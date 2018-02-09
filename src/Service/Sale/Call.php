@@ -18,52 +18,52 @@ class Call
     extends \Praxigento\Core\App\Service\Base\Call
     implements \Praxigento\Pv\Service\ISale
 {
-    /** @var  \Praxigento\Accounting\Api\Service\Account\Get */
-    protected $callAccount;
-    /** @var \Praxigento\Accounting\Api\Service\Operation */
-    protected $callOperation;
-    /** @var \Praxigento\Core\Api\Helper\Date */
-    protected $hlpDate;
-    /** @var \Praxigento\Core\App\Transaction\Database\IManager */
-    protected $manTrans;
-    /** @var  \Praxigento\Pv\Repo\IModule */
-    protected $repoMod;
+    /**
+     * @var \Praxigento\Core\App\Transaction\Database\IManager
+     * @deprecated transaction should not be used on the service layer (nested transactions are prohibited in MySQL)
+     */
+    private $manTrans;
+    /** @var \Praxigento\Core\App\Repo\IGeneric */
+    private $repoGeneric;
     /** @var  \Praxigento\Pv\Repo\Entity\Sale */
-    protected $repoSale;
+    private $repoSale;
     /** @var  \Praxigento\Pv\Repo\Entity\Sale\Item */
-    protected $repoSaleItem;
+    private $repoSaleItem;
     /** @var  \Praxigento\Pv\Repo\Entity\Stock\Item */
-    protected $repoStockItem;
+    private $repoStockItem;
+    /** @var  \Praxigento\Accounting\Api\Service\Account\Get */
+    private $servAccount;
+    /** @var \Praxigento\Accounting\Api\Service\Operation */
+    private $servOper;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
-        \Praxigento\Accounting\Api\Service\Account\Get $callAccount,
-        \Praxigento\Accounting\Api\Service\Operation $callOperation,
+        \Praxigento\Accounting\Api\Service\Account\Get $servAccount,
+        \Praxigento\Accounting\Api\Service\Operation $servOper,
         \Praxigento\Pv\Repo\IModule $repoMod,
+        \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
         \Praxigento\Pv\Repo\Entity\Sale $repoSale,
         \Praxigento\Pv\Repo\Entity\Sale\Item $repoSaleItem,
-        \Praxigento\Pv\Repo\Entity\Stock\Item $repoStockItem,
-        \Praxigento\Core\Api\Helper\Date $hlpDate
+        \Praxigento\Pv\Repo\Entity\Stock\Item $repoStockItem
     ) {
         parent::__construct($logger, $manObj);
         $this->manTrans = $manTrans;
-        $this->callAccount = $callAccount;
-        $this->callOperation = $callOperation;
-        $this->repoMod = $repoMod;
+        $this->servAccount = $servAccount;
+        $this->servOper = $servOper;
+        $this->repoGeneric = $repoGeneric;
         $this->repoSale = $repoSale;
         $this->repoSaleItem = $repoSaleItem;
         $this->repoStockItem = $repoStockItem;
-        $this->hlpDate = $hlpDate;
     }
 
     /**
      * Account PV on sale done.
      *
-     * @param Request\AccountPv $request
-     *
-     * @return Response\AccountPv
+     * @param \Praxigento\Pv\Service\Sale\Request\AccountPv $request
+     * @return \Praxigento\Pv\Service\Sale\Response\AccountPv
+     * @throws \Exception
      */
     public function accountPv(Request\AccountPv $request)
     {
@@ -77,7 +77,7 @@ class Call
         /* get customer for sale order */
         if (is_null($customerId)) {
             $this->logger->info("There is no customer ID in request, select customer ID from sale order data.");
-            $customerId = $this->repoMod->getSaleOrderCustomerId($saleId);
+            $customerId = $this->getSaleOrderCustomerId($saleId);
             $this->logger->info("Order #$saleId is created by customer #$customerId.");
         }
         if (!is_null($customerId)) {
@@ -85,12 +85,12 @@ class Call
             $reqGetAccCust = new GetAccountRequest();
             $reqGetAccCust->setCustomerId($customerId);
             $reqGetAccCust->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-            $respGetAccCust = $this->callAccount->exec($reqGetAccCust);
+            $respGetAccCust = $this->servAccount->exec($reqGetAccCust);
             /* get PV account data for representative */
             $reqGetAccRepres = new GetAccountRequest();
             $reqGetAccRepres->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
             $reqGetAccRepres->setIsRepresentative(TRUE);
-            $respGetAccRepres = $this->callAccount->exec($reqGetAccRepres);
+            $respGetAccRepres = $this->servAccount->exec($reqGetAccRepres);
             /* create one operation with one transaction */
             $reqAddOper = new AddOperationRequest();
             $reqAddOper->setOperationTypeCode(Cfg::CODE_TYPE_OPER_PV_SALE_PAID);
@@ -101,7 +101,7 @@ class Call
                 Transaction::ATTR_DATE_APPLIED => $dateApplied
             ];
             $reqAddOper->setTransactions([$trans]);
-            $respAddOper = $this->callOperation->exec($reqAddOper);
+            $respAddOper = $this->servOper->exec($reqAddOper);
             $operId = $respAddOper->getOperationId();
             $result->setOperationId($operId);
             $result->markSucceed();
@@ -114,15 +114,27 @@ class Call
 
     public function cacheReset()
     {
-        $this->callAccount->cacheReset();
+        $this->servAccount->cacheReset();
+    }
+
+
+    private function getSaleOrderCustomerId($saleId)
+    {
+        $data = $this->repoGeneric->getEntityByPk(
+            Cfg::ENTITY_MAGE_SALES_ORDER,
+            [Cfg::E_COMMON_A_ENTITY_ID => $saleId],
+            [Cfg::E_SALE_ORDER_A_CUSTOMER_ID]
+        );
+        $result = $data[Cfg::E_SALE_ORDER_A_CUSTOMER_ID];
+        return $result;
     }
 
     /**
      * Save PV data on sale order save.
      *
-     * @param Request\Save $req
-     *
-     * @return Response\Save
+     * @param \Praxigento\Pv\Service\Sale\Request\Save $req
+     * @return \Praxigento\Pv\Service\Sale\Response\Save
+     * @throws \Exception
      */
     public function save(Request\Save $req)
     {

@@ -7,8 +7,8 @@ namespace Praxigento\Pv\Service\Transfer;
 
 use Praxigento\Accounting\Api\Service\Account\Get\Request as AccountGetRequest;
 use Praxigento\Accounting\Api\Service\Operation\Request as OperationAddRequest;
-use Praxigento\Accounting\Repo\Entity\Data\Account;
-use Praxigento\Accounting\Repo\Entity\Data\Transaction;
+use Praxigento\Accounting\Repo\Entity\Data\Account as EAccount;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction as Etrans;
 use Praxigento\Pv\Config as Cfg;
 
 /**
@@ -19,34 +19,28 @@ class Call
     extends \Praxigento\Core\App\Service\Base\Call
     implements \Praxigento\Pv\Service\ITransfer
 {
-    /**
-     * @var \Praxigento\Accounting\Api\Service\Account\Get
-     */
-    protected $callAccount;
-    /** @var  \Praxigento\Accounting\Api\Service\Operation */
-    protected $callOperation;
     /** @var  \Praxigento\Core\Api\Helper\Date */
-    protected $hlpDate;
-    /**
-     * Other module's repositories adapter.
-     *
-     * @var \Praxigento\Pv\Repo\IModule
-     */
-    protected $repoMod;
+    private $hlpDate;
+    /** @var \Praxigento\Downline\Repo\Entity\Customer */
+    private $repoDwnlCust;
+    /** @var \Praxigento\Accounting\Api\Service\Account\Get */
+    private $servAccount;
+    /** @var  \Praxigento\Accounting\Api\Service\Operation */
+    private $servOperation;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
-        \Praxigento\Accounting\Api\Service\Account\Get $callAccount,
-        \Praxigento\Accounting\Api\Service\Operation $callOperation,
-        \Praxigento\Pv\Repo\IModule $repoMod
+        \Praxigento\Accounting\Api\Service\Account\Get $servAccount,
+        \Praxigento\Accounting\Api\Service\Operation $servOperation,
+        \Praxigento\Downline\Repo\Entity\Customer $repoDwnlCust
     ) {
         parent::__construct($logger, $manObj);
         $this->hlpDate = $hlpDate;
-        $this->callAccount = $callAccount;
-        $this->callOperation = $callOperation;
-        $this->repoMod = $repoMod;
+        $this->servAccount = $servAccount;
+        $this->servOperation = $servOperation;
+        $this->repoDwnlCust = $repoDwnlCust;
     }
 
 
@@ -72,8 +66,8 @@ class Call
         /* validate conditions */
         if (!$condForceAll) {
             /* validate customer countries */
-            $downDebit = $this->repoMod->getDownlineCustomerById($custIdDebit);
-            $downCredit = $this->repoMod->getDownlineCustomerById($custIdCredit);
+            $downDebit = $this->repoDwnlCust->getById($custIdDebit);
+            $downCredit = $this->repoDwnlCust->getById($custIdCredit);
             /* countries should be equals */
             $countryDebit = $downDebit->getCountryCode();
             $countryCredit = $downCredit->getCountryCode();
@@ -102,9 +96,9 @@ class Call
             $reqAccGet = new AccountGetRequest();
             $reqAccGet->setCustomerId($custIdDebit);
             $reqAccGet->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-            $respAccDebit = $this->callAccount->exec($reqAccGet);
+            $respAccDebit = $this->servAccount->exec($reqAccGet);
             $reqAccGet->setCustomerId($custIdCredit);
-            $respAccCredit = $this->callAccount->exec($reqAccGet);
+            $respAccCredit = $this->servAccount->exec($reqAccGet);
             /* add transfer operation */
             $reqAddOper = new OperationAddRequest();
             $reqAddOper->setOperationTypeCode(Cfg::CODE_TYPE_OPER_PV_TRANSFER);
@@ -112,13 +106,13 @@ class Call
             $reqAddOper->setOperationNote($noteOper);
             $reqAddOper->setTransactions([
                 [
-                    Transaction::ATTR_DEBIT_ACC_ID => $respAccDebit->getId(),
-                    Transaction::ATTR_CREDIT_ACC_ID => $respAccCredit->getId(),
-                    Transaction::ATTR_VALUE => $value,
-                    Transaction::ATTR_NOTE => $noteTrans
+                    ETrans::ATTR_DEBIT_ACC_ID => $respAccDebit->getId(),
+                    ETrans::ATTR_CREDIT_ACC_ID => $respAccCredit->getId(),
+                    ETrans::ATTR_VALUE => $value,
+                    ETrans::ATTR_NOTE => $noteTrans
                 ]
             ]);
-            $respAddOper = $this->callOperation->exec($reqAddOper);
+            $respAddOper = $this->servOperation->exec($reqAddOper);
             if ($respAddOper->isSucceed()) {
                 $result->setOperationId($respAddOper->getOperationId());
                 $result->setTransactionsIds($respAddOper->getTransactionsIds());
@@ -138,7 +132,7 @@ class Call
      */
     public function cacheReset()
     {
-        $this->callAccount->cacheReset();
+        $this->servAccount->cacheReset();
     }
 
     public function creditToCustomer(Request\CreditToCustomer $request)
@@ -148,11 +142,11 @@ class Call
         $reqRepres = new AccountGetRequest();
         $reqRepres->setIsRepresentative(TRUE);
         $reqRepres->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-        $respRepres = $this->callAccount->exec($reqRepres);
+        $respRepres = $this->servAccount->exec($reqRepres);
         /* extract input parameters */
         $requestData = $request->get();
         $reqBetween = new Request\BetweenCustomers($requestData);
-        $fromCustId = $respRepres->get(Account::ATTR_CUST_ID);
+        $fromCustId = $respRepres->get(EAccount::ATTR_CUST_ID);
         $reqBetween->setFromCustomerId($fromCustId);
         $reqBetween->setConditionForceAll(true);
         $respBetween = $this->betweenCustomers($reqBetween);
@@ -171,10 +165,10 @@ class Call
         $reqRepres = new AccountGetRequest();
         $reqRepres->setIsRepresentative(TRUE);
         $reqRepres->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-        $respRepres = $this->callAccount->exec($reqRepres);
+        $respRepres = $this->servAccount->exec($reqRepres);
         /* extract input parameters */
         $requestData = $request->get();
-        $requestData[Request\BetweenCustomers::TO_CUSTOMER_ID] = $respRepres->get(Account::ATTR_CUST_ID);
+        $requestData[Request\BetweenCustomers::TO_CUSTOMER_ID] = $respRepres->get(EAccount::ATTR_CUST_ID);
         $requestData[Request\BetweenCustomers::COND_FORCE_ALL] = true;
         $reqBetween = new Request\BetweenCustomers($requestData);
         $respBetween = $this->betweenCustomers($reqBetween);
