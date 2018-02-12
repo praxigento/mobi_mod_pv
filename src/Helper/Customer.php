@@ -28,13 +28,14 @@ class Customer
     public function canSeePv()
     {
         if (is_null($this->cacheCanSee)) {
-            $gid = $this->session->getCustomerGroupId();
-            if (!is_null($gid)) {
-                $item = $this->repoPvCustGroup->getById($gid);
-                $this->cacheCanSee = (bool)$item->getCanSeePv();
-            } else {
-                $this->cacheCanSee = false;
+            if ($this->session) {
+                $gid = $this->session->getCustomerGroupId();
+                if (!is_null($gid)) {
+                    $item = $this->repoPvCustGroup->getById($gid);
+                    if ($item) $this->cacheCanSee = (bool)$item->getCanSeePv();
+                }
             }
+            if (is_null($this->cacheCanSee)) $this->cacheCanSee = false;
         }
         return $this->cacheCanSee;
     }
