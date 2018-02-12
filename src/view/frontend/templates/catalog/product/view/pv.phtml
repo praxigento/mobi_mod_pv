@@ -1,8 +1,12 @@
 <?php
 /** @var \Praxigento\Pv\Block\Catalog\Product\View\Pv $block */
-$pv = $block->getWarehousePv();
-
+$canSeePv = $block->canSeePv();
+if ($canSeePv) {
+    $pv = $block->getWarehousePv();
+}
 ?>
+<?php if ($canSeePv): ?>
 <div style="display:table-row;">
     <span><?= $pv ?></span> <span>PV</span>
 </div>
+<?php endif; ?>

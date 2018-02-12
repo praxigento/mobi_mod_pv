@@ -8,6 +8,15 @@ namespace Praxigento\Pv\Plugin\Catalog\Block\Product;
 
 class ListProduct
 {
+    /** @var \Praxigento\Pv\Helper\Customer */
+    private $hlpCust;
+
+    public function __construct(
+        \Praxigento\Pv\Helper\Customer $hlpCust
+    ) {
+        $this->hlpCust = $hlpCust;
+    }
+
     /**
      * Insert PV HTML before product price HTML.
      *
@@ -22,11 +31,14 @@ class ListProduct
         \Magento\Catalog\Model\Product $product
     ) {
         $result = $proceed($product);
-        $domId = "prxgt_pv_" . $product->getId();
-        $pvWholesale = $product->getData(\Praxigento\Pv\Plugin\Catalog\Model\Layer::AS_ATTR_PV_WRHS);
-        $pvWholesale = number_format($pvWholesale, 2);
-        $html = "<div id=\"$domId\"><span>$pvWholesale</span> PV</div>";
-        $result = $html . $result;
+        $canSeePv = $this->hlpCust->canSeePv();
+        if ($canSeePv) {
+            $domId = "prxgt_pv_" . $product->getId();
+            $pvWholesale = $product->getData(\Praxigento\Pv\Plugin\Catalog\Model\Layer::AS_ATTR_PV_WRHS);
+            $pvWholesale = number_format($pvWholesale, 2);
+            $html = "<div id=\"$domId\"><span>$pvWholesale</span> PV</div>";
+            $result = $html . $result;
+        }
         return $result;
     }
 }

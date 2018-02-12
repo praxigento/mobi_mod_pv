@@ -8,17 +8,21 @@ namespace Praxigento\Pv\Plugin\Sales\Block\Order\Email\Items\Order;
 use Magento\Sales\Model\Order\Creditmemo\Item as CreditmemoItem;
 use Magento\Sales\Model\Order\Invoice\Item as InvoiceItem;
 use Magento\Sales\Model\Order\Item as OrderItem;
-use \Praxigento\Pv\Repo\Entity\Data\Quote\Item as EPvQuoteItem;
+use Praxigento\Pv\Repo\Entity\Data\Quote\Item as EPvQuoteItem;
 
 class DefaultOrder
 {
+    /** @var \Praxigento\Pv\Helper\Customer */
+    private $hlpCust;
     /** @var \Praxigento\Pv\Repo\Entity\Quote\Item */
     private $repoPvQuoteItem;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Entity\Quote\Item $repoPvQuoteItem
+        \Praxigento\Pv\Repo\Entity\Quote\Item $repoPvQuoteItem,
+        \Praxigento\Pv\Helper\Customer $hlpCust
     ) {
         $this->repoPvQuoteItem = $repoPvQuoteItem;
+        $this->hlpCust = $hlpCust;
     }
 
     /**
@@ -34,14 +38,17 @@ class DefaultOrder
     ) {
         $result = $proceed($item);
         if ($item instanceof OrderItem) {
-            $quoteItemId = $item->getQuoteItemId();
-            $pk = [EPvQuoteItem::ATTR_ITEM_REF => $quoteItemId];
-            $entity = $this->repoPvQuoteItem->getById($pk);
-            if ($entity) {
-                $total = $entity->getTotal();
-                $total = number_format($total, 2);
-                $html = "\n<br /><span class=\"label\">PV Total:</span> <span class=\"price\">$total</span>";
-                $result .= $html;
+            $canSeePv = $this->hlpCust->canSeePv();
+            if ($canSeePv) {
+                $quoteItemId = $item->getQuoteItemId();
+                $pk = [EPvQuoteItem::ATTR_ITEM_REF => $quoteItemId];
+                $entity = $this->repoPvQuoteItem->getById($pk);
+                if ($entity) {
+                    $total = $entity->getTotal();
+                    $total = number_format($total, 2);
+                    $html = "\n<br /><span class=\"label\">PV Total:</span> <span class=\"price\">$total</span>";
+                    $result .= $html;
+                }
             }
         }
         return $result;
