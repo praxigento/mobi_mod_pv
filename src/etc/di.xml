@@ -74,12 +74,12 @@
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Customer\Model\Group">
-        <!-- JOIN 'can see PV' flag to customers groups collection -->
-        <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Customer\Model\Group"
-                sortOrder="400" disabled="false"/>
-    </type>
+    <!--<type name="\Magento\Customer\Model\Group">-->
+        <!--&lt;!&ndash; JOIN 'can see PV' flag to customers groups collection &ndash;&gt;-->
+        <!--<plugin name="prxgt_pv_plugin"-->
+                <!--type="\Praxigento\Pv\Plugin\Customer\Model\Group"-->
+                <!--sortOrder="400" disabled="false"/>-->
+    <!--</type>-->
 
     <type name="\Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <!-- Add custom columns to the sales orders grid -->
