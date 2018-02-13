@@ -7,8 +7,10 @@
 namespace Praxigento\Pv\Plugin\Sales\Model\Service;
 
 use Praxigento\Pv\Service\Sale\Order\Delete\Request as ARequest;
-use Praxigento\Pv\Service\Sale\Order\Delete\Response as AResponse;
 
+/**
+ * Remove relations with cancelled sale order with PV module data.
+ */
 class OrderService
 {
     /** @var \Praxigento\Pv\Service\Sale\Order\Delete */
@@ -37,8 +39,7 @@ class OrderService
         if ($result === true) {
             $req = new ARequest();
             $req->setSaleId($id);
-            /** @var AResponse $resp */
-            $resp = $this->servSaleDelete->exec($req);
+            $this->servSaleDelete->exec($req);
         }
         return $result;
     }
