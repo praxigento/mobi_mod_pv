@@ -12,6 +12,8 @@ define([
     const totals = uiTotals;
     /* shortcuts to global objects */
     const basePriceFormat = window.checkoutConfig.basePriceFormat;
+    /* \Praxigento\Pv\Model\Checkout\ConfigProvider::CFG_CAN_SEE_PV */
+    const canSeePv = window.checkoutConfig.praxigentoCustomerCanSeePv;
     /* clone base format and modify it */
     var pvFormat = JSON.parse(JSON.stringify(basePriceFormat));
     pvFormat.pattern = "%s";
@@ -40,7 +42,7 @@ define([
          */
         isVisible: function () {
             var value = this.getAmount();
-            var result = (value > 0);
+            var result = (value > 0) && canSeePv;
             return result;
         },
 
