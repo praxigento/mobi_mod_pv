@@ -116,4 +116,12 @@
                 sortOrder="400" disabled="false"/>
     </type>
 
+    <type name="Magento\Sales\Model\Service\OrderService">
+        <!-- Return products to inventory on order cancellation. -->
+        <!-- sortOrder should be greater then for the same plugin in Warehouse module -->
+        <plugin name="prxgt_pv_plugin"
+                type="Praxigento\Pv\Plugin\Sales\Model\Service\OrderService"
+                sortOrder="700" disabled="false"/>
+    </type>
+
 </config>
