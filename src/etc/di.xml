@@ -25,6 +25,13 @@
     <!-- ******* -->
     <!-- PLUGINS -->
     <!-- ******* -->
+    <type name="\Magento\Catalog\Block\Product\Widget\NewWidget">
+        <!-- Display PV in new products widget -->
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Catalog\Block\Product\Widget\NewWidget"
+                sortOrder="400" disabled="false"/>
+    </type>
+
     <type name="\Magento\Catalog\Block\Product\ListProduct">
         <!-- Display PV in catalog list -->
         <plugin name="prxgt_pv_plugin"
@@ -73,13 +80,6 @@
                 type="\Praxigento\Pv\Plugin\Customer\Block\Adminhtml\Group\Edit\Form"
                 sortOrder="400" disabled="false"/>
     </type>
-
-    <!--<type name="\Magento\Customer\Model\Group">-->
-        <!--&lt;!&ndash; JOIN 'can see PV' flag to customers groups collection &ndash;&gt;-->
-        <!--<plugin name="prxgt_pv_plugin"-->
-                <!--type="\Praxigento\Pv\Plugin\Customer\Model\Group"-->
-                <!--sortOrder="400" disabled="false"/>-->
-    <!--</type>-->
 
     <type name="\Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <!-- Add custom columns to the sales orders grid -->
