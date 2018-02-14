@@ -67,6 +67,13 @@
                 sortOrder="400" disabled="false"/>
     </type>
 
+    <type name="\Magento\Checkout\CustomerData\Cart">
+        <!-- Add PV data to cart JSON used in mini-cart -->
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Checkout\CustomerData\Cart"
+                sortOrder="400" disabled="false"/>
+    </type>
+
     <type name="\Magento\Customer\Api\GroupRepositoryInterface">
         <!-- Save 'Can See PV' flag on customer group save from adminhtml -->
         <plugin name="prxgt_pv_plugin"

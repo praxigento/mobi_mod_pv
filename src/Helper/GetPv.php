@@ -5,24 +5,22 @@
 
 namespace Praxigento\Pv\Helper;
 
-use Praxigento\Pv\Repo\Query\Product\GetPv as QBGetPv;
-
 /**
- * TODO: duplicate - \Praxigento\Pv\Repo\Entity\Stock\Item::getPvByProductAndStock ????
+ * Application level helper to get PV data.
  */
 class GetPv
     implements \Praxigento\Pv\Api\Helper\GetPv
 {
     /** @var \Praxigento\Warehouse\Api\Helper\Stock */
     private $hlpWrhsStock;
-    /** @var \Praxigento\Pv\Repo\Query\Product\GetPv */
-    private $qbGetPv;
+    /** @var \Praxigento\Pv\Repo\Entity\Stock\Item */
+    private $repoPvStockItem;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Query\Product\GetPv $qbGetPv,
+        \Praxigento\Pv\Repo\Entity\Stock\Item $repoPvStockItem,
         \Praxigento\Warehouse\Api\Helper\Stock $hlpWrhsStock
     ) {
-        $this->qbGetPv = $qbGetPv;
+        $this->repoPvStockItem = $repoPvStockItem;
         $this->hlpWrhsStock = $hlpWrhsStock;
     }
 
@@ -30,13 +28,7 @@ class GetPv
         if (!$stockId) {
             $stockId = $this->hlpWrhsStock->getCurrentStockId();
         }
-        $query = $this->qbGetPv->build();
-        $bind = [
-            QBGetPv::BND_PROD_ID => $prodId,
-            QBGetPv::BND_STOCK_ID => $stockId
-        ];
-        $conn = $query->getConnection();
-        $result = $conn->fetchOne($query, $bind);
+        $result = $this->repoPvStockItem->getPvByProductAndStock($prodId, $stockId);
         $result = number_format($result, 2);
         return $result;
     }
