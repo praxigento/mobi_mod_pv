@@ -6,16 +6,21 @@
 
 namespace Praxigento\Pv\Plugin\Catalog\Block\Product\Widget;
 
-
+/**
+ * Insert warehouse PV before price HTML for new products (in widget).
+ */
 class NewWidget
 {
     /** @var \Praxigento\Pv\Helper\Customer */
     private $hlpCust;
-
+    /** @var \Praxigento\Pv\Helper\GetPv */
+    private $hlpGetPv;
     public function __construct(
-        \Praxigento\Pv\Helper\Customer $hlpCust
+        \Praxigento\Pv\Helper\Customer $hlpCust,
+        \Praxigento\Pv\Helper\GetPv $hlpGetPv
     ) {
         $this->hlpCust = $hlpCust;
+        $this->hlpGetPv = $hlpGetPv;
     }
 
     public function aroundGetProductPriceHtml(
@@ -29,10 +34,11 @@ class NewWidget
         $result = $proceed($product, $priceType, $renderZone, $arguments);
         $canSeePv = $this->hlpCust->canSeePv();
         if ($canSeePv) {
-            $domId = "prxgt_pv_new_" . $product->getId();
-            $pvWholesale = $product->getData(\Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory::AS_ATTR_PV);
-            $pvWholesale = number_format($pvWholesale, 2);
-            $html = "<div id=\"$domId\"><span>$pvWholesale</span> PV</div>";
+            $prodId = $product->getId();
+            $domId = "prxgt_pv_new_" . $prodId;
+            $pvWrhs = $this->hlpGetPv->product($prodId);
+            $pvWrhs = number_format($pvWrhs, 2, '.', '');
+            $html = "<div id=\"$domId\"><span>$pvWrhs</span> PV</div>";
             $result = $html . $result;
         }
         return $result;
