@@ -116,6 +116,13 @@
                 sortOrder="400" disabled="false"/>
     </type>
 
+    <type name="\Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer">
+        <!-- Add PV data to columns HTML in order. -->
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer"
+                sortOrder="400" disabled="false"/>
+    </type>
+
     <type name="\Magento\Sales\Block\Order\Email\Items\Order\DefaultOrder">
         <!-- Add PV total info to the item price in emails -->
         <plugin name="prxgt_pv_plugin"
