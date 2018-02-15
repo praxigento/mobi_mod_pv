@@ -1,0 +1,15 @@
+<div class="subtotal">
+    <span class="label">
+        <!-- ko i18n: 'Cart Subtotal' --><!-- /ko -->
+    </span>
+
+    <!-- MOBI-1143: add quote PV totals to mini-cart -->
+    <div class="prxgt-pv-container" data-bind="visible: $data.elems()[0].cart().prxgt_pv_can_see">
+        <span class="prxgt-pv-wrapper" data-bind="text: $data.elems()[0].cart().prxgt_pv_total"></span>
+        <span>PV</span>
+    </div>
+
+    <!-- ko foreach: elems -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <!-- /ko -->
+</div>

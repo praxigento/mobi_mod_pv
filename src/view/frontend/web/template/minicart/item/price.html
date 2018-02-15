@@ -1,9 +1,9 @@
 <!-- MOBI-1143: add PV to mini-cart items -->
 <!-- see \Praxigento\Pv\Plugin\Checkout\CustomerData\Cart::CFG_CAN_SEE_PV -->
 <div class="prxgt-pv-container" data-bind="visible: item.prxgt_pv_can_see">
-    <!-- see \Praxigento\Pv\Plugin\Checkout\CustomerData\Cart::CFG_ITEM_PV_WRHS -->
-    <span class="prxgt-pv-wrapper" data-bind="text: item.prxgt_pv_wrhs"></span>
-    <span class="label" data-bind="i18n: 'PV'"></span>
+    <!-- see \Praxigento\Pv\Plugin\Checkout\CustomerData\Cart::CFG_PV_TOTAL -->
+    <span class="prxgt-pv-wrapper" data-bind="text: item.prxgt_pv_total"></span>
+    <span>PV</span>
 </div>
 <div class="price-container">
     <span class="price-wrapper" data-bind="html: price"></span>
