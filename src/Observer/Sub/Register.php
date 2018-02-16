@@ -30,11 +30,12 @@ class Register
      * Collect order data and call service method to transfer PV to customer account.
      *
      * @param \Magento\Sales\Api\Data\OrderInterface $order
+     * @throws \Exception
      */
     public function accountPv(\Magento\Sales\Api\Data\OrderInterface $order)
     {
         $state = $order->getState();
-//        if ($state == \Magento\Sales\Model\Order::STATE_PROCESSING) {
+        if ($state == \Magento\Sales\Model\Order::STATE_PROCESSING) {
             /* transfer PV if order is paid */
             $orderId = $order->getEntityId();
             $itemsData = $this->_subCollector->getServiceItemsForMageSaleOrder($order);
@@ -43,7 +44,7 @@ class Register
             $req->setSaleOrderId($orderId);
             $req->setOrderItems($itemsData);
             $this->_callSale->accountPv($req);
-//        }
+        }
     }
 
     /**

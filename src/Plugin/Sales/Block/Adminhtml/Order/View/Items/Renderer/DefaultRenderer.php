@@ -11,16 +11,16 @@ namespace Praxigento\Pv\Plugin\Sales\Block\Adminhtml\Order\View\Items\Renderer;
  */
 class DefaultRenderer
 {
-    /** @var array \Praxigento\Pv\Repo\Entity\Data\Quote\Item[] */
+    /** @var array \Praxigento\Pv\Repo\Entity\Data\Sale\Item[] */
     private $cacheQuoteItems = [];
 
-    /** @var \Praxigento\Pv\Repo\Entity\Quote\Item */
-    private $repoPvQuoteItem;
+    /** @var \Praxigento\Pv\Repo\Entity\Sale\Item */
+    private $repoPvSaleItem;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Entity\Quote\Item $repoPvQuoteItem
+        \Praxigento\Pv\Repo\Entity\Sale\Item $repoPvSaleItem
     ) {
-        $this->repoPvQuoteItem = $repoPvQuoteItem;
+        $this->repoPvSaleItem = $repoPvSaleItem;
     }
 
     public function aroundGetColumnHtml(
@@ -53,19 +53,19 @@ class DefaultRenderer
 
     /**
      * @param int $itemId
-     * @return \Praxigento\Pv\Repo\Entity\Data\Quote\Item
+     * @return \Praxigento\Pv\Repo\Entity\Data\Sale\Item
      */
     private function getPvQuoteItem($itemId)
     {
         if (!isset($this->cacheQuoteItems[$itemId])) {
-            $item = $this->repoPvQuoteItem->getById($itemId);
+            $item = $this->repoPvSaleItem->getById($itemId);
             $this->cacheQuoteItems[$itemId] = $item;
         }
         return $this->cacheQuoteItems[$itemId];
     }
 
     /**
-     * @param \Praxigento\Pv\Repo\Entity\Data\Quote\Item $pvItem
+     * @param \Praxigento\Pv\Repo\Entity\Data\Sale\Item $pvItem
      * @return string
      */
     private function htmlForColumnDiscount($pvItem)
@@ -77,7 +77,7 @@ class DefaultRenderer
     }
 
     /**
-     * @param \Praxigento\Pv\Repo\Entity\Data\Quote\Item $pvItem
+     * @param \Praxigento\Pv\Repo\Entity\Data\Sale\Item $pvItem
      * @param int $qty
      * @return string
      */
@@ -91,7 +91,7 @@ class DefaultRenderer
     }
 
     /**
-     * @param \Praxigento\Pv\Repo\Entity\Data\Quote\Item $pvItem
+     * @param \Praxigento\Pv\Repo\Entity\Data\Sale\Item $pvItem
      * @return string
      */
     private function htmlForColumnSubtotal($pvItem)
@@ -103,7 +103,7 @@ class DefaultRenderer
     }
 
     /**
-     * @param \Praxigento\Pv\Repo\Entity\Data\Quote\Item $pvItem
+     * @param \Praxigento\Pv\Repo\Entity\Data\Sale\Item $pvItem
      * @return string
      */
     private function htmlForColumnTotal($pvItem)
