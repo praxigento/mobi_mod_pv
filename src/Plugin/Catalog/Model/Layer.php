@@ -26,7 +26,7 @@ class Layer
         $result = $proceed($collection);
         $query = $collection->getSelect();
         /* aliases and tables */
-        $asStockItem = \Praxigento\Warehouse\Plugin\Catalog\Model\Layer::AS_TBL_CATALOGINVENTORY_STOCK_ITEM;
+        $asStockItem = \Praxigento\Warehouse\Plugin\Catalog\Model\Layer::AS_CATALOGINVENTORY_STOCK_ITEM;
         $asStockPv = self::AS_TBL_PV_STOCK_ITEM;
         $tblStockPv = [$asStockPv => $collection->getTable(\Praxigento\Pv\Repo\Entity\Data\Stock\Item::ENTITY_NAME)];
         // LEFT JOIN `prxgt_pv_stock_item` AS `prxgtPvStock`
