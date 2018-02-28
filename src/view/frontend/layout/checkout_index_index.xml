@@ -22,6 +22,19 @@
                                                         </item>
                                                     </item>
                                                 </item>
+                                                <item name="cart_items" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="details" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="subtotal" xsi:type="array">
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="template" xsi:type="string">Praxigento_Pv/checkout/summary/item/details/subtotal</item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
                                             </item>
                                         </item>
                                     </item>

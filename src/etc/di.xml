@@ -68,9 +68,16 @@
     </type>
 
     <type name="\Magento\Checkout\CustomerData\Cart">
-        <!-- Add PV data to cart JSON used in mini-cart -->
+        <!-- Add PV data to cart/quote JSON used in mini-cart -->
         <plugin name="prxgt_pv_plugin"
                 type="\Praxigento\Pv\Plugin\Checkout\CustomerData\Cart"
+                sortOrder="400" disabled="false"/>
+    </type>
+
+    <type name="\Magento\Checkout\Model\CompositeConfigProvider">
+        <!-- Add PV data to cart/quote JSON used in checkout (step 01) -->
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Checkout\Model\CompositeConfigProvider"
                 sortOrder="400" disabled="false"/>
     </type>
 
@@ -92,6 +99,14 @@
         <!-- Add custom columns to the sales orders grid -->
         <plugin name="prxgt_pv_plugin"
                 type="\Praxigento\Pv\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory"
+                sortOrder="400" disabled="false"/>
+    </type>
+
+
+    <type name="\Magento\Framework\Webapi\ServiceOutputProcessor">
+        <!-- Add PV to quote items on checkout 2nd step -->
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Framework\Webapi\ServiceOutputProcessor"
                 sortOrder="400" disabled="false"/>
     </type>
 

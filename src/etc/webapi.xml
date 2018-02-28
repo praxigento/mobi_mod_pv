@@ -2,21 +2,4 @@
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
 
-    <!-- TODO: use it or remove it. -->
-    <!--<route url="/V1/prxgt/pv/sale/order/get" method="POST">-->
-    <!--&lt;!&ndash; Get PV related data for given sale order. &ndash;&gt;-->
-    <!--<service class="Praxigento\Pv\Api\Sale\Order\GetInterface" method="execute"/>-->
-    <!--<resources>-->
-    <!--<resource ref="anonymous"/>-->
-    <!--</resources>-->
-    <!--</route>-->
-
-    <!--<route url="/V1/prxgt/pv/transfer/customer/between" method="POST">-->
-    <!--&lt;!&ndash; Perform PV transfer from one customer to another. &ndash;&gt;-->
-    <!--<service class="Praxigento\Pv\Api\Transfer\Customer\BetweenInterface" method="exec"/>-->
-    <!--<resources>-->
-    <!--<resource ref="anonymous"/>-->
-    <!--</resources>-->
-    <!--</route>-->
-
 </routes>
