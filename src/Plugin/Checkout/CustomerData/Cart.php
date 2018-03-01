@@ -45,6 +45,7 @@ class Cart
             $result[self::CFG_CAN_SEE_PV] = $canSeePv;
             if ($canSeePv) {
                 if (isset($result['items']) && is_array($result['items'])) {
+                    $itemId = false;
                     foreach ($result['items'] as $key => $item) {
                         $itemId = $item['item_id'];
                         $pvItem = $this->repoQuoteItem->getById($itemId);
@@ -55,11 +56,16 @@ class Cart
                         /* it is not a big price to have a 'canSeePv' flag for each item */
                         $result['items'][$key][self::CFG_CAN_SEE_PV] = $canSeePv;
                     }
-                    /* get total PV for quote itself */
-                    $quoteId = $this->getQuoteIdByItemId($itemId);
-                    $pvQuote = $this->repoQuote->getById($quoteId);
-                    $totalQuote = $pvQuote->getTotal();
-                    $totalQuote = number_format($totalQuote, 2, '.', '');
+                    if ($itemId) {
+                        /* this is not empty quote, get total PV for quote itself */
+                        $quoteId = $this->getQuoteIdByItemId($itemId);
+                        $pvQuote = $this->repoQuote->getById($quoteId);
+                        $totalQuote = $pvQuote->getTotal();
+                        $totalQuote = number_format($totalQuote, 2, '.', '');
+                    } else {
+                        /* this is quote w/o items */
+                        $totalQuote = '0.00';
+                    }
                     $result[self::CFG_PV_TOTAL] = $totalQuote;
                 }
             }
