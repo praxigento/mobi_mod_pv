@@ -26,7 +26,7 @@ class Collection
         $attribute,
         $condition = null
     ) {
-        if (CollectionFactory::AS_ATTR_PV == $attribute) {
+        if (CollectionFactory::A_PV_WHOLESALE == $attribute) {
             $alias = CollectionFactory::FULL_PV;
             $result = $subject;
             $conn = $result->getConnection();
@@ -54,7 +54,7 @@ class Collection
         $field,
         $dir = \Magento\Framework\Data\Collection::SORT_ORDER_DESC
     ) {
-        if (CollectionFactory::AS_ATTR_PV == $field) {
+        if (CollectionFactory::A_PV_WHOLESALE == $field) {
             $result = $subject;
             $order = CollectionFactory::FULL_PV . ' ' . $dir;
             $select = $result->getSelect();

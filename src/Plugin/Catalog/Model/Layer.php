@@ -5,11 +5,16 @@
 namespace Praxigento\Pv\Plugin\Catalog\Model;
 
 use Praxigento\Pv\Config as Cfg;
+use Praxigento\Pv\Repo\Entity\Data\Stock\Item as EPvStockItem;
 
 class Layer
 {
-    const AS_ATTR_PV_WRHS = 'prxgt_pv_warehouse';
-    const AS_TBL_PV_STOCK_ITEM = 'prxgt_psi';
+    /** Aliases for tables used in query */
+    const AS_PV_STOCK_ITEM = 'prxgt_psi';
+
+    /** Aliases for attributes used in query */
+    const A_PV_WRHS = 'prxgt_pv_warehouse';
+
     /**
      * Join warehouse PV data to product collection.
      *
@@ -25,15 +30,20 @@ class Layer
     ) {
         $result = $proceed($collection);
         $query = $collection->getSelect();
+
         /* aliases and tables */
-        $asStockItem = \Praxigento\Warehouse\Plugin\Catalog\Model\Layer::AS_CATALOGINVENTORY_STOCK_ITEM;
-        $asStockPv = self::AS_TBL_PV_STOCK_ITEM;
-        $tblStockPv = [$asStockPv => $collection->getTable(\Praxigento\Pv\Repo\Entity\Data\Stock\Item::ENTITY_NAME)];
-        // LEFT JOIN `prxgt_pv_stock_item` AS `prxgtPvStock`
-        $on = $asStockPv . '.' . \Praxigento\Pv\Repo\Entity\Data\Stock\Item::ATTR_ITEM_REF . '='
+        $asStockItem = \Praxigento\Warehouse\Plugin\Catalog\Model\Layer::AS_CATINV_STOCK_ITEM;
+        $asStockPv = self::AS_PV_STOCK_ITEM;
+
+        /* LEFT JOIN prxgt_pv_stock_item */
+        $tbl = $collection->getTable(\Praxigento\Pv\Repo\Entity\Data\Stock\Item::ENTITY_NAME);
+        $as = $asStockPv;
+        $cols = [
+            self::A_PV_WRHS => EPvStockItem::ATTR_PV
+        ];
+        $cond = $as . '.' . EPvStockItem::ATTR_ITEM_REF . '='
             . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
-        $cols = [self::AS_ATTR_PV_WRHS => \Praxigento\Pv\Repo\Entity\Data\Stock\Item::ATTR_PV];
-        $query->joinLeft($tblStockPv, $on, $cols);
+        $query->joinLeft([$as => $tbl], $cond, $cols);
         return $result;
     }
 }

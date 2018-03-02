@@ -11,16 +11,17 @@ use Praxigento\Pv\Repo\Entity\Data\Product;
  */
 class CollectionFactory
 {
-    const AS_ATTR_PV = 'prxgt_pv_wholesale';
-    const AS_TBL_PROD_PV = 'prxgtPvProd';
-    const FULL_PV = self::AS_TBL_PROD_PV . '.' . Product::ATTR_PV;
+    const A_PV_WHOLESALE = 'prxgt_pv_wholesale';
+    const AS_PRXGT_PV_PRODUCT = 'prxgtPvProd';
+    const FULL_PV = self::AS_PRXGT_PV_PRODUCT . '.' . Product::ATTR_PV;
+
     /** @var \Magento\Framework\App\ResourceConnection */
-    protected $_resource;
+    private $resource;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource
     ) {
-        $this->_resource = $resource;
+        $this->resource = $resource;
     }
 
     public function aroundCreate(
@@ -32,15 +33,15 @@ class CollectionFactory
         if ($result instanceof \Magento\Catalog\Model\ResourceModel\Product\Collection) {
             $query = $result->getSelect();
             /* LEFT JOIN `prxgt_pv_prod` AS `prxgtPvProd` */
-            $tbl = [self::AS_TBL_PROD_PV => $this->_resource->getTableName(Product::ENTITY_NAME)];
-            $on = self::AS_TBL_PROD_PV . '.' . Product::ATTR_PROD_REF . '=e.entity_id';
+            $tbl = [self::AS_PRXGT_PV_PRODUCT => $this->resource->getTableName(Product::ENTITY_NAME)];
+            $on = self::AS_PRXGT_PV_PRODUCT . '.' . Product::ATTR_PROD_REF . '=e.entity_id';
             $cols = [
-                self::AS_ATTR_PV => Product::ATTR_PV
+                self::A_PV_WHOLESALE => Product::ATTR_PV
             ];
             $query->joinLeft($tbl, $on, $cols);
             /* add fields mapping */
-            $result->addFilterToMap(self::AS_ATTR_PV, self::FULL_PV);
-            $result->addFilterToMap('`e`.`' . self::AS_ATTR_PV . '`', self::FULL_PV);
+            $result->addFilterToMap(self::A_PV_WHOLESALE, self::FULL_PV);
+            $result->addFilterToMap('`e`.`' . self::A_PV_WHOLESALE . '`', self::FULL_PV);
         }
         return $result;
     }
