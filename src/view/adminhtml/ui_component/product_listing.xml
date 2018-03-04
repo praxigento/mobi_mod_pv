@@ -1,20 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
-/**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
--->
-<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
 
     <columns name="product_columns" class="Magento\Catalog\Ui\Component\Listing\Columns">
-        <column name="prxgt_pv_wholesale">
+        <!-- see \Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory::A_PV_PRODUCT -->
+        <column name="prxgt_pv_product">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">textRange</item>
                     <item name="add_field" xsi:type="boolean">true</item>
                     <item name="dataType" xsi:type="string">number</item>
                     <item name="sortable" xsi:type="boolean">true</item>
-                    <item name="label" xsi:type="string" translate="true">Wholesale PV</item>
+                    <item name="label" xsi:type="string" translate="true">PV</item>
                 </item>
             </argument>
         </column>

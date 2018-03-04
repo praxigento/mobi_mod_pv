@@ -5,6 +5,7 @@
 
 namespace Praxigento\Pv\Plugin\Catalog\Block\Product;
 
+use Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory as AProdCollFactory;
 
 class ListProduct
 {
@@ -34,9 +35,9 @@ class ListProduct
         $canSeePv = $this->hlpCust->canSeePv();
         if ($canSeePv) {
             $domId = "prxgt_pv_" . $product->getId();
-            $pvWholesale = $product->getData(\Praxigento\Pv\Plugin\Catalog\Model\Layer::A_PV_WRHS);
-            $pvWholesale = number_format($pvWholesale, 2);
-            $html = "<div id=\"$domId\"><span>$pvWholesale</span> PV</div>";
+            $pvProd = $product->getData(AProdCollFactory::A_PV_PRODUCT);
+            $pvProd = number_format($pvProd, 2);
+            $html = "<div id=\"$domId\"><span>$pvProd</span> PV</div>";
             $result = $html . $result;
         }
         return $result;

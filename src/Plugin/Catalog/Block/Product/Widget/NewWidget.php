@@ -6,6 +6,8 @@
 
 namespace Praxigento\Pv\Plugin\Catalog\Block\Product\Widget;
 
+use Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory as AProdCollFactory;
+
 /**
  * Insert warehouse PV before price HTML for new products (in widget).
  */
@@ -15,6 +17,7 @@ class NewWidget
     private $hlpCust;
     /** @var \Praxigento\Pv\Helper\GetPv */
     private $hlpGetPv;
+
     public function __construct(
         \Praxigento\Pv\Helper\Customer $hlpCust,
         \Praxigento\Pv\Helper\GetPv $hlpGetPv
@@ -36,7 +39,13 @@ class NewWidget
         if ($canSeePv) {
             $prodId = $product->getId();
             $domId = "prxgt_pv_new_" . $prodId;
-            $pvWrhs = $this->hlpGetPv->product($prodId);
+            /* did PV added in collection before? */
+            $pvWrhs = $product->getData(AProdCollFactory::A_PV_PRODUCT);
+            if (!$pvWrhs) {
+                /* if not then get PV directly */
+                $pvWrhs = $this->hlpGetPv->product($prodId);
+            }
+            /* format PV and insert before price */
             $pvWrhs = number_format($pvWrhs, 2, '.', '');
             $html = "<div id=\"$domId\"><span>$pvWrhs</span> PV</div>";
             $result = $html . $result;

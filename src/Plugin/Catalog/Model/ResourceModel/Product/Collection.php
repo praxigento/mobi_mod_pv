@@ -6,8 +6,10 @@
 namespace Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product;
 
 /**
- * Plugin for "\Magento\Catalog\Model\ResourceModel\Product\Collection" to enable order & filter for
+ * Convert Web UI grid columns to DB "table.field" to enable order & filter for
  * additional attributes.
+ *
+ * see \Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory::aroundCreate
  */
 class Collection
 {
@@ -26,14 +28,16 @@ class Collection
         $attribute,
         $condition = null
     ) {
-        if (CollectionFactory::A_PV_WHOLESALE == $attribute) {
-            $alias = CollectionFactory::FULL_PV;
+        if (CollectionFactory::A_PV_PRODUCT == $attribute) {
+            /* map joined attribute to composite pair "tableAlias.field" */
+            $alias = CollectionFactory::FQN_PV;
             $result = $subject;
             $conn = $result->getConnection();
             $query = $conn->prepareSqlCondition($alias, $condition);
             $select = $result->getSelect();
             $select->where($query);
         } else {
+            /* proceed others Magento attributes as-is */
             $result = $proceed($attribute, $condition);
         }
         return $result;
@@ -54,12 +58,14 @@ class Collection
         $field,
         $dir = \Magento\Framework\Data\Collection::SORT_ORDER_DESC
     ) {
-        if (CollectionFactory::A_PV_WHOLESALE == $field) {
+        if (CollectionFactory::A_PV_PRODUCT == $field) {
+            /* map joined attribute to composite pair "tableAlias.field" */
             $result = $subject;
-            $order = CollectionFactory::FULL_PV . ' ' . $dir;
+            $order = CollectionFactory::FQN_PV . ' ' . $dir;
             $select = $result->getSelect();
             $select->order($order);
         } else {
+            /* proceed others Magento attributes as-is */
             $result = $proceed($field, $dir);
         }
         return $result;

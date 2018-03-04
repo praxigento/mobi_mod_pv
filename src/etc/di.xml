@@ -53,12 +53,12 @@
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Catalog\Model\Layer">
-        <!-- Add warehouse PV to collection for category view -->
-        <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Catalog\Model\Layer"
-                sortOrder="400" disabled="false"/>
-    </type>
+    <!--<type name="\Magento\Catalog\Model\Layer">-->
+        <!--&lt;!&ndash; Add warehouse PV to collection for category view &ndash;&gt;-->
+        <!--<plugin name="prxgt_pv_plugin"-->
+                <!--type="\Praxigento\Pv\Plugin\Catalog\Model\Layer"-->
+                <!--sortOrder="400" disabled="false"/>-->
+    <!--</type>-->
 
     <type name="\Magento\Checkout\Block\Cart\Item\Renderer">
         <!-- Add PV html into cart item's price block -->
