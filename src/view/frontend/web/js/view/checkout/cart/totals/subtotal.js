@@ -10,9 +10,9 @@ define([
     /* save totals uiComponent to local context */
     const totals = uiTotals;
 
-    /* see \Praxigento\Pv\Plugin\Checkout\Model\CompositeConfigProvider::JSON_TOTAL_SEG_SUBTOTAL */
+    /* see \Praxigento\Pv\Helper\ConfigProvider::JSON_TOTAL_SEG_SUBTOTAL */
     const SEGMENT = 'prxgt_pv_cart_subtotal';
-    /* see \Praxigento\Pv\Plugin\Checkout\Model\CompositeConfigProvider::JSON_TOTAL_SEG_GRAND*/
+    /* see \Praxigento\Pv\Helper\ConfigProvider::JSON_TOTAL_SEG_GRAND*/
     const SEGMENT_GRAND = 'prxgt_pv_cart_grand';
 
     /* pin prototype function to use in overridden 'isVisible' */

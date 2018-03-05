@@ -5,8 +5,12 @@
 
 namespace Praxigento\Pv\Plugin\Checkout\Block\Cart\Item;
 
+use Praxigento\Pv\Repo\Entity\Data\Quote\Item as EPvQuoteItem;
+
 class Renderer
 {
+    /** @var array */
+    private $cacheQuoteItems = [];
     /** @var \Praxigento\Pv\Helper\Customer */
     private $hlpCust;
     /** @var \Praxigento\Pv\Repo\Entity\Quote\Item */
@@ -29,7 +33,7 @@ class Renderer
         $canSeePv = $this->hlpCust->canSeePv();
         if ($canSeePv) {
             $itemId = $item->getId();
-            $entity = $this->repoPvQuoteItem->getById($itemId);
+            $entity = $this->getCachedItemPv($itemId);
             if ($entity) {
                 $subtotal = $entity->getSubtotal();
                 $subtotal = number_format($subtotal, 2);
@@ -48,7 +52,7 @@ class Renderer
         $canSeePv = $this->hlpCust->canSeePv();
         if ($canSeePv) {
             $itemId = $item->getId();
-            $entity = $this->repoPvQuoteItem->getById($itemId);
+            $entity = $this->getCachedItemPv($itemId);
             if ($entity) {
                 $subtotal = $entity->getSubtotal();
                 $qty = $item->getQty();
@@ -57,5 +61,18 @@ class Renderer
             }
         }
         return $result;
+    }
+
+    /**
+     * @param $itemId
+     * @return EPvQuoteItem|false
+     */
+    private function getCachedItemPv($itemId)
+    {
+        if (!isset($this->cacheQuoteItems[$itemId])) {
+            $entity = $this->repoPvQuoteItem->getById($itemId);
+            $this->cacheQuoteItems[$itemId] = $entity;
+        }
+        return $this->cacheQuoteItems[$itemId];
     }
 }

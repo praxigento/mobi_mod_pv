@@ -106,45 +106,49 @@ class ConfigProvider
      */
     private function addPvTotalsToCart($configData)
     {
+        /* set init values for totals */
+        $subtotal = $discount = $grand = 0;
         $cartId = $this->getCartId($configData);
         /** @var EPvQuote $pvTotals */
         $pvTotals = $this->repoPvQuote->getById($cartId);
         if ($pvTotals) {
-            /* get totals segments from configuration data (different structures for diff. requests) */
-            $totals = null;
+            $subtotal =  number_format($pvTotals->getSubtotal(), 2, '.', '');
+            $discount = number_format($pvTotals->getDiscount(), 2, '.', '');
+            $grand = number_format($pvTotals->getTotal(), 2, '.', '');
+        }
+        /* get totals segments from configuration data (different structures for diff. requests) */
+        $totals = null;
+        if (isset($configData['total_segments'])) {
+            $totals = $configData['total_segments'];
+        } elseif (isset($configData['totalsData']['total_segments'])) {
+            $totals = $configData['totalsData']['total_segments'];
+        }
+        /* populate totals segments with PV data */
+        if ($totals) {
+            $subtotal =  number_format($subtotal, 2, '.', '');
+            $discount = number_format($discount, 2, '.', '');
+            $grand = number_format($grand, 2, '.', '');
+            $segment = [
+                'code' => self::JSON_TOTAL_SEG_SUBTOTAL,
+                'value' => $subtotal
+            ];
+            $totals[] = $segment;
+            $segment = [
+                'code' => self::JSON_TOTAL_SEG_DISCOUNT,
+                'value' => $discount
+            ];
+            $totals[] = $segment;
+            $segment = [
+                'code' => self::JSON_TOTAL_SEG_GRAND,
+                'value' => $grand
+            ];
+            $totals[] = $segment;
+            /* put PV into config */
             if (isset($configData['total_segments'])) {
-                $totals = $configData['total_segments'];
+                $configData['total_segments'] = $totals;
             } elseif (isset($configData['totalsData']['total_segments'])) {
-                $totals = $configData['totalsData']['total_segments'];
+                $configData['totalsData']['total_segments'] = $totals;
             }
-            /* populate totals segments with PV data */
-            if ($totals) {
-                $sub = $total = number_format($pvTotals->getSubtotal(), 2, '.', '');
-                $discount = $total = number_format($pvTotals->getDiscount(), 2, '.', '');
-                $grand = $total = number_format($pvTotals->getTotal(), 2, '.', '');
-                $segment = [
-                    'code' => self::JSON_TOTAL_SEG_SUBTOTAL,
-                    'value' => $sub
-                ];
-                $totals[] = $segment;
-                $segment = [
-                    'code' => self::JSON_TOTAL_SEG_DISCOUNT,
-                    'value' => $discount
-                ];
-                $totals[] = $segment;
-                $segment = [
-                    'code' => self::JSON_TOTAL_SEG_GRAND,
-                    'value' => $grand
-                ];
-                $totals[] = $segment;
-                /* put PV into config */
-                if (isset($configData['total_segments'])) {
-                    $configData['total_segments'] = $totals;
-                } elseif (isset($configData['totalsData']['total_segments'])) {
-                    $configData['totalsData']['total_segments'] = $totals;
-                }
-            }
-
         }
         return $configData;
     }

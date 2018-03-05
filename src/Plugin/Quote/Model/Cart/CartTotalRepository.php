@@ -5,8 +5,9 @@
 
 namespace Praxigento\Pv\Plugin\Quote\Model\Cart;
 
-use Praxigento\Pv\Repo\Entity\Data\Quote as EPvQuote;
-
+/**
+ * @deprecated see \Praxigento\Pv\Helper\ConfigProvider
+ */
 class CartTotalRepository
 {
     const SEGMENT_DISCOUNT = 'prxgt_pv_discount';
@@ -41,43 +42,6 @@ class CartTotalRepository
     ) {
         /** @var \Magento\Quote\Model\Cart\Totals $result */
         $result = $proceed($cartId);
-        /* set init values for totals */
-        $subtotal = $discount = $grand = 0;
-        /* get quote totals by ID */
-        $pk = [EPvQuote::ATTR_QUOTE_REF => $cartId];
-        $found = $this->repoPvQuote->getById($pk);
-        if ($found) {
-            $subtotal = $found->getSubtotal();
-            $discount = $found->getDiscount();
-            $grand = $found->getTotal();
-        }
-
-        /**
-         * Init segments.
-         */
-
-        /** @var \Magento\Quote\Api\Data\TotalSegmentInterface $segSub */
-        $segSub = $this->factTotalSegment->create();
-        $segSub->setCode(self::SEGMENT_SUBTOTAL);
-        $segSub->setValue($subtotal);
-
-        /** @var \Magento\Quote\Api\Data\TotalSegmentInterface $segSub */
-        $segDiscount = $this->factTotalSegment->create();
-        $segDiscount->setCode(self::SEGMENT_DISCOUNT);
-        $segDiscount->setValue($discount);
-
-        /** @var \Magento\Quote\Api\Data\TotalSegmentInterface $segSub */
-        $segGrand = $this->factTotalSegment->create();
-        $segGrand->setCode(self::SEGMENT_GRAND);
-        $segGrand->setValue($grand);
-
-        /* add segments to totals */
-        $segments = $result->getTotalSegments();
-        $segments[self::SEGMENT_SUBTOTAL] = $segSub;
-        $segments[self::SEGMENT_DISCOUNT] = $segDiscount;
-        $segments[self::SEGMENT_GRAND] = $segGrand;
-        $result->setTotalSegments($segments);
-
         return $result;
     }
 

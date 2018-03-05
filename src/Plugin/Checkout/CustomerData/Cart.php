@@ -9,12 +9,15 @@ namespace Praxigento\Pv\Plugin\Checkout\CustomerData;
 use Praxigento\Pv\Config as Cfg;
 
 /**
- * Add warehouse PV to mini-cart items.
+ * Add warehouse PV to mini-cart items (top right corner).
  */
 class Cart
 {
-    const CFG_CAN_SEE_PV = 'prxgt_pv_can_see';
-    const CFG_PV_TOTAL = 'prxgt_pv_total';
+    const JSON_PV_CART_CAN_SEE = 'prxgt_pv_cart_can_see';
+    const JSON_PV_CART_ITEM_CAN_SEE = 'prxgt_pv_cart_item_can_see';
+    const JSON_PV_CART_ITEM_TOTAL = 'prxgt_pv_cart_item_total';
+    const JSON_PV_CART_TOTAL = 'prxgt_pv_cart_total';
+
     /** @var \Praxigento\Pv\Helper\Customer */
     private $hlpPvCust;
     /** @var \Praxigento\Core\App\Repo\IGeneric */
@@ -42,7 +45,7 @@ class Cart
     ) {
         if (is_array($result)) {
             $canSeePv = $this->hlpPvCust->canSeePv();
-            $result[self::CFG_CAN_SEE_PV] = $canSeePv;
+            $result[self::JSON_PV_CART_CAN_SEE] = $canSeePv;
             if ($canSeePv) {
                 if (isset($result['items']) && is_array($result['items'])) {
                     $itemId = false;
@@ -51,10 +54,10 @@ class Cart
                         $pvItem = $this->repoQuoteItem->getById($itemId);
                         $totalItem = $pvItem->getTotal();
                         $totalItem = number_format($totalItem, 2, '.', '');
-                        $result['items'][$key][self::CFG_PV_TOTAL] = $totalItem;
+                        $result['items'][$key][self::JSON_PV_CART_ITEM_TOTAL] = $totalItem;
                         /* this is not good idea, but "This is MAGENTA-A-A-A!!!!" */
                         /* it is not a big price to have a 'canSeePv' flag for each item */
-                        $result['items'][$key][self::CFG_CAN_SEE_PV] = $canSeePv;
+                        $result['items'][$key][self::JSON_PV_CART_ITEM_CAN_SEE] = $canSeePv;
                     }
                     if ($itemId) {
                         /* this is not empty quote, get total PV for quote itself */
@@ -66,7 +69,7 @@ class Cart
                         /* this is quote w/o items */
                         $totalQuote = '0.00';
                     }
-                    $result[self::CFG_PV_TOTAL] = $totalQuote;
+                    $result[self::JSON_PV_CART_TOTAL] = $totalQuote;
                 }
             }
         }
