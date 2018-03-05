@@ -10,8 +10,8 @@ namespace Praxigento\Pv\Helper;
  */
 class Customer
 {
-    /** @var bool|null */
-    private $cacheCanSee = null;
+    /** @var array permissions by customer group */
+    private $cacheCanSeeByGid = [];
     /** @var \Praxigento\Pv\Repo\Entity\Customer\Group */
     private $repoPvCustGroup;
     /** @var \Magento\Customer\Model\Session */
@@ -25,18 +25,25 @@ class Customer
         $this->repoPvCustGroup = $repoPvCustGroup;
     }
 
-    public function canSeePv()
+    /**
+     * Cached accessor for 'Can See PV' flag.
+     *
+     * @param int|null $gid customer group ID, if 'null' - group for current customer is used.
+     * @return bool
+     */
+    public function canSeePv($gid = null)
     {
-        if (is_null($this->cacheCanSee)) {
-            if ($this->session) {
-                $gid = $this->session->getCustomerGroupId();
-                if (!is_null($gid)) {
-                    $item = $this->repoPvCustGroup->getById($gid);
-                    if ($item) $this->cacheCanSee = (bool)$item->getCanSeePv();
-                }
-            }
-            if (is_null($this->cacheCanSee)) $this->cacheCanSee = false;
+        $result = false;
+        if (is_null($gid)) {
+            $gid = $this->session->getCustomerGroupId();
         }
-        return $this->cacheCanSee;
+        if (!isset($this->cacheCanSeeByGid[$gid])) {
+            $item = $this->repoPvCustGroup->getById($gid);
+            if ($item) $result = (bool)$item->getCanSeePv();
+            $this->cacheCanSeeByGid[$gid] = $result;
+        } else {
+            $result = $this->cacheCanSeeByGid[$gid];
+        }
+        return $result;
     }
 }

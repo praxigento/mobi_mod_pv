@@ -6,8 +6,8 @@ define([
 ], function (Component) {
     "use strict";
 
-    /* see \Praxigento\Pv\Plugin\Quote\Model\Cart\CartTotalRepository::SEGMENT_GRAND */
-    const SEGMENT = 'prxgt_pv_grand';
+    /* see \Praxigento\Pv\Plugin\Checkout\Model\CompositeConfigProvider::JSON_TOTAL_SEG_GRAND */
+    const SEGMENT = 'prxgt_pv_cart_grand';
 
     var result = Component.extend({
         defaults: {

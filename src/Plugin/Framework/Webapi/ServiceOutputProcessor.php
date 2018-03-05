@@ -10,18 +10,22 @@ use Praxigento\Pv\Plugin\Checkout\Model\CompositeConfigProvider as ACompConfProv
 
 class ServiceOutputProcessor
 {
-    const CFG_CAN_SEE_PV = ACompConfProv::CFG_CAN_SEE_PV;
-    const CFG_PV_TOTAL = ACompConfProv::CFG_PV_TOTAL;
+    const JSON_ITEM_CAN_SEE_PV = ACompConfProv::JSON_ITEM_CAN_SEE_PV;
+    const JSON_ITEM_PV_TOTAL = ACompConfProv::JSON_ITEM_PV_TOTAL;
 
+    /** @var \Praxigento\Pv\Helper\ConfigProvider */
+    private $hlpCfgProvider;
     /** @var \Praxigento\Pv\Helper\Customer */
     private $hlpPvCust;
     /** @var \Praxigento\Pv\Repo\Entity\Quote\Item */
     private $repoQuoteItem;
 
     public function __construct(
+        \Praxigento\Pv\Helper\ConfigProvider $hlpCfgProvider,
         \Praxigento\Pv\Repo\Entity\Quote\Item $repoQuoteItem,
         \Praxigento\Pv\Helper\Customer $hlpPvCust
     ) {
+        $this->hlpCfgProvider = $hlpCfgProvider;
         $this->repoQuoteItem = $repoQuoteItem;
         $this->hlpPvCust = $hlpPvCust;
     }
@@ -45,24 +49,24 @@ class ServiceOutputProcessor
     ) {
         $result = $proceed($data, $serviceClassName, $serviceMethodName);
         if (
-            ($serviceClassName == 'Magento\Checkout\Api\ShippingInformationManagementInterface') &&
-            ($serviceMethodName == 'saveAddressInformation') &&
-            isset($result['totals']) &&
-            isset($result['totals']['items']) &&
-            is_array($result['totals']['items'])
+            (($serviceClassName == \Magento\Checkout\Api\ShippingInformationManagementInterface::class) &&
+                ($serviceMethodName == 'saveAddressInformation')) ||
+            (($serviceClassName == \Magento\Checkout\Api\TotalsInformationManagementInterface::class) &&
+                ($serviceMethodName == 'calculate'))
         ) {
-            $canSeePv = $this->hlpPvCust->canSeePv();
-            $items = $result['totals']['items'];
-            foreach ($items as $key => $item) {
-                $itemId = $item['item_id'];
-                $pvData = $this->repoQuoteItem->getById($itemId);
-                $total = $pvData->getTotal();
-                $total = number_format($total, 2, '.', '');
-                $item[self::CFG_CAN_SEE_PV] = $canSeePv;
-                $item[self::CFG_PV_TOTAL] = $total;
-                $items[$key] = $item;
-            }
-            $result['totals']['items'] = $items;
+            $result = $this->hlpCfgProvider->addPvData($result);
+//            $canSeePv = $this->hlpPvCust->canSeePv();
+//            $items = $result['totals']['items'];
+//            foreach ($items as $key => $item) {
+//                $itemId = $item['item_id'];
+//                $pvData = $this->repoQuoteItem->getById($itemId);
+//                $total = $pvData->getTotal();
+//                $total = number_format($total, 2, '.', '');
+//                $item[self::JSON_ITEM_CAN_SEE_PV] = $canSeePv;
+//                $item[self::JSON_ITEM_PV_TOTAL] = $total;
+//                $items[$key] = $item;
+//            }
+//            $result['totals']['items'] = $items;
         }
         return $result;
     }

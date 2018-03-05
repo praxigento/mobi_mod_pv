@@ -10,10 +10,10 @@ define([
     /* save totals uiComponent to local context */
     const totals = uiTotals;
 
-    /* see \Praxigento\Pv\Plugin\Quote\Model\Cart\CartTotalRepository::SEGMENT_SUBTOTAL */
-    const SEGMENT = 'prxgt_pv_subtotal';
-    /* see \Praxigento\Pv\Plugin\Quote\Model\Cart\CartTotalRepository::SEGMENT_GRAND*/
-    const SEGMENT_GRAND = 'prxgt_pv_grand';
+    /* see \Praxigento\Pv\Plugin\Checkout\Model\CompositeConfigProvider::JSON_TOTAL_SEG_SUBTOTAL */
+    const SEGMENT = 'prxgt_pv_cart_subtotal';
+    /* see \Praxigento\Pv\Plugin\Checkout\Model\CompositeConfigProvider::JSON_TOTAL_SEG_GRAND*/
+    const SEGMENT_GRAND = 'prxgt_pv_cart_grand';
 
     /* pin prototype function to use in overridden 'isVisible' */
     const fnIsVisible = Component.prototype.isVisible;

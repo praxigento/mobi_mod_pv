@@ -7,6 +7,7 @@ namespace Praxigento\Pv\Model\Checkout;
 
 /**
  * Provide PV visibility configuration data for checkout process.
+ * @deprecated see \Praxigento\Pv\Plugin\Checkout\Model\CompositeConfigProvider
  */
 class ConfigProvider
     implements \Magento\Checkout\Model\ConfigProviderInterface
