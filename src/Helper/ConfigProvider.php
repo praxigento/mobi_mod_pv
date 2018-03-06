@@ -22,6 +22,11 @@ class ConfigProvider
     const JSON_TOTAL_SEG_GRAND = 'prxgt_pv_cart_grand';
     const JSON_TOTAL_SEG_SUBTOTAL = 'prxgt_pv_cart_subtotal';
 
+    /** @var \Praxigento\Pv\Repo\Entity\Data\Quote\Item[] */
+    private $cachePvQuoteItem = [];
+    /** @var \Praxigento\Pv\Repo\Entity\Data\Quote[] */
+    private $cachePvQuote = [];
+
     /** @var \Praxigento\Pv\Helper\Customer */
     private $hlpPvCust;
     /** @var \Praxigento\Core\Api\Helper\Registry */
@@ -100,6 +105,35 @@ class ConfigProvider
         return $configData;
     }
 
+    public function addPvToTotalSegments($segments, $cartId)
+    {
+        /* set init values for totals */
+        $subtotal = $discount = $grand = 0;
+        /** @var \Praxigento\Pv\Repo\Entity\Data\Quote $quotePv */
+        $quotePv = $this->loadPvForQuote($cartId);
+        if ($quotePv) {
+            $subtotal = number_format($quotePv->getSubtotal(), 2, '.', '');
+            $discount = number_format($quotePv->getDiscount(), 2, '.', '');
+            $grand = number_format($quotePv->getTotal(), 2, '.', '');
+        }
+        $one = [
+            'code' => self::JSON_TOTAL_SEG_SUBTOTAL,
+            'value' => $subtotal
+        ];
+        $segments[] = $one;
+        $one = [
+            'code' => self::JSON_TOTAL_SEG_DISCOUNT,
+            'value' => $discount
+        ];
+        $segments[] = $one;
+        $one = [
+            'code' => self::JSON_TOTAL_SEG_GRAND,
+            'value' => $grand
+        ];
+        $segments[] = $one;
+        return $segments;
+    }
+
     /**
      * @param array $configData
      * @return array
@@ -112,7 +146,7 @@ class ConfigProvider
         /** @var EPvQuote $pvTotals */
         $pvTotals = $this->repoPvQuote->getById($cartId);
         if ($pvTotals) {
-            $subtotal =  number_format($pvTotals->getSubtotal(), 2, '.', '');
+            $subtotal = number_format($pvTotals->getSubtotal(), 2, '.', '');
             $discount = number_format($pvTotals->getDiscount(), 2, '.', '');
             $grand = number_format($pvTotals->getTotal(), 2, '.', '');
         }
@@ -125,7 +159,7 @@ class ConfigProvider
         }
         /* populate totals segments with PV data */
         if ($totals) {
-            $subtotal =  number_format($subtotal, 2, '.', '');
+            $subtotal = number_format($subtotal, 2, '.', '');
             $discount = number_format($discount, 2, '.', '');
             $grand = number_format($grand, 2, '.', '');
             $segment = [
@@ -153,6 +187,16 @@ class ConfigProvider
         return $configData;
     }
 
+    public function getCartItemPv($itemId)
+    {
+        $grand = 0;
+        $item = $this->loadPvForQuoteItem($itemId);
+        if ($item) {
+            $grand = $item->getTotal();
+        }
+        $result = number_format($grand, 2, '.', '');
+        return $result;
+    }
     /**
      * @param int|null $custGroupId
      * @param int|null $cartId
@@ -175,6 +219,7 @@ class ConfigProvider
         }
         return $result;
     }
+
     /**
      * Get cart using REST input parameters.
      *
@@ -236,5 +281,35 @@ class ConfigProvider
             }
         }
         return $result;
+    }
+
+    /**
+     * Cacheable loader for quote's PV.
+     *
+     * @param int $quoteId
+     * @return \Praxigento\Pv\Repo\Entity\Data\Quote
+     */
+    private function loadPvForQuote($quoteId)
+    {
+        if (!isset($this->cachePvQuote[$quoteId])) {
+            $found = $this->repoPvQuote->getById((int)$quoteId);
+            $this->cachePvQuote[$quoteId] = $found;
+        }
+        return $this->cachePvQuote[$quoteId];
+    }
+
+    /**
+     * Cacheable loader for quote item's PV.
+     *
+     * @param int $itemId
+     * @return \Praxigento\Pv\Repo\Entity\Data\Quote\Item
+     */
+    private function loadPvForQuoteItem($itemId)
+    {
+        if (!isset($this->cachePvQuoteItem[$itemId])) {
+            $found = $this->repoPvQuoteItem->getById((int)$itemId);
+            $this->cachePvQuoteItem[$itemId] = $found;
+        }
+        return $this->cachePvQuoteItem[$itemId];
     }
 }

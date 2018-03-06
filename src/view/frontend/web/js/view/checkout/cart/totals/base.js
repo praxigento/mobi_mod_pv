@@ -54,7 +54,6 @@ define([
         getBaseValue: function () {
             var price = this.getAmount();
             var result = uiPriceUtils.formatPrice(price, pvFormat);
-debugger
             return result;
         },
 

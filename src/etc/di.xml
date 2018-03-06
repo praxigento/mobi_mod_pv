@@ -53,13 +53,6 @@
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <!--<type name="\Magento\Catalog\Model\Layer">-->
-        <!--&lt;!&ndash; Add warehouse PV to collection for category view &ndash;&gt;-->
-        <!--<plugin name="prxgt_pv_plugin"-->
-                <!--type="\Praxigento\Pv\Plugin\Catalog\Model\Layer"-->
-                <!--sortOrder="400" disabled="false"/>-->
-    <!--</type>-->
-
     <type name="\Magento\Checkout\Block\Cart\Item\Renderer">
         <!-- Add PV html into cart item's price block -->
         <plugin name="prxgt_pv_plugin"
@@ -104,7 +97,7 @@
 
 
     <type name="\Magento\Framework\Webapi\ServiceOutputProcessor">
-        <!-- Add PV to quote items on checkout 2nd step -->
+        <!-- Add PV to cart/quote according to REST API requests/response structure. -->
         <plugin name="prxgt_pv_plugin"
                 type="\Praxigento\Pv\Plugin\Framework\Webapi\ServiceOutputProcessor"
                 sortOrder="400" disabled="false"/>
