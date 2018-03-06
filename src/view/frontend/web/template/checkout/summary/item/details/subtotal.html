@@ -1,17 +1,12 @@
-<!--
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
--->
 <div class="subtotal">
-    <!-- MOBI-1157: add PV to checkout steps -->
-    <!-- see \Praxigento\Pv\Plugin\Checkout\Model\CompositeConfigProvider::CFG_CAN_SEE_PV -->
+    <!-- MOBI-1157: add PV to checkout step 2 (billing) -->
+    <!-- see \Praxigento\Pv\Helper\ConfigProvider::JSON_CAN_SEE_PV -->
     <span class="prxgt-pv-container cart-price" data-bind="visible: $parents[1].prxgt_pv_can_see">
-        <!-- see \Praxigento\Pv\Plugin\Checkout\Model\CompositeConfigProvider::CFG_PV_TOTAL -->
-        <span class="prxgt-pv-wrapper" data-bind="text: $parents[1].prxgt_pv_total"></span>
+        <!-- see \Praxigento\Pv\Helper\ConfigProvider::JSON_TOTAL_SEG_GRAND -->
+        <span class="prxgt-pv-wrapper" data-bind="text: $parents[1].prxgt_pv_cart_grand"></span>
         <span>PV</span>
     </span>
+
     <!-- ko if: isPriceInclTaxDisplayed() && !getRegion('row_incl_tax') -->
     <span class="price-including-tax"
           data-bind ="text: getValueInclTax($parents[1]), attr:{'data-label': $t('Incl. Tax')}">

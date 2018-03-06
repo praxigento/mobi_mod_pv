@@ -154,6 +154,28 @@ class ConfigProvider
     }
 
     /**
+     * @param int|null $custGroupId
+     * @param int|null $cartId
+     * @return bool
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function getCanSeePv($custGroupId = null, $cartId = null)
+    {
+        $result = false;
+        /* try to get customer group ID using cart ID if group ID is missed */
+        if (is_null($custGroupId)) {
+            $cartData = $this->repoCart->get((int)$cartId);
+            if ($cartData) {
+                $custGroupId = $cartData->getCustomerGroupId();
+            }
+        }
+        /* get 'Can See PV' attribute for the customer group */
+        if (!is_null($custGroupId)) {
+            $result = $this->hlpPvCust->canSeePv($custGroupId);
+        }
+        return $result;
+    }
+    /**
      * Get cart using REST input parameters.
      *
      * @return \Magento\Quote\Api\Data\CartInterface|null

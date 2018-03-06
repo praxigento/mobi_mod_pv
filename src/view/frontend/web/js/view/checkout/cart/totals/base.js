@@ -25,7 +25,7 @@ define([
             template: "Praxigento_Pv/checkout/total/entry"
         },
         /**
-         * Extract partial payment amount from totals segment.
+         * Extract appropriate PV amount from totals segment.
          * @returns {number}
          */
         getAmount: function () {
@@ -47,13 +47,14 @@ define([
         },
 
         /**
-         * Return formatted amount for partial payment amount (base currency).
+         * Return formatted amount for appropriate PV total value (subtotal, discount, grand).
          *
          * @returns {String|*}
          */
         getBaseValue: function () {
             var price = this.getAmount();
             var result = uiPriceUtils.formatPrice(price, pvFormat);
+debugger
             return result;
         },
 
