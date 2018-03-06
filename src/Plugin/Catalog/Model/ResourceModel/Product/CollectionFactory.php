@@ -63,7 +63,7 @@ class CollectionFactory
                 $cols = [
                     self::A_PV_PRODUCT => EPvProd::ATTR_PV
                 ];
-                $cond = "$as." . EPvProd::ATTR_PROD_REF . "=$asProd" . Cfg::E_PRODUCT_A_ENTITY_ID;
+                $cond = "$as." . EPvProd::ATTR_PROD_REF . "=$asProd." . Cfg::E_PRODUCT_A_ENTITY_ID;
                 $query->joinLeft([$as => $tbl], $cond, $cols);
                 /* add fields mapping */
                 $result->addFilterToMap(self::A_PV_PRODUCT, self::FQN_PV);
