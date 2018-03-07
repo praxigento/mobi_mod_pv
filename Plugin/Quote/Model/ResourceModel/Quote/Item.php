@@ -9,10 +9,10 @@ use Praxigento\Pv\Repo\Entity\Data\Quote\Item as EPvQuoteItem;
 
 class Item
 {
-    /** @var \Praxigento\Pv\Repo\Entity\Quote\Item */
-    private $repoPvQuoteItem;
     /** @var \Praxigento\Pv\Api\Helper\GetPv */
     private $hlpGetPv;
+    /** @var \Praxigento\Pv\Repo\Entity\Quote\Item */
+    private $repoPvQuoteItem;
 
     public function __construct(
         \Praxigento\Pv\Repo\Entity\Quote\Item $repoPvQuoteItem,

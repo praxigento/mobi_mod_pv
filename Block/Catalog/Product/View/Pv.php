@@ -28,13 +28,6 @@ class Pv
         $this->hlpGetPv = $hlpGetPv;
     }
 
-    public function getWarehousePv() {
-        $product = $this->registry->registry('product');
-        $prodId = $product->getId();
-        $result = $this->hlpGetPv->product($prodId);
-        return $result;
-    }
-
     /**
      * 'true' - if customer has permissions to see PV on the front.
      * @return bool
@@ -42,6 +35,14 @@ class Pv
     public function canSeePv()
     {
         $result = $this->hlpCust->canSeePv();
+        return $result;
+    }
+
+    public function getWarehousePv()
+    {
+        $product = $this->registry->registry('product');
+        $prodId = $product->getId();
+        $result = $this->hlpGetPv->product($prodId);
         return $result;
     }
 }

@@ -4,9 +4,6 @@
  */
 namespace Praxigento\Pv\Plugin\Catalog\Model;
 
-use Praxigento\Pv\Config as Cfg;
-use Praxigento\Pv\Repo\Entity\Data\Stock\Item as EPvStockItem;
-
 /**
  * @deprecated Product PV is added in \Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory::aroundCreate
  */

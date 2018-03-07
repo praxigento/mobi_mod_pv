@@ -8,10 +8,10 @@ namespace Praxigento\Pv\Observer\Sub\Register;
 
 class Collector
 {
-    /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
-    protected $_manStock;
     /** @var \Magento\Framework\ObjectManagerInterface */
     protected $_manObj;
+    /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
+    protected $_manStock;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
