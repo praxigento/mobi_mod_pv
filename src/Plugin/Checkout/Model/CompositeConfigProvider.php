@@ -13,11 +13,11 @@ use Praxigento\Pv\Plugin\Framework\Webapi\ServiceOutputProcessor as ARestProc;
  */
 class CompositeConfigProvider
 {
-    /** @var \Praxigento\Pv\Helper\ConfigProvider */
+    /** @var \Praxigento\Pv\Helper\PvProvider */
     private $hlpCfgProvider;
 
     public function __construct(
-        \Praxigento\Pv\Helper\ConfigProvider $hlpCfgProvider
+        \Praxigento\Pv\Helper\PvProvider $hlpCfgProvider
     ) {
         $this->hlpCfgProvider = $hlpCfgProvider;
     }

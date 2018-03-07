@@ -6,7 +6,7 @@ define([
 ], function (Component) {
     "use strict";
 
-    /* see \Praxigento\Pv\Helper\ConfigProvider::JSON_TOTAL_SEG_DISCOUNT */
+    /* see \Praxigento\Pv\Helper\PvProvider::JSON_TOTAL_SEG_DISCOUNT */
     const SEGMENT = 'prxgt_pv_cart_discount';
 
     var result = Component.extend({

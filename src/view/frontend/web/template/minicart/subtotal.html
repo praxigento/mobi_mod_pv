@@ -4,10 +4,10 @@
     </span>
 
     <!-- Add quote PV totals to mini-cart (top right corner) -->
-    <!-- see \Praxigento\Pv\Plugin\Checkout\CustomerData\Cart::JSON_PV_CART_... -->
+    <!-- see \Praxigento\Pv\Plugin\Checkout\CustomerData\Cart::JSON_PV_MINI_CART_... -->
     <div class="prxgt-pv-container prxgt-pv-minicart"
-         data-bind="visible: $data.elems()[0].cart().prxgt_pv_cart_can_see">
-        <span class="prxgt-pv-wrapper" data-bind="text: $data.elems()[0].cart().prxgt_pv_cart_total"></span>
+         data-bind="visible: $data.elems()[0].cart().prxgt_pv_mini_cart_can_see">
+        <span class="prxgt-pv-wrapper" data-bind="text: $data.elems()[0].cart().prxgt_pv_mini_cart_total"></span>
         <span>PV</span>
     </div>
 

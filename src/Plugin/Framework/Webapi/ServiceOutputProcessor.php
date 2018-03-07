@@ -11,18 +11,15 @@ class ServiceOutputProcessor
     const JSON_CAN_SEE_PV = 'praxigentoCustomerCanSeePv';
     const JSON_ITEM_CAN_SEE_PV = 'prxgt_pv_item_can_see';
     const JSON_ITEM_PV_TOTAL = 'prxgt_pv_item_total';
-    const JSON_TOTAL_SEG_DISCOUNT = 'prxgt_pv_cart_discount'; // flag bound to the item (TODO: use JSON_CAN_SEE_PV on the front)
-    const JSON_TOTAL_SEG_GRAND = 'prxgt_pv_cart_grand';
-    const JSON_TOTAL_SEG_SUBTOTAL = 'prxgt_pv_cart_subtotal';
 
-    /** @var \Praxigento\Pv\Helper\ConfigProvider */
+    /** @var \Praxigento\Pv\Helper\PvProvider */
     private $hlpCfgProvider;
     /** @var \Praxigento\Core\Api\Helper\Registry */
     private $hlpReg;
 
     public function __construct(
         \Praxigento\Core\Api\Helper\Registry $hlpReg,
-        \Praxigento\Pv\Helper\ConfigProvider $hlpCfgProvider
+        \Praxigento\Pv\Helper\PvProvider $hlpCfgProvider
     ) {
         $this->hlpReg = $hlpReg;
         $this->hlpCfgProvider = $hlpCfgProvider;

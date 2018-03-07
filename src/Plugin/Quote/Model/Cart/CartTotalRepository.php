@@ -6,7 +6,7 @@
 namespace Praxigento\Pv\Plugin\Quote\Model\Cart;
 
 /**
- * @deprecated see \Praxigento\Pv\Helper\ConfigProvider
+ * @deprecated see \Praxigento\Pv\Helper\PvProvider
  */
 class CartTotalRepository
 {
