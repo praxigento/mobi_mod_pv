@@ -1,5 +1,9 @@
 <?php
-/** @var \Praxigento\Pv\Block\Catalog\Product\View\Pv $block */
+/**
+ * Display PV in product details on the front.
+ *
+ * @var \Praxigento\Pv\Block\Catalog\Product\View\Pv $block
+ */
 $canSeePv = $block->canSeePv();
 if ($canSeePv) {
     $pv = $block->getWarehousePv();

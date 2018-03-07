@@ -8,9 +8,18 @@ namespace Praxigento\Pv\Block\Adminhtml\Order;
 
 use Praxigento\Pv\Repo\Entity\Data\Sale as EPvSale;
 
+/**
+ * Block to display sale order totals.
+ *
+ * see ./view/adminhtml/layout/sales_order_view.xml
+ */
 class Totals
     extends \Magento\Framework\View\Element\Template
 {
+    const PV_DISCOUNT = 'prxgt_pv_discount_sale';
+    const PV_GRAND = 'prxgt_pv_grand_sale';
+    const PV_SUBTOTAL = 'prxgt_pv_subtotal_sale';
+
     /** @var \Praxigento\Pv\Repo\Entity\Sale */
     private $repoPvSale;
 
@@ -41,7 +50,7 @@ class Totals
             $grand = number_format($grand, 2, '.', '');
             $subtotal = new \Magento\Framework\DataObject(
                 [
-                    'code' => 'prxgt_pv_subtotal',
+                    'code' => self::PV_SUBTOTAL,
                     'strong' => true,
                     'base_value' => $subtotal,
                     'value' => $subtotal,
@@ -51,7 +60,7 @@ class Totals
             );
             $discount = new \Magento\Framework\DataObject(
                 [
-                    'code' => 'prxgt_pv_discount',
+                    'code' => self::PV_DISCOUNT,
                     'strong' => true,
                     'base_value' => $discount,
                     'value' => $discount,
@@ -61,7 +70,7 @@ class Totals
             );
             $grand = new \Magento\Framework\DataObject(
                 [
-                    'code' => 'prxgt_pv_grand',
+                    'code' => self::PV_GRAND,
                     'strong' => true,
                     'base_value' => $grand,
                     'value' => $grand,

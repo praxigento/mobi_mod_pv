@@ -5,7 +5,7 @@
 -->
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <columns name="sales_order_columns">
-        <column name="prxgt_pv_total">
+        <column name="prxgt_pv_total_sale_grid">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">number</item>
@@ -13,7 +13,7 @@
                 </item>
             </argument>
         </column>
-        <column name="prxgt_pv_discount">
+        <column name="prxgt_pv_discount_sale_grid">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">number</item>
@@ -21,7 +21,7 @@
                 </item>
             </argument>
         </column>
-        <column name="prxgt_pv_subtotal">
+        <column name="prxgt_pv_subtotal_sale_grid">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">number</item>

@@ -5,6 +5,9 @@
 
 namespace Praxigento\Pv\Block\Catalog\Product\View;
 
+/**
+ * Display PV using template "./view/frontend/templates/catalog/product/view/pv.phtml"
+ */
 class Pv
     extends \Magento\Framework\View\Element\Template
 {

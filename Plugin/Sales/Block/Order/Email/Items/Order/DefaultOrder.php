@@ -5,11 +5,12 @@
 
 namespace Praxigento\Pv\Plugin\Sales\Block\Order\Email\Items\Order;
 
-use Magento\Sales\Model\Order\Creditmemo\Item as CreditmemoItem;
-use Magento\Sales\Model\Order\Invoice\Item as InvoiceItem;
 use Magento\Sales\Model\Order\Item as OrderItem;
 use Praxigento\Pv\Repo\Entity\Data\Quote\Item as EPvQuoteItem;
 
+/**
+ * Add PV total to order item in sale order email.
+ */
 class DefaultOrder
 {
     /** @var \Praxigento\Pv\Helper\Customer */
@@ -28,7 +29,7 @@ class DefaultOrder
     /**
      * @param \Magento\Sales\Block\Order\Email\Items\Order\DefaultOrder $subject
      * @param \Closure $proceed
-     * @param OrderItem|InvoiceItem|CreditmemoItem $item
+     * @param \Magento\Sales\Model\Order\Item $item
      * @return mixed
      */
     public function aroundGetItemPrice(

@@ -3,13 +3,20 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Pv\Block\Sales\Order;
+namespace Praxigento\Pv\Block\Email\Sales\Order;
 
 use Praxigento\Pv\Repo\Entity\Data\Quote as EPvQuote;
 
+/**
+ * Add PV to sale order email.
+ *
+ * see ./view/frontend/layout/sales_email_order_items.xml
+ */
 class Pv
     extends \Magento\Framework\View\Element\Template
 {
+    const PV_TOTAL = 'prxgt_pv_total_email';
+
     /** @var \Praxigento\Pv\Repo\Entity\Quote */
     private $repoPvQuote;
 
@@ -36,13 +43,13 @@ class Pv
             $value = $entity->getTotal();
             $value = number_format($value, 2);
             /* compose total data for 'module-sales/view/frontend/templates/order/totals.phtml' */
-            $pvSubtotal = new \Magento\Framework\DataObject();
-            $pvSubtotal->setCode('prxgt_pv_total');
-            $pvSubtotal->setValue($value);
-            $pvSubtotal->setLabel('PV Total');
-            $pvSubtotal->setStrong(true);
-            $pvSubtotal->setIsFormated(true);
-            $parent->addTotal($pvSubtotal, 'last');
+            $grand = new \Magento\Framework\DataObject();
+            $grand->setCode(self::PV_TOTAL);
+            $grand->setValue($value);
+            $grand->setLabel('PV Total');
+            $grand->setStrong(true);
+            $grand->setIsFormated(true);
+            $parent->addTotal($grand, 'last');
         }
     }
 }

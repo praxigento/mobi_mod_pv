@@ -10,9 +10,9 @@ use Praxigento\Pv\Repo\Entity\Data\Sale;
 
 class QueryModifier
 {
-    const AS_FLD_PV_DISCOUNT = 'prxgt_pv_discount';
-    const AS_FLD_PV_SUBTOTAL = 'prxgt_pv_subtotal';
-    const AS_FLD_PV_TOTAL = 'prxgt_pv_total';
+    const AS_FLD_PV_DISCOUNT = 'prxgt_pv_discount_sale_grid';
+    const AS_FLD_PV_SUBTOTAL = 'prxgt_pv_subtotal_sale_grid';
+    const AS_FLD_PV_TOTAL = 'prxgt_pv_total_sale_grid';
     const AS_TBL_PV_SALES = 'prxgtPvSales';
 
     /** @var \Magento\Framework\App\ResourceConnection */

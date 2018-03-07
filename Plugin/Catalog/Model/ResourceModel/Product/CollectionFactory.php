@@ -20,6 +20,7 @@ class CollectionFactory
 
     /** alias for PV data in the result set (used in ./view/adminhtml/ui_component/product_listing.xml) */
     const A_PV_PRODUCT = 'prxgt_pv_product';
+
     /** combination of the table alias & table field for filtering & ordering in admin grid (Fully Qualified Name) */
     const FQN_PV = self::AS_PRXGT_PV_PRODUCT . '.' . EPvProd::ATTR_PV;
 
