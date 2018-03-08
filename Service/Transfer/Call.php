@@ -29,7 +29,7 @@ class Call
     private $servOperation;
 
     public function __construct(
-        \Psr\Log\LoggerInterface $logger,
+        \Praxigento\Core\App\Api\Logger\Main $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Accounting\Api\Service\Account\Get $servAccount,

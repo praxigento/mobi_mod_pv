@@ -37,7 +37,7 @@ class Call
     private $servOper;
 
     public function __construct(
-        \Psr\Log\LoggerInterface $logger,
+        \Praxigento\Core\App\Api\Logger\Main $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\App\Api\Repo\Transaction\Manager $manTrans,
         \Praxigento\Accounting\Api\Service\Account\Get $servAccount,
