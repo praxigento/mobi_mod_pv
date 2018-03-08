@@ -101,13 +101,6 @@
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Quote\Model\Cart\CartTotalRepository">
-        <!-- Add PV totals to fronted data container -->
-        <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Quote\Model\Cart\CartTotalRepository"
-                sortOrder="400" disabled="false"/>
-    </type>
-
     <type name="\Magento\Quote\Model\ResourceModel\Quote\Item">
         <!-- Create/update PV data for corresponded quote item -->
         <plugin name="prxgt_pv_plugin"
