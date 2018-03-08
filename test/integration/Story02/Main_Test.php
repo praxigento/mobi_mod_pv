@@ -19,13 +19,13 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private $_callAccount;
     /** @var \Praxigento\Pv\Service\ITransfer */
     private $_callTransfer;
-    /** @var \Praxigento\Core\App\Api\Repo\Transaction\Manager */
+    /** @var \Praxigento\Core\Api\App\Repo\Transaction\Manager */
     private $_manTrans;
 
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->_manTrans = $this->_manObj->get(\Praxigento\Core\App\Api\Repo\Transaction\Manager::class);
+        $this->_manTrans = $this->_manObj->get(\Praxigento\Core\Api\App\Repo\Transaction\Manager::class);
         $this->_callTransfer = $this->_manObj->get(\Praxigento\Pv\Service\ITransfer::class);
         $this->_callAccount = $this->_manObj->get(\Praxigento\Accounting\Api\Service\Account\Get::class);
     }

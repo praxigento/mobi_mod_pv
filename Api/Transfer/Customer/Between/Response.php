@@ -11,7 +11,7 @@ namespace Praxigento\Pv\Api\Transfer\Customer\Between;
  *
  */
 class Response
-    extends \Praxigento\Core\App\Api\Web\Response
+    extends \Praxigento\Core\Api\App\Web\Response
 {
     /**
      * @return \Praxigento\Pv\Api\Transfer\Customer\Between\Response\Data

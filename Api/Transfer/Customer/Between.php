@@ -35,8 +35,8 @@ class Between
         $this->postProcess($ctx);
 
         /* get results from context and place it to API response */
-        /** @var \Praxigento\Core\App\Api\Web\Response $result */
-        $result = new \Praxigento\Core\App\Api\Web\Response();
+        /** @var \Praxigento\Core\Api\App\Web\Response $result */
+        $result = new \Praxigento\Core\Api\App\Web\Response();
         $rsData = $ctx->get(self::CTX_RESULT_DATA);
         $rsCode = $ctx->get(self::CTX_RESULT_CODE);
         $result->setData($rsData);
@@ -82,8 +82,8 @@ class Between
         $operId = $resp->getOperationId();
         $respData = new \Praxigento\Pv\Api\Transfer\Customer\Between\Response\Data();
         $respCode = ($resp->isSucceed()) ?
-            \Praxigento\Core\App\Api\Web\Response::CODE_SUCCESS :
-            \Praxigento\Core\App\Api\Web\Response::CODE_FAILED;
+            \Praxigento\Core\Api\App\Web\Response::CODE_SUCCESS :
+            \Praxigento\Core\Api\App\Web\Response::CODE_FAILED;
         if ($operId) $respData->setOperationId($operId);
         if ($resp->getIsInvalidCountries()) $respData->setIsInvalidCountries(true);
         if ($resp->getIsInvalidDownline()) $respData->setIsInvalidDownline(true);
