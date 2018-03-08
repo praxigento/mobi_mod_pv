@@ -19,7 +19,7 @@ class Call
     implements \Praxigento\Pv\Service\ISale
 {
     /**
-     * @var \Praxigento\Core\App\Transaction\Database\IManager
+     * @var \Praxigento\Core\App\Api\Repo\Transaction\Manager
      * @deprecated transaction should not be used on the service layer (nested transactions are prohibited in MySQL)
      */
     private $manTrans;
@@ -39,7 +39,7 @@ class Call
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
+        \Praxigento\Core\App\Api\Repo\Transaction\Manager $manTrans,
         \Praxigento\Accounting\Api\Service\Account\Get $servAccount,
         \Praxigento\Accounting\Api\Service\Operation $servOper,
         \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
