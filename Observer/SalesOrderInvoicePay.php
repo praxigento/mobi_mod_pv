@@ -17,25 +17,26 @@ class SalesOrderInvoicePay
 {
     /* Names for the items in the event's data */
     const DATA_INVOICE = 'invoice';
+
     /** @var \Praxigento\Core\Api\Helper\Date */
-    protected $hlpDate;
+    private $hlpDate;
     /** @var \Praxigento\Core\Api\App\Logger\Main */
-    protected $logger;
+    private $logger;
+    /** @var \Praxigento\Pv\Observer\A\Register */
+    private $ownRegister;
     /** @var \Praxigento\Pv\Repo\Entity\Sale */
-    protected $repoSale;
-    /** @var \Praxigento\Pv\Observer\Sub\Register */
-    protected $subRegister;
+    private $repoSale;
 
     public function __construct(
         \Praxigento\Core\Api\App\Logger\Main $logger,
         \Praxigento\Pv\Repo\Entity\Sale $repoSale,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
-        \Praxigento\Pv\Observer\Sub\Register $subRegister
+        \Praxigento\Pv\Observer\A\Register $ownRegister
     ) {
         $this->logger = $logger;
         $this->repoSale = $repoSale;
         $this->hlpDate = $hlpDate;
-        $this->subRegister = $subRegister;
+        $this->ownRegister = $ownRegister;
     }
 
     public function execute(\Magento\Framework\Event\Observer $observer)
@@ -54,7 +55,7 @@ class SalesOrderInvoicePay
                 $data = [ESale::ATTR_DATE_PAID => $datePaid];
                 $this->repoSale->updateById($orderId, $data);
                 /* transfer PV to customer account */
-                $this->subRegister->accountPv($order);
+                $this->ownRegister->accountPv($order);
             }
         }
     }
