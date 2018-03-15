@@ -2,7 +2,9 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Pv\Service\Sale\Request;
+
+namespace Praxigento\Pv\Service\Sale\Account\Pv;
+
 
 /**
  * @method int getCustomerId()
@@ -12,5 +14,8 @@ namespace Praxigento\Pv\Service\Sale\Request;
  * @method string getDateApplied()
  * @method void setDateApplied(string $data)
  */
-class AccountPv extends \Praxigento\Core\App\Service\Base\Request {
+class Request
+    extends \Praxigento\Core\App\Service\Base\Request
+{
+
 }

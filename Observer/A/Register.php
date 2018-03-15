@@ -11,15 +11,17 @@ class Register
 {
     /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
     private $hlpStock;
-    /** @var \Praxigento\Pv\Service\ISale */
-    private $servSale;
+    /** @var \Praxigento\Pv\Service\Sale\Account\Pv */
+    private $salePv;
+    /** @var \Praxigento\Pv\Service\Sale\Save */
+    private $saleSave;
 
     public function __construct(
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock,
-        \Praxigento\Pv\Service\ISale $servSale
+        \Praxigento\Pv\Service\Sale\Account\Pv $servSale
     ) {
         $this->hlpStock = $hlpStock;
-        $this->servSale = $servSale;
+        $this->salePv = $servSale;
     }
 
     /**
@@ -37,10 +39,10 @@ class Register
             /* TODO: remove this attr from request, it is never used */
 //            $itemsData = $this->getServiceItemsForMageSaleOrder($order);
             /** @var \Praxigento\Pv\Service\Sale\Request\AccountPv $req */
-            $req = new \Praxigento\Pv\Service\Sale\Request\AccountPv();
+            $req = new \Praxigento\Pv\Service\Sale\Account\Pv\Request();
             $req->setSaleOrderId($orderId);
 //            $req->setOrderItems($itemsData);
-            $this->servSale->accountPv($req);
+            $this->salePv->exec($req);
         }
     }
 
@@ -101,13 +103,13 @@ class Register
         $dateCreated = $order->getCreatedAt();
         $itemsData = $this->getServiceItemsForMageSaleOrder($order);
         /* compose request data and request itself */
-        /** @var \Praxigento\Pv\Service\Sale\Request\Save $req */
-        $req = new \Praxigento\Pv\Service\Sale\Request\Save();
+        /** @var \Praxigento\Pv\Service\Sale\Save\Request $req */
+        $req = new \Praxigento\Pv\Service\Sale\Save\Request();
         $req->setSaleOrderId($orderId);
         $req->setOrderItems($itemsData);
         if ($state == \Magento\Sales\Model\Order::STATE_PROCESSING) {
             $req->setSaleOrderDatePaid($dateCreated);
         }
-        $this->servSale->save($req);
+        $this->saleSave->exec($req);
     }
 }
