@@ -14,8 +14,6 @@
     <!-- ******** -->
     <!-- Services -->
     <!-- ******** -->
-    <preference for="\Praxigento\Pv\Service\ISale"
-                type="\Praxigento\Pv\Service\Sale\Call"/>
     <preference for="\Praxigento\Pv\Service\ITransfer"
                 type="\Praxigento\Pv\Service\Transfer\Call"/>
 

@@ -2,9 +2,12 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Pv\Service\Sale\Response;
 
-class AccountPv extends \Praxigento\Core\App\Service\Base\Response
+namespace Praxigento\Pv\Service\Sale\Account\Pv;
+
+
+class Response
+    extends \Praxigento\Core\App\Service\Base\Response
 {
     const OPERATION_ID = 'operation_id';
 
