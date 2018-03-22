@@ -126,6 +126,12 @@
                 type="\Praxigento\Pv\Plugin\Sales\Block\Order\Email\Items\Order\DefaultOrder"
                 sortOrder="400" disabled="false"/>
     </type>
+    <type name="\Magento\Sales\Block\Order\History">
+        <!-- Add PV to orders grid on the front -->
+        <plugin name="prxgt_pv_plugin"
+                type="\Praxigento\Pv\Plugin\Sales\Block\Order\History"
+                sortOrder="400" disabled="false"/>
+    </type>
 
     <type name="Magento\Sales\Model\Service\OrderService">
         <!-- Return products to inventory on order cancellation. -->
