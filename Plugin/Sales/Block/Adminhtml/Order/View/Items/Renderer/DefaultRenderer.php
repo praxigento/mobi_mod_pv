@@ -11,14 +11,14 @@ namespace Praxigento\Pv\Plugin\Sales\Block\Adminhtml\Order\View\Items\Renderer;
  */
 class DefaultRenderer
 {
-    /** @var array \Praxigento\Pv\Repo\Entity\Data\Sale\Item[] */
+    /** @var array \Praxigento\Pv\Repo\Data\Sale\Item[] */
     private $cacheQuoteItems = [];
 
-    /** @var \Praxigento\Pv\Repo\Entity\Sale\Item */
+    /** @var \Praxigento\Pv\Repo\Dao\Sale\Item */
     private $repoPvSaleItem;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Entity\Sale\Item $repoPvSaleItem
+        \Praxigento\Pv\Repo\Dao\Sale\Item $repoPvSaleItem
     ) {
         $this->repoPvSaleItem = $repoPvSaleItem;
     }
@@ -53,7 +53,7 @@ class DefaultRenderer
 
     /**
      * @param int $itemId
-     * @return \Praxigento\Pv\Repo\Entity\Data\Sale\Item
+     * @return \Praxigento\Pv\Repo\Data\Sale\Item
      */
     private function getPvQuoteItem($itemId)
     {
@@ -65,7 +65,7 @@ class DefaultRenderer
     }
 
     /**
-     * @param \Praxigento\Pv\Repo\Entity\Data\Sale\Item $pvItem
+     * @param \Praxigento\Pv\Repo\Data\Sale\Item $pvItem
      * @return string
      */
     private function htmlForColumnDiscount($pvItem)
@@ -77,7 +77,7 @@ class DefaultRenderer
     }
 
     /**
-     * @param \Praxigento\Pv\Repo\Entity\Data\Sale\Item $pvItem
+     * @param \Praxigento\Pv\Repo\Data\Sale\Item $pvItem
      * @param int $qty
      * @return string
      */
@@ -91,7 +91,7 @@ class DefaultRenderer
     }
 
     /**
-     * @param \Praxigento\Pv\Repo\Entity\Data\Sale\Item $pvItem
+     * @param \Praxigento\Pv\Repo\Data\Sale\Item $pvItem
      * @return string
      */
     private function htmlForColumnSubtotal($pvItem)
@@ -103,7 +103,7 @@ class DefaultRenderer
     }
 
     /**
-     * @param \Praxigento\Pv\Repo\Entity\Data\Sale\Item $pvItem
+     * @param \Praxigento\Pv\Repo\Data\Sale\Item $pvItem
      * @return string
      */
     private function htmlForColumnTotal($pvItem)

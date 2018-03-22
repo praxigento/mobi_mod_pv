@@ -22,15 +22,15 @@ class Cart
     private $hlpPvCust;
     /** @var \Praxigento\Core\App\Repo\IGeneric */
     private $repoGeneric;
-    /** @var \Praxigento\Pv\Repo\Entity\Quote */
+    /** @var \Praxigento\Pv\Repo\Dao\Quote */
     private $repoQuote;
-    /** @var \Praxigento\Pv\Repo\Entity\Quote\Item */
+    /** @var \Praxigento\Pv\Repo\Dao\Quote\Item */
     private $repoQuoteItem;
 
     public function __construct(
         \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
-        \Praxigento\Pv\Repo\Entity\Quote $repoQuote,
-        \Praxigento\Pv\Repo\Entity\Quote\Item $repoQuoteItem,
+        \Praxigento\Pv\Repo\Dao\Quote $repoQuote,
+        \Praxigento\Pv\Repo\Dao\Quote\Item $repoQuoteItem,
         \Praxigento\Pv\Helper\Customer $hlpPvCust
     ) {
         $this->repoGeneric = $repoGeneric;

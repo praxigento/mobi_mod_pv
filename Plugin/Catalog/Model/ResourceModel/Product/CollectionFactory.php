@@ -4,8 +4,8 @@
  */
 namespace Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product;
 
-use Praxigento\Pv\Repo\Entity\Data\Product as EPvProd;
-use Praxigento\Pv\Repo\Entity\Data\Stock\Item as EPvStockItem;
+use Praxigento\Pv\Repo\Data\Product as EPvProd;
+use Praxigento\Pv\Repo\Data\Stock\Item as EPvStockItem;
 use Praxigento\Warehouse\Config as Cfg;
 
 /**

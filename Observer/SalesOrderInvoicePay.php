@@ -5,7 +5,7 @@
 
 namespace Praxigento\Pv\Observer;
 
-use Praxigento\Pv\Repo\Entity\Data\Sale as ESale;
+use Praxigento\Pv\Repo\Data\Sale as ESale;
 
 /**
  * Update 'date_paid' in PV register and account PV when order is paid completely (bank transfer).
@@ -24,12 +24,12 @@ class SalesOrderInvoicePay
     private $logger;
     /** @var \Praxigento\Pv\Observer\A\Register */
     private $ownRegister;
-    /** @var \Praxigento\Pv\Repo\Entity\Sale */
+    /** @var \Praxigento\Pv\Repo\Dao\Sale */
     private $repoSale;
 
     public function __construct(
         \Praxigento\Core\Api\App\Logger\Main $logger,
-        \Praxigento\Pv\Repo\Entity\Sale $repoSale,
+        \Praxigento\Pv\Repo\Dao\Sale $repoSale,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Pv\Observer\A\Register $ownRegister
     ) {

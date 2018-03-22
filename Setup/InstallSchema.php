@@ -5,13 +5,13 @@
  */
 namespace Praxigento\Pv\Setup;
 
-use Praxigento\Pv\Repo\Entity\Data\Customer\Group as Group;
-use Praxigento\Pv\Repo\Entity\Data\Product as Product;
-use Praxigento\Pv\Repo\Entity\Data\Quote as Quote;
-use Praxigento\Pv\Repo\Entity\Data\Quote\Item as QuoteItem;
-use Praxigento\Pv\Repo\Entity\Data\Sale as Sale;
-use Praxigento\Pv\Repo\Entity\Data\Sale\Item as SaleItem;
-use Praxigento\Pv\Repo\Entity\Data\Stock\Item as StockItem;
+use Praxigento\Pv\Repo\Data\Customer\Group as Group;
+use Praxigento\Pv\Repo\Data\Product as Product;
+use Praxigento\Pv\Repo\Data\Quote as Quote;
+use Praxigento\Pv\Repo\Data\Quote\Item as QuoteItem;
+use Praxigento\Pv\Repo\Data\Sale as Sale;
+use Praxigento\Pv\Repo\Data\Sale\Item as SaleItem;
+use Praxigento\Pv\Repo\Data\Stock\Item as StockItem;
 
 class InstallSchema
     extends \Praxigento\Core\App\Setup\Schema\Base

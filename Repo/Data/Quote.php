@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Pv\Repo\Entity\Data;
+namespace Praxigento\Pv\Repo\Data;
 
 class Quote
     extends \Praxigento\Core\App\Repo\Data\Entity\Base

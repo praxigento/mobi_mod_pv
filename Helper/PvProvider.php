@@ -18,23 +18,23 @@ class PvProvider
     const JSON_TOTAL_SEG_GRAND = 'prxgt_pv_cart_grand';
     const JSON_TOTAL_SEG_SUBTOTAL = 'prxgt_pv_cart_subtotal';
 
-    /** @var \Praxigento\Pv\Repo\Entity\Data\Quote[] */
+    /** @var \Praxigento\Pv\Repo\Data\Quote[] */
     private $cachePvQuote = [];
-    /** @var \Praxigento\Pv\Repo\Entity\Data\Quote\Item[] */
+    /** @var \Praxigento\Pv\Repo\Data\Quote\Item[] */
     private $cachePvQuoteItem = [];
     /** @var \Praxigento\Pv\Helper\Customer */
     private $hlpPvCust;
     /** @var \Magento\Quote\Api\CartRepositoryInterface */
     private $repoCart;
-    /** @var \Praxigento\Pv\Repo\Entity\Quote */
+    /** @var \Praxigento\Pv\Repo\Dao\Quote */
     private $repoPvQuote;
-    /** @var \Praxigento\Pv\Repo\Entity\Quote\Item */
+    /** @var \Praxigento\Pv\Repo\Dao\Quote\Item */
     private $repoPvQuoteItem;
 
     public function __construct(
         \Magento\Quote\Api\CartRepositoryInterface $repoCart,
-        \Praxigento\Pv\Repo\Entity\Quote $repoPvQuote,
-        \Praxigento\Pv\Repo\Entity\Quote\Item $repoPvQuoteItem,
+        \Praxigento\Pv\Repo\Dao\Quote $repoPvQuote,
+        \Praxigento\Pv\Repo\Dao\Quote\Item $repoPvQuoteItem,
         \Praxigento\Pv\Helper\Customer $hlpPvCust
     ) {
         $this->repoCart = $repoCart;
@@ -47,7 +47,7 @@ class PvProvider
     {
         /* set init values for totals */
         $subtotal = $discount = $grand = 0;
-        /** @var \Praxigento\Pv\Repo\Entity\Data\Quote $quotePv */
+        /** @var \Praxigento\Pv\Repo\Data\Quote $quotePv */
         $quotePv = $this->loadPvForQuote($cartId);
         if ($quotePv) {
             $subtotal = number_format($quotePv->getSubtotal(), 2, '.', '');
@@ -114,7 +114,7 @@ class PvProvider
      * Cacheable loader for quote's PV.
      *
      * @param int $quoteId
-     * @return \Praxigento\Pv\Repo\Entity\Data\Quote
+     * @return \Praxigento\Pv\Repo\Data\Quote
      */
     private function loadPvForQuote($quoteId)
     {
@@ -129,7 +129,7 @@ class PvProvider
      * Cacheable loader for quote item's PV.
      *
      * @param int $itemId
-     * @return \Praxigento\Pv\Repo\Entity\Data\Quote\Item
+     * @return \Praxigento\Pv\Repo\Data\Quote\Item
      */
     private function loadPvForQuoteItem($itemId)
     {

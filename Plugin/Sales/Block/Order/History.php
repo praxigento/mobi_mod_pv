@@ -6,7 +6,7 @@
 namespace Praxigento\Pv\Plugin\Sales\Block\Order;
 
 use Praxigento\Core\Config as Cfg;
-use Praxigento\Pv\Repo\Entity\Data\Sale as ASale;
+use Praxigento\Pv\Repo\Data\Sale as ASale;
 
 class History
 {

@@ -12,14 +12,14 @@ class Customer
 {
     /** @var array permissions by customer group */
     private $cacheCanSeeByGid = [];
-    /** @var \Praxigento\Pv\Repo\Entity\Customer\Group */
+    /** @var \Praxigento\Pv\Repo\Dao\Customer\Group */
     private $repoPvCustGroup;
     /** @var \Magento\Customer\Model\Session */
     private $session;
 
     public function __construct(
         \Magento\Customer\Model\Session $session,
-        \Praxigento\Pv\Repo\Entity\Customer\Group $repoPvCustGroup
+        \Praxigento\Pv\Repo\Dao\Customer\Group $repoPvCustGroup
     ) {
         $this->session = $session;
         $this->repoPvCustGroup = $repoPvCustGroup;

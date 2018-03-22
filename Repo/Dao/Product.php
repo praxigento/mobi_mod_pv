@@ -3,11 +3,12 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Pv\Repo\Entity\Quote;
+namespace Praxigento\Pv\Repo\Dao;
 
-use Praxigento\Pv\Repo\Entity\Data\Quote\Item as Entity;
+use Praxigento\Pv\Repo\Data\Product as Entity;
 
-class Item
+class Product
+
     extends \Praxigento\Core\App\Repo\Def\Entity
 {
     public function __construct(
@@ -61,5 +62,4 @@ class Item
         $result = parent::getById($id);
         return $result;
     }
-
 }

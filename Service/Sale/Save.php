@@ -10,17 +10,17 @@ use Praxigento\Pv\Service\Sale\Save\Response as AResponse;
 
 class Save
 {
-    /** @var  \Praxigento\Pv\Repo\Entity\Sale */
+    /** @var  \Praxigento\Pv\Repo\Dao\Sale */
     private $repoSale;
-    /** @var  \Praxigento\Pv\Repo\Entity\Sale\Item */
+    /** @var  \Praxigento\Pv\Repo\Dao\Sale\Item */
     private $repoSaleItem;
-    /** @var  \Praxigento\Pv\Repo\Entity\Stock\Item */
+    /** @var  \Praxigento\Pv\Repo\Dao\Stock\Item */
     private $repoStockItem;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Entity\Sale $repoSale,
-        \Praxigento\Pv\Repo\Entity\Sale\Item $repoSaleItem,
-        \Praxigento\Pv\Repo\Entity\Stock\Item $repoStockItem
+        \Praxigento\Pv\Repo\Dao\Sale $repoSale,
+        \Praxigento\Pv\Repo\Dao\Sale\Item $repoSaleItem,
+        \Praxigento\Pv\Repo\Dao\Stock\Item $repoStockItem
     )
     {
         $this->repoSale = $repoSale;
@@ -48,7 +48,7 @@ class Save
             $pv = $this->repoStockItem->getPvByProductAndStock($prodId, $stockId);
             $qty = $item->getQuantity();
             $total = $pv * $qty;
-            $eItem = new \Praxigento\Pv\Repo\Entity\Data\Sale\Item();
+            $eItem = new \Praxigento\Pv\Repo\Data\Sale\Item();
             $eItem->setItemRef($itemId);
             $eItem->setSubtotal($total);
             $eItem->setDiscount(0);
@@ -57,7 +57,7 @@ class Save
             $orderTotal += $total;
         }
         /* save order data */
-        $eOrder = new \Praxigento\Pv\Repo\Entity\Data\Sale();
+        $eOrder = new \Praxigento\Pv\Repo\Data\Sale();
         $eOrder->setSaleRef($orderId);
         $eOrder->setSubtotal($orderTotal);
         $eOrder->setDiscount(0);

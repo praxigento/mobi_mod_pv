@@ -3,10 +3,10 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Pv\Repo\Entity\Data;
+namespace Praxigento\Pv\Repo\Data;
 /**
  * Base PV attributes (related to the whole product).
- * Warehouse PV are in \Praxigento\Pv\Repo\Entity\Data\Stock\Item.
+ * Warehouse PV are in \Praxigento\Pv\Repo\Data\Stock\Item.
  */
 class Product
     extends \Praxigento\Core\App\Repo\Data\Entity\Base

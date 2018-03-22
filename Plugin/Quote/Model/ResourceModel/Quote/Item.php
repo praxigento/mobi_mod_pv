@@ -5,17 +5,17 @@
 
 namespace Praxigento\Pv\Plugin\Quote\Model\ResourceModel\Quote;
 
-use Praxigento\Pv\Repo\Entity\Data\Quote\Item as EPvQuoteItem;
+use Praxigento\Pv\Repo\Data\Quote\Item as EPvQuoteItem;
 
 class Item
 {
     /** @var \Praxigento\Pv\Api\Helper\GetPv */
     private $hlpGetPv;
-    /** @var \Praxigento\Pv\Repo\Entity\Quote\Item */
+    /** @var \Praxigento\Pv\Repo\Dao\Quote\Item */
     private $repoPvQuoteItem;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Entity\Quote\Item $repoPvQuoteItem,
+        \Praxigento\Pv\Repo\Dao\Quote\Item $repoPvQuoteItem,
         \Praxigento\Pv\Api\Helper\GetPv $hlpGetPv
     ) {
         $this->repoPvQuoteItem = $repoPvQuoteItem;

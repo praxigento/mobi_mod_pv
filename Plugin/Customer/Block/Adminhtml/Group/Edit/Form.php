@@ -14,14 +14,14 @@ class Form
     const ELEM_PRXGT_PV_CAN_SEE = 'prxgt_pv_can_see';
     const PARAM_PRXGT_PV_CAN_SEE = 'pv_can_see';
 
-    /** @var \Praxigento\Pv\Repo\Entity\Customer\Group */
+    /** @var \Praxigento\Pv\Repo\Dao\Customer\Group */
     private $repoPvCustGroup;
     /** @var \Magento\Eav\Model\Entity\Attribute\Source\Boolean */
     private $srcBool;
 
     public function __construct(
         \Magento\Eav\Model\Entity\Attribute\Source\Boolean $srcBool,
-        \Praxigento\Pv\Repo\Entity\Customer\Group $repoPvCustGroup
+        \Praxigento\Pv\Repo\Dao\Customer\Group $repoPvCustGroup
     ) {
         $this->srcBool = $srcBool;
         $this->repoPvCustGroup = $repoPvCustGroup;

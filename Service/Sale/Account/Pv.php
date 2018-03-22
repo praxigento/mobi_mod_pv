@@ -16,7 +16,7 @@ class Pv
 {
     /** @var \Praxigento\Core\App\Repo\IGeneric */
     private $repoGeneric;
-    /** @var  \Praxigento\Pv\Repo\Entity\Sale */
+    /** @var  \Praxigento\Pv\Repo\Dao\Sale */
     private $repoSale;
     /** @var  \Praxigento\Accounting\Api\Service\Account\Get */
     private $servAccount;
@@ -27,7 +27,7 @@ class Pv
         \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
         \Praxigento\Accounting\Api\Service\Account\Get $servAccount,
         \Praxigento\Accounting\Api\Service\Operation $servOper,
-        \Praxigento\Pv\Repo\Entity\Sale $repoSale
+        \Praxigento\Pv\Repo\Dao\Sale $repoSale
     )
     {
         $this->repoGeneric = $repoGeneric;

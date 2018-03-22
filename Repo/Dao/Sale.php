@@ -3,11 +3,11 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Pv\Repo\Entity\Customer;
+namespace Praxigento\Pv\Repo\Dao;
 
-use Praxigento\Pv\Repo\Entity\Data\Customer\Group as Entity;
+use Praxigento\Pv\Repo\Data\Sale as Entity;
 
-class Group
+class Sale
     extends \Praxigento\Core\App\Repo\Def\Entity
 {
     public function __construct(
@@ -21,8 +21,7 @@ class Group
      * @param Entity|array $data
      * @return Entity
      */
-    public function create($data)
-    {
+    public function create($data) {
         $result = parent::create($data);
         return $result;
     }
@@ -58,9 +57,9 @@ class Group
      * @param int $id
      * @return Entity|bool Found instance data or 'false'
      */
-    public function getById($id)
-    {
+    public function getById($id) {
         $result = parent::getById($id);
         return $result;
     }
+
 }

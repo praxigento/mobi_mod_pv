@@ -6,7 +6,7 @@
 namespace Praxigento\Pv\Plugin\Framework\View\Element\UiComponent\DataProvider\Sub;
 
 use Praxigento\Pv\Config as Cfg;
-use Praxigento\Pv\Repo\Entity\Data\Sale;
+use Praxigento\Pv\Repo\Data\Sale;
 
 class QueryModifier
 {

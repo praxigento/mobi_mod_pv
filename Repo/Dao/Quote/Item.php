@@ -3,11 +3,11 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Pv\Repo\Entity;
+namespace Praxigento\Pv\Repo\Dao\Quote;
 
-use Praxigento\Pv\Repo\Entity\Data\Quote as Entity;
+use Praxigento\Pv\Repo\Data\Quote\Item as Entity;
 
-class Quote
+class Item
     extends \Praxigento\Core\App\Repo\Def\Entity
 {
     public function __construct(

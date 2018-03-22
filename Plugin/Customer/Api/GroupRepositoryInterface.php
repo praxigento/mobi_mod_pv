@@ -7,7 +7,7 @@
 namespace Praxigento\Pv\Plugin\Customer\Api;
 
 use Praxigento\Pv\Plugin\Customer\Block\Adminhtml\Group\Edit\Form as AForm;
-use Praxigento\Pv\Repo\Entity\Data\Customer\Group as EPvCustGroup;
+use Praxigento\Pv\Repo\Data\Customer\Group as EPvCustGroup;
 
 /**
  * Save 'Can See PV' flag on group saving in adminhtml.
@@ -16,12 +16,12 @@ class GroupRepositoryInterface
 {
     /** @var \Magento\Framework\App\Action\Context */
     private $context;
-    /** @var \Praxigento\Pv\Repo\Entity\Customer\Group */
+    /** @var \Praxigento\Pv\Repo\Dao\Customer\Group */
     private $repoPvCustGroup;
 
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
-        \Praxigento\Pv\Repo\Entity\Customer\Group $repoPvCustGroup
+        \Praxigento\Pv\Repo\Dao\Customer\Group $repoPvCustGroup
     ) {
         $this->context = $context;
         $this->repoPvCustGroup = $repoPvCustGroup;

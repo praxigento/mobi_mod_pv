@@ -3,10 +3,10 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Pv\Repo\Entity\Sale;
+namespace Praxigento\Pv\Repo\Dao\Sale;
 
 use Praxigento\Pv\Config as Cfg;
-use Praxigento\Pv\Repo\Entity\Data\Sale\Item as Entity;
+use Praxigento\Pv\Repo\Data\Sale\Item as Entity;
 
 class Item
     extends \Praxigento\Core\App\Repo\Def\Entity

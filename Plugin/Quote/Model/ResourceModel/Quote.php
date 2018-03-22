@@ -6,15 +6,15 @@
 namespace Praxigento\Pv\Plugin\Quote\Model\ResourceModel;
 
 use Praxigento\Pv\Config as Cfg;
-use Praxigento\Pv\Repo\Entity\Data\Quote as EPvQuote;
+use Praxigento\Pv\Repo\Data\Quote as EPvQuote;
 
 class Quote
 {
-    /** @var \Praxigento\Pv\Repo\Entity\Quote */
+    /** @var \Praxigento\Pv\Repo\Dao\Quote */
     private $repoPvQuote;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Entity\Quote $repoPvQuote
+        \Praxigento\Pv\Repo\Dao\Quote $repoPvQuote
     ) {
         $this->repoPvQuote = $repoPvQuote;
     }

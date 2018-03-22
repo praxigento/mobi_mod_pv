@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Pv\Repo\Entity\Data\Customer;
+namespace Praxigento\Pv\Repo\Data\Customer;
 /**
  * Additional flags for customer group entity.
  */

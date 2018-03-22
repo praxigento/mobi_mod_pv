@@ -6,7 +6,7 @@
 
 namespace Praxigento\Pv\Block\Adminhtml\Order;
 
-use Praxigento\Pv\Repo\Entity\Data\Sale as EPvSale;
+use Praxigento\Pv\Repo\Data\Sale as EPvSale;
 
 /**
  * Block to display sale order totals.
@@ -20,12 +20,12 @@ class Totals
     const PV_GRAND = 'prxgt_pv_grand_sale';
     const PV_SUBTOTAL = 'prxgt_pv_subtotal_sale';
 
-    /** @var \Praxigento\Pv\Repo\Entity\Sale */
+    /** @var \Praxigento\Pv\Repo\Dao\Sale */
     private $repoPvSale;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
-        \Praxigento\Pv\Repo\Entity\Sale $repoPvSale,
+        \Praxigento\Pv\Repo\Dao\Sale $repoPvSale,
         array $data = []
     ) {
         parent::__construct($context, $data);

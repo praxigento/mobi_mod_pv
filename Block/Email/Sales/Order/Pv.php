@@ -5,7 +5,7 @@
 
 namespace Praxigento\Pv\Block\Email\Sales\Order;
 
-use Praxigento\Pv\Repo\Entity\Data\Quote as EPvQuote;
+use Praxigento\Pv\Repo\Data\Quote as EPvQuote;
 
 /**
  * Add PV to sale order email.
@@ -17,13 +17,13 @@ class Pv
 {
     const PV_TOTAL = 'prxgt_pv_total_email';
 
-    /** @var \Praxigento\Pv\Repo\Entity\Quote */
+    /** @var \Praxigento\Pv\Repo\Dao\Quote */
     private $repoPvQuote;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         array $data = [],
-        \Praxigento\Pv\Repo\Entity\Quote $repoPvQuote
+        \Praxigento\Pv\Repo\Dao\Quote $repoPvQuote
     ) {
         parent::__construct($context, $data);
         $this->repoPvQuote = $repoPvQuote;

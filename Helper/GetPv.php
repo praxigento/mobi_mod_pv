@@ -13,11 +13,11 @@ class GetPv
 {
     /** @var \Praxigento\Warehouse\Api\Helper\Stock */
     private $hlpWrhsStock;
-    /** @var \Praxigento\Pv\Repo\Entity\Stock\Item */
+    /** @var \Praxigento\Pv\Repo\Dao\Stock\Item */
     private $repoPvStockItem;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Entity\Stock\Item $repoPvStockItem,
+        \Praxigento\Pv\Repo\Dao\Stock\Item $repoPvStockItem,
         \Praxigento\Warehouse\Api\Helper\Stock $hlpWrhsStock
     ) {
         $this->repoPvStockItem = $repoPvStockItem;

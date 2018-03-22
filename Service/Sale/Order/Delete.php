@@ -6,8 +6,8 @@
 
 namespace Praxigento\Pv\Service\Sale\Order;
 
-use Praxigento\Pv\Repo\Entity\Data\Sale as EPvSale;
-use Praxigento\Pv\Repo\Entity\Data\Sale\Item as EPvSaleItem;
+use Praxigento\Pv\Repo\Data\Sale as EPvSale;
+use Praxigento\Pv\Repo\Data\Sale\Item as EPvSaleItem;
 use Praxigento\Pv\Service\Sale\Order\Delete\Request as ARequest;
 use Praxigento\Pv\Service\Sale\Order\Delete\Response as AResponse;
 
@@ -16,17 +16,17 @@ use Praxigento\Pv\Service\Sale\Order\Delete\Response as AResponse;
  */
 class Delete
 {
-    /** @var \Praxigento\Pv\Repo\Entity\Sale */
+    /** @var \Praxigento\Pv\Repo\Dao\Sale */
     private $repoSale;
-    /** @var \Praxigento\Pv\Repo\Entity\Sale\Item */
+    /** @var \Praxigento\Pv\Repo\Dao\Sale\Item */
     private $repoSaleItem;
     /** @var \Magento\Sales\Api\OrderRepositoryInterface */
     private $repoSaleOrder;
 
     public function __construct(
         \Magento\Sales\Api\OrderRepositoryInterface $repoSaleOrder,
-        \Praxigento\Pv\Repo\Entity\Sale $repoSale,
-        \Praxigento\Pv\Repo\Entity\Sale\Item $repoSaleItem
+        \Praxigento\Pv\Repo\Dao\Sale $repoSale,
+        \Praxigento\Pv\Repo\Dao\Sale\Item $repoSaleItem
     ) {
         $this->repoSaleOrder = $repoSaleOrder;
         $this->repoSale = $repoSale;
