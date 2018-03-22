@@ -58,16 +58,16 @@ class Pv
             $reqGetAccCust->setCustomerId($customerId);
             $reqGetAccCust->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
             $respGetAccCust = $this->servAccount->exec($reqGetAccCust);
-            /* get PV account data for representative */
-            $reqGetAccRepres = new AAccountGetRequest();
-            $reqGetAccRepres->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
-            $reqGetAccRepres->setIsRepresentative(TRUE);
-            $respGetAccRepres = $this->servAccount->exec($reqGetAccRepres);
+            /* get PV account data for system */
+            $reqGetAccSys = new AAccountGetRequest();
+            $reqGetAccSys->setAssetTypeCode(Cfg::CODE_TYPE_ASSET_PV);
+            $reqGetAccSys->setIsSystem(TRUE);
+            $respGetAccSys = $this->servAccount->exec($reqGetAccSys);
             /* create one operation with one transaction */
             $reqAddOper = new AOperationRequest();
             $reqAddOper->setOperationTypeCode(Cfg::CODE_TYPE_OPER_PV_SALE_PAID);
             $trans = [
-                ATransaction::ATTR_DEBIT_ACC_ID => $respGetAccRepres->getId(),
+                ATransaction::ATTR_DEBIT_ACC_ID => $respGetAccSys->getId(),
                 ATransaction::ATTR_CREDIT_ACC_ID => $respGetAccCust->getId(),
                 ATransaction::ATTR_VALUE => $pvTotal,
                 ATransaction::ATTR_DATE_APPLIED => $dateApplied
