@@ -8,8 +8,8 @@ namespace Praxigento\Pv\Setup;
 
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
-use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as TypeAsset;
-use Praxigento\Accounting\Repo\Entity\Data\Type\Operation as TypeOperation;
+use Praxigento\Accounting\Repo\Data\Type\Asset as TypeAsset;
+use Praxigento\Accounting\Repo\Data\Type\Operation as TypeOperation;
 use Praxigento\Pv\Config as Cfg;
 
 class InstallData extends \Praxigento\Core\App\Setup\Data\Base

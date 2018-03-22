@@ -7,7 +7,7 @@ namespace Praxigento\Pv\Service\Sale\Account;
 
 use Praxigento\Accounting\Api\Service\Account\Get\Request as AAccountGetRequest;
 use Praxigento\Accounting\Api\Service\Operation\Request as AOperationRequest;
-use Praxigento\Accounting\Repo\Entity\Data\Transaction as ATransaction;
+use Praxigento\Accounting\Repo\Data\Transaction as ATransaction;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Service\Sale\Account\Pv\Request as ARequest;
 use Praxigento\Pv\Service\Sale\Account\Pv\Response as AResponse;
