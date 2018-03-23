@@ -12,16 +12,18 @@ class Register
     /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
     private $hlpStock;
     /** @var \Praxigento\Pv\Service\Sale\Account\Pv */
-    private $salePv;
+    private $servPvAccount;
     /** @var \Praxigento\Pv\Service\Sale\Save */
-    private $saleSave;
+    private $servPvSave;
 
     public function __construct(
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock,
-        \Praxigento\Pv\Service\Sale\Account\Pv $servSale
+        \Praxigento\Pv\Service\Sale\Account\Pv $servPvAccount,
+        \Praxigento\Pv\Service\Sale\Save $servPvSave
     ) {
         $this->hlpStock = $hlpStock;
-        $this->salePv = $servSale;
+        $this->servPvAccount = $servPvAccount;
+        $this->servPvSave = $servPvSave;
     }
 
     /**
@@ -42,7 +44,7 @@ class Register
             $req = new \Praxigento\Pv\Service\Sale\Account\Pv\Request();
             $req->setSaleOrderId($orderId);
 //            $req->setOrderItems($itemsData);
-            $this->salePv->exec($req);
+            $this->servPvAccount->exec($req);
         }
     }
 
@@ -110,6 +112,6 @@ class Register
         if ($state == \Magento\Sales\Model\Order::STATE_PROCESSING) {
             $req->setSaleOrderDatePaid($dateCreated);
         }
-        $this->saleSave->exec($req);
+        $this->servPvSave->exec($req);
     }
 }
