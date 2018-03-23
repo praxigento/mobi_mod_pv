@@ -15,16 +15,16 @@ class Form
     const PARAM_PRXGT_PV_CAN_SEE = 'pv_can_see';
 
     /** @var \Praxigento\Pv\Repo\Dao\Customer\Group */
-    private $repoPvCustGroup;
+    private $daoPvCustGroup;
     /** @var \Magento\Eav\Model\Entity\Attribute\Source\Boolean */
     private $srcBool;
 
     public function __construct(
         \Magento\Eav\Model\Entity\Attribute\Source\Boolean $srcBool,
-        \Praxigento\Pv\Repo\Dao\Customer\Group $repoPvCustGroup
+        \Praxigento\Pv\Repo\Dao\Customer\Group $daoPvCustGroup
     ) {
         $this->srcBool = $srcBool;
-        $this->repoPvCustGroup = $repoPvCustGroup;
+        $this->daoPvCustGroup = $daoPvCustGroup;
     }
 
     public function beforeSetForm(
@@ -55,7 +55,7 @@ class Form
         $fldId = $form->getElement('id');
         if ($fldId) {
             $groupId = $fldId->getValue();
-            $entity = $this->repoPvCustGroup->getById($groupId);
+            $entity = $this->daoPvCustGroup->getById($groupId);
             if ($entity) {
                 $canSeePv = (bool)$entity->getCanSeePv();
             } else {

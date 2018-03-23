@@ -12,13 +12,13 @@ class Item
     /** @var \Praxigento\Pv\Api\Helper\GetPv */
     private $hlpGetPv;
     /** @var \Praxigento\Pv\Repo\Dao\Quote\Item */
-    private $repoPvQuoteItem;
+    private $daoPvQuoteItem;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Dao\Quote\Item $repoPvQuoteItem,
+        \Praxigento\Pv\Repo\Dao\Quote\Item $daoPvQuoteItem,
         \Praxigento\Pv\Api\Helper\GetPv $hlpGetPv
     ) {
-        $this->repoPvQuoteItem = $repoPvQuoteItem;
+        $this->daoPvQuoteItem = $daoPvQuoteItem;
         $this->hlpGetPv = $hlpGetPv;
     }
 
@@ -46,7 +46,7 @@ class Item
             $subtotal = number_format($pvWrhs * $qty, 2);
             /* create/update PV values for quote item (if changed) */
             $pk = [EPvQuoteItem::A_ITEM_REF => $id];
-            $found = $this->repoPvQuoteItem->getById($pk);
+            $found = $this->daoPvQuoteItem->getById($pk);
             if ($found) {
                 /* update PV data if subtotals are different */
                 if ($found->getSubtotal() != $subtotal) {
@@ -54,7 +54,7 @@ class Item
                     $found->setSubtotal($subtotal);
                     $found->setDiscount(0);
                     $found->setTotal($subtotal);
-                    $this->repoPvQuoteItem->updateById($pk, $found);
+                    $this->daoPvQuoteItem->updateById($pk, $found);
                 }
             } else {
                 /* create new record */
@@ -64,7 +64,7 @@ class Item
                 $entity->setSubtotal($subtotal);
                 $entity->setDiscount(0);
                 $entity->setTotal($subtotal);
-                $this->repoPvQuoteItem->create($entity);
+                $this->daoPvQuoteItem->create($entity);
             }
         }
         return $result;

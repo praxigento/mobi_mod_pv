@@ -15,12 +15,12 @@ class DefaultRenderer
     private $cacheQuoteItems = [];
 
     /** @var \Praxigento\Pv\Repo\Dao\Sale\Item */
-    private $repoPvSaleItem;
+    private $daoPvSaleItem;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Dao\Sale\Item $repoPvSaleItem
+        \Praxigento\Pv\Repo\Dao\Sale\Item $daoPvSaleItem
     ) {
-        $this->repoPvSaleItem = $repoPvSaleItem;
+        $this->daoPvSaleItem = $daoPvSaleItem;
     }
 
     public function aroundGetColumnHtml(
@@ -58,7 +58,7 @@ class DefaultRenderer
     private function getPvQuoteItem($itemId)
     {
         if (!isset($this->cacheQuoteItems[$itemId])) {
-            $item = $this->repoPvSaleItem->getById($itemId);
+            $item = $this->daoPvSaleItem->getById($itemId);
             $this->cacheQuoteItems[$itemId] = $item;
         }
         return $this->cacheQuoteItems[$itemId];

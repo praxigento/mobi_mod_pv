@@ -21,15 +21,15 @@ class Totals
     const PV_SUBTOTAL = 'prxgt_pv_subtotal_sale';
 
     /** @var \Praxigento\Pv\Repo\Dao\Sale */
-    private $repoPvSale;
+    private $daoPvSale;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
-        \Praxigento\Pv\Repo\Dao\Sale $repoPvSale,
+        \Praxigento\Pv\Repo\Dao\Sale $daoPvSale,
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->repoPvSale = $repoPvSale;
+        $this->daoPvSale = $daoPvSale;
     }
 
     public function initTotals()
@@ -40,7 +40,7 @@ class Totals
         $sale = $parent->getOrder();
         $saleId = $sale->getId();
         /** @var EPvSale $found */
-        $found = $this->repoPvSale->getById($saleId);
+        $found = $this->daoPvSale->getById($saleId);
         if ($found) {
             $subtotal = $found->getSubtotal();
             $discount = $found->getDiscount();

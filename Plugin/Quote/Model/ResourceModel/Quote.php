@@ -11,12 +11,12 @@ use Praxigento\Pv\Repo\Data\Quote as EPvQuote;
 class Quote
 {
     /** @var \Praxigento\Pv\Repo\Dao\Quote */
-    private $repoPvQuote;
+    private $daoPvQuote;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Dao\Quote $repoPvQuote
+        \Praxigento\Pv\Repo\Dao\Quote $daoPvQuote
     ) {
-        $this->repoPvQuote = $repoPvQuote;
+        $this->daoPvQuote = $daoPvQuote;
     }
 
     /**
@@ -43,7 +43,7 @@ class Quote
             $grand = (float)$addr->getData(Cfg::CODE_TOTAL_GRAND . '_amount');
             /* create/update PV values for quote (if changed) */
             $pk = [EPvQuote::A_QUOTE_REF => $id];
-            $found = $this->repoPvQuote->getById($pk);
+            $found = $this->daoPvQuote->getById($pk);
             if ($found) {
                 /* update PV data if subtotals are different */
                 if (
@@ -54,7 +54,7 @@ class Quote
                     $found->setSubtotal($subtotal);
                     $found->setDiscount($discount);
                     $found->setTotal($grand);
-                    $this->repoPvQuote->updateById($pk, $found);
+                    $this->daoPvQuote->updateById($pk, $found);
                 }
             } else {
                 /* create new record */
@@ -63,7 +63,7 @@ class Quote
                 $entity->setSubtotal($subtotal);
                 $entity->setDiscount($discount);
                 $entity->setTotal($grand);
-                $this->repoPvQuote->create($entity);
+                $this->daoPvQuote->create($entity);
             }
         }
         return $result;

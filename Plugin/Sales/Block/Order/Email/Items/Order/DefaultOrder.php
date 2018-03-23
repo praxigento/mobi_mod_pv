@@ -16,13 +16,13 @@ class DefaultOrder
     /** @var \Praxigento\Pv\Helper\Customer */
     private $hlpCust;
     /** @var \Praxigento\Pv\Repo\Dao\Quote\Item */
-    private $repoPvQuoteItem;
+    private $daoPvQuoteItem;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Dao\Quote\Item $repoPvQuoteItem,
+        \Praxigento\Pv\Repo\Dao\Quote\Item $daoPvQuoteItem,
         \Praxigento\Pv\Helper\Customer $hlpCust
     ) {
-        $this->repoPvQuoteItem = $repoPvQuoteItem;
+        $this->daoPvQuoteItem = $daoPvQuoteItem;
         $this->hlpCust = $hlpCust;
     }
 
@@ -43,7 +43,7 @@ class DefaultOrder
             if ($canSeePv) {
                 $quoteItemId = $item->getQuoteItemId();
                 $pk = [EPvQuoteItem::A_ITEM_REF => $quoteItemId];
-                $entity = $this->repoPvQuoteItem->getById($pk);
+                $entity = $this->daoPvQuoteItem->getById($pk);
                 if ($entity) {
                     $total = $entity->getTotal();
                     $total = number_format($total, 2);

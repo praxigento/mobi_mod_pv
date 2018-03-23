@@ -25,16 +25,16 @@ class SalesOrderInvoicePay
     /** @var \Praxigento\Pv\Observer\A\Register */
     private $ownRegister;
     /** @var \Praxigento\Pv\Repo\Dao\Sale */
-    private $repoSale;
+    private $daoSale;
 
     public function __construct(
         \Praxigento\Core\Api\App\Logger\Main $logger,
-        \Praxigento\Pv\Repo\Dao\Sale $repoSale,
+        \Praxigento\Pv\Repo\Dao\Sale $daoSale,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Pv\Observer\A\Register $ownRegister
     ) {
         $this->logger = $logger;
-        $this->repoSale = $repoSale;
+        $this->daoSale = $daoSale;
         $this->hlpDate = $hlpDate;
         $this->ownRegister = $ownRegister;
     }
@@ -53,7 +53,7 @@ class SalesOrderInvoicePay
                 $datePaid = $this->hlpDate->getUtcNowForDb();
                 $this->logger->debug("Update paid date in PV registry on sale order (#$orderId) is paid.");
                 $data = [ESale::A_DATE_PAID => $datePaid];
-                $this->repoSale->updateById($orderId, $data);
+                $this->daoSale->updateById($orderId, $data);
                 /* transfer PV to customer account */
                 $this->ownRegister->accountPv($order);
             }

@@ -18,15 +18,15 @@ class Pv
     const PV_TOTAL = 'prxgt_pv_total_email';
 
     /** @var \Praxigento\Pv\Repo\Dao\Quote */
-    private $repoPvQuote;
+    private $daoPvQuote;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         array $data = [],
-        \Praxigento\Pv\Repo\Dao\Quote $repoPvQuote
+        \Praxigento\Pv\Repo\Dao\Quote $daoPvQuote
     ) {
         parent::__construct($context, $data);
-        $this->repoPvQuote = $repoPvQuote;
+        $this->daoPvQuote = $daoPvQuote;
     }
 
     public function initTotals() {
@@ -37,7 +37,7 @@ class Pv
         $quoteId = $order->getQuoteId();
         /* get PV data */
         $pk = [EPvQuote::A_QUOTE_REF => $quoteId];
-        $entity = $this->repoPvQuote->getById($pk);
+        $entity = $this->daoPvQuote->getById($pk);
 
         if ($entity) {
             $value = $entity->getTotal();

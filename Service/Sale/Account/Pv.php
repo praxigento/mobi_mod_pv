@@ -15,25 +15,25 @@ use Praxigento\Pv\Service\Sale\Account\Pv\Response as AResponse;
 class Pv
 {
     /** @var \Praxigento\Core\App\Repo\IGeneric */
-    private $repoGeneric;
+    private $daoGeneric;
     /** @var  \Praxigento\Pv\Repo\Dao\Sale */
-    private $repoSale;
+    private $daoSale;
     /** @var  \Praxigento\Accounting\Api\Service\Account\Get */
     private $servAccount;
     /** @var \Praxigento\Accounting\Api\Service\Operation */
     private $servOper;
 
     public function __construct(
-        \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
+        \Praxigento\Core\App\Repo\IGeneric $daoGeneric,
         \Praxigento\Accounting\Api\Service\Account\Get $servAccount,
         \Praxigento\Accounting\Api\Service\Operation $servOper,
-        \Praxigento\Pv\Repo\Dao\Sale $repoSale
+        \Praxigento\Pv\Repo\Dao\Sale $daoSale
     )
     {
-        $this->repoGeneric = $repoGeneric;
+        $this->daoGeneric = $daoGeneric;
         $this->servAccount = $servAccount;
         $this->servOper = $servOper;
-        $this->repoSale = $repoSale;
+        $this->daoSale = $daoSale;
     }
 
     /**
@@ -46,7 +46,7 @@ class Pv
         $saleId = $request->getSaleOrderId();
         $customerId = $request->getCustomerId();
         $dateApplied = $request->getDateApplied();
-        $sale = $this->repoSale->getById($saleId);
+        $sale = $this->daoSale->getById($saleId);
         $pvTotal = $sale->getTotal();
         /* get customer for sale order */
         if (is_null($customerId)) {
@@ -84,7 +84,7 @@ class Pv
 
     private function getSaleOrderCustomerId($saleId)
     {
-        $data = $this->repoGeneric->getEntityByPk(
+        $data = $this->daoGeneric->getEntityByPk(
             Cfg::ENTITY_MAGE_SALES_ORDER,
             [Cfg::E_COMMON_A_ENTITY_ID => $saleId],
             [Cfg::E_SALE_ORDER_A_CUSTOMER_ID]

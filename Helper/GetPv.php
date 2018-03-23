@@ -14,13 +14,13 @@ class GetPv
     /** @var \Praxigento\Warehouse\Api\Helper\Stock */
     private $hlpWrhsStock;
     /** @var \Praxigento\Pv\Repo\Dao\Stock\Item */
-    private $repoPvStockItem;
+    private $daoPvStockItem;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Dao\Stock\Item $repoPvStockItem,
+        \Praxigento\Pv\Repo\Dao\Stock\Item $daoPvStockItem,
         \Praxigento\Warehouse\Api\Helper\Stock $hlpWrhsStock
     ) {
-        $this->repoPvStockItem = $repoPvStockItem;
+        $this->daoPvStockItem = $daoPvStockItem;
         $this->hlpWrhsStock = $hlpWrhsStock;
     }
 
@@ -28,7 +28,7 @@ class GetPv
         if (!$stockId) {
             $stockId = $this->hlpWrhsStock->getCurrentStockId();
         }
-        $result = $this->repoPvStockItem->getPvByProductAndStock($prodId, $stockId);
+        $result = $this->daoPvStockItem->getPvByProductAndStock($prodId, $stockId);
         $result = number_format($result, 2);
         return $result;
     }

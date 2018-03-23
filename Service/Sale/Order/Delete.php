@@ -17,20 +17,20 @@ use Praxigento\Pv\Service\Sale\Order\Delete\Response as AResponse;
 class Delete
 {
     /** @var \Praxigento\Pv\Repo\Dao\Sale */
-    private $repoSale;
+    private $daoSale;
     /** @var \Praxigento\Pv\Repo\Dao\Sale\Item */
-    private $repoSaleItem;
+    private $daoSaleItem;
     /** @var \Magento\Sales\Api\OrderRepositoryInterface */
-    private $repoSaleOrder;
+    private $daoSaleOrder;
 
     public function __construct(
-        \Magento\Sales\Api\OrderRepositoryInterface $repoSaleOrder,
-        \Praxigento\Pv\Repo\Dao\Sale $repoSale,
-        \Praxigento\Pv\Repo\Dao\Sale\Item $repoSaleItem
+        \Magento\Sales\Api\OrderRepositoryInterface $daoSaleOrder,
+        \Praxigento\Pv\Repo\Dao\Sale $daoSale,
+        \Praxigento\Pv\Repo\Dao\Sale\Item $daoSaleItem
     ) {
-        $this->repoSaleOrder = $repoSaleOrder;
-        $this->repoSale = $repoSale;
-        $this->repoSaleItem = $repoSaleItem;
+        $this->daoSaleOrder = $daoSaleOrder;
+        $this->daoSale = $daoSale;
+        $this->daoSaleItem = $daoSaleItem;
     }
 
     /**
@@ -46,7 +46,7 @@ class Delete
 
         /** perform processing */
         /** @var \Magento\Sales\Api\Data\OrderInterface $sale */
-        $sale = $this->repoSaleOrder->get($saleId);
+        $sale = $this->daoSaleOrder->get($saleId);
         if ($sale) {
             $items = $sale->getAllItems();
             /** @var \Magento\Sales\Api\Data\OrderItemInterface $item */
@@ -65,12 +65,12 @@ class Delete
     private function removeSaleItemPv($saleItemId)
     {
         $where = EPvSaleItem::A_ITEM_REF . '=' . (int)$saleItemId;
-        $this->repoSaleItem->delete($where);
+        $this->daoSaleItem->delete($where);
     }
 
     private function removeSalePv($saleId)
     {
         $where = EPvSale::A_SALE_REF . '=' . (int)$saleId;
-        $this->repoSale->delete($where);
+        $this->daoSale->delete($where);
     }
 }

@@ -21,21 +21,21 @@ class Cart
     /** @var \Praxigento\Pv\Helper\Customer */
     private $hlpPvCust;
     /** @var \Praxigento\Core\App\Repo\IGeneric */
-    private $repoGeneric;
+    private $daoGeneric;
     /** @var \Praxigento\Pv\Repo\Dao\Quote */
-    private $repoQuote;
+    private $daoQuote;
     /** @var \Praxigento\Pv\Repo\Dao\Quote\Item */
-    private $repoQuoteItem;
+    private $daoQuoteItem;
 
     public function __construct(
-        \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
-        \Praxigento\Pv\Repo\Dao\Quote $repoQuote,
-        \Praxigento\Pv\Repo\Dao\Quote\Item $repoQuoteItem,
+        \Praxigento\Core\App\Repo\IGeneric $daoGeneric,
+        \Praxigento\Pv\Repo\Dao\Quote $daoQuote,
+        \Praxigento\Pv\Repo\Dao\Quote\Item $daoQuoteItem,
         \Praxigento\Pv\Helper\Customer $hlpPvCust
     ) {
-        $this->repoGeneric = $repoGeneric;
-        $this->repoQuote = $repoQuote;
-        $this->repoQuoteItem = $repoQuoteItem;
+        $this->daoGeneric = $daoGeneric;
+        $this->daoQuote = $daoQuote;
+        $this->daoQuoteItem = $daoQuoteItem;
         $this->hlpPvCust = $hlpPvCust;
     }
 
@@ -51,7 +51,7 @@ class Cart
                     $itemId = false;
                     foreach ($result['items'] as $key => $item) {
                         $itemId = $item['item_id'];
-                        $pvItem = $this->repoQuoteItem->getById($itemId);
+                        $pvItem = $this->daoQuoteItem->getById($itemId);
                         $totalItem = $pvItem->getTotal();
                         $totalItem = number_format($totalItem, 2, '.', '');
                         $result['items'][$key][self::JSON_PV_MINI_CART_ITEM_TOTAL] = $totalItem;
@@ -62,7 +62,7 @@ class Cart
                     if ($itemId) {
                         /* this is not empty quote, get total PV for quote itself */
                         $quoteId = $this->getQuoteIdByItemId($itemId);
-                        $pvQuote = $this->repoQuote->getById($quoteId);
+                        $pvQuote = $this->daoQuote->getById($quoteId);
                         $totalQuote = $pvQuote->getTotal();
                         $totalQuote = number_format($totalQuote, 2, '.', '');
                     } else {
@@ -81,7 +81,7 @@ class Cart
         $tbl = Cfg::ENTITY_MAGE_QUOTE_ITEM;
         $id = [Cfg::E_QUOTE_ITEM_A_ITEM_ID => $itemId];
         $cols = [Cfg::E_QUOTE_ITEM_A_QUOTE_ID];
-        $rs = $this->repoGeneric->getEntityByPk($tbl, $id, $cols);
+        $rs = $this->daoGeneric->getEntityByPk($tbl, $id, $cols);
         $result = reset($rs);
         return $result;
     }

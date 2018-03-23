@@ -13,16 +13,16 @@ class Customer
     /** @var array permissions by customer group */
     private $cacheCanSeeByGid = [];
     /** @var \Praxigento\Pv\Repo\Dao\Customer\Group */
-    private $repoPvCustGroup;
+    private $daoPvCustGroup;
     /** @var \Magento\Customer\Model\Session */
     private $session;
 
     public function __construct(
         \Magento\Customer\Model\Session $session,
-        \Praxigento\Pv\Repo\Dao\Customer\Group $repoPvCustGroup
+        \Praxigento\Pv\Repo\Dao\Customer\Group $daoPvCustGroup
     ) {
         $this->session = $session;
-        $this->repoPvCustGroup = $repoPvCustGroup;
+        $this->daoPvCustGroup = $daoPvCustGroup;
     }
 
     /**
@@ -38,7 +38,7 @@ class Customer
             $gid = $this->session->getCustomerGroupId();
         }
         if (!isset($this->cacheCanSeeByGid[$gid])) {
-            $item = $this->repoPvCustGroup->getById($gid);
+            $item = $this->daoPvCustGroup->getById($gid);
             if ($item) $result = (bool)$item->getCanSeePv();
             $this->cacheCanSeeByGid[$gid] = $result;
         } else {

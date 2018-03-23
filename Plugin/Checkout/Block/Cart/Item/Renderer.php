@@ -14,13 +14,13 @@ class Renderer
     /** @var \Praxigento\Pv\Helper\Customer */
     private $hlpCust;
     /** @var \Praxigento\Pv\Repo\Dao\Quote\Item */
-    private $repoPvQuoteItem;
+    private $daoPvQuoteItem;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Dao\Quote\Item $repoPvQuoteItem,
+        \Praxigento\Pv\Repo\Dao\Quote\Item $daoPvQuoteItem,
         \Praxigento\Pv\Helper\Customer $hlpCust
     ) {
-        $this->repoPvQuoteItem = $repoPvQuoteItem;
+        $this->daoPvQuoteItem = $daoPvQuoteItem;
         $this->hlpCust = $hlpCust;
     }
 
@@ -70,7 +70,7 @@ class Renderer
     private function getCachedItemPv($itemId)
     {
         if (!isset($this->cacheQuoteItems[$itemId])) {
-            $entity = $this->repoPvQuoteItem->getById($itemId);
+            $entity = $this->daoPvQuoteItem->getById($itemId);
             $this->cacheQuoteItems[$itemId] = $entity;
         }
         return $this->cacheQuoteItems[$itemId];

@@ -11,21 +11,21 @@ use Praxigento\Pv\Service\Sale\Save\Response as AResponse;
 class Save
 {
     /** @var  \Praxigento\Pv\Repo\Dao\Sale */
-    private $repoSale;
+    private $daoSale;
     /** @var  \Praxigento\Pv\Repo\Dao\Sale\Item */
-    private $repoSaleItem;
+    private $daoSaleItem;
     /** @var  \Praxigento\Pv\Repo\Dao\Stock\Item */
-    private $repoStockItem;
+    private $daoStockItem;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Dao\Sale $repoSale,
-        \Praxigento\Pv\Repo\Dao\Sale\Item $repoSaleItem,
-        \Praxigento\Pv\Repo\Dao\Stock\Item $repoStockItem
+        \Praxigento\Pv\Repo\Dao\Sale $daoSale,
+        \Praxigento\Pv\Repo\Dao\Sale\Item $daoSaleItem,
+        \Praxigento\Pv\Repo\Dao\Stock\Item $daoStockItem
     )
     {
-        $this->repoSale = $repoSale;
-        $this->repoSaleItem = $repoSaleItem;
-        $this->repoStockItem = $repoStockItem;
+        $this->daoSale = $daoSale;
+        $this->daoSaleItem = $daoSaleItem;
+        $this->daoStockItem = $daoStockItem;
     }
 
     /**
@@ -45,7 +45,7 @@ class Save
             $prodId = $item->getProductId();
             $stockId = $item->getStockId();
             $itemId = $item->getItemId();
-            $pv = $this->repoStockItem->getPvByProductAndStock($prodId, $stockId);
+            $pv = $this->daoStockItem->getPvByProductAndStock($prodId, $stockId);
             $qty = $item->getQuantity();
             $total = $pv * $qty;
             $eItem = new \Praxigento\Pv\Repo\Data\Sale\Item();
@@ -53,7 +53,7 @@ class Save
             $eItem->setSubtotal($total);
             $eItem->setDiscount(0);
             $eItem->setTotal($total);
-            $this->repoSaleItem->replace($eItem);
+            $this->daoSaleItem->replace($eItem);
             $orderTotal += $total;
         }
         /* save order data */
@@ -63,7 +63,7 @@ class Save
         $eOrder->setDiscount(0);
         $eOrder->setTotal($orderTotal);
         $eOrder->setDatePaid($datePaid);
-        $this->repoSale->replace($eOrder);
+        $this->daoSale->replace($eOrder);
         $result->markSucceed();
         return $result;
 

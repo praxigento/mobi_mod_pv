@@ -17,14 +17,14 @@ class GroupRepositoryInterface
     /** @var \Magento\Framework\App\Action\Context */
     private $context;
     /** @var \Praxigento\Pv\Repo\Dao\Customer\Group */
-    private $repoPvCustGroup;
+    private $daoPvCustGroup;
 
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
-        \Praxigento\Pv\Repo\Dao\Customer\Group $repoPvCustGroup
+        \Praxigento\Pv\Repo\Dao\Customer\Group $daoPvCustGroup
     ) {
         $this->context = $context;
-        $this->repoPvCustGroup = $repoPvCustGroup;
+        $this->daoPvCustGroup = $daoPvCustGroup;
     }
 
     public function afterSave(
@@ -45,7 +45,7 @@ class GroupRepositoryInterface
                 $entity = new EPvCustGroup();
                 $entity->setGroupRef($id);
                 $entity->setCanSeePv($canSeePv);
-                $this->repoPvCustGroup->replace($entity);
+                $this->daoPvCustGroup->replace($entity);
             }
         }
         return $result;

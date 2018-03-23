@@ -25,21 +25,21 @@ class PvProvider
     /** @var \Praxigento\Pv\Helper\Customer */
     private $hlpPvCust;
     /** @var \Magento\Quote\Api\CartRepositoryInterface */
-    private $repoCart;
+    private $daoCart;
     /** @var \Praxigento\Pv\Repo\Dao\Quote */
-    private $repoPvQuote;
+    private $daoPvQuote;
     /** @var \Praxigento\Pv\Repo\Dao\Quote\Item */
-    private $repoPvQuoteItem;
+    private $daoPvQuoteItem;
 
     public function __construct(
-        \Magento\Quote\Api\CartRepositoryInterface $repoCart,
-        \Praxigento\Pv\Repo\Dao\Quote $repoPvQuote,
-        \Praxigento\Pv\Repo\Dao\Quote\Item $repoPvQuoteItem,
+        \Magento\Quote\Api\CartRepositoryInterface $daoCart,
+        \Praxigento\Pv\Repo\Dao\Quote $daoPvQuote,
+        \Praxigento\Pv\Repo\Dao\Quote\Item $daoPvQuoteItem,
         \Praxigento\Pv\Helper\Customer $hlpPvCust
     ) {
-        $this->repoCart = $repoCart;
-        $this->repoPvQuote = $repoPvQuote;
-        $this->repoPvQuoteItem = $repoPvQuoteItem;
+        $this->daoCart = $daoCart;
+        $this->daoPvQuote = $daoPvQuote;
+        $this->daoPvQuoteItem = $daoPvQuoteItem;
         $this->hlpPvCust = $hlpPvCust;
     }
 
@@ -83,7 +83,7 @@ class PvProvider
         $result = false;
         /* try to get customer group ID using cart ID if group ID is missed */
         if (is_null($custGroupId)) {
-            $cartData = $this->repoCart->get((int)$cartId);
+            $cartData = $this->daoCart->get((int)$cartId);
             if ($cartData) {
                 $custGroupId = $cartData->getCustomerGroupId();
             }
@@ -119,7 +119,7 @@ class PvProvider
     private function loadPvForQuote($quoteId)
     {
         if (!isset($this->cachePvQuote[$quoteId])) {
-            $found = $this->repoPvQuote->getById((int)$quoteId);
+            $found = $this->daoPvQuote->getById((int)$quoteId);
             $this->cachePvQuote[$quoteId] = $found;
         }
         return $this->cachePvQuote[$quoteId];
@@ -134,7 +134,7 @@ class PvProvider
     private function loadPvForQuoteItem($itemId)
     {
         if (!isset($this->cachePvQuoteItem[$itemId])) {
-            $found = $this->repoPvQuoteItem->getById((int)$itemId);
+            $found = $this->daoPvQuoteItem->getById((int)$itemId);
             $this->cachePvQuoteItem[$itemId] = $found;
         }
         return $this->cachePvQuoteItem[$itemId];
