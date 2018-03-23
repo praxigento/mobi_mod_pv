@@ -52,7 +52,7 @@ class SalesOrderInvoicePay
             if ($orderId) {
                 $datePaid = $this->hlpDate->getUtcNowForDb();
                 $this->logger->debug("Update paid date in PV registry on sale order (#$orderId) is paid.");
-                $data = [ESale::ATTR_DATE_PAID => $datePaid];
+                $data = [ESale::A_DATE_PAID => $datePaid];
                 $this->repoSale->updateById($orderId, $data);
                 /* transfer PV to customer account */
                 $this->ownRegister->accountPv($order);

@@ -45,7 +45,7 @@ class Item
             $pvWrhs = $this->hlpGetPv->product($productId);
             $subtotal = number_format($pvWrhs * $qty, 2);
             /* create/update PV values for quote item (if changed) */
-            $pk = [EPvQuoteItem::ATTR_ITEM_REF => $id];
+            $pk = [EPvQuoteItem::A_ITEM_REF => $id];
             $found = $this->repoPvQuoteItem->getById($pk);
             if ($found) {
                 /* update PV data if subtotals are different */

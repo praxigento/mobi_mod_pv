@@ -11,13 +11,13 @@ namespace Praxigento\Pv\Repo\Data;
 class Product
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
-    const ATTR_PROD_REF = 'prod_ref';
-    const ATTR_PV = 'pv';
+    const A_PROD_REF = 'prod_ref';
+    const A_PV = 'pv';
     const ENTITY_NAME = 'prxgt_pv_prod';
 
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_PROD_REF];
+        return [self::A_PROD_REF];
     }
 
     /**
@@ -25,7 +25,7 @@ class Product
      */
     public function getProductRef()
     {
-        $result = parent::get(self::ATTR_PROD_REF);
+        $result = parent::get(self::A_PROD_REF);
         return $result;
     }
 
@@ -34,7 +34,7 @@ class Product
      */
     public function getPv()
     {
-        $result = parent::get(self::ATTR_PV);
+        $result = parent::get(self::A_PV);
         return $result;
     }
 
@@ -44,7 +44,7 @@ class Product
      */
     public function setProductRef($data)
     {
-        parent::set(self::ATTR_PROD_REF, $data);
+        parent::set(self::A_PROD_REF, $data);
     }
 
     /**
@@ -52,7 +52,7 @@ class Product
      */
     public function setPv($data)
     {
-        parent::set(self::ATTR_PV, $data);
+        parent::set(self::A_PV, $data);
     }
 
 }

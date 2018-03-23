@@ -64,13 +64,13 @@ class Delete
 
     private function removeSaleItemPv($saleItemId)
     {
-        $where = EPvSaleItem::ATTR_ITEM_REF . '=' . (int)$saleItemId;
+        $where = EPvSaleItem::A_ITEM_REF . '=' . (int)$saleItemId;
         $this->repoSaleItem->delete($where);
     }
 
     private function removeSalePv($saleId)
     {
-        $where = EPvSale::ATTR_SALE_REF . '=' . (int)$saleId;
+        $where = EPvSale::A_SALE_REF . '=' . (int)$saleId;
         $this->repoSale->delete($where);
     }
 }

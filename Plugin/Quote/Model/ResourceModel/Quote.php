@@ -42,7 +42,7 @@ class Quote
             $discount = (float)$addr->getData(Cfg::CODE_TOTAL_DISCOUNT . '_amount');
             $grand = (float)$addr->getData(Cfg::CODE_TOTAL_GRAND . '_amount');
             /* create/update PV values for quote (if changed) */
-            $pk = [EPvQuote::ATTR_QUOTE_REF => $id];
+            $pk = [EPvQuote::A_QUOTE_REF => $id];
             $found = $this->repoPvQuote->getById($pk);
             if ($found) {
                 /* update PV data if subtotals are different */

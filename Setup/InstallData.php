@@ -18,7 +18,7 @@ class InstallData extends \Praxigento\Core\App\Setup\Data\Base
     {
         $this->_conn->insertArray(
             $this->_resource->getTableName(TypeAsset::ENTITY_NAME),
-            [TypeAsset::ATTR_CODE, TypeAsset::ATTR_NOTE, TypeAsset::ATTR_IS_VISIBLE],
+            [TypeAsset::A_CODE, TypeAsset::A_NOTE, TypeAsset::A_IS_VISIBLE],
             [
                 [
                     Cfg::CODE_TYPE_ASSET_PV,
@@ -33,7 +33,7 @@ class InstallData extends \Praxigento\Core\App\Setup\Data\Base
     {
         $this->_conn->insertArray(
             $this->_resource->getTableName(TypeOperation::ENTITY_NAME),
-            [TypeOperation::ATTR_CODE, TypeOperation::ATTR_NOTE],
+            [TypeOperation::A_CODE, TypeOperation::A_NOTE],
             [
                 [Cfg::CODE_TYPE_OPER_PV_SALE_PAID, 'PV assets related to order processing.'],
                 [Cfg::CODE_TYPE_OPER_PV_TRANSFER, 'PV transfer between customers accounts.']

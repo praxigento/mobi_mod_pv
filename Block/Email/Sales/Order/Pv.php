@@ -36,7 +36,7 @@ class Pv
         $order = $parent->getOrder();
         $quoteId = $order->getQuoteId();
         /* get PV data */
-        $pk = [EPvQuote::ATTR_QUOTE_REF => $quoteId];
+        $pk = [EPvQuote::A_QUOTE_REF => $quoteId];
         $entity = $this->repoPvQuote->getById($pk);
 
         if ($entity) {

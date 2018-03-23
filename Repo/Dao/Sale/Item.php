@@ -81,7 +81,7 @@ class Item
         $cols = [];
         $query->from($tblOrder, $cols);
         /* LEFT JOIN prxgt_pv_sale_item pwq */
-        $on = $asPvItem . '.' . Entity::ATTR_ITEM_REF . '=' . $asOrder . '.' . Cfg::E_SALE_ORDER_ITEM_A_ITEM_ID;
+        $on = $asPvItem . '.' . Entity::A_ITEM_REF . '=' . $asOrder . '.' . Cfg::E_SALE_ORDER_ITEM_A_ITEM_ID;
         $cols = '*'; // get all columns
         $query->joinLeft($tblPvItem, $on, $cols);
         /* WHERE */

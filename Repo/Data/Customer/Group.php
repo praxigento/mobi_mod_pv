@@ -10,39 +10,39 @@ namespace Praxigento\Pv\Repo\Data\Customer;
 class Group
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
-    const ATTR_CAN_SEE_PV = 'can_see_pv';
-    const ATTR_GROUP_REF = 'group_ref';
+    const A_CAN_SEE_PV = 'can_see_pv';
+    const A_GROUP_REF = 'group_ref';
     const ENTITY_NAME = 'prxgt_pv_cust_group';
 
     /** @return bool */
     public function getCanSeePv()
     {
-        $result = parent::get(self::ATTR_CAN_SEE_PV);
+        $result = parent::get(self::A_CAN_SEE_PV);
         return $result;
     }
 
     /** @return int */
     public function getGroupRef()
     {
-        $result = parent::get(self::ATTR_GROUP_REF);
+        $result = parent::get(self::A_GROUP_REF);
         return $result;
     }
 
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_GROUP_REF];
+        return [self::A_GROUP_REF];
     }
 
     /** @param bool $data */
     public function setCanSeePv($data)
     {
-        parent::set(self::ATTR_CAN_SEE_PV, $data);
+        parent::set(self::A_CAN_SEE_PV, $data);
     }
 
     /** @param int $data */
     public function setGroupRef($data)
     {
-        parent::set(self::ATTR_GROUP_REF, $data);
+        parent::set(self::A_GROUP_REF, $data);
     }
 
 }

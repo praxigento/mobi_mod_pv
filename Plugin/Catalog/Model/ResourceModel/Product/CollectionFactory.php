@@ -22,7 +22,7 @@ class CollectionFactory
     const A_PV_PRODUCT = 'prxgt_pv_product';
 
     /** combination of the table alias & table field for filtering & ordering in admin grid (Fully Qualified Name) */
-    const FQN_PV = self::AS_PRXGT_PV_PRODUCT . '.' . EPvProd::ATTR_PV;
+    const FQN_PV = self::AS_PRXGT_PV_PRODUCT . '.' . EPvProd::A_PV;
 
     /** @var \Praxigento\Warehouse\Api\Helper\Stock */
     private $hlpStock;
@@ -62,9 +62,9 @@ class CollectionFactory
                 $tbl = $this->resource->getTableName(EPvProd::ENTITY_NAME);
                 $as = self::AS_PRXGT_PV_PRODUCT;
                 $cols = [
-                    self::A_PV_PRODUCT => EPvProd::ATTR_PV
+                    self::A_PV_PRODUCT => EPvProd::A_PV
                 ];
-                $cond = "$as." . EPvProd::ATTR_PROD_REF . "=$asProd." . Cfg::E_PRODUCT_A_ENTITY_ID;
+                $cond = "$as." . EPvProd::A_PROD_REF . "=$asProd." . Cfg::E_PRODUCT_A_ENTITY_ID;
                 $query->joinLeft([$as => $tbl], $cond, $cols);
                 /* add fields mapping */
                 $result->addFilterToMap(self::A_PV_PRODUCT, self::FQN_PV);
@@ -86,9 +86,9 @@ class CollectionFactory
                 $tbl = $this->resource->getTableName(EPvStockItem::ENTITY_NAME);
                 $as = $asPvWrhs;
                 $cols = [
-                    self::A_PV_PRODUCT => EPvStockItem::ATTR_PV
+                    self::A_PV_PRODUCT => EPvStockItem::A_PV
                 ];
-                $cond = "$as." . EPvStockItem::ATTR_ITEM_REF . '='
+                $cond = "$as." . EPvStockItem::A_ITEM_REF . '='
                     . "$asStockItem." . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
                 $query->joinLeft([$as => $tbl], $cond, $cols);
                 $cond = "$asStockItem." . Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID . '=' . (int)$stockId;

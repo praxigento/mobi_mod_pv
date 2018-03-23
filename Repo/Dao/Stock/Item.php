@@ -82,8 +82,8 @@ class Item
         $cols = [];
         $query->from($tblStockItem, $cols);
         /* LEFT JOIN prxgt_pv_stock_item */
-        $on = $asPv . '.' . Entity::ATTR_ITEM_REF . '=' . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
-        $cols = [Entity::ATTR_PV];
+        $on = $asPv . '.' . Entity::A_ITEM_REF . '=' . $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
+        $cols = [Entity::A_PV];
         $query->joinLeft($tblPv, $on, $cols);
         /* WHERE */
         $where = $asStockItem . '.' . Cfg::E_CATINV_STOCK_ITEM_A_PROD_ID . '=' . (int)$productId;

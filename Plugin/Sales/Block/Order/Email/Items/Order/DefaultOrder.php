@@ -42,7 +42,7 @@ class DefaultOrder
             $canSeePv = $this->hlpCust->canSeePv();
             if ($canSeePv) {
                 $quoteItemId = $item->getQuoteItemId();
-                $pk = [EPvQuoteItem::ATTR_ITEM_REF => $quoteItemId];
+                $pk = [EPvQuoteItem::A_ITEM_REF => $quoteItemId];
                 $entity = $this->repoPvQuoteItem->getById($pk);
                 if ($entity) {
                     $total = $entity->getTotal();

@@ -37,9 +37,9 @@ class History
 
             /* LEFT JOIN prxgt_pv_sale */
             $tbl = $result->getTable(ASale::ENTITY_NAME);
-            $on = Cfg::AS_MAIN_TABLE . '.' . Cfg::E_SALE_ORDER_A_ENTITY_ID . '=' . self::AS_PRXGT_PV_SALE . '.' . ASale::ATTR_SALE_REF;
+            $on = Cfg::AS_MAIN_TABLE . '.' . Cfg::E_SALE_ORDER_A_ENTITY_ID . '=' . self::AS_PRXGT_PV_SALE . '.' . ASale::A_SALE_REF;
             $cols = [
-                self::A_TOTAL => ASale::ATTR_TOTAL
+                self::A_TOTAL => ASale::A_TOTAL
             ];
             $query->joinLeft([self::AS_PRXGT_PV_SALE => $tbl], $on, $cols);
             $this->isJoined = true;

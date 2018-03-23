@@ -29,15 +29,15 @@ class QueryModifier
     ) {
         // total
         $fieldAlias = self::AS_FLD_PV_TOTAL;
-        $fieldFullName = self::AS_TBL_PV_SALES . '.' . Sale::ATTR_TOTAL;
+        $fieldFullName = self::AS_TBL_PV_SALES . '.' . Sale::A_TOTAL;
         $collection->addFilterToMap($fieldAlias, $fieldFullName);
         // discount
         $fieldAlias = self::AS_FLD_PV_DISCOUNT;
-        $fieldFullName = self::AS_TBL_PV_SALES . '.' . Sale::ATTR_DISCOUNT;
+        $fieldFullName = self::AS_TBL_PV_SALES . '.' . Sale::A_DISCOUNT;
         $collection->addFilterToMap($fieldAlias, $fieldFullName);
         // subtotal
         $fieldAlias = self::AS_FLD_PV_SUBTOTAL;
-        $fieldFullName = self::AS_TBL_PV_SALES . '.' . Sale::ATTR_SUBTOTAL;
+        $fieldFullName = self::AS_TBL_PV_SALES . '.' . Sale::A_SUBTOTAL;
         $collection->addFilterToMap($fieldAlias, $fieldFullName);
     }
 
@@ -47,11 +47,11 @@ class QueryModifier
         $select = $collection->getSelect();
         /* LEFT JOIN `prxgt_pv_sale` */
         $tbl = [self::AS_TBL_PV_SALES => $this->_resource->getTableName(Sale::ENTITY_NAME)];
-        $on = self::AS_TBL_PV_SALES . '.' . Sale::ATTR_SALE_REF . '=main_table.' . Cfg::E_SALE_ORDER_A_ENTITY_ID;
+        $on = self::AS_TBL_PV_SALES . '.' . Sale::A_SALE_REF . '=main_table.' . Cfg::E_SALE_ORDER_A_ENTITY_ID;
         $cols = [
-            self::AS_FLD_PV_TOTAL => Sale::ATTR_TOTAL,
-            self::AS_FLD_PV_DISCOUNT => Sale::ATTR_DISCOUNT,
-            self::AS_FLD_PV_SUBTOTAL => Sale::ATTR_SUBTOTAL
+            self::AS_FLD_PV_TOTAL => Sale::A_TOTAL,
+            self::AS_FLD_PV_DISCOUNT => Sale::A_DISCOUNT,
+            self::AS_FLD_PV_SUBTOTAL => Sale::A_SUBTOTAL
         ];
         $select->joinLeft($tbl, $on, $cols);
     }
