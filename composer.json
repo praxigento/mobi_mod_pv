@@ -1,8 +1,8 @@
 {
-  "name": "praxigento/mobi_mod_mage2_pv",
+  "name": "praxigento/mobi_mod_pv",
   "description": "MOBI: Praxigento_Pv module.",
   "type": "magento2-module",
-  "homepage": "https://github.com/praxigento/mobi_mod_mage2_pv",
+  "homepage": "https://github.com/praxigento/mobi_mod_pv",
   "license": "MIT",
   "authors": [
     {
@@ -19,7 +19,7 @@
     }
   },
   "require": {
-    "praxigento/mobi_mod_mage2_downline": "dev-master",
-    "praxigento/mobi_mod_mage2_warehouse": "dev-master"
+    "praxigento/mobi_mod_downline": "dev-master",
+    "praxigento/mobi_mod_warehouse": "dev-master"
   }
 }
