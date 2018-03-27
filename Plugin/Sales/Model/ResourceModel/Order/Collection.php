@@ -13,6 +13,7 @@ use Praxigento\Warehouse\Config as Cfg;
 class Collection
 {
     const AS_PV_SALE = 'prxgtPvSale';
+
     /** @var  \Magento\Framework\App\ResourceConnection */
     private $resource;
 
@@ -22,21 +23,18 @@ class Collection
         $this->resource = $resource;
     }
 
-    public function aroundAddAttributeToSelect(
-        \Magento\Sales\Model\ResourceModel\Order\Collection $subject,
-        \Closure $proceed,
-        $attribute,
-        $joinType = false
-    ) {
-        /** @var \Magento\Sales\Model\ResourceModel\Order\Collection $result */
-        $result = $proceed($attribute, $joinType);
-        if ($attribute == '*') {
-            $query = $result->getSelect();
-            $this->queryAddPv($query);
-        }
-        return $result;
-    }
-
+    /**
+     * Add PV data to sales orders collection when all fields are added ('*').
+     *
+     * Method 'addFieldToSelect' is called from method 'addAttributeToSelect'.
+     *
+     * @param \Magento\Sales\Model\ResourceModel\Order\Collection $subject
+     * @param \Closure $proceed
+     * @param $field
+     * @param null $alias
+     * @return \Magento\Sales\Model\ResourceModel\Order\Collection
+     * @throws \Zend_Db_Select_Exception
+     */
     public function aroundAddFieldToSelect(
         \Magento\Sales\Model\ResourceModel\Order\Collection $subject,
         \Closure $proceed,
