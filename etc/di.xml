@@ -126,11 +126,33 @@
                 type="Praxigento\Pv\Plugin\Sales\Block\Order\Email\Items\Order\DefaultOrder"
                 sortOrder="400" disabled="false"/>
     </type>
+
     <type name="Magento\Sales\Block\Order\History">
         <!-- Add PV to orders grid on the front -->
         <plugin name="prxgt_pv_plugin"
                 type="Praxigento\Pv\Plugin\Sales\Block\Order\History"
                 sortOrder="400" disabled="false"/>
+    </type>
+
+    <type name="Magento\Sales\Block\Order\Items">
+        <!-- Add PV to order items on the front -->
+        <plugin name="prxgt_pv_plugin"
+                type="Praxigento\Pv\Plugin\Sales\Block\Order\Items"
+                sortOrder="400" disabled="false"/>
+    </type>
+
+    <type name="Magento\Sales\Block\Order\PrintShipment">
+        <!-- Add PV to order items on the front -->
+        <plugin name="prxgt_pv_plugin"
+                type="Praxigento\Pv\Plugin\Sales\Block\Order\PrintShipment"
+                sortOrder="400" disabled="false"/>
+    </type>
+
+    <type name="Magento\Sales\Model\ResourceModel\Order\Item\CollectionFactory">
+        <!-- Add PV data to order items collection -->
+        <plugin name="prxgt_pv_plugin"
+                type="Praxigento\Pv\Plugin\Sales\Model\ResourceModel\Order\Item\CollectionFactory"
+                sortOrder="700" disabled="false"/>
     </type>
 
     <type name="Magento\Sales\Model\ResourceModel\Order\Collection">
@@ -139,6 +161,7 @@
                 type="Praxigento\Pv\Plugin\Sales\Model\ResourceModel\Order\Collection"
                 sortOrder="700" disabled="false"/>
     </type>
+
     <type name="Magento\Sales\Model\Service\OrderService">
         <!-- Return products to inventory on order cancellation. -->
         <!-- sortOrder should be greater then for the same plugin in Warehouse module -->

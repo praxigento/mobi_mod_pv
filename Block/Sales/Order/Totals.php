@@ -4,14 +4,16 @@
  * Since: 2018
  */
 
-namespace Praxigento\Pv\Block\Adminhtml\Order;
+namespace Praxigento\Pv\Block\Sales\Order;
 
 use Praxigento\Pv\Repo\Data\Sale as EPvSale;
 
 /**
  * Block to display sale order totals.
  *
- * see ./view/adminhtml/layout/sales_order_view.xml
+ * see:
+ *  ./view/adminhtml/layout/sales_order_view.xml
+ *  ./view/frontend/layout/sales_order_view.xml
  */
 class Totals
     extends \Magento\Framework\View\Element\Template

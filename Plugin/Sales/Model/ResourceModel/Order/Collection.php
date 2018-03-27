@@ -8,7 +8,7 @@ namespace Praxigento\Pv\Plugin\Sales\Model\ResourceModel\Order;
 
 use Praxigento\Pv\Api\Data\Sales\Order as DPvSales;
 use Praxigento\Pv\Repo\Data\Sale as EPvSale;
-use Praxigento\Warehouse\Config as Cfg;
+use Praxigento\Pv\Config as Cfg;
 
 class Collection
 {
@@ -55,7 +55,7 @@ class Collection
      * @return int|null|string
      * @throws \Zend_Db_Select_Exception
      */
-    private function getAliasForSalesTable($query)
+    private function getAliasForMainTable($query)
     {
         $result = null;
         $from = $query->getPart(\Magento\Framework\DB\Select::FROM);
@@ -80,7 +80,7 @@ class Collection
      */
     private function queryAddPv($query)
     {
-        $asSales = $this->getAliasForSalesTable($query);
+        $asSales = $this->getAliasForMainTable($query);
         if ($asSales) {
             /* there is 'sales_order' table - we can JOIN our tables to get PV */
             $tbl = $this->resource->getTableName(EPvSale::ENTITY_NAME);
