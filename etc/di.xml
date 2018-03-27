@@ -5,134 +5,140 @@
     <!-- *** -->
     <!-- API -->
     <!-- *** -->
-    <preference for="\Praxigento\Pv\Api\Helper\GetPv"
-                type="\Praxigento\Pv\Helper\GetPv"/>
-    <preference for="\Praxigento\Pv\Api\Transfer\Customer\BetweenInterface"
-                type="\Praxigento\Pv\Api\Transfer\Customer\Between"/>
+    <preference for="Praxigento\Pv\Api\Helper\GetPv"
+                type="Praxigento\Pv\Helper\GetPv"/>
+    <preference for="Praxigento\Pv\Api\Transfer\Customer\BetweenInterface"
+                type="Praxigento\Pv\Api\Transfer\Customer\Between"/>
 
 
     <!-- ******** -->
     <!-- Services -->
     <!-- ******** -->
-    <preference for="\Praxigento\Pv\Service\ITransfer"
-                type="\Praxigento\Pv\Service\Transfer\Call"/>
+    <preference for="Praxigento\Pv\Service\ITransfer"
+                type="Praxigento\Pv\Service\Transfer\Call"/>
 
 
     <!-- ******* -->
     <!-- PLUGINS -->
     <!-- ******* -->
-    <type name="\Magento\Catalog\Block\Product\Widget\NewWidget">
+    <type name="Magento\Catalog\Block\Product\Widget\NewWidget">
         <!-- Display PV in new products widget -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Catalog\Block\Product\Widget\NewWidget"
+                type="Praxigento\Pv\Plugin\Catalog\Block\Product\Widget\NewWidget"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Catalog\Block\Product\ListProduct">
+    <type name="Magento\Catalog\Block\Product\ListProduct">
         <!-- Display PV in catalog list -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Catalog\Block\Product\ListProduct"
+                type="Praxigento\Pv\Plugin\Catalog\Block\Product\ListProduct"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Catalog\Model\ResourceModel\Product\Collection">
+    <type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
         <!-- Enable order & filter for additional fields (wholesale PV) in products collection -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\Collection"
+                type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\Collection"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
+    <type name="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
         <!-- Add fields mapping (wholesale PV) to products collection -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory"
+                type="Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Checkout\Block\Cart\Item\Renderer">
+    <type name="Magento\Checkout\Block\Cart\Item\Renderer">
         <!-- Add PV html into cart item's price block -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Checkout\Block\Cart\Item\Renderer"
+                type="Praxigento\Pv\Plugin\Checkout\Block\Cart\Item\Renderer"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Checkout\CustomerData\Cart">
+    <type name="Magento\Checkout\CustomerData\Cart">
         <!-- Add PV data to cart/quote JSON used in mini-cart -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Checkout\CustomerData\Cart"
+                type="Praxigento\Pv\Plugin\Checkout\CustomerData\Cart"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Checkout\Model\CompositeConfigProvider">
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
         <!-- Add PV data to cart/quote JSON used in checkout (step 01) -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Checkout\Model\CompositeConfigProvider"
+                type="Praxigento\Pv\Plugin\Checkout\Model\CompositeConfigProvider"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Customer\Api\GroupRepositoryInterface">
+    <type name="Magento\Customer\Api\GroupRepositoryInterface">
         <!-- Save 'Can See PV' flag on customer group save from adminhtml -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Customer\Api\GroupRepositoryInterface"
+                type="Praxigento\Pv\Plugin\Customer\Api\GroupRepositoryInterface"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Customer\Block\Adminhtml\Group\Edit\Form">
+    <type name="Magento\Customer\Block\Adminhtml\Group\Edit\Form">
         <!-- Add more fields to customer group edit form (can see PV flag) -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Customer\Block\Adminhtml\Group\Edit\Form"
+                type="Praxigento\Pv\Plugin\Customer\Block\Adminhtml\Group\Edit\Form"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <!-- Add custom columns to the sales orders grid -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory"
+                type="Praxigento\Pv\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory"
                 sortOrder="400" disabled="false"/>
     </type>
 
 
-    <type name="\Magento\Framework\Webapi\ServiceOutputProcessor">
+    <type name="Magento\Framework\Webapi\ServiceOutputProcessor">
         <!-- Add PV to cart/quote according to REST API requests/response structure. -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Framework\Webapi\ServiceOutputProcessor"
+                type="Praxigento\Pv\Plugin\Framework\Webapi\ServiceOutputProcessor"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Quote\Model\ResourceModel\Quote\Item">
+    <type name="Magento\Quote\Model\ResourceModel\Quote\Item">
         <!-- Create/update PV data for corresponded quote item -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Quote\Model\ResourceModel\Quote\Item"
+                type="Praxigento\Pv\Plugin\Quote\Model\ResourceModel\Quote\Item"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Quote\Model\ResourceModel\Quote">
+    <type name="Magento\Quote\Model\ResourceModel\Quote">
         <!-- Create/update PV data for corresponded quote -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Quote\Model\ResourceModel\Quote"
+                type="Praxigento\Pv\Plugin\Quote\Model\ResourceModel\Quote"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer">
+    <type name="Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer">
         <!-- Add PV data to columns HTML in order. -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer"
+                type="Praxigento\Pv\Plugin\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer"
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="\Magento\Sales\Block\Order\Email\Items\Order\DefaultOrder">
+    <type name="Magento\Sales\Block\Order\Email\Items\Order\DefaultOrder">
         <!-- Add PV total info to the item price in emails -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Sales\Block\Order\Email\Items\Order\DefaultOrder"
+                type="Praxigento\Pv\Plugin\Sales\Block\Order\Email\Items\Order\DefaultOrder"
                 sortOrder="400" disabled="false"/>
     </type>
-    <type name="\Magento\Sales\Block\Order\History">
+    <type name="Magento\Sales\Block\Order\History">
         <!-- Add PV to orders grid on the front -->
         <plugin name="prxgt_pv_plugin"
-                type="\Praxigento\Pv\Plugin\Sales\Block\Order\History"
+                type="Praxigento\Pv\Plugin\Sales\Block\Order\History"
                 sortOrder="400" disabled="false"/>
     </type>
 
+    <type name="Magento\Sales\Model\ResourceModel\Order\Collection">
+        <!-- Add PV data to orders collection -->
+        <plugin name="prxgt_pv_plugin"
+                type="Praxigento\Pv\Plugin\Sales\Model\ResourceModel\Order\Collection"
+                sortOrder="700" disabled="false"/>
+    </type>
     <type name="Magento\Sales\Model\Service\OrderService">
         <!-- Return products to inventory on order cancellation. -->
         <!-- sortOrder should be greater then for the same plugin in Warehouse module -->

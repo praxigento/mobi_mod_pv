@@ -5,6 +5,7 @@
         <sequence>
             <module name="Praxigento_Downline"/>
             <module name="Praxigento_Warehouse"/>
+            <module name="Magento_Sales"/>
         </sequence>
     </module>
 </config>
