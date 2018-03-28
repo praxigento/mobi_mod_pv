@@ -18,8 +18,11 @@ class InstallData extends \Praxigento\Core\App\Setup\Data\Base
     {
         $this->_conn->insertArray(
             $this->_resource->getTableName(TypeAsset::ENTITY_NAME),
-            [TypeAsset::A_CODE, TypeAsset::A_NOTE, TypeAsset::A_IS_VISIBLE],
             [
+                TypeAsset::A_CODE,
+                TypeAsset::A_NOTE,
+                TypeAsset::A_IS_TRANSFERABLE
+            ], [
                 [
                     Cfg::CODE_TYPE_ASSET_PV,
                     'PV (Points of volume or volume points).',
