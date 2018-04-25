@@ -17,7 +17,7 @@ class Cart
     const JSON_PV_MINI_CART_ITEM_CAN_SEE = 'prxgt_pv_mini_cart_item_can_see';
     const JSON_PV_MINI_CART_ITEM_TOTAL = 'prxgt_pv_mini_cart_item_total';
     const JSON_PV_MINI_CART_TOTAL = 'prxgt_pv_mini_cart_total';
-    /** @var \Praxigento\Core\App\Repo\IGeneric */
+    /** @var \Praxigento\Core\Api\App\Repo\Generic */
     private $daoGeneric;
     /** @var \Praxigento\Pv\Repo\Dao\Quote */
     private $daoQuote;
@@ -29,7 +29,7 @@ class Cart
     private $hlpPvCust;
 
     public function __construct(
-        \Praxigento\Core\App\Repo\IGeneric $daoGeneric,
+        \Praxigento\Core\Api\App\Repo\Generic $daoGeneric,
         \Praxigento\Pv\Repo\Dao\Quote $daoQuote,
         \Praxigento\Pv\Repo\Dao\Quote\Item $daoQuoteItem,
         \Praxigento\Pv\Helper\Customer $hlpPvCust,

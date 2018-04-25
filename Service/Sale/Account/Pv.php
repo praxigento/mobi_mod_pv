@@ -14,7 +14,7 @@ use Praxigento\Pv\Service\Sale\Account\Pv\Response as AResponse;
 
 class Pv
 {
-    /** @var \Praxigento\Core\App\Repo\IGeneric */
+    /** @var \Praxigento\Core\Api\App\Repo\Generic */
     private $daoGeneric;
     /** @var  \Praxigento\Pv\Repo\Dao\Sale */
     private $daoSale;
@@ -24,7 +24,7 @@ class Pv
     private $servOper;
 
     public function __construct(
-        \Praxigento\Core\App\Repo\IGeneric $daoGeneric,
+        \Praxigento\Core\Api\App\Repo\Generic $daoGeneric,
         \Praxigento\Accounting\Api\Service\Account\Get $servAccount,
         \Praxigento\Accounting\Api\Service\Operation $servOper,
         \Praxigento\Pv\Repo\Dao\Sale $daoSale
