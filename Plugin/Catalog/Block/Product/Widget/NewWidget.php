@@ -15,15 +15,19 @@ class NewWidget
 {
     /** @var \Praxigento\Pv\Helper\Customer */
     private $hlpCust;
+    /** @var \Praxigento\Core\Api\Helper\Format */
+    private $hlpFormat;
     /** @var \Praxigento\Pv\Helper\GetPv */
     private $hlpGetPv;
 
     public function __construct(
         \Praxigento\Pv\Helper\Customer $hlpCust,
-        \Praxigento\Pv\Helper\GetPv $hlpGetPv
+        \Praxigento\Pv\Helper\GetPv $hlpGetPv,
+        \Praxigento\Core\Api\Helper\Format $hlpFormat
     ) {
         $this->hlpCust = $hlpCust;
         $this->hlpGetPv = $hlpGetPv;
+        $this->hlpFormat = $hlpFormat;
     }
 
     public function aroundGetProductPriceHtml(
@@ -46,7 +50,7 @@ class NewWidget
                 $pvWrhs = $this->hlpGetPv->product($prodId);
             }
             /* format PV and insert before price */
-            $pvWrhs = number_format($pvWrhs, 2, '.', '');
+            $pvWrhs = $this->hlpFormat->toNumber($pvWrhs);
             $html = "<div id=\"$domId\"><span>$pvWrhs</span> PV</div>";
             $result = $html . $result;
         }

@@ -22,24 +22,28 @@ class PvProvider
     private $cachePvQuote = [];
     /** @var \Praxigento\Pv\Repo\Data\Quote\Item[] */
     private $cachePvQuoteItem = [];
-    /** @var \Praxigento\Pv\Helper\Customer */
-    private $hlpPvCust;
     /** @var \Magento\Quote\Api\CartRepositoryInterface */
     private $daoCart;
     /** @var \Praxigento\Pv\Repo\Dao\Quote */
     private $daoPvQuote;
     /** @var \Praxigento\Pv\Repo\Dao\Quote\Item */
     private $daoPvQuoteItem;
+    /** @var \Praxigento\Core\Api\Helper\Format */
+    private $hlpFormat;
+    /** @var \Praxigento\Pv\Helper\Customer */
+    private $hlpPvCust;
 
     public function __construct(
         \Magento\Quote\Api\CartRepositoryInterface $daoCart,
         \Praxigento\Pv\Repo\Dao\Quote $daoPvQuote,
         \Praxigento\Pv\Repo\Dao\Quote\Item $daoPvQuoteItem,
+        \Praxigento\Core\Api\Helper\Format $hlpFormat,
         \Praxigento\Pv\Helper\Customer $hlpPvCust
     ) {
         $this->daoCart = $daoCart;
         $this->daoPvQuote = $daoPvQuote;
         $this->daoPvQuoteItem = $daoPvQuoteItem;
+        $this->hlpFormat = $hlpFormat;
         $this->hlpPvCust = $hlpPvCust;
     }
 
@@ -50,9 +54,9 @@ class PvProvider
         /** @var \Praxigento\Pv\Repo\Data\Quote $quotePv */
         $quotePv = $this->loadPvForQuote($cartId);
         if ($quotePv) {
-            $subtotal = number_format($quotePv->getSubtotal(), 2, '.', '');
-            $discount = number_format($quotePv->getDiscount(), 2, '.', '');
-            $grand = number_format($quotePv->getTotal(), 2, '.', '');
+            $subtotal = $this->hlpFormat->toNumber($quotePv->getSubtotal());
+            $discount = $this->hlpFormat->toNumber($quotePv->getDiscount());
+            $grand = $this->hlpFormat->toNumber($quotePv->getTotal());
         }
         $one = [
             'code' => self::JSON_TOTAL_SEG_SUBTOTAL,
@@ -106,7 +110,7 @@ class PvProvider
         if ($item) {
             $grand = $item->getTotal();
         }
-        $result = number_format($grand, 2, '.', '');
+        $result = $this->hlpFormat->toNumber($grand);
         return $result;
     }
 

@@ -19,14 +19,18 @@ class Pv
 
     /** @var \Praxigento\Pv\Repo\Dao\Quote */
     private $daoPvQuote;
+    /** @var \Praxigento\Core\Api\Helper\Format */
+    private $hlpFormat;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         array $data = [],
-        \Praxigento\Pv\Repo\Dao\Quote $daoPvQuote
+        \Praxigento\Pv\Repo\Dao\Quote $daoPvQuote,
+        \Praxigento\Core\Api\Helper\Format $hlpFormat
     ) {
         parent::__construct($context, $data);
         $this->daoPvQuote = $daoPvQuote;
+        $this->hlpFormat = $hlpFormat;
     }
 
     public function initTotals() {
@@ -41,7 +45,7 @@ class Pv
 
         if ($entity) {
             $value = $entity->getTotal();
-            $value = number_format($value, 2);
+            $value = $this->hlpFormat->toNumber($value);
             /* compose total data for 'module-sales/view/frontend/templates/order/totals.phtml' */
             $grand = new \Magento\Framework\DataObject();
             $grand->setCode(self::PV_TOTAL);

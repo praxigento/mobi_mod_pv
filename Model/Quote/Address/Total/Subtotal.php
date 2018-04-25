@@ -16,13 +16,17 @@ class Subtotal
     private $hlpGetPv;
     /** @var \Magento\Framework\Pricing\PriceCurrencyInterface */
     private $hlpPriceCurrency;
+    /** @var \Praxigento\Core\Api\Helper\Format */
+    private $hlpFormat;
 
     public function __construct(
         \Magento\Framework\Pricing\PriceCurrencyInterface $hlpPriceCurrency,
-        \Praxigento\Pv\Api\Helper\GetPv $hlpGetPv
+        \Praxigento\Pv\Api\Helper\GetPv $hlpGetPv,
+        \Praxigento\Core\Api\Helper\Format $hlpFormat
     ) {
         $this->hlpPriceCurrency = $hlpPriceCurrency;
         $this->hlpGetPv = $hlpGetPv;
+        $this->hlpFormat = $hlpFormat;
     }
 
     public function collect(
@@ -45,7 +49,7 @@ class Subtotal
                 $product = $item->getProduct();
                 $productId = $product->getId();
                 $warehousePv = $this->hlpGetPv->product($productId);
-                $subtotal = number_format($qty * $warehousePv, 2);
+                $subtotal = $this->hlpFormat->toNumber($qty * $warehousePv);
                 $quoteSubtotal += $subtotal;
             }
         }

@@ -17,26 +17,29 @@ class Cart
     const JSON_PV_MINI_CART_ITEM_CAN_SEE = 'prxgt_pv_mini_cart_item_can_see';
     const JSON_PV_MINI_CART_ITEM_TOTAL = 'prxgt_pv_mini_cart_item_total';
     const JSON_PV_MINI_CART_TOTAL = 'prxgt_pv_mini_cart_total';
-
-    /** @var \Praxigento\Pv\Helper\Customer */
-    private $hlpPvCust;
     /** @var \Praxigento\Core\App\Repo\IGeneric */
     private $daoGeneric;
     /** @var \Praxigento\Pv\Repo\Dao\Quote */
     private $daoQuote;
     /** @var \Praxigento\Pv\Repo\Dao\Quote\Item */
     private $daoQuoteItem;
+    /** @var \Praxigento\Core\Api\Helper\Format */
+    private $hlpFormat;
+    /** @var \Praxigento\Pv\Helper\Customer */
+    private $hlpPvCust;
 
     public function __construct(
         \Praxigento\Core\App\Repo\IGeneric $daoGeneric,
         \Praxigento\Pv\Repo\Dao\Quote $daoQuote,
         \Praxigento\Pv\Repo\Dao\Quote\Item $daoQuoteItem,
-        \Praxigento\Pv\Helper\Customer $hlpPvCust
+        \Praxigento\Pv\Helper\Customer $hlpPvCust,
+        \Praxigento\Core\Api\Helper\Format $hlpFormat
     ) {
         $this->daoGeneric = $daoGeneric;
         $this->daoQuote = $daoQuote;
         $this->daoQuoteItem = $daoQuoteItem;
         $this->hlpPvCust = $hlpPvCust;
+        $this->hlpFormat = $hlpFormat;
     }
 
     public function afterGetSectionData(
@@ -53,7 +56,7 @@ class Cart
                         $itemId = $item['item_id'];
                         $pvItem = $this->daoQuoteItem->getById($itemId);
                         $totalItem = $pvItem->getTotal();
-                        $totalItem = number_format($totalItem, 2, '.', '');
+                        $totalItem = $this->hlpFormat->toNumber($totalItem, 2);
                         $result['items'][$key][self::JSON_PV_MINI_CART_ITEM_TOTAL] = $totalItem;
                         /* this is not good idea, but "This is MAGENTA-A-A-A!!!!" */
                         /* it is not a big price to have a 'canSeePv' flag for each item */
@@ -64,7 +67,7 @@ class Cart
                         $quoteId = $this->getQuoteIdByItemId($itemId);
                         $pvQuote = $this->daoQuote->getById($quoteId);
                         $totalQuote = $pvQuote->getTotal();
-                        $totalQuote = number_format($totalQuote, 2, '.', '');
+                        $totalQuote = $this->hlpFormat->toNumber($totalQuote);
                     } else {
                         /* this is quote w/o items */
                         $totalQuote = '0.00';

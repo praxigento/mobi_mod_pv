@@ -16,11 +16,15 @@ class DefaultRenderer
 
     /** @var \Praxigento\Pv\Repo\Dao\Sale\Item */
     private $daoPvSaleItem;
+    /** @var \Praxigento\Core\Api\Helper\Format */
+    private $hlpFormat;
 
     public function __construct(
-        \Praxigento\Pv\Repo\Dao\Sale\Item $daoPvSaleItem
+        \Praxigento\Pv\Repo\Dao\Sale\Item $daoPvSaleItem,
+        \Praxigento\Core\Api\Helper\Format $hlpFormat
     ) {
         $this->daoPvSaleItem = $daoPvSaleItem;
+        $this->hlpFormat = $hlpFormat;
     }
 
     public function aroundGetColumnHtml(
@@ -71,7 +75,7 @@ class DefaultRenderer
     private function htmlForColumnDiscount($pvItem)
     {
         $val = $pvItem->getDiscount();
-        $val = number_format($val, 2, '.', '');
+        $val = $this->hlpFormat->toNumber($val);
         $result = "<div>$val PV</div>";
         return $result;
     }
@@ -85,7 +89,7 @@ class DefaultRenderer
     {
         $subtotal = $pvItem->getSubtotal();
         $val = ($qty > 0) ? $subtotal / $qty : $subtotal;
-        $val = number_format($val, 2, '.', '');
+        $val = $this->hlpFormat->toNumber($val);
         $result = "<div>$val PV</div>";
         return $result;
     }
@@ -97,7 +101,7 @@ class DefaultRenderer
     private function htmlForColumnSubtotal($pvItem)
     {
         $val = $pvItem->getSubtotal();
-        $val = number_format($val, 2, '.', '');
+        $val = $this->hlpFormat->toNumber($val);
         $result = "<div>$val PV</div>";
         return $result;
     }
@@ -109,7 +113,7 @@ class DefaultRenderer
     private function htmlForColumnTotal($pvItem)
     {
         $val = $pvItem->getTotal();
-        $val = number_format($val, 2, '.', '');
+        $val = $this->hlpFormat->toNumber($val);
         $result = "<div>$val PV</div>";
         return $result;
     }

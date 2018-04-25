@@ -11,17 +11,21 @@ class Renderer
 {
     /** @var array */
     private $cacheQuoteItems = [];
-    /** @var \Praxigento\Pv\Helper\Customer */
-    private $hlpCust;
     /** @var \Praxigento\Pv\Repo\Dao\Quote\Item */
     private $daoPvQuoteItem;
+    /** @var \Praxigento\Pv\Helper\Customer */
+    private $hlpCust;
+    /** @var \Praxigento\Core\Api\Helper\Format */
+    private $hlpFormat;
 
     public function __construct(
         \Praxigento\Pv\Repo\Dao\Quote\Item $daoPvQuoteItem,
-        \Praxigento\Pv\Helper\Customer $hlpCust
+        \Praxigento\Pv\Helper\Customer $hlpCust,
+        \Praxigento\Core\Api\Helper\Format $hlpFormat
     ) {
         $this->daoPvQuoteItem = $daoPvQuoteItem;
         $this->hlpCust = $hlpCust;
+        $this->hlpFormat = $hlpFormat;
     }
 
     public function aroundGetRowTotalHtml(
@@ -36,7 +40,7 @@ class Renderer
             $entity = $this->getCachedItemPv($itemId);
             if ($entity) {
                 $subtotal = $entity->getSubtotal();
-                $subtotal = number_format($subtotal, 2);
+                $subtotal = $this->hlpFormat->toNumber($subtotal);
                 $result = "<span>$subtotal PV</span>" . $result;
             }
         }
@@ -56,7 +60,7 @@ class Renderer
             if ($entity) {
                 $subtotal = $entity->getSubtotal();
                 $qty = $item->getQty();
-                $pvUnit = number_format($subtotal / $qty, 2);
+                $pvUnit = $this->hlpFormat->toNumber($subtotal / $qty);
                 $result = "<span>$pvUnit PV</span>" . $result;
             }
         }

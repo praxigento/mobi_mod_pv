@@ -13,17 +13,22 @@ use Praxigento\Pv\Repo\Data\Quote\Item as EPvQuoteItem;
  */
 class DefaultOrder
 {
-    /** @var \Praxigento\Pv\Helper\Customer */
-    private $hlpCust;
     /** @var \Praxigento\Pv\Repo\Dao\Quote\Item */
     private $daoPvQuoteItem;
+    /** @var \Praxigento\Pv\Helper\Customer */
+    private $hlpCust;
+    /** @var \Praxigento\Core\Api\Helper\Format */
+    private $hlpFormat;
 
     public function __construct(
         \Praxigento\Pv\Repo\Dao\Quote\Item $daoPvQuoteItem,
-        \Praxigento\Pv\Helper\Customer $hlpCust
+        \Praxigento\Pv\Helper\Customer $hlpCust,
+        \Praxigento\Core\Api\Helper\Format $hlpFormat
+
     ) {
         $this->daoPvQuoteItem = $daoPvQuoteItem;
         $this->hlpCust = $hlpCust;
+        $this->hlpFormat = $hlpFormat;
     }
 
     /**
@@ -46,7 +51,7 @@ class DefaultOrder
                 $entity = $this->daoPvQuoteItem->getById($pk);
                 if ($entity) {
                     $total = $entity->getTotal();
-                    $total = number_format($total, 2);
+                    $total = $this->hlpFormat->toNumber($total);
                     $html = "\n<br /><span class=\"label\">PV Total:</span> <span class=\"price\">$total</span>";
                     $result .= $html;
                 }

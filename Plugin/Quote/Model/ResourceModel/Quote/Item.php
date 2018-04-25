@@ -9,17 +9,21 @@ use Praxigento\Pv\Repo\Data\Quote\Item as EPvQuoteItem;
 
 class Item
 {
-    /** @var \Praxigento\Pv\Api\Helper\GetPv */
-    private $hlpGetPv;
     /** @var \Praxigento\Pv\Repo\Dao\Quote\Item */
     private $daoPvQuoteItem;
+    /** @var \Praxigento\Core\Api\Helper\Format */
+    private $hlpFormat;
+    /** @var \Praxigento\Pv\Api\Helper\GetPv */
+    private $hlpGetPv;
 
     public function __construct(
         \Praxigento\Pv\Repo\Dao\Quote\Item $daoPvQuoteItem,
-        \Praxigento\Pv\Api\Helper\GetPv $hlpGetPv
+        \Praxigento\Pv\Api\Helper\GetPv $hlpGetPv,
+        \Praxigento\Core\Api\Helper\Format $hlpFormat
     ) {
         $this->daoPvQuoteItem = $daoPvQuoteItem;
         $this->hlpGetPv = $hlpGetPv;
+        $this->hlpFormat = $hlpFormat;
     }
 
     /**
@@ -43,7 +47,7 @@ class Item
             $product = $object->getProduct();
             $productId = $product->getId();
             $pvWrhs = $this->hlpGetPv->product($productId);
-            $subtotal = number_format($pvWrhs * $qty, 2);
+            $subtotal = $this->hlpFormat($pvWrhs * $qty);
             /* create/update PV values for quote item (if changed) */
             $pk = [EPvQuoteItem::A_ITEM_REF => $id];
             $found = $this->daoPvQuoteItem->getById($pk);

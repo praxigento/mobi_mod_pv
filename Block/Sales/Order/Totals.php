@@ -24,14 +24,18 @@ class Totals
 
     /** @var \Praxigento\Pv\Repo\Dao\Sale */
     private $daoPvSale;
+    /** @var \Praxigento\Core\Api\Helper\Format */
+    private $hlpFormat;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Praxigento\Pv\Repo\Dao\Sale $daoPvSale,
+        \Praxigento\Core\Api\Helper\Format $hlpFormat,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->daoPvSale = $daoPvSale;
+        $this->hlpFormat = $hlpFormat;
     }
 
     public function initTotals()
@@ -47,9 +51,9 @@ class Totals
             $subtotal = $found->getSubtotal();
             $discount = $found->getDiscount();
             $grand = $found->getTotal();
-            $subtotal = number_format($subtotal, 2, '.', '');
-            $discount = number_format($discount, 2, '.', '');
-            $grand = number_format($grand, 2, '.', '');
+            $subtotal = $this->hlpFormat->toNumber($subtotal);
+            $discount = $this->hlpFormat->toNumber($discount);
+            $grand = $this->hlpFormat->toNumber($grand);
             $subtotal = new \Magento\Framework\DataObject(
                 [
                     'code' => self::PV_SUBTOTAL,

@@ -11,17 +11,21 @@ namespace Praxigento\Pv\Helper;
 class GetPv
     implements \Praxigento\Pv\Api\Helper\GetPv
 {
-    /** @var \Praxigento\Warehouse\Api\Helper\Stock */
-    private $hlpWrhsStock;
     /** @var \Praxigento\Pv\Repo\Dao\Stock\Item */
     private $daoPvStockItem;
+    /** @var \Praxigento\Core\Api\Helper\Format */
+    private $hlpFormat;
+    /** @var \Praxigento\Warehouse\Api\Helper\Stock */
+    private $hlpWrhsStock;
 
     public function __construct(
         \Praxigento\Pv\Repo\Dao\Stock\Item $daoPvStockItem,
+        \Praxigento\Core\Api\Helper\Format $hlpFormat,
         \Praxigento\Warehouse\Api\Helper\Stock $hlpWrhsStock
     ) {
         $this->daoPvStockItem = $daoPvStockItem;
         $this->hlpWrhsStock = $hlpWrhsStock;
+        $this->hlpFormat = $hlpFormat;
     }
 
     public function product($prodId, $stockId = null) {
@@ -29,7 +33,7 @@ class GetPv
             $stockId = $this->hlpWrhsStock->getCurrentStockId();
         }
         $result = $this->daoPvStockItem->getPvByProductAndStock($prodId, $stockId);
-        $result = number_format($result, 2);
+        $result = $this->hlpFormat->toNumber($result);
         return $result;
     }
 }

@@ -11,11 +11,15 @@ class ListProduct
 {
     /** @var \Praxigento\Pv\Helper\Customer */
     private $hlpCust;
+    /** @var \Praxigento\Core\Api\Helper\Format */
+    private $hlpFormat;
 
     public function __construct(
-        \Praxigento\Pv\Helper\Customer $hlpCust
+        \Praxigento\Pv\Helper\Customer $hlpCust,
+        \Praxigento\Core\Api\Helper\Format $hlpFormat
     ) {
         $this->hlpCust = $hlpCust;
+        $this->hlpFormat = $hlpFormat;
     }
 
     /**
@@ -36,7 +40,7 @@ class ListProduct
         if ($canSeePv) {
             $domId = "prxgt_pv_" . $product->getId();
             $pvProd = $product->getData(AProdCollFactory::A_PV_PRODUCT);
-            $pvProd = number_format($pvProd, 2);
+            $pvProd = $this->hlpFormat->toNumber($pvProd);
             $html = "<div id=\"$domId\"><span>$pvProd</span> PV</div>";
             $result = $html . $result;
         }
