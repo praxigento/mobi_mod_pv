@@ -47,7 +47,7 @@ class Item
             $product = $object->getProduct();
             $productId = $product->getId();
             $pvWrhs = $this->hlpGetPv->product($productId);
-            $subtotal = $this->hlpFormat($pvWrhs * $qty);
+            $subtotal = $this->hlpFormat->toNumber($pvWrhs * $qty);
             /* create/update PV values for quote item (if changed) */
             $pk = [EPvQuoteItem::A_ITEM_REF => $id];
             $found = $this->daoPvQuoteItem->getById($pk);
