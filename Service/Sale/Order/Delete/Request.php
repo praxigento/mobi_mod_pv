@@ -12,7 +12,7 @@ namespace Praxigento\Pv\Service\Sale\Order\Delete;
  * @method void setSaleId(int $data)
  */
 class Request
-    extends \Praxigento\Core\App\Service\Base\Request
+    extends \Praxigento\Core\App\Service\Request
 {
 
 }

@@ -12,7 +12,7 @@ namespace Praxigento\Pv\Service\Sale\Request;
  * @method string getSaleOrderDatePaid()
  * @method void setSaleOrderDatePaid(string $data)
  */
-class Save extends \Praxigento\Core\App\Service\Base\Request
+class Save extends \Praxigento\Core\App\Service\Request
 {
 
 }

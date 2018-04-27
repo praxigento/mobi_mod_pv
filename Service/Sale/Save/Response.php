@@ -7,7 +7,7 @@ namespace Praxigento\Pv\Service\Sale\Save;
 
 
 class Response
-    extends \Praxigento\Core\App\Service\Base\Response
+    extends \Praxigento\Core\App\Service\Response
 {
 
 }
