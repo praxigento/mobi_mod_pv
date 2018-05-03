@@ -4,11 +4,11 @@
 
     <event name="checkout_submit_all_after">
         <!-- Registry PV for sale orders ("buffer saving") and account PV for paid orders. -->
-        <observer name="prxgt_pv_observer" instance="\Praxigento\Pv\Observer\CheckoutSubmitAllAfter"/>
+        <observer name="prxgt_pv_observer" instance="Praxigento\Pv\Observer\CheckoutSubmitAllAfter"/>
     </event>
     <event name="sales_order_invoice_pay">
         <!-- Collect PV on customer account when order is paid by bank transfer. -->
-        <observer name="prxgt_pv_observer" instance="\Praxigento\Pv\Observer\SalesOrderInvoicePay"/>
+        <observer name="prxgt_pv_observer" instance="Praxigento\Pv\Observer\SalesOrderInvoicePay"/>
     </event>
 
 </config>

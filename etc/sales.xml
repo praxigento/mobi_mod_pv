@@ -4,30 +4,30 @@
     <section name="quote">
         <!-- see .../module-sales/etc/sales.xml -->
         <group name="totals">
-            <!-- MOBI-1046 : collect PV totals in quotes (see \Praxigento\Pv\Config::CODE_TOTAL_XXX) -->
+            <!-- MOBI-1046 : collect PV totals in quotes (see Praxigento\Pv\Config::CODE_TOTAL_XXX) -->
             <item name="prxgt_pv_subtotal"
-                  instance="\Praxigento\Pv\Model\Quote\Address\Total\Subtotal"
+                  instance="Praxigento\Pv\Model\Quote\Address\Total\Subtotal"
                   sort_order="700"/>
             <item name="prxgt_pv_discount"
-                  instance="\Praxigento\Pv\Model\Quote\Address\Total\Discount"
+                  instance="Praxigento\Pv\Model\Quote\Address\Total\Discount"
                   sort_order="800"/>
             <item name="prxgt_pv_grand"
-                  instance="\Praxigento\Pv\Model\Quote\Address\Total\Grand"
+                  instance="Praxigento\Pv\Model\Quote\Address\Total\Grand"
                   sort_order="900"/>
         </group>
     </section>
     <section name="order_invoice">
         <!-- see .../module-sales/etc/sales.xml -->
         <group name="totals">
-            <!-- MOBI-1046 : collect PV totals in invoices (see \Praxigento\Pv\Config::CODE_TOTAL_XXX) -->
+            <!-- MOBI-1046 : collect PV totals in invoices (see Praxigento\Pv\Config::CODE_TOTAL_XXX) -->
             <item name="prxgt_pv_subtotal"
-                  instance="\Praxigento\Pv\Model\Order\Invoice\Total\Subtotal"
+                  instance="Praxigento\Pv\Model\Order\Invoice\Total\Subtotal"
                   sort_order="700"/>
             <item name="prxgt_pv_discount"
-                  instance="\Praxigento\Pv\Model\Order\Invoice\Total\Discount"
+                  instance="Praxigento\Pv\Model\Order\Invoice\Total\Discount"
                   sort_order="800"/>
             <item name="prxgt_pv_grand"
-                  instance="\Praxigento\Pv\Model\Order\Invoice\Total\Grand"
+                  instance="Praxigento\Pv\Model\Order\Invoice\Total\Grand"
                   sort_order="900"/>
         </group>
     </section>
