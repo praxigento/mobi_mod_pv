@@ -74,7 +74,10 @@ class DefaultRenderer
      */
     private function htmlForColumnDiscount($pvItem)
     {
-        $val = $pvItem->getDiscount();
+        $val = 0;
+        if ($pvItem) {
+            $val = $pvItem->getDiscount();
+        }
         $val = $this->hlpFormat->toNumber($val);
         $result = "<div>$val PV</div>";
         return $result;
@@ -87,8 +90,11 @@ class DefaultRenderer
      */
     private function htmlForColumnPrice($pvItem, $qty)
     {
-        $subtotal = $pvItem->getSubtotal();
-        $val = ($qty > 0) ? $subtotal / $qty : $subtotal;
+        $val = 0;
+        if ($pvItem) {
+            $subtotal = $pvItem->getSubtotal();
+            $val = ($qty > 0) ? $subtotal / $qty : $subtotal;
+        }
         $val = $this->hlpFormat->toNumber($val);
         $result = "<div>$val PV</div>";
         return $result;
@@ -100,7 +106,10 @@ class DefaultRenderer
      */
     private function htmlForColumnSubtotal($pvItem)
     {
-        $val = $pvItem->getSubtotal();
+        $val = 0;
+        if ($pvItem) {
+            $val = $pvItem->getSubtotal();
+        }
         $val = $this->hlpFormat->toNumber($val);
         $result = "<div>$val PV</div>";
         return $result;
@@ -112,7 +121,10 @@ class DefaultRenderer
      */
     private function htmlForColumnTotal($pvItem)
     {
-        $val = $pvItem->getTotal();
+        $val = 0;
+        if ($pvItem) {
+            $val = $pvItem->getTotal();
+        }
         $val = $this->hlpFormat->toNumber($val);
         $result = "<div>$val PV</div>";
         return $result;
