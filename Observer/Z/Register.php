@@ -2,23 +2,25 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Pv\Observer\A;
+namespace Praxigento\Pv\Observer\Z;
 
 /**
+ * Z-classes are shared between classes of this level hierarchy or below (\Praxigento\Pv\Observer\...).
+ *
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Register
 {
     /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
     private $hlpStock;
-    /** @var \Praxigento\Pv\Service\Sale\Account\Pv */
+    /** @var \Praxigento\Pv\Api\Service\Sale\Account\Pv */
     private $servPvAccount;
     /** @var \Praxigento\Pv\Service\Sale\Save */
     private $servPvSave;
 
     public function __construct(
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock,
-        \Praxigento\Pv\Service\Sale\Account\Pv $servPvAccount,
+        \Praxigento\Pv\Api\Service\Sale\Account\Pv $servPvAccount,
         \Praxigento\Pv\Service\Sale\Save $servPvSave
     ) {
         $this->hlpStock = $hlpStock;
@@ -38,12 +40,9 @@ class Register
         if ($state == \Magento\Sales\Model\Order::STATE_PROCESSING) {
             /* transfer PV if order is paid */
             $orderId = $order->getEntityId();
-            /* TODO: remove this attr from request, it is never used */
-//            $itemsData = $this->getServiceItemsForMageSaleOrder($order);
-            /** @var \Praxigento\Pv\Service\Sale\Request\AccountPv $req */
-            $req = new \Praxigento\Pv\Service\Sale\Account\Pv\Request();
+            /** @var \Praxigento\Pv\Api\Service\Sale\Account\Pv\Request $req */
+            $req = new \Praxigento\Pv\Api\Service\Sale\Account\Pv\Request();
             $req->setSaleOrderId($orderId);
-//            $req->setOrderItems($itemsData);
             $this->servPvAccount->exec($req);
         }
     }

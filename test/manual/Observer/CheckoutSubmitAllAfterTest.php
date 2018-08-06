@@ -2,12 +2,14 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Pv\Observer;
+
+namespace Test\Praxigento\Pv\Observer;
 
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
-class CheckoutSubmitAllAfter_ManualTest extends \Praxigento\Core\Test\BaseIntegrationTest
+class CheckoutSubmitAllAfterTest
+    extends \Praxigento\Core\Test\BaseIntegrationTest
 {
     /** @var  \Magento\Sales\Api\OrderRepositoryInterface */
     private $_mageRepoSaleOrder;
@@ -25,9 +27,8 @@ class CheckoutSubmitAllAfter_ManualTest extends \Praxigento\Core\Test\BaseIntegr
         /** @var \Magento\Framework\Event\Observer $event */
         $event = $this->_manObj->create(\Magento\Framework\Event\Observer::class);
         /** @var \Magento\Sales\Api\Data\OrderInterface $order */
-        $order = $this->_mageRepoSaleOrder->get(1);
+        $order = $this->_mageRepoSaleOrder->get(3);
         $event->setData(CheckoutSubmitAllAfter::DATA_ORDER, $order);
         $this->obj->execute($event);
-
     }
 }

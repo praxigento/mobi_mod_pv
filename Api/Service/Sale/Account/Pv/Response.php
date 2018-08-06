@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Pv\Service\Sale\Account\Pv;
+namespace Praxigento\Pv\Api\Service\Sale\Account\Pv;
 
 
 class Response

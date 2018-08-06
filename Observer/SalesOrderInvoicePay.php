@@ -22,7 +22,7 @@ class SalesOrderInvoicePay
     private $hlpDate;
     /** @var \Praxigento\Core\Api\App\Logger\Main */
     private $logger;
-    /** @var \Praxigento\Pv\Observer\A\Register */
+    /** @var \Praxigento\Pv\Observer\Z\Register */
     private $ownRegister;
     /** @var \Praxigento\Pv\Repo\Dao\Sale */
     private $daoSale;
@@ -31,7 +31,7 @@ class SalesOrderInvoicePay
         \Praxigento\Core\Api\App\Logger\Main $logger,
         \Praxigento\Pv\Repo\Dao\Sale $daoSale,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
-        \Praxigento\Pv\Observer\A\Register $ownRegister
+        \Praxigento\Pv\Observer\Z\Register $ownRegister
     ) {
         $this->logger = $logger;
         $this->daoSale = $daoSale;

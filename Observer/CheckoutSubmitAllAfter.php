@@ -13,14 +13,14 @@ class CheckoutSubmitAllAfter
     /* Names for the items in the event's data */
     const DATA_ORDER = 'order';
 
-    /** @var \Praxigento\Pv\Observer\A\Register */
-    private $ownRegister;
+    /** @var \Praxigento\Pv\Observer\Z\Register */
+    private $zRegister;
 
     public function __construct(
-        \Praxigento\Pv\Observer\A\Register $ownRegister
+        \Praxigento\Pv\Observer\Z\Register $zRegister
     ) {
 
-        $this->ownRegister = $ownRegister;
+        $this->zRegister = $zRegister;
     }
 
     public function execute(\Magento\Framework\Event\Observer $observer)
@@ -28,7 +28,7 @@ class CheckoutSubmitAllAfter
         /** @var \Magento\Sales\Model\Order $order */
         $order = $observer->getData(self::DATA_ORDER);
         /* save PV for order and order items into the registry */
-        $this->ownRegister->savePv($order);
+        $this->zRegister->savePv($order);
         /* account PV if order is paid (credit card payment) */
         $state = $order->getState();
         $status = $order->getStatus();
@@ -36,7 +36,7 @@ class CheckoutSubmitAllAfter
             ($state == \Magento\Sales\Model\Order::STATE_PROCESSING) &&
             ($status != \Magento\Sales\Model\Order::STATUS_FRAUD)
         ) {
-            $this->ownRegister->accountPv($order);
+            $this->zRegister->accountPv($order);
         }
 
     }

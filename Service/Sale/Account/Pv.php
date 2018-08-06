@@ -8,12 +8,18 @@ namespace Praxigento\Pv\Service\Sale\Account;
 use Praxigento\Accounting\Api\Service\Account\Get\Request as AAccountGetRequest;
 use Praxigento\Accounting\Api\Service\Operation\Request as AOperationRequest;
 use Praxigento\Accounting\Repo\Data\Transaction as ATransaction;
+use Praxigento\Pv\Api\Service\Sale\Account\Pv\Request as ARequest;
+use Praxigento\Pv\Api\Service\Sale\Account\Pv\Response as AResponse;
 use Praxigento\Pv\Config as Cfg;
-use Praxigento\Pv\Service\Sale\Account\Pv\Request as ARequest;
-use Praxigento\Pv\Service\Sale\Account\Pv\Response as AResponse;
 
+/**
+ * PV is paid to the customer itself by default.
+ */
 class Pv
+    implements \Praxigento\Pv\Api\Service\Sale\Account\Pv
 {
+    /** @var \Praxigento\Downline\Repo\Dao\Customer */
+    private $daoDwnlCust;
     /** @var \Praxigento\Core\Api\App\Repo\Generic */
     private $daoGeneric;
     /** @var  \Praxigento\Pv\Repo\Dao\Sale */
@@ -25,22 +31,24 @@ class Pv
 
     public function __construct(
         \Praxigento\Core\Api\App\Repo\Generic $daoGeneric,
+        \Praxigento\Downline\Repo\Dao\Customer $daoDwnlCust,
         \Praxigento\Accounting\Api\Service\Account\Get $servAccount,
         \Praxigento\Accounting\Api\Service\Operation $servOper,
         \Praxigento\Pv\Repo\Dao\Sale $daoSale
     )
     {
         $this->daoGeneric = $daoGeneric;
+        $this->daoDwnlCust = $daoDwnlCust;
+        $this->daoSale = $daoSale;
         $this->servAccount = $servAccount;
         $this->servOper = $servOper;
-        $this->daoSale = $daoSale;
     }
 
     /**
      * @param ARequest $request
      * @return AResponse
      */
-    public function exec(ARequest $request)
+    public function exec($request)
     {
         $result = new AResponse();
         $saleId = $request->getSaleOrderId();
@@ -49,10 +57,13 @@ class Pv
         $sale = $this->daoSale->getById($saleId);
         $pvTotal = $sale->getTotal();
         /* get customer for sale order */
+        list($saleCustId, $saleIncId) = $this->getSaleOrderData($saleId);
         if (is_null($customerId)) {
-            $customerId = $this->getSaleOrderCustomerId($saleId);
+            $customerId = $saleCustId;
         }
         if (!is_null($customerId)) {
+            $mlmId = $this->getMlmId($customerId);
+            $note = "PV for sale #$mlmId";
             /* get PV account data for customer */
             $reqGetAccCust = new AAccountGetRequest();
             $reqGetAccCust->setCustomerId($customerId);
@@ -66,11 +77,13 @@ class Pv
             /* create one operation with one transaction */
             $reqAddOper = new AOperationRequest();
             $reqAddOper->setOperationTypeCode(Cfg::CODE_TYPE_OPER_PV_SALE_PAID);
+            $reqAddOper->setOperationNote($note);
             $trans = [
                 ATransaction::A_DEBIT_ACC_ID => $respGetAccSys->getId(),
                 ATransaction::A_CREDIT_ACC_ID => $respGetAccCust->getId(),
                 ATransaction::A_VALUE => $pvTotal,
-                ATransaction::A_DATE_APPLIED => $dateApplied
+                ATransaction::A_DATE_APPLIED => $dateApplied,
+                ATransaction::A_NOTE => $note
             ];
             $reqAddOper->setTransactions([$trans]);
             $respAddOper = $this->servOper->exec($reqAddOper);
@@ -82,15 +95,29 @@ class Pv
         return $result;
     }
 
-    private function getSaleOrderCustomerId($saleId)
+    private function getMlmId($custId)
     {
-        $data = $this->daoGeneric->getEntityByPk(
-            Cfg::ENTITY_MAGE_SALES_ORDER,
-            [Cfg::E_COMMON_A_ENTITY_ID => $saleId],
-            [Cfg::E_SALE_ORDER_A_CUSTOMER_ID]
-        );
-        $result = $data[Cfg::E_SALE_ORDER_A_CUSTOMER_ID];
+        $entity = $this->daoDwnlCust->getById($custId);
+        $result = $entity->getMlmId();
         return $result;
     }
 
+    /**
+     * Get significant attributes of the sale order.
+     *
+     * @param int $saleId
+     * @return array [$custId, $incId]
+     */
+    private function getSaleOrderData($saleId)
+    {
+        /* get referral customer ID */
+        $entity = $this->daoGeneric->getEntityByPk(
+            Cfg::ENTITY_MAGE_SALES_ORDER,
+            [Cfg::E_COMMON_A_ENTITY_ID => $saleId],
+            [Cfg::E_SALE_ORDER_A_CUSTOMER_ID, Cfg::E_SALE_ORDER_A_INCREMENT_ID]
+        );
+        $custId = $entity[Cfg::E_SALE_ORDER_A_CUSTOMER_ID];
+        $incId = $entity[Cfg::E_SALE_ORDER_A_INCREMENT_ID];
+        return [$custId, $incId];
+    }
 }

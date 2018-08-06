@@ -7,8 +7,8 @@
     <!-- *** -->
     <preference for="Praxigento\Pv\Api\Helper\GetPv"
                 type="Praxigento\Pv\Helper\GetPv"/>
-    <preference for="Praxigento\Pv\Api\Transfer\Customer\BetweenInterface"
-                type="Praxigento\Pv\Api\Transfer\Customer\Between"/>
+    <preference for="Praxigento\Pv\Api\Service\Sale\Account\Pv"
+                type="Praxigento\Pv\Service\Sale\Account\Pv"/>
 
 
     <!-- ******** -->
