@@ -36,15 +36,11 @@ class Register
      */
     public function accountPv(\Magento\Sales\Api\Data\OrderInterface $order)
     {
-        $state = $order->getState();
-        if ($state == \Magento\Sales\Model\Order::STATE_PROCESSING) {
-            /* transfer PV if order is paid */
-            $orderId = $order->getEntityId();
-            /** @var \Praxigento\Pv\Api\Service\Sale\Account\Pv\Request $req */
-            $req = new \Praxigento\Pv\Api\Service\Sale\Account\Pv\Request();
-            $req->setSaleOrderId($orderId);
-            $this->servPvAccount->exec($req);
-        }
+        /* sale state validation should be performed before */
+        $orderId = $order->getEntityId();
+        $req = new \Praxigento\Pv\Api\Service\Sale\Account\Pv\Request();
+        $req->setSaleOrderId($orderId);
+        $this->servPvAccount->exec($req);
     }
 
     /**
