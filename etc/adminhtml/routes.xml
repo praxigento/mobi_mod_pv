@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="admin">
+        <!-- route ID should be equal to the route front name (https://github.com/magento/magento2/pull/11020) -->
+        <!-- route ID must match to pattern "[A-Za-z0-9_]{3,}" -->
+        <route id="ppv" frontName="ppv">
+            <module name="Praxigento_Pv"/>
+        </route>
+    </router>
+</config>

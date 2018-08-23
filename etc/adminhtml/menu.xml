@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Praxigento_Pv::accounts"
+             title="PV Module"
+             translate="title"
+             module="Praxigento_Pv"
+             sortOrder="2000"
+             parent="Praxigento_Accounting::accounts"
+             resource="Praxigento_Pv::admin"/>
+        <add id="Praxigento_Pv::transfers_upload"
+             title="PV Transfers Upload"
+             translate="title"
+             module="Praxigento_Pv"
+             sortOrder="2100"
+             parent="Praxigento_Pv::accounts"
+             action="ppv/transfers_upload"
+             resource="Praxigento_Pv::transfers_upload"/>
+    </menu>
+</config>

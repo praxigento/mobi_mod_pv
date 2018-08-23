@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <!-- ******************************************************************************** -->
+    <!-- For format sample see "module-customer/view/base/ui_component/customer_form.xml" -->
+    <!-- ******************************************************************************** -->
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">prxgt_pv_transfers_upload_01.step_01_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">WTF?????</item>
+    </argument>
+
+    <settings>
+        <buttons>
+            <button name="save" class="Praxigento\Pv\Block\Adminhtml\Button\Upload"/>
+        </buttons>
+        <layout>
+            <type>tabs</type>
+        </layout>
+        <deps>
+            <dep>prxgt_pv_transfers_upload_01.step_01_data_source</dep>
+        </deps>
+    </settings>
+
+    <dataSource name="step_01_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="bonus/overview/post"/>
+        </settings>
+        <dataProvider class="Praxigento\Santegra\Ui\DataProvider" name="step_01_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <!-- See \Praxigento\Santegra\Block\Adminhtml\Bonus\Overview\Report::FIELDSET -->
+    <fieldset name="bonus_overview">
+
+        <!-- CSV File. See in "\Praxigento\Pv\Controller\Adminhtml\Transfers\Upload\Save::PARAM_FILE" -->
+        <field name="csv_file">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string">CSV File</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="formElement" xsi:type="string">fileUploader</item>
+                    <item name="maxFileSize" xsi:type="number">2097152</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>
+                    <item name="uploaderConfig" xsi:type="array">
+                        <item name="url" xsi:type="url" path="ppv/transfers_upload/save"/>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
+    </fieldset>
+</form>
