@@ -236,6 +236,231 @@
                     }
                   }
                 }
+              },
+              "Transfer": {
+                "alias": "trans",
+                "comment": "PV Transfers",
+                "entity": {
+                  "Batch": {
+                    "alias": "batch",
+                    "comment": "PV Transfers batches.",
+                    "attribute": {
+                      "Id": {
+                        "alias": "id",
+                        "comment": "Entity ID.",
+                        "nullable": false,
+                        "type": {
+                          "integer": {
+                            "unsigned": true
+                          }
+                        }
+                      },
+                      "UserRef": {
+                        "alias": "user_ref",
+                        "comment": "Admin user reference.",
+                        "nullable": true,
+                        "type": {
+                          "integer": {
+                            "unsigned": true
+                          }
+                        }
+                      },
+                      "CustomerRef": {
+                        "alias": "cust_ref",
+                        "comment": "Customer reference.",
+                        "nullable": true,
+                        "type": {
+                          "integer": {
+                            "unsigned": true
+                          }
+                        }
+                      }
+                    },
+                    "index": {
+                      "PK": {
+                        "type": "primary",
+                        "aliases": [
+                          "id"
+                        ]
+                      }
+                    },
+                    "relation": {
+                      "toAdminUser": {
+                        "own": {
+                          "aliases": [
+                            "user_ref"
+                          ]
+                        },
+                        "reference": {
+                          "entity": {
+                            "completeAlias": "admin_user"
+                          },
+                          "aliases": [
+                            "user_id"
+                          ]
+                        },
+                        "action": {
+                          "delete": "cascade",
+                          "update": "cascade"
+                        }
+                      },
+                      "toCustomer": {
+                        "own": {
+                          "aliases": ["cust_ref"]
+                        },
+                        "reference": {
+                          "entity": {
+                            "completeAlias": "prxgt_dwnl_customer"
+                          },
+                          "aliases": ["customer_ref"]
+                        },
+                        "action": {
+                          "delete": "cascade",
+                          "update": "cascade"
+                        }
+                      }
+                    }
+                  }
+                },
+                "package": {
+                  "Batch": {
+                    "alias": "batch",
+                    "comment": "PV Transfers Batches",
+                    "entity": {
+                      "Item": {
+                        "alias": "item",
+                        "comment": "Items of PV Transfers batches.",
+                        "attribute": {
+                          "Id": {
+                            "alias": "id",
+                            "comment": "Entity ID.",
+                            "nullable": false,
+                            "type": {
+                              "integer": {
+                                "unsigned": true
+                              }
+                            }
+                          },
+                          "BatchRef": {
+                            "alias": "batch_ref",
+                            "comment": "PV Transfers Batch reference.",
+                            "nullable": true,
+                            "type": {
+                              "integer": {
+                                "unsigned": true
+                              }
+                            }
+                          },
+                          "CustomerFromRef": {
+                            "alias": "cust_from_ref",
+                            "comment": "Sender reference.",
+                            "nullable": true,
+                            "type": {
+                              "integer": {
+                                "unsigned": true
+                              }
+                            }
+                          },
+                          "CustomerToRef": {
+                            "alias": "cust_to_ref",
+                            "comment": "Receiver reference.",
+                            "nullable": false,
+                            "type": {
+                              "integer": {
+                                "unsigned": true
+                              }
+                            }
+                          },
+                          "Value": {
+                            "alias": "value",
+                            "comment": "Value for PV transfer (should be positive).",
+                            "nullable": false,
+                            "default": 0,
+                            "type": {
+                              "numeric": {
+                                "precision": 12,
+                                "scale": 4
+                              }
+                            }
+                          },
+                          "Restricted": {
+                            "alias": "restricted",
+                            "comment": "'true' if current transfer is restricted by logic (admin users can perform these transfers with warning).",
+
+                            "nullable": false,
+                            "default": false,
+                            "type": {
+                              "boolean": {}
+                            }
+                          }
+                        },
+                        "index": {
+                          "PK": {
+                            "type": "primary",
+                            "aliases": [
+                              "id"
+                            ]
+                          },
+                          "Unique": {
+                            "type": "unique",
+                            "aliases": [
+                              "batch_ref",
+                              "cust_from_ref",
+                              "cust_to_ref"
+                            ]
+                          }
+                        },
+                        "relation": {
+                          "toBatch": {
+                            "own": {
+                              "aliases": ["batch_ref"]
+                            },
+                            "reference": {
+                              "entity": {
+                                "completeAlias": "prxgt_pv_trans_batch"
+                              },
+                              "aliases": ["id"]
+                            },
+                            "action": {
+                              "delete": "cascade",
+                              "update": "cascade"
+                            }
+                          },
+                          "toCustomerFrom": {
+                            "own": {
+                              "aliases": ["cust_from_ref"]
+                            },
+                            "reference": {
+                              "entity": {
+                                "completeAlias": "prxgt_dwnl_customer"
+                              },
+                              "aliases": ["customer_ref"]
+                            },
+                            "action": {
+                              "delete": "cascade",
+                              "update": "cascade"
+                            }
+                          },
+                          "toCustomerTo": {
+                            "own": {
+                              "aliases": ["cust_to_ref"]
+                            },
+                            "reference": {
+                              "entity": {
+                                "completeAlias": "prxgt_dwnl_customer"
+                              },
+                              "aliases": ["customer_ref"]
+                            },
+                            "action": {
+                              "delete": "cascade",
+                              "update": "cascade"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             },
             "entity": {

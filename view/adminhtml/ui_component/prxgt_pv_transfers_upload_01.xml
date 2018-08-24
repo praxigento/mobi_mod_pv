@@ -43,6 +43,10 @@
 
     <!-- See \Praxigento\Santegra\Block\Adminhtml\Bonus\Overview\Report::FIELDSET -->
     <fieldset name="bonus_overview">
+        <!-- Don't remove "settings/label" section, fieldset will be empty on the front -->
+        <settings>
+            <label></label>
+        </settings>
 
         <!-- CSV File. See in "\Praxigento\Pv\Controller\Adminhtml\Transfers\Upload\Save::PARAM_FILE" -->
         <field name="csv_file">

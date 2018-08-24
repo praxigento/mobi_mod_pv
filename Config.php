@@ -25,4 +25,5 @@ class Config extends \Praxigento\Core\Config
     const MENU_TRANSFERS_UPLOAD = 'transfers_upload';
 
     const MODULE = 'Praxigento_Pv';
+    const MOD_VERSION_0_1_0 = '0.1.0';
 }

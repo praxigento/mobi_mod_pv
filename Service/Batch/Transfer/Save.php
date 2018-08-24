@@ -28,6 +28,9 @@ class Save
     {
         assert($request instanceof ARequest);
         $result = new AResponse();
+        $file = $request->getFile();
+        $entries = $this->hlpCsv->read($file);
+
         return $result;
     }
 }
