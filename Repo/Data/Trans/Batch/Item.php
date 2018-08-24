@@ -13,8 +13,8 @@ class Item
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const A_BATCH_REF = 'batch_ref';
-    const A_CUST_REF_FROM = 'cust_ref_from';
-    const A_CUST_REF_TO = 'cust_ref_to';
+    const A_CUST_FROM_REF= 'cust_from_ref';
+    const A_CUST_TO_REF = 'cust_to_ref';
     const A_ID = 'id';
     const A_RESTRICTED = 'restricted';
     const A_VALUE = 'value';
@@ -29,16 +29,16 @@ class Item
     }
 
     /** @return int */
-    public function getCustRefFrom()
+    public function getCustFromRef()
     {
-        $result = parent::get(self::A_CUST_REF_FROM);
+        $result = parent::get(self::A_CUST_FROM_REF);
         return $result;
     }
 
     /** @return int */
-    public function getCustRefTo()
+    public function getCustToRef()
     {
-        $result = parent::get(self::A_CUST_REF_TO);
+        $result = parent::get(self::A_CUST_TO_REF);
         return $result;
     }
 
@@ -75,15 +75,15 @@ class Item
     }
 
     /** @param int $data */
-    public function setCustRefFrom($data)
+    public function setCustFromRef($data)
     {
-        parent::set(self::A_CUST_REF_FROM, $data);
+        parent::set(self::A_CUST_FROM_REF, $data);
     }
 
     /** @param int $data */
-    public function setCustRefTo($data)
+    public function setCustToRef($data)
     {
-        parent::set(self::A_CUST_REF_TO, $data);
+        parent::set(self::A_CUST_TO_REF, $data);
     }
 
     /** @param int $data */

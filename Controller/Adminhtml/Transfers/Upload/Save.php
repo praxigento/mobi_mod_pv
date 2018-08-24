@@ -39,7 +39,6 @@ class Save
 
     public function execute()
     {
-        $q = 5;
         $dirMedia = $this->filesystem->getDirectoryWrite(ADirList::MEDIA);
         $dirTarget = $dirMedia->getAbsolutePath('uploader/');
         $fileId = self::FIELDSET . '[' . self::FIELD_CSV_FILE . ']';

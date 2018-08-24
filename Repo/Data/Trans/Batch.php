@@ -14,7 +14,7 @@ class Batch
 {
     const A_CUST_REF = 'cust_ref';
     const A_ID = 'id';
-    const A_USER_REG = 'user_ref';
+    const A_USER_REF = 'user_ref';
 
     const ENTITY_NAME = 'prxgt_pv_trans_batch';
 
@@ -40,7 +40,7 @@ class Batch
     /** @return int */
     public function getUserRef()
     {
-        $result = parent::get(self::A_USER_REG);
+        $result = parent::get(self::A_USER_REF);
         return $result;
     }
 
@@ -59,7 +59,7 @@ class Batch
     /** @param int $data */
     public function setUserRef($data)
     {
-        parent::set(self::A_USER_REG, $data);
+        parent::set(self::A_USER_REF, $data);
     }
 
 }

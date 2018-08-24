@@ -20,7 +20,7 @@ class Batch
 
     /**
      * @param Entity|array $data
-     * @return Entity
+     * @return int|null
      */
     public function create($data) {
         $result = parent::create($data);

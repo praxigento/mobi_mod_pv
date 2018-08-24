@@ -4,7 +4,7 @@
  * Since: 2018
  */
 
-namespace Praxigento\Pv\Service\Batch\Transfer\Z\Data;
+namespace Praxigento\Pv\Service\Batch\Transfer\Save\A\Data;
 
 /**
  * CSV file item.
