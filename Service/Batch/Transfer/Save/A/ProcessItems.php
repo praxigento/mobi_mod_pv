@@ -44,7 +44,7 @@ class ProcessItems
     /**
      * Remove all existing batches for currently logged in admin user.
      *
-     * @return \Praxigento\Pv\Repo\Data\Trans\Batch
+     * @return int
      * @throws \Exception
      */
     private function cleanBatches($userId)
@@ -57,7 +57,7 @@ class ProcessItems
     /**
      * Register new batch for currently logged in admin user.
      *
-     * @return \Praxigento\Pv\Repo\Data\Trans\Batch
+     * @return int
      * @throws \Exception
      */
     private function createBatch($userId)
@@ -70,6 +70,7 @@ class ProcessItems
 
     /**
      * @param DItem[] $items
+     * @return array [$batchId, $senderErrors, $receiverErrors]
      */
     public function exec($items)
     {
@@ -78,6 +79,7 @@ class ProcessItems
 
         $this->cleanBatches($userId);
         $batchId = $this->createBatch($userId);
+        $senderErrors = $receiverErrors = [];
 
         $map = $this->getMapByMlmId();
         foreach ($items as $item) {
@@ -85,31 +87,34 @@ class ProcessItems
             $mlmIdTo = $item->to;
             $value = $item->value;
 
+            /* errors flag for one iteration */
+            $errors = false;
             if (isset($map[$mlmIdFrom])) {
                 $idFrom = $map[$mlmIdFrom];
             } else {
-                $msg = "Sender MLM ID #%1 is not set.";
-                $phrase = new \Magento\Framework\Phrase($msg, [$mlmIdFrom]);
-                throw new \Magento\Framework\Exception\LocalizedException($phrase);
+                $senderErrors[] = $mlmIdFrom;
+                $errors = true;
             }
             if (isset($map[$mlmIdTo])) {
                 $idTo = $map[$mlmIdTo];
             } else {
-                $msg = "Receiver MLM ID #%1 is not set.";
-                $phrase = new \Magento\Framework\Phrase($msg, [$mlmIdFrom]);
-                throw new \Magento\Framework\Exception\LocalizedException($phrase);
+                $receiverErrors[] = $mlmIdTo;
+                $errors = true;
             }
 
-            $amount = abs($value);
+            if (!$errors) {
+                $amount = abs($value);
 
-            $entity = new EBatchItem();
-            $entity->setBatchRef($batchId);
-            $entity->setCustFromRef($idFrom);
-            $entity->setCustToRef($idTo);
-            $entity->setValue($amount);
+                $entity = new EBatchItem();
+                $entity->setBatchRef($batchId);
+                $entity->setCustFromRef($idFrom);
+                $entity->setCustToRef($idTo);
+                $entity->setValue($amount);
 
-            $this->daoBatchItem->create($entity);
+                $this->daoBatchItem->create($entity);
+            }
         }
+        return [$batchId, $senderErrors, $receiverErrors];
     }
 
     private function getMapByMlmId()

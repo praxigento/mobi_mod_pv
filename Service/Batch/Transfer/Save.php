@@ -35,7 +35,10 @@ class Save
         $result = new AResponse();
         $file = $request->getFile();
         $items = $this->readCsv($file);
-        $this->aProcItems->exec($items);
+        list($batchId, $senderErrors, $receiverErrors) = $this->aProcItems->exec($items);
+        $result->setBatchId($batchId);
+        $result->setSenderMlmIdError($senderErrors);
+        $result->setReceiverMlmIdError($receiverErrors);
         return $result;
     }
 

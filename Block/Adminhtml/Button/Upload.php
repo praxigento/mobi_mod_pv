@@ -12,7 +12,7 @@ class Upload
     public function getButtonData()
     {
         $data = [
-            'label' => __('Upload CSV'),
+            'label' => __('Preview Transfers'),
             'class' => 'save primary',
             'data_attribute' => [
                 'mage-init' => ['button' => ['event' => 'save']],
