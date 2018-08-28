@@ -85,8 +85,21 @@ class ProcessItems
             $mlmIdTo = $item->to;
             $value = $item->value;
 
-            $idFrom = $map[$mlmIdFrom];
-            $idTo = $map[$mlmIdTo];
+            if (isset($map[$mlmIdFrom])) {
+                $idFrom = $map[$mlmIdFrom];
+            } else {
+                $msg = "Sender MLM ID #%1 is not set.";
+                $phrase = new \Magento\Framework\Phrase($msg, [$mlmIdFrom]);
+                throw new \Magento\Framework\Exception\LocalizedException($phrase);
+            }
+            if (isset($map[$mlmIdTo])) {
+                $idTo = $map[$mlmIdTo];
+            } else {
+                $msg = "Receiver MLM ID #%1 is not set.";
+                $phrase = new \Magento\Framework\Phrase($msg, [$mlmIdFrom]);
+                throw new \Magento\Framework\Exception\LocalizedException($phrase);
+            }
+
             $amount = abs($value);
 
             $entity = new EBatchItem();

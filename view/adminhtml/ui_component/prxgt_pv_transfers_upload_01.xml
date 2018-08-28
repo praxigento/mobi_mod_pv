@@ -41,8 +41,8 @@
         </dataProvider>
     </dataSource>
 
-    <!-- See \Praxigento\Santegra\Block\Adminhtml\Bonus\Overview\Report::FIELDSET -->
-    <fieldset name="bonus_overview">
+    <!-- See \Praxigento\Pv\Controller\Adminhtml\Transfers\Upload\Save::FIELDSET -->
+    <fieldset name="pv_transfers_upload">
         <!-- Don't remove "settings/label" section, fieldset will be empty on the front -->
         <settings>
             <label></label>
