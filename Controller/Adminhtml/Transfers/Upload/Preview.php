@@ -6,11 +6,13 @@
 
 namespace Praxigento\Pv\Controller\Adminhtml\Transfers\Upload;
 
+use Praxigento\Pv\Config as Cfg;
+
 /**
  * Process previously saved CSV items and compose report for UI.
  */
 class Preview
-    extends \Magento\Backend\App\Action
+    extends \Praxigento\Core\App\Action\Back\Base
 {
     const FIELDSET = 'pv_transfers_upload';
     const FIELD_CSV_FILE = 'csv_file';
@@ -18,32 +20,34 @@ class Preview
 
     /** @var \Psr\Log\LoggerInterface */
     private $logger;
-    /** @var \Praxigento\Pv\Controller\Adminhtml\Transfers\Upload\Z\BatchIdStore */
-    private $zBatchIdStore;
+    /** @var \Praxigento\Pv\Helper\BatchIdStore */
+    private $hlpBatchIdStore;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Praxigento\Core\Api\App\Logger\Main $logger,
-        \Praxigento\Pv\Controller\Adminhtml\Transfers\Upload\Z\BatchIdStore $zBatchIdStore
+        \Praxigento\Pv\Helper\BatchIdStore $hlpBatchIdStore
     ) {
-        parent::__construct($context);
+        $aclResource = Cfg::MODULE . '::' . Cfg::ACL_TRANSFERS_UPLOAD;
+        $activeMenu = Cfg::MODULE . '::' . Cfg::MENU_TRANSFERS_UPLOAD;
+        $breadcrumbLabel = 'PV Transfers Preview';
+        $breadcrumbTitle = 'PV Transfers Preview';
+        $pageTitle = 'PV Transfers Preview';
+        parent::__construct(
+            $context,
+            $aclResource,
+            $activeMenu,
+            $breadcrumbLabel,
+            $breadcrumbTitle,
+            $pageTitle
+        );
         $this->logger = $logger;
-        $this->zBatchIdStore = $zBatchIdStore;
+        $this->hlpBatchIdStore = $hlpBatchIdStore;
     }
 
     public function execute()
     {
-        $result = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_JSON);
-        try {
-            $batchId = $this->zBatchIdStore->restoreBatchId();
-            $this->logger->info("Processing PV transfers batch #$batchId.");
-            $data = ['result' => true];
-        } catch (\Exception $e) {
-            $data = ['error' => $e->getMessage(), 'errorcode' => $e->getCode()];
-        }
-
-        /* return uploaded file data to UI for preview */
-        $result->setData($data);
+        $result = parent::execute();
         return $result;
     }
 

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">prxgt_pv_transfers_upload_02.preview_ds</item>
+            <item name="deps" xsi:type="string">prxgt_pv_transfers_upload_02.preview_ds</item>
+        </item>
+        <item name="spinner" xsi:type="string">preview_columns</item>
+    </argument>
+
+
+    <settings>
+        <!--<buttons>-->
+        <!--<button name="save" class="Praxigento\Pv\Block\Adminhtml\Button\Upload"/>-->
+        <!--</buttons>-->
+    </settings>
+
+    <dataSource name="preview_ds">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Praxigento\Core\App\Ui\DataProvider\Grid\Base</argument>
+            <argument name="name" xsi:type="string">preview_ds</argument>
+            <argument name="gridQueryBuilder" xsi:type="object">Praxigento\Pv\Ui\DataProvider\Grid\Transfers\Query</argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+
+    <columns name="preview_columns">
+
+        <column name="itemId">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">Item ID</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="fromId">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Sender ID</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="fromMlmId">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Sender MLM ID</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="toId">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Receiver ID</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="toMlmId">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Receiver MLM ID</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="value">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Value</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="restricted">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Restricted</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="batchId">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Batch ID</item>
+                </item>
+            </argument>
+        </column>
+
+    </columns>
+
+</listing>

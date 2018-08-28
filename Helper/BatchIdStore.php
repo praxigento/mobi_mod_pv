@@ -4,11 +4,11 @@
  * Since: 2018
  */
 
-namespace Praxigento\Pv\Controller\Adminhtml\Transfers\Upload\Z;
+namespace Praxigento\Pv\Helper;
 
 
 /**
- * Save restore batch ID between processing steps (controlles).
+ * Save restore PV transfers batch ID between processing steps.
  */
 class BatchIdStore
 {

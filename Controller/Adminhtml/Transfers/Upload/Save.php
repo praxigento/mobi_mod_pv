@@ -29,8 +29,8 @@ class Save
     private $logger;
     /** @var \Praxigento\Pv\Service\Batch\Transfer\Save */
     private $srvSave;
-    /** @var \Praxigento\Pv\Controller\Adminhtml\Transfers\Upload\Z\BatchIdStore  */
-    private $zBatchIdStore;
+    /** @var \Praxigento\Pv\Helper\BatchIdStore  */
+    private $hlpBatchIdStore;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -38,14 +38,14 @@ class Save
         \Magento\MediaStorage\Model\File\UploaderFactory $factUploader,
         \Praxigento\Core\Api\App\Logger\Main $logger,
         \Praxigento\Pv\Service\Batch\Transfer\Save $srvSave,
-        \Praxigento\Pv\Controller\Adminhtml\Transfers\Upload\Z\BatchIdStore $zBatchIdStore
+        \Praxigento\Pv\Helper\BatchIdStore $hlpBatchIdStore
     ) {
         parent::__construct($context);
         $this->filesystem = $filesystem;
         $this->factUploader = $factUploader;
         $this->logger = $logger;
         $this->srvSave = $srvSave;
-        $this->zBatchIdStore = $zBatchIdStore;
+        $this->hlpBatchIdStore = $hlpBatchIdStore;
     }
 
     public function execute()
@@ -85,7 +85,7 @@ class Save
 
         /* log batch ID and save it to further processin (in next controllers) */
         $this->logger->info("New batch #$batchId is created for uploaded CSV file.");
-        $this->zBatchIdStore->saveBatchId($batchId);
+        $this->hlpBatchIdStore->saveBatchId($batchId);
 
         /* analyze response and compose error message for logs & admin UI */
         if (is_array($senderErrors) && count($senderErrors)) {

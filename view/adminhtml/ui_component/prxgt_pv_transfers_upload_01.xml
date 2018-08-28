@@ -33,10 +33,6 @@
             <submitUrl path="ppv/transfers_upload/preview"/>
         </settings>
         <dataProvider class="Praxigento\Santegra\Ui\DataProvider" name="step_01_data_source">
-            <settings>
-                <requestFieldName>id</requestFieldName>
-                <primaryFieldName>entity_id</primaryFieldName>
-            </settings>
         </dataProvider>
     </dataSource>
 
