@@ -1,0 +1,21 @@
+<?php
+/**
+ * Authors: Alex Gusev <alex@flancer64.com>
+ * Since: 2018
+ */
+/** @var \Praxigento\Pv\Block\Adminhtml\Transfers\Upload\Result $block */
+?>
+
+<div>
+    <?php if ($block->getIsBatchMissed()): ?>
+        <div><span><?= __('Current batch is already processed.') ?></span></div>
+    <?php else: ?>
+        <div><span><?= __('Batch ID') ?>: </span><span><?= $block->getBatchId() ?></span></div>
+        <?php if ($block->getIsSucceed()): ?>
+            <div><span><?= __('Operation ID') ?>: </span><span><?= $block->getOperationId() ?></span></div>
+        <?php else: ?>
+            <div><span><?= __('Operation is failed.') ?></span></div>
+        <?php endif; ?>
+    <?php endif; ?>
+</div>
+

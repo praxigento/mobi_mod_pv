@@ -10,6 +10,9 @@ use Praxigento\Pv\Service\Batch\Transfer\Save\A\Data\Item as DItem;
 use Praxigento\Pv\Service\Batch\Transfer\Save\Request as ARequest;
 use Praxigento\Pv\Service\Batch\Transfer\Save\Response as AResponse;
 
+/**
+ * Parse CSV file data and save it to DB.
+ */
 class Save
 {
     /** @var \Praxigento\Pv\Service\Batch\Transfer\Save\A\ProcessItems */

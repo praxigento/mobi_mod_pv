@@ -29,6 +29,16 @@ class Item
     }
 
     /**
+     * @param int $batchId
+     * @return \Praxigento\Pv\Repo\Data\Trans\Batch\Item[]
+     */
+    public function getByBatchId($batchId)
+    {
+        $where = Entity::A_BATCH_REF . '=' . (int)$batchId;
+        $result = $this->get($where);
+        return $result;
+    }
+    /**
      * Generic method to get data from repository.
      *
      * @param null $where

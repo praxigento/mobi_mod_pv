@@ -12,9 +12,13 @@
 
 
     <settings>
-        <!--<buttons>-->
-        <!--<button name="save" class="Praxigento\Pv\Block\Adminhtml\Button\Upload"/>-->
-        <!--</buttons>-->
+        <buttons>
+            <button name="process">
+                <url path="ppv/transfers_upload/process"/>
+                <class>primary</class>
+                <label translate="true">Process</label>
+            </button>
+        </buttons>
     </settings>
 
     <dataSource name="preview_ds">

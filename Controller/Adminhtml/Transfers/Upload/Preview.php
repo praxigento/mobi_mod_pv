@@ -14,19 +14,8 @@ use Praxigento\Pv\Config as Cfg;
 class Preview
     extends \Praxigento\Core\App\Action\Back\Base
 {
-    const FIELDSET = 'pv_transfers_upload';
-    const FIELD_CSV_FILE = 'csv_file';
-    const MEDIA_SUBFOLDER = 'uploader/';
-
-    /** @var \Psr\Log\LoggerInterface */
-    private $logger;
-    /** @var \Praxigento\Pv\Helper\BatchIdStore */
-    private $hlpBatchIdStore;
-
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Praxigento\Core\Api\App\Logger\Main $logger,
-        \Praxigento\Pv\Helper\BatchIdStore $hlpBatchIdStore
+        \Magento\Backend\App\Action\Context $context
     ) {
         $aclResource = Cfg::MODULE . '::' . Cfg::ACL_TRANSFERS_UPLOAD;
         $activeMenu = Cfg::MODULE . '::' . Cfg::MENU_TRANSFERS_UPLOAD;
@@ -41,14 +30,6 @@ class Preview
             $breadcrumbTitle,
             $pageTitle
         );
-        $this->logger = $logger;
-        $this->hlpBatchIdStore = $hlpBatchIdStore;
-    }
-
-    public function execute()
-    {
-        $result = parent::execute();
-        return $result;
     }
 
 }

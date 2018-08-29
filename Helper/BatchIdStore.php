@@ -32,4 +32,9 @@ class BatchIdStore
     {
         $this->sessAdmin->setData(self::SESS_BATCH_ID, $id);
     }
+
+    public function cleanBatchId()
+    {
+        $this->sessAdmin->getData(self::SESS_BATCH_ID, true);
+    }
 }
