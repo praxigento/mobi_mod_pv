@@ -2,24 +2,24 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Pv\Observer;
 
 /**
- * Registry PV on order submit.
+ * Registry PV on order submit and account PV if order being paid by credit card.
  */
-class CheckoutSubmitAllAfter
+class SalesModelServiceQuoteSubmitSuccess
     implements \Magento\Framework\Event\ObserverInterface
 {
     /* Names for the items in the event's data */
     const DATA_ORDER = 'order';
 
-    /** @var \Praxigento\Pv\Observer\Z\Register */
+    /** @var \Praxigento\Pv\Observer\Z\PvRegister */
     private $zRegister;
 
     public function __construct(
-        \Praxigento\Pv\Observer\Z\Register $zRegister
+        \Praxigento\Pv\Observer\Z\PvRegister $zRegister
     ) {
-
         $this->zRegister = $zRegister;
     }
 

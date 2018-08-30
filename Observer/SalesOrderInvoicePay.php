@@ -5,12 +5,9 @@
 
 namespace Praxigento\Pv\Observer;
 
-use Praxigento\Pv\Repo\Data\Sale as ESale;
-
 /**
- * Update 'date_paid' in PV register and account PV when order is paid completely (bank transfer).
- *
- * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * This branch is used for check/money payments only.
+ * Update 'date_paid' in PV register and account PV when order is paid completely.
  */
 class SalesOrderInvoicePay
     implements \Magento\Framework\Event\ObserverInterface
@@ -20,23 +17,20 @@ class SalesOrderInvoicePay
 
     /** @var \Praxigento\Core\Api\Helper\Date */
     private $hlpDate;
-    /** @var \Praxigento\Core\Api\App\Logger\Main */
-    private $logger;
-    /** @var \Praxigento\Pv\Observer\Z\Register */
-    private $ownRegister;
+    /** @var \Praxigento\Pv\Observer\Z\PvRegister */
+    private $zRegister;
     /** @var \Praxigento\Pv\Repo\Dao\Sale */
     private $daoSale;
 
     public function __construct(
-        \Praxigento\Core\Api\App\Logger\Main $logger,
+
         \Praxigento\Pv\Repo\Dao\Sale $daoSale,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
-        \Praxigento\Pv\Observer\Z\Register $ownRegister
+        \Praxigento\Pv\Observer\Z\PvRegister $zRegister
     ) {
-        $this->logger = $logger;
         $this->daoSale = $daoSale;
         $this->hlpDate = $hlpDate;
-        $this->ownRegister = $ownRegister;
+        $this->zRegister = $zRegister;
     }
 
     public function execute(\Magento\Framework\Event\Observer $observer)
@@ -45,17 +39,13 @@ class SalesOrderInvoicePay
         $invoice = $observer->getData(self::DATA_INVOICE);
         $state = $invoice->getState();
         if ($state == \Magento\Sales\Model\Order\Invoice::STATE_PAID) {
-            /* update date_paid in the PV registry */
             /** @var \Magento\Sales\Model\Order $order */
             $order = $invoice->getOrder();
+            /* $orderId is null for orders being paid by credit card */
             $orderId = $order->getEntityId();
             if ($orderId) {
-                $datePaid = $this->hlpDate->getUtcNowForDb();
-                $this->logger->debug("Update paid date in PV registry on sale order (#$orderId) is paid.");
-                $data = [ESale::A_DATE_PAID => $datePaid];
-                $this->daoSale->updateById($orderId, $data);
-                /* transfer PV to customer account */
-                $this->ownRegister->accountPv($order);
+                /* this order is paid by check/money order, transfer PV to the customer account */
+                $this->zRegister->accountPv($order);
             }
         }
     }

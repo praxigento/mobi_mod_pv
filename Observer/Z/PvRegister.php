@@ -4,28 +4,42 @@
  */
 namespace Praxigento\Pv\Observer\Z;
 
+use Praxigento\Pv\Repo\Data\Sale as ESale;
+
 /**
- * Z-classes are shared between classes of this level hierarchy or below (\Praxigento\Pv\Observer\...).
- *
- * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * - account PV (transfer PV to customer account)
+ * - register PV for the sale order
+ * - update paid date in sale order registry
  */
-class Register
+class PvRegister
 {
+    /** @var \Praxigento\Core\Api\App\Logger\Main */
+    private $logger;
+    /** @var \Praxigento\Pv\Repo\Dao\Sale */
+    private $daoSale;
+    /** @var \Praxigento\Core\Api\Helper\Date */
+    private $hlpDate;
     /** @var  \Praxigento\Warehouse\Api\Helper\Stock */
     private $hlpStock;
     /** @var \Praxigento\Pv\Api\Service\Sale\Account\Pv */
-    private $servPvAccount;
+    private $srvPvAccount;
     /** @var \Praxigento\Pv\Service\Sale\Save */
-    private $servPvSave;
+    private $srvPvSave;
 
     public function __construct(
+        \Praxigento\Core\Api\App\Logger\Main $logger,
+        \Praxigento\Pv\Repo\Dao\Sale $daoSale,
         \Praxigento\Warehouse\Api\Helper\Stock $hlpStock,
-        \Praxigento\Pv\Api\Service\Sale\Account\Pv $servPvAccount,
-        \Praxigento\Pv\Service\Sale\Save $servPvSave
+        \Praxigento\Core\Api\Helper\Date $hlpDate,
+        \Praxigento\Pv\Api\Service\Sale\Account\Pv $srvPvAccount,
+        \Praxigento\Pv\Service\Sale\Save $srvPvSave
     ) {
+        $this->logger = $logger;
+        $this->daoSale = $daoSale;
         $this->hlpStock = $hlpStock;
-        $this->servPvAccount = $servPvAccount;
-        $this->servPvSave = $servPvSave;
+        $this->hlpDate = $hlpDate;
+        $this->srvPvAccount = $srvPvAccount;
+        $this->srvPvSave = $srvPvSave;
     }
 
     /**
@@ -38,9 +52,12 @@ class Register
     {
         /* sale state validation should be performed before */
         $orderId = $order->getEntityId();
+        /* update record state in the registry */
+        $this->updateDatePaid($orderId);
+        /* ... then transfer PV to the customer account */
         $req = new \Praxigento\Pv\Api\Service\Sale\Account\Pv\Request();
         $req->setSaleOrderId($orderId);
-        $this->servPvAccount->exec($req);
+        $this->srvPvAccount->exec($req);
     }
 
     /**
@@ -107,6 +124,19 @@ class Register
         if ($state == \Magento\Sales\Model\Order::STATE_PROCESSING) {
             $req->setSaleOrderDatePaid($dateCreated);
         }
-        $this->servPvSave->exec($req);
+        $this->srvPvSave->exec($req);
+    }
+
+    /**
+     * Update paid date in sale order registry of PV module.
+     *
+     * @param int $orderId
+     */
+    private function updateDatePaid($orderId)
+    {
+        $datePaid = $this->hlpDate->getUtcNowForDb();
+        $data = [ESale::A_DATE_PAID => $datePaid];
+        $this->daoSale->updateById($orderId, $data);
+        $this->logger->info("Update paid date in PV registry when sale order (#$orderId) is paid.");
     }
 }
