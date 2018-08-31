@@ -43,6 +43,12 @@
             <label></label>
         </settings>
 
+        <htmlContent name="csv_file_sample">
+            <block class="Magento\Backend\Block\Template"
+                   name="csv_file_sample"
+                   template="Praxigento_Pv::transfer/sample.phtml"/>
+        </htmlContent>
+
         <!-- CSV File. See in "\Praxigento\Pv\Controller\Adminhtml\Transfers\Upload\Save::PARAM_FILE" -->
         <field name="csv_file">
             <argument name="data" xsi:type="array">
