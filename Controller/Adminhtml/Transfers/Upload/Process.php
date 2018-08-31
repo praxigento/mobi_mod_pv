@@ -18,12 +18,13 @@ class Process
     extends \Praxigento\Core\App\Action\Back\Base
 {
     const BLOCK = 'prxgt_pv_transfer_result';
+
     /** @var \Praxigento\Pv\Repo\Dao\Trans\Batch */
     private $daoBatch;
     /** @var \Praxigento\Pv\Helper\BatchIdStore */
     private $hlpBatchIdStore;
-    /** @var \Praxigento\Santegra\Helper\Acc\Pv\DateApplied */
-    private $hlpDateApplied;
+    /** @var \Praxigento\Core\Api\Helper\Date */
+    private $hlpDate;
     /** @var \Psr\Log\LoggerInterface */
     private $logger;
     /** @var \Praxigento\Pv\Service\Batch\Transfer\Process */
@@ -34,7 +35,7 @@ class Process
         \Praxigento\Core\Api\App\Logger\Main $logger,
         \Praxigento\Pv\Repo\Dao\Trans\Batch $daoBatch,
         \Praxigento\Pv\Helper\BatchIdStore $hlpBatchIdStore,
-        \Praxigento\Santegra\Helper\Acc\Pv\DateApplied $hlpDateApplied,
+        \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Pv\Service\Batch\Transfer\Process $servProcess
     ) {
         $aclResource = Cfg::MODULE . '::' . Cfg::ACL_TRANSFERS_UPLOAD;
@@ -52,9 +53,8 @@ class Process
         );
         $this->logger = $logger;
         $this->daoBatch = $daoBatch;
-        /** TODO: overwrite this controller in "mobi_app_santegra" and remove $hlpDateApplied from here */
-        $this->hlpDateApplied = $hlpDateApplied;
         $this->hlpBatchIdStore = $hlpBatchIdStore;
+        $this->hlpDate = $hlpDate;
         $this->servProcess = $servProcess;
     }
 
@@ -78,7 +78,8 @@ class Process
         $block->setBatchId($batchId);
         $block->setIsSucceed(false);
         if ($batchId) {
-            $dateApplied = $this->hlpDateApplied->get();
+            /* PV transfer for current month */
+            $dateApplied = $this->hlpDate->getMageNowForDb();
             $req = new ARequest();
             $req->setBatchId($batchId);
             $req->setDateApplied($dateApplied);

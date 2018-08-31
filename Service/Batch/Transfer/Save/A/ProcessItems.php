@@ -26,18 +26,22 @@ class ProcessItems
     private $hlpTree;
     /** @var \Magento\Backend\Model\Auth\Session */
     private $sessAdmin;
+    /** @var \Praxigento\Pv\Api\Helper\Validate\Transfer */
+    private $hlpValidTrans;
 
     public function __construct(
         \Magento\Backend\Model\Auth\Session $sessAdmin,
         \Praxigento\Downline\Repo\Dao\Customer $daoDwnlCust,
         \Praxigento\Pv\Repo\Dao\Trans\Batch $daoBatch,
         \Praxigento\Pv\Repo\Dao\Trans\Batch\Item $daoBatchItem,
+        \Praxigento\Pv\Api\Helper\Validate\Transfer $hlpValidTrans,
         \Praxigento\Downline\Api\Helper\Tree $hlpTree
     ) {
         $this->sessAdmin = $sessAdmin;
         $this->daoDwnlCust = $daoDwnlCust;
         $this->daoBatch = $daoBatch;
         $this->daoBatchItem = $daoBatchItem;
+        $this->hlpValidTrans = $hlpValidTrans;
         $this->hlpTree = $hlpTree;
     }
 
@@ -110,6 +114,9 @@ class ProcessItems
                 $entity->setCustFromRef($idFrom);
                 $entity->setCustToRef($idTo);
                 $entity->setValue($amount);
+
+                $restricted = $this->hlpValidTrans->isRestricted($entity);
+                $entity->setRestricted($restricted);
 
                 $this->daoBatchItem->create($entity);
             }

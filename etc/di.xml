@@ -5,6 +5,8 @@
     <!-- *** -->
     <!-- API -->
     <!-- *** -->
+    <preference for="Praxigento\Pv\Api\Helper\Validate\Transfer"
+                type="Praxigento\Pv\Helper\Validate\Transfer"/>
     <preference for="Praxigento\Pv\Api\Helper\GetPv"
                 type="Praxigento\Pv\Helper\GetPv"/>
     <preference for="Praxigento\Pv\Api\Service\Sale\Account\Pv"

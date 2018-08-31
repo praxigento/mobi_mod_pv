@@ -9,7 +9,7 @@ namespace Praxigento\Pv\Controller\Adminhtml\Transfers\Upload;
 use Praxigento\Pv\Config as Cfg;
 
 /**
- * Process previously saved CSV items and compose report for UI.
+ * Preview previously saved CSV items as adminhtml grid.
  */
 class Preview
     extends \Praxigento\Core\App\Action\Back\Base
