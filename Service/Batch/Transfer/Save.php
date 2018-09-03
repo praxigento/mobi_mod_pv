@@ -56,14 +56,17 @@ class Save
         $result = [];
         $entries = $this->hlpCsv->read($fullPath);
         foreach ($entries as $one) {
-            $from = $one[0];
-            $to = $one[1];
-            $value = $one[2];
+            $i=0;
+            $fromId = $one[$i++];
+            $fromName = $one[$i++];
+            $toId = $one[$i++];
+            $toName = $one[$i++];
+            $volume = $one[$i++];
 
             $item = new DItem();
-            $item->from = $from;
-            $item->to = $to;
-            $item->value = $value;
+            $item->from = $fromId;
+            $item->to = $toId;
+            $item->value = $volume;
             $result[] = $item;
         }
         return $result;
