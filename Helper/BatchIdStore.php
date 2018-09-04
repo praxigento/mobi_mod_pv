@@ -8,7 +8,7 @@ namespace Praxigento\Pv\Helper;
 
 
 /**
- * Save restore PV transfers batch ID between processing steps.
+ * Save and restore PV transfers batch ID into/from session between processing steps.
  */
 class BatchIdStore
 {
