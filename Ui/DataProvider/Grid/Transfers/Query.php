@@ -16,10 +16,10 @@ class Query
 {
     /**#@+ Tables aliases for external usage ('camelCase' naming) */
     const AS_FROM = 'f';
-    const AS_FROM_NAME = 'fn';
     const AS_ITEMS = 'i';
+    const AS_NAME_FROM = 'nf';
+    const AS_NAME_TO = 'nt';
     const AS_TO = 't';
-    const AS_TO_NAME = 'tn';
     /**#@- */
 
     /**#@+ Columns/expressions aliases for external usage */
@@ -37,10 +37,10 @@ class Query
 
     /**#@+ Entities are used in the query */
     const E_FROM = EDwnlCust::ENTITY_NAME;
-    const E_FROM_NAME = Cfg::ENTITY_MAGE_CUSTOMER;
     const E_ITEMS = EItem::ENTITY_NAME;
+    const E_NAME_FROM = Cfg::ENTITY_MAGE_CUSTOMER;
+    const E_NAME_TO = Cfg::ENTITY_MAGE_CUSTOMER;
     const E_TO = EDwnlCust::ENTITY_NAME;
-    const E_TO_NAME = Cfg::ENTITY_MAGE_CUSTOMER;
     /**#@- */
 
     /** @var \Praxigento\Pv\Helper\BatchIdStore */
@@ -57,16 +57,16 @@ class Query
 
     private function expFullNameFrom()
     {
-        $fullname = 'CONCAT(' . self::AS_FROM_NAME . '.' . Cfg::E_CUSTADDR_A_FIRSTNAME . ', " ", '
-            . self::AS_FROM_NAME . '.' . Cfg::E_CUSTADDR_A_LASTNAME . ')';
+        $fullname = 'CONCAT(' . self::AS_NAME_FROM . '.' . Cfg::E_CUSTOMER_A_FIRSTNAME . ', " ", '
+            . self::AS_NAME_FROM . '.' . Cfg::E_CUSTOMER_A_LASTNAME . ')';
         $result = new AnExpression($fullname);
         return $result;
     }
 
     private function expFullNameTo()
     {
-        $fullname = 'CONCAT(' . self::AS_TO_NAME . '.' . Cfg::E_CUSTADDR_A_FIRSTNAME . ', " ", '
-            . self::AS_TO_NAME . '.' . Cfg::E_CUSTADDR_A_LASTNAME . ')';
+        $fullname = 'CONCAT(' . self::AS_NAME_TO . '.' . Cfg::E_CUSTOMER_A_FIRSTNAME . ', " ", '
+            . self::AS_NAME_TO . '.' . Cfg::E_CUSTOMER_A_LASTNAME . ')';
         $result = new AnExpression($fullname);
         return $result;
     }
@@ -129,9 +129,9 @@ class Query
         /* define tables aliases for internal usage (in this method) */
         $asItems = self::AS_ITEMS;
         $asFrom = self::AS_FROM;
-        $asFromName = self::AS_FROM_NAME;
+        $asFromName = self::AS_NAME_FROM;
         $asTo = self::AS_TO;
-        $asToName = self::AS_TO_NAME;
+        $asToName = self::AS_NAME_TO;
 
         /* SELECT FROM prxgt_pv_trans_batch_item */
         $tbl = $this->resource->getTableName(self::E_ITEMS);
@@ -156,7 +156,7 @@ class Query
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN customer_entity (from) */
-        $tbl = $this->resource->getTableName(self::E_FROM_NAME);
+        $tbl = $this->resource->getTableName(self::E_NAME_FROM);
         $as = $asFromName;
         $exp = $this->expFullNameFrom();
         $cols = [
@@ -175,7 +175,7 @@ class Query
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN customer_entity (to) */
-        $tbl = $this->resource->getTableName(self::E_TO_NAME);
+        $tbl = $this->resource->getTableName(self::E_NAME_TO);
         $as = $asToName;
         $exp = $this->expFullNameTo();
         $cols = [
