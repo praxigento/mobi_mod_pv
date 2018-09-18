@@ -10,7 +10,7 @@ namespace Test\Praxigento\Pv\Ui\DataProvider\Grid\Transfers;
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 
 class QueryTest
-    extends \Praxigento\Core\Test\BaseIntegrationTest
+    extends \Praxigento\Core\Test\BaseCase\Manual
 {
 
 

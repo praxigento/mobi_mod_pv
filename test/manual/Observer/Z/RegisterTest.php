@@ -9,7 +9,7 @@ namespace Test\Praxigento\Pv\Observer\Z;
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
 class RegisterTest
-    extends \Praxigento\Core\Test\BaseIntegrationTest
+    extends \Praxigento\Core\Test\BaseCase\Manual
 {
     /** @var  \Praxigento\Pv\Observer\Z\PvRegister */
     private $obj;
