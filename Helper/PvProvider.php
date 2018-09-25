@@ -9,8 +9,8 @@ namespace Praxigento\Pv\Helper;
  * Populate cart/quote JSON configuration with PV data (JS globals on frontend: "window.checkoutConfig = {}").
  *
  * see
- *  * \Praxigento\Pv\Plugin\Checkout\Model\CompositeConfigProvider
- *  * \Praxigento\Pv\Plugin\Framework\Webapi\ServiceOutputProcessor
+ *  * \Praxigento\Pv\Plugin\Magento\Checkout\Model\CompositeConfigProvider
+ *  * \Praxigento\Pv\Plugin\Magento\Framework\Webapi\ServiceOutputProcessor
  */
 class PvProvider
 {

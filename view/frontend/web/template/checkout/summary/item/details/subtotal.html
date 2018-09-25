@@ -1,8 +1,8 @@
 <div class="subtotal">
     <!-- Add PV to positions in cart summary (cart view & checkout steps) -->
-    <!-- see \Praxigento\Pv\Plugin\Framework\Webapi\ServiceOutputProcessor::JSON_ITEM_CAN_SEE_PV -->
+    <!-- see \Praxigento\Pv\Plugin\Magento\Framework\Webapi\ServiceOutputProcessor::JSON_ITEM_CAN_SEE_PV -->
     <span class="prxgt-pv-container cart-price" data-bind="visible: $parents[1].prxgt_pv_item_can_see">
-        <!-- see \Praxigento\Pv\Plugin\Framework\Webapi\ServiceOutputProcessor::JSON_ITEM_PV_TOTAL -->
+        <!-- see \Praxigento\Pv\Plugin\Magento\Framework\Webapi\ServiceOutputProcessor::JSON_ITEM_PV_TOTAL -->
         <span class="prxgt-pv-wrapper" data-bind="text: $parents[1].prxgt_pv_item_total"></span>
         <span>PV</span>
     </span>

@@ -12,7 +12,7 @@ define([
     const totals = uiTotals;
     /* shortcuts to global objects */
     const basePriceFormat = window.checkoutConfig.basePriceFormat;
-    /* \Praxigento\Pv\Plugin\Framework\Webapi\ServiceOutputProcessor::JSON_CAN_SEE_PV */
+    /* \Praxigento\Pv\Plugin\Magento\Framework\Webapi\ServiceOutputProcessor::JSON_CAN_SEE_PV */
     const canSeePv = window.checkoutConfig.praxigentoCustomerCanSeePv;
     /* clone base format and modify it */
     var pvFormat = JSON.parse(JSON.stringify(basePriceFormat));

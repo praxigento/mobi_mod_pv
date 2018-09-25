@@ -3,7 +3,7 @@
          xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
 
     <columns name="product_columns" class="Magento\Catalog\Ui\Component\Listing\Columns">
-        <!-- see \Praxigento\Pv\Plugin\Catalog\Model\ResourceModel\Product\CollectionFactory::A_PV_PRODUCT -->
+        <!-- see \Praxigento\Pv\Plugin\Magento\Catalog\Model\ResourceModel\Product\CollectionFactory::A_PV_PRODUCT -->
         <column name="prxgt_pv_product">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
