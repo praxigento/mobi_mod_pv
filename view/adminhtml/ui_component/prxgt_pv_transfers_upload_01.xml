@@ -32,7 +32,7 @@
         <settings>
             <submitUrl path="ppv/transfers_upload/preview"/>
         </settings>
-        <dataProvider class="Praxigento\Santegra\Ui\DataProvider" name="step_01_data_source">
+        <dataProvider class="Praxigento\Core\App\Ui\DataProvider\Base" name="step_01_data_source">
         </dataProvider>
     </dataSource>
 
