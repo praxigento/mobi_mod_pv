@@ -407,7 +407,8 @@
                             "aliases": [
                               "batch_ref",
                               "cust_from_ref",
-                              "cust_to_ref"
+                              "cust_to_ref",
+                              "value"
                             ]
                           }
                         },
