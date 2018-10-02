@@ -6,8 +6,8 @@
 
 namespace Praxigento\Pv\Service\Batch\Transfer;
 
-use Praxigento\Accounting\Api\Service\Operation\Request as AReqOper;
-use Praxigento\Accounting\Api\Service\Operation\Response as ARespOper;
+use Praxigento\Accounting\Api\Service\Operation\Create\Request as AReqOper;
+use Praxigento\Accounting\Api\Service\Operation\Create\Response as ARespOper;
 use Praxigento\Accounting\Repo\Data\Transaction as ETrans;
 use Praxigento\Downline\Repo\Data\Customer as EDwnlCust;
 use Praxigento\Pv\Config as Cfg;
@@ -31,7 +31,7 @@ class Process
     private $hlpTree;
     /** @var \Psr\Log\LoggerInterface */
     private $logger;
-    /** @var \Praxigento\Accounting\Api\Service\Operation */
+    /** @var \Praxigento\Accounting\Api\Service\Operation\Create */
     private $servOper;
     /** @var \Magento\Backend\Model\Auth\Session */
     private $sessAdmin;
@@ -44,7 +44,7 @@ class Process
         \Praxigento\Downline\Repo\Dao\Customer $daoDwnlCust,
         \Praxigento\Pv\Repo\Dao\Trans\Batch\Item $daoBatchItem,
         \Praxigento\Downline\Api\Helper\Tree $hlpTree,
-        \Praxigento\Accounting\Api\Service\Operation $servOper
+        \Praxigento\Accounting\Api\Service\Operation\Create $servOper
     ) {
         $this->sessAdmin = $sessAdmin;
         $this->logger = $logger;

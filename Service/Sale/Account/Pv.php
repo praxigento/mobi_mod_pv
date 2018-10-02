@@ -6,7 +6,7 @@
 namespace Praxigento\Pv\Service\Sale\Account;
 
 use Praxigento\Accounting\Api\Service\Account\Get\Request as AAccountGetRequest;
-use Praxigento\Accounting\Api\Service\Operation\Request as AOperationRequest;
+use Praxigento\Accounting\Api\Service\Operation\Create\Request as AOperationRequest;
 use Praxigento\Accounting\Repo\Data\Transaction as ATransaction;
 use Praxigento\Pv\Api\Service\Sale\Account\Pv\Request as ARequest;
 use Praxigento\Pv\Api\Service\Sale\Account\Pv\Response as AResponse;
@@ -26,14 +26,14 @@ class Pv
     private $daoSale;
     /** @var  \Praxigento\Accounting\Api\Service\Account\Get */
     private $servAccount;
-    /** @var \Praxigento\Accounting\Api\Service\Operation */
+    /** @var \Praxigento\Accounting\Api\Service\Operation\Create */
     private $servOper;
 
     public function __construct(
         \Praxigento\Core\Api\App\Repo\Generic $daoGeneric,
         \Praxigento\Downline\Repo\Dao\Customer $daoDwnlCust,
         \Praxigento\Accounting\Api\Service\Account\Get $servAccount,
-        \Praxigento\Accounting\Api\Service\Operation $servOper,
+        \Praxigento\Accounting\Api\Service\Operation\Create $servOper,
         \Praxigento\Pv\Repo\Dao\Sale $daoSale
     )
     {
