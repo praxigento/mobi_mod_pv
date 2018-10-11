@@ -9,6 +9,7 @@
                 type="Praxigento\Pv\Helper\Validate\Transfer"/>
     <preference for="Praxigento\Pv\Api\Helper\GetPv"
                 type="Praxigento\Pv\Helper\GetPv"/>
+    <!--  Transfer sale order's PV to customer account. -->
     <preference for="Praxigento\Pv\Api\Service\Sale\Account\Pv"
                 type="Praxigento\Pv\Service\Sale\Account\Pv"/>
 

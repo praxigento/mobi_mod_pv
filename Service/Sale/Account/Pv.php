@@ -13,7 +13,7 @@ use Praxigento\Pv\Api\Service\Sale\Account\Pv\Response as AResponse;
 use Praxigento\Pv\Config as Cfg;
 
 /**
- * PV is paid to the customer itself by default.
+ * Transfer sale order's PV to customer account. PV is paid to the customer itself by default.
  */
 class Pv
     implements \Praxigento\Pv\Api\Service\Sale\Account\Pv
