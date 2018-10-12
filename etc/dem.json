@@ -548,6 +548,16 @@
                       }
                     }
                   },
+                  "TransRef": {
+                    "alias": "trans_ref",
+                    "comment": "Reference to the related PV transaction.",
+                    "nullable": true,
+                    "type": {
+                      "integer": {
+                        "unsigned": true
+                      }
+                    }
+                  },
                   "DatePaid": {
                     "alias": "date_paid",
                     "comment": "Time when sale order was paid and PV were transferred to the customer's account.",
@@ -562,6 +572,12 @@
                     "type": "primary",
                     "aliases": [
                       "sale_ref"
+                    ]
+                  },
+                  "TransUnique": {
+                    "type": "unique",
+                    "aliases": [
+                      "trans_ref"
                     ]
                   }
                 },

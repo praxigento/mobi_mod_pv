@@ -1,7 +1,7 @@
 <config
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="Praxigento_Pv" setup_version="0.2.0">
+    <module name="Praxigento_Pv" setup_version="0.2.1">
         <sequence>
             <module name="Praxigento_Downline"/>
             <module name="Praxigento_Warehouse"/>

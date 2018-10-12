@@ -13,6 +13,8 @@ class Sale
     const A_SALE_REF = 'sale_ref';
     const A_SUBTOTAL = 'subtotal';
     const A_TOTAL = 'total';
+    const A_TRANS_REF = 'trans_ref';
+
     const ENTITY_NAME = 'prxgt_pv_sale';
 
     /** @return string */
@@ -55,34 +57,65 @@ class Sale
         return $result;
     }
 
-    /** @param string $data */
+    /** @return int */
+    public function getTransRef()
+    {
+        $result = parent::get(self::A_TRANS_REF);
+        return $result;
+    }
+
+    /**
+     * @param string $data
+     * @return void
+     */
     public function setDatePaid($data)
     {
         parent::set(self::A_DATE_PAID, $data);
     }
 
-    /** @param float $data */
+    /**
+     * @param float $data
+     * @return void
+     */
     public function setDiscount($data)
     {
         parent::set(self::A_DISCOUNT, $data);
     }
 
-    /** @param int $data */
+    /**
+     * @param int $data
+     * @return void
+     */
     public function setSaleRef($data)
     {
         parent::set(self::A_SALE_REF, $data);
     }
 
-    /** @param float $data */
+    /**
+     * @param float $data
+     * @return void
+     */
     public function setSubtotal($data)
     {
         parent::set(self::A_SUBTOTAL, $data);
     }
 
-    /** @param float $data */
+    /**
+     * @param float $data
+     * @return void
+     */
     public function setTotal($data)
     {
         parent::set(self::A_TOTAL, $data);
+    }
+
+    /**
+     * @param int $data
+     * @return void
+     */
+    public function setTransRef($data)
+    {
+        parent::set(self::A_TRANS_REF, $data);
     }
 
 }
