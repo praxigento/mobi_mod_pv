@@ -23,13 +23,12 @@ class V0_2_0
         $this->toolDem = $toolDem;
     }
 
-    public function exec($setup)
+    /**
+     * @param \Magento\Framework\Setup\SchemaSetupInterface $setup
+     * @param \Praxigento\Core\Data $demPackage
+     */
+    public function exec($setup, $demPackage = null)
     {
-        /** Read and parse JSON schema. */
-        $pathToFile = __DIR__ . '/../etc/dem.json';
-        $pathToNode = '/dBEAR/package/Praxigento/package/Pv/package/Transfer';
-        $demPackage = $this->toolDem->readDemPackage($pathToFile, $pathToNode);
-
         /* add Batch entity */
         $demEntity = $demPackage->get('entity/Batch');
         $this->toolDem->createEntity(EBatch::ENTITY_NAME, $demEntity);

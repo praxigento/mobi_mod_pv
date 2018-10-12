@@ -17,8 +17,9 @@ class V0_2_1
 {
     /**
      * @param \Magento\Framework\Setup\SchemaSetupInterface $setup
+     * @param \Praxigento\Core\Data $demPackage
      */
-    public function exec($setup)
+    public function exec($setup, $demPackage = null)
     {
         $conn = $setup->getConnection();
         $table = $setup->getTable(ESale::ENTITY_NAME);
