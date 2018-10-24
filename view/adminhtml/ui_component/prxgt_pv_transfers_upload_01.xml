@@ -9,15 +9,14 @@
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">prxgt_pv_transfers_upload_01.step_01_data_source</item>
         </item>
+        <!-- to prevent never ending spinner -->
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
 
     <settings>
         <buttons>
             <button name="save" class="Praxigento\Pv\Block\Adminhtml\Button\Upload"/>
         </buttons>
-        <layout>
-            <type>tabs</type>
-        </layout>
         <deps>
             <dep>prxgt_pv_transfers_upload_01.step_01_data_source</dep>
         </deps>
