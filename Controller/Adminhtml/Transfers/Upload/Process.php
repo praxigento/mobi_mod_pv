@@ -79,7 +79,7 @@ class Process
         $block->setIsSucceed(false);
         if ($batchId) {
             /* PV transfer for current month */
-            $dateApplied = $this->hlpDate->getMageNowForDb();
+            $dateApplied = $this->hlpDate->getUtcNowForDb();
             $req = new ARequest();
             $req->setBatchId($batchId);
             $req->setDateApplied($dateApplied);
