@@ -122,7 +122,8 @@ class Save
     {
         $dirMedia = $this->filesystem->getDirectoryWrite(ADirList::MEDIA);
         $dirTarget = $dirMedia->getAbsolutePath(self::MEDIA_SUBFOLDER);
-        $fileId = self::FIELDSET . '[' . self::FIELD_CSV_FILE . ']';
+//        $fileId = self::FIELDSET . '[' . self::FIELD_CSV_FILE . ']';
+        $fileId = self::FIELD_CSV_FILE;
         $uploader = $this->factUploader->create(['fileId' => $fileId]);
         $uploader->setAllowRenameFiles(true);
         $result = $uploader->save($dirTarget);
