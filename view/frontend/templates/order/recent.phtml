@@ -39,7 +39,9 @@ $canSeePv = $hlp->canSeePv();
                         <th scope="col" class="col date"><?= /* @escapeNotVerified */ __('Date') ?></th>
                         <th scope="col" class="col shipping"><?= /* @escapeNotVerified */ __('Ship To') ?></th>
                         <?php if ($canSeePv): ?>
-                        <th scope="col" class="col total"><?= /* @escapeNotVerified */ __('PV') ?></th>
+                            <th scope="col" class="col total"><?= /* @escapeNotVerified */ __('PV') ?></th>
+                        <?php else: ?>
+                            <th scope="col" class="col total"></th>
                         <?php endif; ?>
                         <th scope="col" class="col total"><?= /* @escapeNotVerified */ __('Order Total') ?></th>
                         <th scope="col" class="col status"><?= /* @escapeNotVerified */ __('Status') ?></th>
@@ -54,6 +56,8 @@ $canSeePv = $hlp->canSeePv();
                             <td data-th="<?= $block->escapeHtml(__('Ship To')) ?>" class="col shipping"><?= $_order->getShippingAddress() ? $block->escapeHtml($_order->getShippingAddress()->getName()) : '&nbsp;' ?></td>
                             <?php if ($canSeePv): ?>
                                 <td data-th="<?= $block->escapeHtml(__('PV')) ?>" class="col total"><?= /* @escapeNotVerified */ number_format($_order->getData(DPvSale::A_PV_GRAND), 2) ?></td>
+                            <?php else: ?>
+                                <td class="col total"></td>
                             <?php endif; ?>
                             <td data-th="<?= $block->escapeHtml(__('Order Total')) ?>" class="col total"><?= /* @escapeNotVerified */ $_order->formatPrice($_order->getGrandTotal()) ?></td>
                             <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status"><?= /* @escapeNotVerified */ $_order->getStatusLabel() ?></td>

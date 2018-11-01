@@ -5,8 +5,16 @@
  */
 
 // @codingStandardsIgnoreFile
-use \Praxigento\Pv\Api\Data\Sales\Order\Item as DPvItem;
+use Praxigento\Pv\Api\Data\Sales\Order\Item as DPvItem;
+
 /** @var  $block \Magento\Sales\Block\Order\Item\Renderer\DefaultRenderer */
+
+/* we should use block to follow Magento guide but we need to inherit from base block. So we use this quick solution */
+$obm = \Magento\Framework\App\ObjectManager::getInstance();
+/** @var \Praxigento\Pv\Helper\Customer $hlp */
+$hlp = $obm->get(\Praxigento\Pv\Helper\Customer::class);
+$canSeePv = $hlp->canSeePv();
+
 $_item = $block->getItem();
 ?>
 <tr id="order-item-row-<?= /* @escapeNotVerified */ $_item->getId() ?>">
@@ -71,9 +79,13 @@ $_item = $block->getItem();
         <?php endif; ?>
         </ul>
     </td>
-    <td class="col subtotal" data-th="<?= $block->escapeHtml(__('PV')) ?>">
-        <?= number_format($_item->getData(DPvItem::A_PV_GRAND), 2) ?>
-    </td>
+    <?php if ($canSeePv): ?>
+        <td class="col subtotal" data-th="<?= $block->escapeHtml(__('PV')) ?>">
+            <?= number_format($_item->getData(DPvItem::A_PV_GRAND), 2) ?>
+        </td>
+    <?php else: /* add empty column to prevent colspan'ed cells displacement */ ?>
+        <td class="col subtotal"></td>
+    <?php endif; ?>
     <td class="col subtotal" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
         <?= $block->getItemRowTotalHtml() ?>
     </td>

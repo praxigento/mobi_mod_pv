@@ -7,6 +7,13 @@
 // @codingStandardsIgnoreFile
 
 /** @var \Magento\Sales\Block\Order\Items $block */
+
+/* we should use block to follow Magento guide but we need to inherit from base block. So we use this quick solution */
+$obm = \Magento\Framework\App\ObjectManager::getInstance();
+/** @var \Praxigento\Pv\Helper\Customer $hlp */
+$hlp = $obm->get(\Praxigento\Pv\Helper\Customer::class);
+$canSeePv = $hlp->canSeePv();
+
 ?>
 <div class="table-wrapper order-items">
     <table class="data table table-order-items" id="my-orders-table" summary="<?= /* @escapeNotVerified */ __('Items Ordered') ?>">
@@ -24,7 +31,11 @@
                 <th class="col sku"><?= /* @escapeNotVerified */ __('SKU') ?></th>
                 <th class="col price"><?= /* @escapeNotVerified */ __('Price') ?></th>
                 <th class="col qty"><?= /* @escapeNotVerified */ __('Qty') ?></th>
-                <th class="col subtotal"><?= /* @escapeNotVerified */ __('PV') ?></th>
+                <?php if ($canSeePv): ?>
+                    <th class="col subtotal"><?= /* @escapeNotVerified */ __('PV') ?></th>
+                <?php else: ?>
+                    <th class="col subtotal"></th>
+                <?php endif; ?>
                 <th class="col subtotal"><?= /* @escapeNotVerified */ __('Subtotal') ?></th>
             </tr>
         </thead>
