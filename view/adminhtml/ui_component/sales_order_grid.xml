@@ -1,33 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
-/**
- * Additional columns for sale orders grid.
- */
--->
-<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <!-- **************************************************** -->
+    <!-- Additional Columns for Grid                          -->
+    <!-- **************************************************** -->
     <columns name="sales_order_columns">
+
         <column name="prxgt_pv_total_sale_grid">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">number</item>
-                    <item name="label" xsi:type="string" translate="true">PV Total</item>
-                </item>
-            </argument>
+            <settings>
+                <dataType>number</dataType>
+                <filter>textRange</filter>
+                <label translate="true">PV Total</label>
+            </settings>
         </column>
+
         <column name="prxgt_pv_discount_sale_grid">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">number</item>
-                    <item name="label" xsi:type="string" translate="true">PV Discount</item>
-                </item>
-            </argument>
+            <settings>
+                <dataType>number</dataType>
+                <filter>textRange</filter>
+                <label translate="true">PV Discount</label>
+            </settings>
         </column>
+
         <column name="prxgt_pv_subtotal_sale_grid">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">number</item>
-                    <item name="label" xsi:type="string" translate="true">PV Subtotal</item>
-                </item>
-            </argument>
+            <settings>
+                <dataType>number</dataType>
+                <filter>textRange</filter>
+                <label translate="true">PV Subtotal</label>
+            </settings>
         </column>
+
     </columns>
 </listing>

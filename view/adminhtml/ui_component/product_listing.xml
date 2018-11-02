@@ -2,18 +2,20 @@
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
 
-    <columns name="product_columns" class="Magento\Catalog\Ui\Component\Listing\Columns">
+
+    <!-- **************************************************** -->
+    <!-- Additional Columns for Grid                          -->
+    <!-- **************************************************** -->
+    <columns name="product_columns">
+
         <!-- see \Praxigento\Pv\Plugin\Magento\Catalog\Model\ResourceModel\Product\CollectionFactory::A_PV_PRODUCT -->
         <column name="prxgt_pv_product">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">textRange</item>
-                    <item name="add_field" xsi:type="boolean">true</item>
-                    <item name="dataType" xsi:type="string">number</item>
-                    <item name="sortable" xsi:type="boolean">true</item>
-                    <item name="label" xsi:type="string" translate="true">PV</item>
-                </item>
-            </argument>
+            <settings>
+                <dataType>number</dataType>
+                <filter>textRange</filter>
+                <label translate="true">PV</label>
+            </settings>
         </column>
+
     </columns>
 </listing>

@@ -2,15 +2,13 @@
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
 
-    <!-- ******************************************************************************** -->
-    <!-- For format sample see "module-customer/view/base/ui_component/customer_form.xml" -->
-    <!-- ******************************************************************************** -->
+    <!-- **************************************************** -->
+    <!-- Configuration of the component's data provider.      -->
+    <!-- **************************************************** -->
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">prxgt_pv_transfers_upload_01.step_01_data_source</item>
         </item>
-        <!-- to prevent never ending spinner -->
-        <item name="template" xsi:type="string">templates/form/collapsible</item>
     </argument>
 
     <settings>
@@ -20,18 +18,22 @@
         <deps>
             <dep>prxgt_pv_transfers_upload_01.step_01_data_source</dep>
         </deps>
+        <!-- to prevent never ending spinner & to post form data to server -->
+        <layout>
+            <type>tabs</type>
+        </layout>
     </settings>
 
-    <dataSource name="step_01_data_source">
-        <argument name="data" xsi:type="array">
-            <item name="js_config" xsi:type="array">
-                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
-            </item>
-        </argument>
+    <!-- **************************************************** -->
+    <!-- Data Source (is used by data provider).              -->
+    <!-- **************************************************** -->
+    <dataSource name="step_01_data_source"
+                component="Magento_Ui/js/form/provider">
         <settings>
             <submitUrl path="ppv/transfers_upload/preview"/>
         </settings>
-        <dataProvider class="Praxigento\Core\App\Ui\DataProvider\Base" name="step_01_data_source">
+        <dataProvider class="Praxigento\Core\App\Ui\DataProvider\Base"
+                      name="step_01_data_source">
         </dataProvider>
     </dataSource>
 
