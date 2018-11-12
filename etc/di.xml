@@ -155,14 +155,14 @@
         <!-- Add PV data to order items collection -->
         <plugin name="prxgt_pv_plugin"
                 type="Praxigento\Pv\Plugin\Magento\Sales\Model\ResourceModel\Order\Item\CollectionFactory"
-                sortOrder="700" disabled="false"/>
+                sortOrder="400" disabled="false"/>
     </type>
 
     <type name="Magento\Sales\Model\ResourceModel\Order\Collection">
         <!-- Add PV data to orders collection -->
         <plugin name="prxgt_pv_plugin"
                 type="Praxigento\Pv\Plugin\Magento\Sales\Model\ResourceModel\Order\Collection"
-                sortOrder="700" disabled="false"/>
+                sortOrder="400" disabled="false"/>
     </type>
 
     <type name="Magento\Sales\Model\Service\OrderService">
@@ -170,7 +170,7 @@
         <!-- sortOrder should be greater then for the same plugin in Warehouse module -->
         <plugin name="prxgt_pv_plugin"
                 type="Praxigento\Pv\Plugin\Magento\Sales\Model\Service\OrderService"
-                sortOrder="700" disabled="false"/>
+                sortOrder="400" disabled="false"/>
     </type>
 
 </config>
