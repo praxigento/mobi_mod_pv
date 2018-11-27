@@ -9,7 +9,8 @@
     <columns name="product_columns">
 
         <!-- see \Praxigento\Pv\Plugin\Magento\Catalog\Model\ResourceModel\Product\CollectionFactory::A_PV_PRODUCT -->
-        <column name="prxgt_pv_product">
+        <column name="prxgt_pv_product"
+                component="Praxigento_Core/js/grid/columns/decimal">
             <settings>
                 <dataType>number</dataType>
                 <filter>textRange</filter>

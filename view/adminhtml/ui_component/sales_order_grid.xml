@@ -7,7 +7,8 @@
     <!-- **************************************************** -->
     <columns name="sales_order_columns">
 
-        <column name="prxgt_pv_total_sale_grid">
+        <column name="prxgt_pv_total_sale_grid"
+                component="Praxigento_Core/js/grid/columns/decimal">
             <settings>
                 <dataType>number</dataType>
                 <filter>textRange</filter>
@@ -15,7 +16,8 @@
             </settings>
         </column>
 
-        <column name="prxgt_pv_discount_sale_grid">
+        <column name="prxgt_pv_discount_sale_grid"
+                component="Praxigento_Core/js/grid/columns/decimal">
             <settings>
                 <dataType>number</dataType>
                 <filter>textRange</filter>
@@ -23,7 +25,8 @@
             </settings>
         </column>
 
-        <column name="prxgt_pv_subtotal_sale_grid">
+        <column name="prxgt_pv_subtotal_sale_grid"
+                component="Praxigento_Core/js/grid/columns/decimal">
             <settings>
                 <dataType>number</dataType>
                 <filter>textRange</filter>

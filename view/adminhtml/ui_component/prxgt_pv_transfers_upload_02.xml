@@ -43,7 +43,8 @@
     <!-- **************************************************** -->
     <columns name="preview_columns">
 
-        <column name="itemId">
+        <column name="itemId"
+                component="Praxigento_Core/js/grid/columns/integer">
             <settings>
                 <dataType>number</dataType>
                 <filter>text</filter>
@@ -51,7 +52,8 @@
             </settings>
         </column>
 
-        <column name="fromId">
+        <column name="fromId"
+                component="Praxigento_Core/js/grid/columns/integer">
             <settings>
                 <dataType>number</dataType>
                 <filter>text</filter>
@@ -75,7 +77,8 @@
             </settings>
         </column>
 
-        <column name="toId">
+        <column name="toId"
+                component="Praxigento_Core/js/grid/columns/integer">
             <settings>
                 <dataType>number</dataType>
                 <filter>text</filter>
@@ -100,9 +103,10 @@
             </settings>
         </column>
 
-        <column name="value">
+        <column name="value"
+                component="Praxigento_Core/js/grid/columns/decimal">
             <settings>
-                <dataType>text</dataType>
+                <dataType>number</dataType>
                 <filter>text</filter>
                 <label translate="true">Value</label>
             </settings>
@@ -116,7 +120,8 @@
             </settings>
         </column>
 
-        <column name="batchId">
+        <column name="batchId"
+                component="Praxigento_Core/js/grid/columns/integer">
             <settings>
                 <dataType>number</dataType>
                 <label translate="true">Batch ID</label>
