@@ -127,7 +127,7 @@ class ProcessItems
     private function getMapByMlmId()
     {
         $all = $this->daoDwnlCust->get();
-        $result = $this->hlpTree->mapValueById($all, EDwnlCust::A_MLM_ID, EDwnlCust::A_CUSTOMER_ID);
+        $result = $this->hlpTree->mapValueById($all, EDwnlCust::A_MLM_ID, EDwnlCust::A_CUSTOMER_REF);
         return $result;
     }
 }

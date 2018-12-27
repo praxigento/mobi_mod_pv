@@ -152,7 +152,7 @@ class Query
         $cols = [
             self::A_FROM_MLM_ID => EDwnlCust::A_MLM_ID
         ];
-        $cond = $as . '.' . EDwnlCust::A_CUSTOMER_ID . '=' . $asItems . '.' . EItem::A_CUST_FROM_REF;
+        $cond = $as . '.' . EDwnlCust::A_CUSTOMER_REF . '=' . $asItems . '.' . EItem::A_CUST_FROM_REF;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN customer_entity (from) */
@@ -162,7 +162,7 @@ class Query
         $cols = [
             self::A_FROM_NAME => $exp
         ];
-        $cond = $as . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asFrom . '.' . EDwnlCust::A_CUSTOMER_ID;
+        $cond = $as . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asFrom . '.' . EDwnlCust::A_CUSTOMER_REF;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN prxgt_dwnl_customer (to) */
@@ -171,7 +171,7 @@ class Query
         $cols = [
             self::A_TO_MLM_ID => EDwnlCust::A_MLM_ID
         ];
-        $cond = $as . '.' . EDwnlCust::A_CUSTOMER_ID . '=' . $asItems . '.' . EItem::A_CUST_TO_REF;
+        $cond = $as . '.' . EDwnlCust::A_CUSTOMER_REF . '=' . $asItems . '.' . EItem::A_CUST_TO_REF;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN customer_entity (to) */
@@ -181,7 +181,7 @@ class Query
         $cols = [
             self::A_TO_NAME => $exp
         ];
-        $cond = $as . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asTo . '.' . EDwnlCust::A_CUSTOMER_ID;
+        $cond = $as . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asTo . '.' . EDwnlCust::A_CUSTOMER_REF;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /**

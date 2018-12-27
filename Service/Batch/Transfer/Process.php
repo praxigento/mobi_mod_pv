@@ -128,7 +128,7 @@ class Process
         /** @var EDwnlCust[] $all */
         $all = $this->daoDwnlCust->get();
         foreach ($all as $one) {
-            $id = $one->getCustomerId();
+            $id = $one->getCustomerRef();
             $mlmId = $one->getMlmId();
             $result[$id] = $mlmId;
         }
