@@ -61,7 +61,8 @@
             </settings>
         </column>
 
-        <column name="fromMlmId">
+        <column name="fromMlmId"
+                component="Praxigento_Pv/js/grid/transfers/upload/column/link/from_mlm_id">
             <settings>
                 <dataType>text</dataType>
                 <filter>text</filter>
@@ -69,11 +70,20 @@
             </settings>
         </column>
 
-        <column name="fromName">
+        <column name="fromName"
+                component="Praxigento_Pv/js/grid/transfers/upload/column/link/from_name">
             <settings>
                 <dataType>text</dataType>
                 <filter>text</filter>
                 <label translate="true">Sender</label>
+            </settings>
+        </column>
+
+        <column name="fromCountry">
+            <settings>
+                <dataType>text</dataType>
+                <filter>text</filter>
+                <label translate="true">Send. Country</label>
             </settings>
         </column>
 
@@ -86,7 +96,8 @@
             </settings>
         </column>
 
-        <column name="toMlmId">
+        <column name="toMlmId"
+                component="Praxigento_Pv/js/grid/transfers/upload/column/link/to_mlm_id">
             <settings>
                 <dataType>text</dataType>
                 <filter>text</filter>
@@ -95,11 +106,36 @@
             </settings>
         </column>
 
-        <column name="toName">
+        <column name="toName"
+                component="Praxigento_Pv/js/grid/transfers/upload/column/link/to_name">
             <settings>
                 <dataType>text</dataType>
                 <filter>text</filter>
                 <label translate="true">Receiver</label>
+            </settings>
+        </column>
+
+        <column name="toGroup">
+            <settings>
+                <dataType>text</dataType>
+                <filter>text</filter>
+                <label translate="true">Rec. Group</label>
+            </settings>
+        </column>
+
+        <column name="toCountry">
+            <settings>
+                <dataType>text</dataType>
+                <filter>text</filter>
+                <label translate="true">Rec. Country</label>
+            </settings>
+        </column>
+
+        <column name="toPath">
+            <settings>
+                <dataType>text</dataType>
+                <filter>text</filter>
+                <label translate="true">Rec. Path</label>
             </settings>
         </column>
 
