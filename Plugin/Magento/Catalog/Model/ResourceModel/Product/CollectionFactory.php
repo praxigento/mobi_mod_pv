@@ -2,6 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Pv\Plugin\Magento\Catalog\Model\ResourceModel\Product;
 
 use Praxigento\Pv\Repo\Data\Product as EPvProd;
@@ -91,6 +92,8 @@ class CollectionFactory
                 $cond = "$as." . EPvStockItem::A_ITEM_REF . '='
                     . "$asStockItem." . Cfg::E_CATINV_STOCK_ITEM_A_ITEM_ID;
                 $query->joinLeft([$as => $tbl], $cond, $cols);
+
+                /* add filter by warehouse */
                 $cond = "$asStockItem." . Cfg::E_CATINV_STOCK_ITEM_A_STOCK_ID . '=' . (int)$stockId;
                 $query->where($cond);
             } else {
