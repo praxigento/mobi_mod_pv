@@ -24,10 +24,10 @@ class ProcessItems
     private $daoDwnlCust;
     /** @var \Praxigento\Downline\Api\Helper\Tree */
     private $hlpTree;
-    /** @var \Magento\Backend\Model\Auth\Session */
-    private $sessAdmin;
     /** @var \Praxigento\Pv\Api\Helper\Validate\Transfer */
     private $hlpValidTrans;
+    /** @var \Magento\Backend\Model\Auth\Session */
+    private $sessAdmin;
 
     public function __construct(
         \Magento\Backend\Model\Auth\Session $sessAdmin,
@@ -115,8 +115,10 @@ class ProcessItems
                 $entity->setCustToRef($idTo);
                 $entity->setValue($amount);
 
-                $restricted = $this->hlpValidTrans->isRestricted($entity);
-                $entity->setRestricted($restricted);
+                [$notBalanceEnough, $notInDownline, $notGroupAllowed] = $this->hlpValidTrans->validate($entity);
+                $entity->setWarnBalance($notBalanceEnough);
+                $entity->setWarnDwnl($notInDownline);
+                $entity->setWarnGroup($notGroupAllowed);
 
                 $this->daoBatchItem->create($entity);
             }

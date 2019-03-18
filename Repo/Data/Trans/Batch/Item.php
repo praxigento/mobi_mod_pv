@@ -13,12 +13,13 @@ class Item
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const A_BATCH_REF = 'batch_ref';
-    const A_CUST_FROM_REF= 'cust_from_ref';
+    const A_CUST_FROM_REF = 'cust_from_ref';
     const A_CUST_TO_REF = 'cust_to_ref';
     const A_ID = 'id';
-    const A_RESTRICTED = 'restricted';
     const A_VALUE = 'value';
-
+    const A_WARN_BALANCE = 'warn_balance';
+    const A_WARN_DWNL = 'warn_dwnl';
+    const A_WARN_GROUP = 'warn_group';
     const ENTITY_NAME = 'prxgt_pv_trans_batch_item';
 
     /** @return int */
@@ -54,17 +55,31 @@ class Item
         return [self::A_ID];
     }
 
-    /** @return bool */
-    public function getRestricted()
-    {
-        $result = parent::get(self::A_RESTRICTED);
-        return $result;
-    }
-
     /** @return float */
     public function getValue()
     {
         $result = parent::get(self::A_VALUE);
+        return $result;
+    }
+
+    /** @return bool */
+    public function getWarnBalance()
+    {
+        $result = parent::get(self::A_WARN_BALANCE);
+        return $result;
+    }
+
+    /** @return bool */
+    public function getWarnDwnl()
+    {
+        $result = parent::get(self::A_WARN_DWNL);
+        return $result;
+    }
+
+    /** @return bool */
+    public function getWarnGroup()
+    {
+        $result = parent::get(self::A_WARN_GROUP);
         return $result;
     }
 
@@ -92,16 +107,28 @@ class Item
         parent::set(self::A_ID, $data);
     }
 
-    /** @param bool $data */
-    public function setRestricted($data)
-    {
-        parent::set(self::A_RESTRICTED, $data);
-    }
-
     /** @param float $data */
     public function setValue($data)
     {
         parent::set(self::A_VALUE, $data);
+    }
+
+    /** @param bool $data */
+    public function setWarnBalance($data)
+    {
+        parent::set(self::A_WARN_BALANCE, $data);
+    }
+
+    /** @param bool $data */
+    public function setWarnDwnl($data)
+    {
+        parent::set(self::A_WARN_DWNL, $data);
+    }
+
+    /** @param bool $data */
+    public function setWarnGroup($data)
+    {
+        parent::set(self::A_WARN_GROUP, $data);
     }
 
 }

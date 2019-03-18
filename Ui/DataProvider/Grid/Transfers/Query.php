@@ -30,7 +30,6 @@ class Query
     const A_FROM_MLM_ID = 'fromMlmId';
     const A_FROM_NAME = 'fromName';
     const A_ITEM_ID = 'itemId';
-    const A_RESTRICTED = 'restricted';
     const A_TO_COUNTRY = 'toCountry';
     const A_TO_GROUP = 'toGroup';
     const A_TO_ID = 'toId';
@@ -38,8 +37,10 @@ class Query
     const A_TO_NAME = 'toName';
     const A_TO_PATH = 'toPath';
     const A_VALUE = 'value';
+    const A_WARN_BALANCE = 'warn_balance';
+    const A_WARN_DWNL = 'warn_dwnl';
+    const A_WARN_GROUP = 'warn_group';
     /**#@- */
-
     /**#@+ Entities are used in the query */
     const E_FROM = EDwnlCust::ENTITY_NAME;
     const E_GROUP = Cfg::ENTITY_MAGE_CUSTOMER_GROUP;
@@ -89,7 +90,9 @@ class Query
                 self::A_FROM_MLM_ID => self::AS_FROM . '.' . EDwnlCust::A_MLM_ID,
                 self::A_FROM_NAME => $expFullNameFrom,
                 self::A_ITEM_ID => self::AS_ITEMS . '.' . EItem::A_ID,
-                self::A_RESTRICTED => self::AS_ITEMS . '.' . EItem::A_RESTRICTED,
+                self::A_WARN_BALANCE => self::AS_ITEMS . '.' . EItem::A_WARN_BALANCE,
+                self::A_WARN_DWNL => self::AS_ITEMS . '.' . EItem::A_WARN_DWNL,
+                self::A_WARN_GROUP => self::AS_ITEMS . '.' . EItem::A_WARN_GROUP,
                 self::A_TO_COUNTRY => self::AS_TO . '.' . EDwnlCust::A_COUNTRY_CODE,
                 self::A_TO_GROUP => self::AS_GROUP . '.' . Cfg::E_CUSTGROUP_A_CODE,
                 self::A_TO_ID => self::AS_ITEMS . '.' . EItem::A_CUST_TO_REF,
@@ -160,7 +163,9 @@ class Query
             self::A_ITEM_ID => EItem::A_ID,
             self::A_FROM_ID => EItem::A_CUST_FROM_REF,
             self::A_TO_ID => EItem::A_CUST_TO_REF,
-            self::A_RESTRICTED => EItem::A_RESTRICTED,
+            self::A_WARN_BALANCE => EItem::A_WARN_BALANCE,
+            self::A_WARN_DWNL => EItem::A_WARN_DWNL,
+            self::A_WARN_GROUP => EItem::A_WARN_GROUP,
             self::A_VALUE => EItem::A_VALUE
         ];
         $result->from([$as => $tbl], $cols);

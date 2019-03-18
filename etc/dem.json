@@ -385,9 +385,27 @@
                               }
                             }
                           },
-                          "Restricted": {
-                            "alias": "restricted",
-                            "comment": "'true' if current transfer is restricted by logic (admin users can perform these transfers with warning).",
+                          "WarnDownline": {
+                            "alias": "warn_dwnl",
+                            "comment": "'true' if current transfer is restricted by downline (receiver is not in sender's downline).",
+                            "nullable": false,
+                            "default": 0,
+                            "type": {
+                              "boolean": {}
+                            }
+                          },
+                          "WarnBalance": {
+                            "alias": "warn_balance",
+                            "comment": "'true' if current transfer is restricted by logic (balance is not enough).",
+                            "nullable": false,
+                            "default": 0,
+                            "type": {
+                              "boolean": {}
+                            }
+                          },
+                          "WarnGroup": {
+                            "alias": "warn_group",
+                            "comment": "'true' if current transfer is restricted by logic (recipient has not allowed customer group).",
                             "nullable": false,
                             "default": 0,
                             "type": {

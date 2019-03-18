@@ -148,11 +148,27 @@
             </settings>
         </column>
 
-        <column name="restricted">
+        <column name="warn_balance"
+                component="Praxigento_Core/js/grid/column/integer">
             <settings>
-                <dataType>text</dataType>
-                <filter>text</filter>
-                <label translate="true">Restricted</label>
+                <dataType>number</dataType>
+                <label translate="true">Balance</label>
+            </settings>
+        </column>
+
+        <column name="warn_dwnl"
+                component="Praxigento_Core/js/grid/column/integer">
+            <settings>
+                <dataType>number</dataType>
+                <label translate="true">Dwnl</label>
+            </settings>
+        </column>
+
+        <column name="warn_group"
+                component="Praxigento_Core/js/grid/column/integer">
+            <settings>
+                <dataType>number</dataType>
+                <label translate="true">Group</label>
             </settings>
         </column>
 

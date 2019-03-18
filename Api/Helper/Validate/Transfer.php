@@ -11,10 +11,11 @@ use Praxigento\Pv\Repo\Data\Trans\Batch\Item as EBatchItem;
 interface Transfer
 {
     /**
-     * Validate one item from the batch of PV transfers.
+     * Validate one item from the batch of PV transfers and return vector with warnings/errors.
+     * Return empty array if no warnings/errors found.
      *
      * @param \Praxigento\Pv\Repo\Data\Trans\Batch\Item $item
-     * @return bool
+     * @return array
      */
-    public function isRestricted(EBatchItem $item);
+    public function validate(EBatchItem $item);
 }

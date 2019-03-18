@@ -16,12 +16,8 @@ class Transfer
     implements \Praxigento\Pv\Api\Helper\Validate\Transfer
 {
 
-    /**
-     * @param \Praxigento\Pv\Repo\Data\Trans\Batch\Item $item
-     * @return bool
-     */
-    public function isRestricted(EBatchItem $item)
+    public function validate(EBatchItem $item)
     {
-        return false;
+        return [];
     }
 }
