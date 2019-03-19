@@ -403,6 +403,15 @@
                               "boolean": {}
                             }
                           },
+                          "WarnCountry": {
+                            "alias": "warn_country",
+                            "comment": "'true' if current transfer is restricted by logic (sender & receiver are placed in the different countries).",
+                            "nullable": false,
+                            "default": 0,
+                            "type": {
+                              "boolean": {}
+                            }
+                          },
                           "WarnGroup": {
                             "alias": "warn_group",
                             "comment": "'true' if current transfer is restricted by logic (recipient has not allowed customer group).",

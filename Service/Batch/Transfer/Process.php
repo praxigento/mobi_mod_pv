@@ -84,18 +84,24 @@ class Process
             $custMlmIdTo = $mapMlmIdById[$custIdTo];
 
             if ($value > Cfg::DEF_ZERO) {
-                $accDebit = $this->daoAcc->getByCustomerId($custIdFrom, $assetTypeId);
-                $accDebitId = $accDebit->getId();
-                $accCredit = $this->daoAcc->getByCustomerId($custIdTo, $assetTypeId);
-                $accCreditId = $accCredit->getId();
-                $note = "batch: $custMlmIdFrom/$custIdFrom => $custMlmIdTo/$custIdTo";
-                $tran = new ETrans();
-                $tran->setDebitAccId($accDebitId);
-                $tran->setCreditAccId($accCreditId);
-                $tran->setValue($value);
-                $tran->setDateApplied($dateApplied);
-                $tran->setNote($note);
-                $trans[] = $tran;
+                $wrongGroup = $item->getWarnGroup();
+                if (!$wrongGroup) {
+                    $accDebit = $this->daoAcc->getByCustomerId($custIdFrom, $assetTypeId);
+                    $accDebitId = $accDebit->getId();
+                    $accCredit = $this->daoAcc->getByCustomerId($custIdTo, $assetTypeId);
+                    $accCreditId = $accCredit->getId();
+                    $note = "batch: $custMlmIdFrom/$custIdFrom => $custMlmIdTo/$custIdTo";
+                    $tran = new ETrans();
+                    $tran->setDebitAccId($accDebitId);
+                    $tran->setCreditAccId($accCreditId);
+                    $tran->setValue($value);
+                    $tran->setDateApplied($dateApplied);
+                    $tran->setNote($note);
+                    $trans[] = $tran;
+                } else {
+                    $this->logger->warning("Skipping batch item (from: $custMlmIdFrom/$custIdFrom; "
+                        . "to: $custMlmIdTo/$custIdTo). Wrong customer group.");
+                }
             }
         }
 

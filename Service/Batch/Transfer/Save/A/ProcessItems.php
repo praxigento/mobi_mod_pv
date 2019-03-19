@@ -115,8 +115,10 @@ class ProcessItems
                 $entity->setCustToRef($idTo);
                 $entity->setValue($amount);
 
-                [$notBalanceEnough, $notInDownline, $notGroupAllowed] = $this->hlpValidTrans->validate($entity);
+                [$notBalanceEnough, $notInDownline, $notGroupAllowed, $notSameCountries]
+                    = $this->hlpValidTrans->validate($entity);
                 $entity->setWarnBalance($notBalanceEnough);
+                $entity->setWarnCountry($notSameCountries);
                 $entity->setWarnDwnl($notInDownline);
                 $entity->setWarnGroup($notGroupAllowed);
 

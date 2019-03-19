@@ -38,6 +38,7 @@ class Query
     const A_TO_PATH = 'toPath';
     const A_VALUE = 'value';
     const A_WARN_BALANCE = 'warn_balance';
+    const A_WARN_COUNTRY = 'warn_country';
     const A_WARN_DWNL = 'warn_dwnl';
     const A_WARN_GROUP = 'warn_group';
     /**#@- */
@@ -91,6 +92,7 @@ class Query
                 self::A_FROM_NAME => $expFullNameFrom,
                 self::A_ITEM_ID => self::AS_ITEMS . '.' . EItem::A_ID,
                 self::A_WARN_BALANCE => self::AS_ITEMS . '.' . EItem::A_WARN_BALANCE,
+                self::A_WARN_COUNTRY => self::AS_ITEMS . '.' . EItem::A_WARN_COUNTRY,
                 self::A_WARN_DWNL => self::AS_ITEMS . '.' . EItem::A_WARN_DWNL,
                 self::A_WARN_GROUP => self::AS_ITEMS . '.' . EItem::A_WARN_GROUP,
                 self::A_TO_COUNTRY => self::AS_TO . '.' . EDwnlCust::A_COUNTRY_CODE,
@@ -164,6 +166,7 @@ class Query
             self::A_FROM_ID => EItem::A_CUST_FROM_REF,
             self::A_TO_ID => EItem::A_CUST_TO_REF,
             self::A_WARN_BALANCE => EItem::A_WARN_BALANCE,
+            self::A_WARN_COUNTRY => EItem::A_WARN_COUNTRY,
             self::A_WARN_DWNL => EItem::A_WARN_DWNL,
             self::A_WARN_GROUP => EItem::A_WARN_GROUP,
             self::A_VALUE => EItem::A_VALUE

@@ -18,6 +18,7 @@ class Item
     const A_ID = 'id';
     const A_VALUE = 'value';
     const A_WARN_BALANCE = 'warn_balance';
+    const A_WARN_COUNTRY = 'warn_country';
     const A_WARN_DWNL = 'warn_dwnl';
     const A_WARN_GROUP = 'warn_group';
     const ENTITY_NAME = 'prxgt_pv_trans_batch_item';
@@ -70,6 +71,13 @@ class Item
     }
 
     /** @return bool */
+    public function getWarnCountry()
+    {
+        $result = parent::get(self::A_WARN_COUNTRY);
+        return $result;
+    }
+
+    /** @return bool */
     public function getWarnDwnl()
     {
         $result = parent::get(self::A_WARN_DWNL);
@@ -117,6 +125,12 @@ class Item
     public function setWarnBalance($data)
     {
         parent::set(self::A_WARN_BALANCE, $data);
+    }
+
+    /** @param bool $data */
+    public function setWarnCountry($data)
+    {
+        parent::set(self::A_WARN_COUNTRY, $data);
     }
 
     /** @param bool $data */

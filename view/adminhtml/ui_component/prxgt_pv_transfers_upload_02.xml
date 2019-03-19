@@ -39,6 +39,17 @@
     </dataSource>
 
     <!-- **************************************************** -->
+    <!-- Grid header (filter, bookmarks, pager, ...).         -->
+    <!-- **************************************************** -->
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+    </listingToolbar>
+
+    <!-- **************************************************** -->
     <!-- Grid Columns                                         -->
     <!-- **************************************************** -->
     <columns name="preview_columns">
@@ -145,6 +156,14 @@
                 <dataType>number</dataType>
                 <filter>text</filter>
                 <label translate="true">Value</label>
+            </settings>
+        </column>
+
+        <column name="warn_country"
+                component="Praxigento_Core/js/grid/column/integer">
+            <settings>
+                <dataType>number</dataType>
+                <label translate="true">Country</label>
             </settings>
         </column>
 
