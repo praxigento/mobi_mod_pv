@@ -16,7 +16,7 @@ class Transfer
     implements \Praxigento\Pv\Api\Helper\Validate\Transfer
 {
 
-    public function validate(EBatchItem $item)
+    public function validateBatchItem(EBatchItem $item)
     {
         return [];
     }

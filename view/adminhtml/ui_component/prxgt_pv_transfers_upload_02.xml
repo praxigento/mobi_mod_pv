@@ -34,7 +34,8 @@
             <!--https://magento.stackexchange.com/questions/248611/magento-2-grid-data-source-definition-in-compact-form -->
             <argument name="class" xsi:type="string">Praxigento\Core\App\Ui\DataProvider\Grid\Base</argument>
             <argument name="name" xsi:type="string">preview_ds</argument>
-            <argument name="gridQueryBuilder" xsi:type="object">Praxigento\Pv\Ui\DataProvider\Grid\Transfers\Query</argument>
+            <argument name="gridQueryBuilder" xsi:type="object">Praxigento\Pv\Ui\DataProvider\Grid\Transfers\Query
+            </argument>
         </argument>
     </dataSource>
 
@@ -156,6 +157,14 @@
                 <dataType>number</dataType>
                 <filter>text</filter>
                 <label translate="true">Value</label>
+            </settings>
+        </column>
+
+        <column name="warn_date_applied"
+                component="Praxigento_Core/js/grid/column/integer">
+            <settings>
+                <dataType>number</dataType>
+                <label translate="true">Date Appl.</label>
             </settings>
         </column>
 

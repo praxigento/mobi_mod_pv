@@ -6,10 +6,7 @@
 
 namespace Praxigento\Pv\Service\Batch\Transfer;
 
-use Praxigento\Accounting\Api\Service\Operation\Create\Request as AReqOper;
-use Praxigento\Accounting\Api\Service\Operation\Create\Response as ARespOper;
 use Praxigento\Accounting\Repo\Data\Transaction as ETrans;
-use Praxigento\Downline\Repo\Data\Customer as EDwnlCust;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Service\Batch\Transfer\Process\Request as ARequest;
 use Praxigento\Pv\Service\Batch\Transfer\Process\Response as AResponse;
@@ -85,7 +82,8 @@ class Process
 
             if ($value > Cfg::DEF_ZERO) {
                 $wrongGroup = $item->getWarnGroup();
-                if (!$wrongGroup) {
+                $wrongDateAppl = $item->getWarnDateApplied();
+                if (!$wrongGroup && !$wrongDateAppl) {
                     $accDebit = $this->daoAcc->getByCustomerId($custIdFrom, $assetTypeId);
                     $accDebitId = $accDebit->getId();
                     $accCredit = $this->daoAcc->getByCustomerId($custIdTo, $assetTypeId);
@@ -99,8 +97,14 @@ class Process
                     $tran->setNote($note);
                     $trans[] = $tran;
                 } else {
+                    $details = '';
+                    if ($wrongGroup) {
+                        $details = 'Wrong customer group.';
+                    } elseif ($wrongDateAppl) {
+                        $details = 'Wrong date applied.';
+                    }
                     $this->logger->warning("Skipping batch item (from: $custMlmIdFrom/$custIdFrom; "
-                        . "to: $custMlmIdTo/$custIdTo). Wrong customer group.");
+                        . "to: $custMlmIdTo/$custIdTo). $details");
                 }
             }
         }

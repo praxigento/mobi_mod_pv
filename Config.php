@@ -4,6 +4,7 @@
  *
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Pv;
 
 use Praxigento\Downline\Config as DownlineCfg;
@@ -27,4 +28,6 @@ class Config extends \Praxigento\Core\Config
     const MODULE = 'Praxigento_Pv';
     const MOD_VERSION_0_1_0 = '0.1.0';
     const MOD_VERSION_0_2_0 = '0.2.0';
+    const MOD_VERSION_0_2_1 = '0.2.1';
+    const MOD_VERSION_0_2_2 = '0.2.2';
 }

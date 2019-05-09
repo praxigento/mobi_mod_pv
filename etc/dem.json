@@ -385,6 +385,15 @@
                               }
                             }
                           },
+                          "WarnDateApplied": {
+                            "alias": "warn_date_applied",
+                            "comment": "'true' if date applied for current transfer is less than date created for recipient customer.",
+                            "nullable": false,
+                            "default": 0,
+                            "type": {
+                              "boolean": {}
+                            }
+                          },
                           "WarnDownline": {
                             "alias": "warn_dwnl",
                             "comment": "'true' if current transfer is restricted by downline (receiver is not in sender's downline).",

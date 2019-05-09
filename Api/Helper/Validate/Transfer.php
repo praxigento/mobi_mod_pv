@@ -17,5 +17,5 @@ interface Transfer
      * @param \Praxigento\Pv\Repo\Data\Trans\Batch\Item $item
      * @return array
      */
-    public function validate(EBatchItem $item);
+    public function validateBatchItem(EBatchItem $item);
 }
