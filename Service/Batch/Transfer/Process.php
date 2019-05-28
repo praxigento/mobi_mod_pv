@@ -6,6 +6,8 @@
 
 namespace Praxigento\Pv\Service\Batch\Transfer;
 
+use Praxigento\Accounting\Api\Service\Operation\Create\Request as AReqOper;
+use Praxigento\Accounting\Api\Service\Operation\Create\Response as ARespOper;
 use Praxigento\Accounting\Repo\Data\Transaction as ETrans;
 use Praxigento\Pv\Config as Cfg;
 use Praxigento\Pv\Service\Batch\Transfer\Process\Request as ARequest;
