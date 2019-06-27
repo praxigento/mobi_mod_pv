@@ -44,7 +44,8 @@ class DefaultOrder
     ) {
         $result = $proceed($item);
         if ($item instanceof OrderItem) {
-            $canSeePv = $this->hlpCust->canSeePv();
+            $gid = $item->getOrder()->getCustomerGroupId();
+            $canSeePv = $this->hlpCust->canSeePv($gid);
             if ($canSeePv) {
                 $quoteItemId = $item->getQuoteItemId();
                 $pk = [EPvQuoteItem::A_ITEM_REF => $quoteItemId];

@@ -19,6 +19,8 @@ class Pv
 
     /** @var \Praxigento\Pv\Repo\Dao\Quote */
     private $daoPvQuote;
+    /** @var \Praxigento\Pv\Helper\Customer */
+    private $hlpCust;
     /** @var \Praxigento\Core\Api\Helper\Format */
     private $hlpFormat;
 
@@ -26,34 +28,41 @@ class Pv
         \Magento\Framework\View\Element\Template\Context $context,
         array $data = [],
         \Praxigento\Pv\Repo\Dao\Quote $daoPvQuote,
-        \Praxigento\Core\Api\Helper\Format $hlpFormat
+        \Praxigento\Core\Api\Helper\Format $hlpFormat,
+        \Praxigento\Pv\Helper\Customer $hlpCust
     ) {
         parent::__construct($context, $data);
         $this->daoPvQuote = $daoPvQuote;
         $this->hlpFormat = $hlpFormat;
+        $this->hlpCust = $hlpCust;
     }
 
-    public function initTotals() {
+    public function initTotals()
+    {
         /* get order data */
         /** @var \Magento\Sales\Block\Order\Totals $parent */
         $parent = $this->getParentBlock();
         $order = $parent->getOrder();
         $quoteId = $order->getQuoteId();
-        /* get PV data */
-        $pk = [EPvQuote::A_QUOTE_REF => $quoteId];
-        $entity = $this->daoPvQuote->getById($pk);
+        $groupId = $order->getCustomerGroupId();
+        $canSeePv = $this->hlpCust->canSeePv($groupId);
+        if ($canSeePv) {
+            /* get PV data */
+            $pk = [EPvQuote::A_QUOTE_REF => $quoteId];
+            $entity = $this->daoPvQuote->getById($pk);
 
-        if ($entity) {
-            $value = $entity->getTotal();
-            $value = $this->hlpFormat->toNumber($value);
-            /* compose total data for 'module-sales/view/frontend/templates/order/totals.phtml' */
-            $grand = new \Magento\Framework\DataObject();
-            $grand->setCode(self::PV_TOTAL);
-            $grand->setValue($value);
-            $grand->setLabel('PV Total');
-            $grand->setStrong(true);
-            $grand->setIsFormated(true);
-            $parent->addTotal($grand, 'last');
+            if ($entity) {
+                $value = $entity->getTotal();
+                $value = $this->hlpFormat->toNumber($value);
+                /* compose total data for 'module-sales/view/frontend/templates/order/totals.phtml' */
+                $grand = new \Magento\Framework\DataObject();
+                $grand->setCode(self::PV_TOTAL);
+                $grand->setValue($value);
+                $grand->setLabel('PV Total');
+                $grand->setStrong(true);
+                $grand->setIsFormated(true);
+                $parent->addTotal($grand, 'last');
+            }
         }
     }
 }
