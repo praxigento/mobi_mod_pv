@@ -6,7 +6,7 @@
 namespace Praxigento\Pv\Observer;
 
 /**
- * This branch is used for check/money payments only.
+ * This way is used for check/money payments only.
  * Update 'date_paid' in PV register and account PV when order is paid completely.
  */
 class SalesOrderInvoicePay
