@@ -16,7 +16,7 @@ class RegisterTest
     /** @var  \Magento\Sales\Api\OrderRepositoryInterface */
     private $repoSaleOrder;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->repoSaleOrder = $this->_manObj->get(\Magento\Sales\Api\OrderRepositoryInterface::class);
         $this->obj = $this->_manObj->create(\Praxigento\Pv\Observer\Z\PvRegister::class);
