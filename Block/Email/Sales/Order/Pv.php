@@ -61,7 +61,7 @@ class Pv
                 $grand->setLabel('PV Total');
                 $grand->setStrong(true);
                 $grand->setIsFormated(true);
-                $parent->addTotal($grand, 'last');
+                $parent->addTotal($grand);
             }
         }
     }
