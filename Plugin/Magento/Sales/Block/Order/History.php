@@ -1,6 +1,6 @@
 <?php
 /**
- * File creator: makhovdmitrii@inbox.ru
+ * File creator: dmitriimakhov@gmail.com
  */
 
 namespace Praxigento\Pv\Plugin\Magento\Sales\Block\Order;
