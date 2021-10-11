@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="order_items">
+            <block class="Magento\Framework\View\Element\RendererList" name="sales.order.print.renderers"
+                   as="renderer.list"/>
+        </referenceBlock>
+        <referenceBlock name="order_totals">
+            <arguments>
+                <!-- fix columns number in the totals section (./view/frontend/templates/order/items.phtml) -->
+                <argument name="label_properties" xsi:type="string">colspan="5" class="mark"</argument>
+            </arguments>
+            <block class="Praxigento\Pv\Block\Sales\Order\Totals" name="praxigento_pv_totals"/>
+        </referenceBlock>
+    </body>
+</page>

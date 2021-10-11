@@ -144,13 +144,6 @@
                 sortOrder="400" disabled="false"/>
     </type>
 
-    <type name="Magento\Sales\Block\Order\PrintShipment">
-        <!-- Add PV to order items on the front -->
-        <plugin name="prxgt_pv_plugin"
-                type="Praxigento\Pv\Plugin\Magento\Sales\Block\Order\PrintShipment"
-                sortOrder="400" disabled="false"/>
-    </type>
-
     <type name="Magento\Sales\Model\ResourceModel\Order\Item\CollectionFactory">
         <!-- Add PV data to order items collection -->
         <plugin name="prxgt_pv_plugin"
