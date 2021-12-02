@@ -85,7 +85,8 @@ class Process
             if ($value > Cfg::DEF_ZERO) {
                 $wrongGroup = $item->getWarnGroup();
                 $wrongDateAppl = $item->getWarnDateApplied();
-                if (!$wrongGroup && !$wrongDateAppl) {
+                $sameIds = $item->getWarnSameIds();
+                if (!$wrongGroup && !$wrongDateAppl && !$sameIds) {
                     $accDebit = $this->daoAcc->getByCustomerId($custIdFrom, $assetTypeId);
                     $accDebitId = $accDebit->getId();
                     $accCredit = $this->daoAcc->getByCustomerId($custIdTo, $assetTypeId);
@@ -104,6 +105,8 @@ class Process
                         $details = 'Wrong customer group.';
                     } elseif ($wrongDateAppl) {
                         $details = 'Wrong date applied.';
+                    } elseif ($sameIds) {
+                        $details = 'The same IDs for sender/receiver..';
                     }
                     $this->logger->warning("Skipping batch item (from: $custMlmIdFrom/$custIdFrom; "
                         . "to: $custMlmIdTo/$custIdTo). $details");

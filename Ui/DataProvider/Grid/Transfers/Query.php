@@ -42,6 +42,7 @@ class Query
     const A_WARN_DATE_APPLIED = 'warn_date_applied';
     const A_WARN_DWNL = 'warn_dwnl';
     const A_WARN_GROUP = 'warn_group';
+    const A_WARN_SAME_IDS = 'warn_same_ids';
     /**#@- */
     /**#@+ Entities are used in the query */
     const E_FROM = EDwnlCust::ENTITY_NAME;
@@ -97,6 +98,7 @@ class Query
                 self::A_WARN_COUNTRY => self::AS_ITEMS . '.' . EItem::A_WARN_COUNTRY,
                 self::A_WARN_DWNL => self::AS_ITEMS . '.' . EItem::A_WARN_DWNL,
                 self::A_WARN_GROUP => self::AS_ITEMS . '.' . EItem::A_WARN_GROUP,
+                self::A_WARN_SAME_IDS => self::AS_ITEMS . '.' . EItem::A_WARN_SAME_IDS,
                 self::A_TO_COUNTRY => self::AS_TO . '.' . EDwnlCust::A_COUNTRY_CODE,
                 self::A_TO_GROUP => self::AS_GROUP . '.' . Cfg::E_CUSTGROUP_A_CODE,
                 self::A_TO_ID => self::AS_ITEMS . '.' . EItem::A_CUST_TO_REF,
@@ -111,42 +113,6 @@ class Query
         return $result;
     }
 
-    /**
-     * SELECT
-     * `i`.`batch_ref` AS `batchId`,
-     * `i`.`id` AS `itemId`,
-     * `i`.`cust_from_ref` AS `fromId`,
-     * `i`.`cust_to_ref` AS `toId`,
-     * `i`.`restricted`,
-     * `i`.`value`,
-     * `f`.`country_code` AS `fromCountry`,
-     * `f`.`mlm_id` AS `fromMlmId`,
-     * (CONCAT(nf.firstname,
-     * " ",
-     * nf.lastname)) AS `fromName`,
-     * `t`.`country_code` AS `toCountry`,
-     * `t`.`mlm_id` AS `toMlmId`,
-     * `t`.`path` AS `toPath`,
-     * (CONCAT(nt.firstname,
-     * " ",
-     * nt.lastname)) AS `toName`,
-     * `g`.`customer_group_code` AS `toGroup`
-     * FROM
-     * `prxgt_pv_trans_batch_item` AS `i`
-     * LEFT JOIN `prxgt_dwnl_customer` AS `f` ON
-     * f.customer_ref = i.cust_from_ref
-     * LEFT JOIN `customer_entity` AS `nf` ON
-     * nf.entity_id = f.customer_ref
-     * LEFT JOIN `prxgt_dwnl_customer` AS `t` ON
-     * t.customer_ref = i.cust_to_ref
-     * LEFT JOIN `customer_entity` AS `nt` ON
-     * nt.entity_id = t.customer_ref
-     * LEFT JOIN `customer_group` AS `g` ON
-     * g.customer_group_id = nt.group_id
-     * WHERE
-     * (i.batch_ref = :batchId)
-     *
-     */
     protected function getQueryItems()
     {
         $result = $this->conn->select();
@@ -172,6 +138,7 @@ class Query
             self::A_WARN_COUNTRY => EItem::A_WARN_COUNTRY,
             self::A_WARN_DWNL => EItem::A_WARN_DWNL,
             self::A_WARN_GROUP => EItem::A_WARN_GROUP,
+            self::A_WARN_SAME_IDS => EItem::A_WARN_SAME_IDS,
             self::A_VALUE => EItem::A_VALUE
         ];
         $result->from([$as => $tbl], $cols);

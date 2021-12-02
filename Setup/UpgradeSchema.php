@@ -19,17 +19,21 @@ class UpgradeSchema
     private $v0_2_1;
     /** @var \Praxigento\Pv\Setup\UpgradeSchema\A\V0_2_2 */
     private $v0_2_2;
+    /** @var \Praxigento\Pv\Setup\UpgradeSchema\A\V0_2_3 */
+    private $v0_2_3;
 
     public function __construct(
         \Praxigento\Core\App\Setup\Dem\Tool $toolDem,
         \Praxigento\Pv\Setup\UpgradeSchema\A\V0_2_0 $v0_2_0,
         \Praxigento\Pv\Setup\UpgradeSchema\A\V0_2_1 $v0_2_1,
-        \Praxigento\Pv\Setup\UpgradeSchema\A\V0_2_2 $v0_2_2
+        \Praxigento\Pv\Setup\UpgradeSchema\A\V0_2_2 $v0_2_2,
+        \Praxigento\Pv\Setup\UpgradeSchema\A\V0_2_3 $v0_2_3
     ) {
         $this->toolDem = $toolDem;
         $this->v0_2_0 = $v0_2_0;
         $this->v0_2_1 = $v0_2_1;
         $this->v0_2_2 = $v0_2_2;
+        $this->v0_2_3 = $v0_2_3;
     }
 
     public function upgrade(
@@ -47,12 +51,20 @@ class UpgradeSchema
         if ($version == Cfg::MOD_VERSION_0_1_0) {
             $this->v0_2_0->exec($setup, $demPackage);
             $this->v0_2_1->exec($setup, $demPackage);
+            $this->v0_2_2->exec($setup, $demPackage);
+            $this->v0_2_3->exec($setup, $demPackage);
         }
         if ($version == Cfg::MOD_VERSION_0_2_0) {
             $this->v0_2_1->exec($setup, $demPackage);
+            $this->v0_2_2->exec($setup, $demPackage);
+            $this->v0_2_3->exec($setup, $demPackage);
         }
         if ($version == Cfg::MOD_VERSION_0_2_1) {
             $this->v0_2_2->exec($setup, $demPackage);
+            $this->v0_2_3->exec($setup, $demPackage);
+        }
+        if ($version == Cfg::MOD_VERSION_0_2_2) {
+            $this->v0_2_3->exec($setup, $demPackage);
         }
         $setup->endSetup();
     }

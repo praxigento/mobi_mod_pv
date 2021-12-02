@@ -22,6 +22,7 @@ class Item
     const A_WARN_DATE_APPLIED = 'warn_date_applied';
     const A_WARN_DWNL = 'warn_dwnl';
     const A_WARN_GROUP = 'warn_group';
+    const A_WARN_SAME_IDS = 'warn_same_ids';
     const ENTITY_NAME = 'prxgt_pv_trans_batch_item';
 
     /** @return int */
@@ -93,21 +94,24 @@ class Item
     }
 
     /** @return bool */
-    public function getWarnGroup()
-    {
+    public function getWarnGroup() {
         $result = parent::get(self::A_WARN_GROUP);
         return $result;
     }
 
+    /** @return bool */
+    public function getWarnSameIds() {
+        $result = parent::get(self::A_WARN_SAME_IDS);
+        return $result;
+    }
+
     /** @param int $data */
-    public function setBatchRef($data)
-    {
+    public function setBatchRef($data) {
         parent::set(self::A_BATCH_REF, $data);
     }
 
     /** @param int $data */
-    public function setCustFromRef($data)
-    {
+    public function setCustFromRef($data) {
         parent::set(self::A_CUST_FROM_REF, $data);
     }
 
@@ -148,15 +152,18 @@ class Item
     }
 
     /** @param bool $data */
-    public function setWarnDwnl($data)
-    {
+    public function setWarnDwnl($data) {
         parent::set(self::A_WARN_DWNL, $data);
     }
 
     /** @param bool $data */
-    public function setWarnGroup($data)
-    {
+    public function setWarnGroup($data) {
         parent::set(self::A_WARN_GROUP, $data);
+    }
+
+    /** @param bool $data */
+    public function setWarnSameIds($data) {
+        parent::set(self::A_WARN_SAME_IDS, $data);
     }
 
 }

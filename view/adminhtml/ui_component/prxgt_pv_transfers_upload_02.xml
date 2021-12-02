@@ -200,6 +200,14 @@
             </settings>
         </column>
 
+        <column name="warn_same_ids"
+                component="Praxigento_Core/js/grid/column/integer">
+            <settings>
+                <dataType>number</dataType>
+                <label translate="true">Same IDs</label>
+            </settings>
+        </column>
+
         <column name="batchId"
                 component="Praxigento_Core/js/grid/column/integer">
             <settings>

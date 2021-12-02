@@ -115,13 +115,21 @@ class ProcessItems
                 $entity->setCustToRef($idTo);
                 $entity->setValue($amount);
 
-                [$notBalanceEnough, $notInDownline, $notGroupAllowed, $notSameCountries, $notAppliedAfterCreated]
+                [
+                    $notBalanceEnough,
+                    $notInDownline,
+                    $notGroupAllowed,
+                    $notSameCountries,
+                    $notAppliedAfterCreated,
+                    $sameIds
+                ]
                     = $this->hlpValidTrans->validateBatchItem($entity);
                 $entity->setWarnBalance($notBalanceEnough);
                 $entity->setWarnCountry($notSameCountries);
                 $entity->setWarnDwnl($notInDownline);
                 $entity->setWarnGroup($notGroupAllowed);
                 $entity->setWarnDateApplied($notAppliedAfterCreated);
+                $entity->setWarnSameIds($sameIds);
 
                 $this->daoBatchItem->create($entity);
             }

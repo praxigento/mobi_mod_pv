@@ -429,6 +429,15 @@
                             "type": {
                               "boolean": {}
                             }
+                          },
+                          "WarnSameIds": {
+                            "alias": "warn_same_ids",
+                            "comment": "'true' if sender ID is equal to recipient ID.",
+                            "nullable": false,
+                            "default": 0,
+                            "type": {
+                              "boolean": {}
+                            }
                           }
                         },
                         "index": {

@@ -30,4 +30,5 @@ class Config extends \Praxigento\Core\Config
     const MOD_VERSION_0_2_0 = '0.2.0';
     const MOD_VERSION_0_2_1 = '0.2.1';
     const MOD_VERSION_0_2_2 = '0.2.2';
+    const MOD_VERSION_0_2_3 = '0.2.3';
 }
